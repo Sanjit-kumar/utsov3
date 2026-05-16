@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events &amp; Schedule — UTSOV Durga Puja 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#5C0000;--red:#8B1A1A;--red-mid:#A52020;--red-bright:#C0392B;
+  --cream:#FFFDF8;--cream-warm:#FFF5EC;--ivory:#FFF0E5;--blush:#FFE8E0;
+  --saffron:#E07830;--saffron-lt:#F09844;--marigold:#FF9933;
+  --gold:#C9A84C;--gold-lt:#E8C97A;
+  --black:#1A0000;--on-red:rgba(255,255,255,.95);--on-red-muted:rgba(255,255,255,.62);
+  --on-cream:#1A0000;--on-cream-mid:#6B1010;--on-cream-muted:#9B3030;
+  --bdr-red:rgba(139,26,26,.15);--bdr-gold:rgba(201,168,76,.4);--bdr-white:rgba(255,255,255,.18);
+  --r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
+  --f-display:'Bebas Neue',sans-serif;--f-serif:'EB Garamond',serif;--f-label:'Josefin Sans',sans-serif;--f-bn:'Noto Serif Bengali',serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);background:var(--cream);color:var(--on-cream);overflow-x:hidden}
+
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.9rem 2.5rem;transition:background .35s,box-shadow .35s,border-color .35s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(255,253,248,.97);backdrop-filter:blur(20px);border-color:var(--bdr-red);box-shadow:0 2px 20px rgba(139,26,26,.08)}
+nav{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:2rem}
+.nav-logo img{height:44px;width:auto;display:block}
+.nav-logo-fb{font-family:var(--f-display);font-size:2rem;color:var(--red-dark);letter-spacing:.06em;text-decoration:none;line-height:1}
+nav ul{display:flex;list-style:none;gap:2.25rem;margin-left:auto}
+nav ul a{color:var(--on-cream-mid);text-decoration:none;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;padding:.2rem 0;border-bottom:1.5px solid transparent}
+nav ul a:hover,nav ul a.active{color:var(--red);border-bottom-color:var(--red)}
+.nav-ctas{display:flex;gap:.65rem;margin-left:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .25s;cursor:pointer;border:none;white-space:nowrap;padding:.6rem 1.4rem;border-radius:var(--r-full)}
+.btn-red{background:var(--red);color:var(--cream);box-shadow:0 4px 16px rgba(139,26,26,.3)}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.5px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:var(--blush)}
+.btn-saffron{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#fff;box-shadow:0 4px 16px rgba(224,120,48,.4)}
+.btn-saffron:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#2a0000;font-weight:800}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-outline-w{background:transparent;border:1.5px solid rgba(255,255,255,.5);color:var(--on-red)}
+.btn-outline-w:hover{background:rgba(255,255,255,.1)}
+.btn-lg{padding:.85rem 2.5rem;font-size:.82rem}
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;z-index:501}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--red);transition:all .3s;border-radius:2px}
+.menu-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:940px){.menu-toggle{display:flex}nav ul{display:none;position:fixed;inset:0;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:500}nav ul.open{display:flex}nav ul a{font-size:1.1rem}.nav-ctas{display:none}}
+
+.rv{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}
+
+/* PAGE HERO */
+.page-hero{position:relative;padding:8rem 2.5rem 5rem;background:var(--cream);overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--red),var(--saffron),var(--marigold),var(--saffron),var(--red))}
+.page-hero::after{content:'';position:absolute;top:0;left:0;right:0;height:70%;background:radial-gradient(ellipse 80% 100% at 50% 0%,rgba(139,26,26,.07) 0%,transparent 70%);pointer-events:none}
+.ph-inner{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center}
+.ph-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--blush);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.4rem 1.2rem;font-family:var(--f-label);font-size:.68rem;font-weight:700;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.25rem}
+.ph-bn{font-family:var(--f-bn);font-size:clamp(1.1rem,2vw,1.5rem);color:var(--on-cream-mid);font-weight:600;display:block;margin-bottom:.6rem}
+.ph-title{font-family:var(--f-display);font-size:clamp(3.5rem,8vw,7rem);color:var(--red-dark);line-height:.9;margin-bottom:.75rem;letter-spacing:.01em}
+.ph-divider{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;margin:.9rem auto}
+.ph-sub{font-family:var(--f-serif);font-style:italic;font-size:clamp(1rem,2vw,1.15rem);color:var(--on-cream-mid);line-height:1.7;max-width:60ch;margin:0 auto}
+
+/* SECTION UTILS */
+.s-in{max-width:1280px;margin:0 auto;padding:5.5rem 2rem}
+.s-head{text-align:center;margin-bottom:3.5rem}
+.s-label{display:inline-block;font-family:var(--f-label);font-size:.64rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.7rem}
+.s-label-red{color:var(--red-mid)}.s-label-saffron{color:var(--saffron)}.s-label-gold{color:var(--gold)}.s-label-cream{color:var(--gold-lt)}
+.s-title{font-family:var(--f-display);font-size:clamp(2.5rem,5vw,4rem);line-height:.95;letter-spacing:.01em;margin-bottom:.6rem}
+.s-title-dark{color:var(--red-dark)}.s-title-white{color:var(--on-red)}
+.s-sub{font-family:var(--f-serif);font-size:1rem;line-height:1.8}
+.s-sub-dark{color:var(--on-cream-mid)}.s-sub-light{color:var(--on-red-muted)}
+.ornament{display:flex;align-items:center;gap:.9rem;margin:.75rem auto 0;justify-content:center;opacity:.65}
+.ornament::before,.ornament::after{content:'';flex:1;height:1px;max-width:80px;background:linear-gradient(90deg,transparent,currentColor)}
+.ornament span{font-size:.7rem;letter-spacing:.2em}
+.section-cream{background:var(--cream)}.section-ivory{background:var(--ivory)}.section-blush{background:var(--blush)}
+.section-red{background:var(--red-dark)}.section-redmid{background:var(--red)}
+
+/* SCHEDULE */
+.schedule-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.day-col-head{background:linear-gradient(135deg,var(--red),var(--red-dark));border-radius:var(--r-xl) var(--r-xl) 0 0;padding:1.75rem 2rem}
+.day-col-head .day-num-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:.3rem}
+.day-col-head .day-title{font-family:var(--f-display);font-size:2.2rem;color:var(--on-red);letter-spacing:.02em}
+.day-col-head .day-date{font-family:var(--f-label);font-size:.78rem;color:rgba(255,255,255,.7);margin-top:.3rem;letter-spacing:.06em}
+.day-col-head .day-bn{font-family:var(--f-bn);font-size:1.1rem;color:var(--gold-lt);display:block;margin-top:.5rem;font-weight:600}
+.events-list{background:var(--cream);border-radius:0 0 var(--r-xl) var(--r-xl);overflow:hidden;border:1.5px solid var(--bdr-red);border-top:none}
+.event-item{display:flex;gap:1.25rem;padding:1.5rem 1.75rem;border-bottom:1px solid rgba(139,26,26,.08);align-items:flex-start;transition:background .25s}
+.event-item:last-child{border-bottom:none}
+.event-item:hover{background:var(--blush)}
+.ei-time-block{flex-shrink:0;text-align:center;min-width:68px}
+.ei-time{font-family:var(--f-display);font-size:1.2rem;color:var(--red);line-height:1}
+.ei-period{font-family:var(--f-label);font-size:.58rem;color:var(--on-cream-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;display:block}
+.ei-icon{font-size:1.5rem;flex-shrink:0;margin-top:.2rem}
+.ei-content{flex:1}
+.ei-name{font-family:var(--f-label);font-size:.9rem;font-weight:700;color:var(--on-cream);margin-bottom:.2rem;letter-spacing:.03em}
+.ei-desc{font-size:.88rem;color:var(--on-cream-mid);line-height:1.65}
+.ei-loc{display:inline-flex;align-items:center;gap:.3rem;margin-top:.4rem;font-family:var(--f-label);font-size:.62rem;color:var(--red);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:860px){.schedule-wrap{grid-template-columns:1fr}}
+
+/* TICKETS */
+.tickets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.ticket-card{border-radius:var(--r-xl);overflow:hidden;border:1.5px solid var(--bdr-red);background:var(--cream);transition:transform .3s,box-shadow .3s,border-color .3s}
+.ticket-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,0,0,.15);border-color:var(--red)}
+.ticket-card.featured{border-color:var(--gold);box-shadow:0 8px 30px rgba(201,168,76,.2)}
+.tc-top{padding:2rem 1.75rem;background:var(--blush)}
+.tc-top.featured-top{background:linear-gradient(135deg,var(--red-dark),var(--red))}
+.tc-tier{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.18em;color:var(--on-cream-muted);text-transform:uppercase;margin-bottom:.5rem}
+.tc-top.featured-top .tc-tier{color:rgba(255,255,255,.7)}
+.tc-name{font-family:var(--f-display);font-size:1.7rem;color:var(--red-dark)}
+.tc-top.featured-top .tc-name{color:var(--on-red)}
+.tc-price{font-family:var(--f-display);font-size:2.8rem;color:var(--red);line-height:1;margin-top:.5rem}
+.tc-top.featured-top .tc-price{color:var(--gold-lt)}
+.tc-price span{font-size:1rem;font-family:var(--f-serif);font-weight:400;color:var(--on-cream-muted)}
+.tc-top.featured-top .tc-price span{color:rgba(255,255,255,.55)}
+.tc-body{padding:1.75rem}
+.tc-features{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem}
+.tc-features li{display:flex;align-items:flex-start;gap:.6rem;font-size:.9rem;color:var(--on-cream-mid)}
+.tc-features li::before{content:'✓';color:var(--red);font-weight:700;flex-shrink:0;margin-top:.05rem}
+@media(max-width:860px){.tickets-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.tickets-grid{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:.75rem;max-width:820px;margin:0 auto}
+.faq-item{background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-lg);overflow:hidden;transition:border-color .3s;box-shadow:0 2px 12px rgba(139,26,26,.05)}
+.faq-item.open{border-color:var(--red)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;cursor:pointer;gap:1rem}
+.faq-q span{font-family:var(--f-label);font-size:.9rem;font-weight:700;color:var(--on-cream);letter-spacing:.03em}
+.faq-arrow{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:transform .3s,background .3s;color:var(--red)}
+.faq-item.open .faq-arrow{transform:rotate(180deg);background:var(--red);color:var(--cream)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a p{padding:0 1.5rem 1.25rem;font-size:.93rem;color:var(--on-cream-mid);line-height:1.8}
+
+/* FOOTER */
+footer{background:var(--red-dark);border-top:3px solid var(--gold)}
+.ft-in{max-width:1280px;margin:0 auto;padding:4rem 2rem 1.5rem}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.ft-brand-logo img{height:40px;width:auto;display:block;margin-bottom:1rem}
+.ft-brand-logo-fb{font-family:var(--f-display);font-size:2.2rem;color:var(--gold-lt);letter-spacing:.06em;display:block;margin-bottom:1rem}
+.ft-brand p{font-size:.82rem;color:var(--on-red-muted);line-height:1.8;max-width:28ch;margin-bottom:1.25rem}
+.ft-socials{display:flex;gap:.65rem}
+.ft-social-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;font-size:.85rem;text-decoration:none;transition:background .2s}
+.ft-social-btn:hover{background:rgba(201,168,76,.25)}
+.ft-col h5{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.18em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:1.1rem}
+.ft-col ul{list-style:none}
+.ft-col ul li{font-size:.8rem;color:var(--on-red-muted);margin-bottom:.6rem}
+.ft-col ul li a{color:rgba(255,253,248,.5);text-decoration:none;transition:color .2s}
+.ft-col ul li a:hover{color:var(--gold-lt)}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:rgba(255,253,248,.3);flex-wrap:wrap;gap:.75rem}
+.ft-legal{display:flex;gap:1.5rem}
+.ft-legal a{color:rgba(255,253,248,.3);text-decoration:none;transition:color .2s}
+.ft-legal a:hover{color:var(--gold-lt)}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:480px){.ft-grid{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}}
+
+.floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
+@keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</head>
+<body>
+<header id="siteHeader">
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=nav-logo-fb>UTSOV</span>'"></a>
+    <ul id="navMenu">
+      <li><a href="artists.html">Artists</a></li>
+      <li><a href="events.html" class="active">Events</a></li>
+      <li><a href="philanthropy.html">Philanthropy</a></li>
+      <li><a href="sponsorship.html">Sponsor</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
+      <a href="#tickets" class="btn btn-red">Get Passes</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="ph-inner">
+    <div class="ph-badge rv">🪔 October 17–18, 2026</div>
+    <span class="ph-bn rv">দুর্গাপূজা ২০২৬ — সময়সূচি</span>
+    <h1 class="ph-title rv d1">Events &amp;<br>Schedule</h1>
+    <div class="ph-divider rv d1"></div>
+    <p class="ph-sub rv d2">Two days. Countless moments of joy, devotion, music, and community. Here is everything happening at UTSOV 2026.</p>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<section class="section-ivory">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-label s-label-red rv">Full Programme</span>
+      <h2 class="s-title s-title-dark rv d1">Two Days of Celebration</h2>
+      <div class="ornament rv d1" style="color:var(--red)"><span>✦</span></div>
+      <p class="s-sub s-sub-dark rv d2" style="max-width:58ch;margin:.9rem auto 0">Jo Ann Magistro Performing Arts Center, East Brunswick, New Jersey</p>
+    </div>
+    <div class="schedule-wrap">
+      <!-- DAY 1 -->
+      <div class="rv">
+        <div class="day-col-head">
+          <div class="day-num-label">Day One</div>
+          <div class="day-title">Saturday</div>
+          <div class="day-date">October 17, 2026</div>
+          <span class="day-bn">শনিবার · ১৭ অক্টোবর</span>
+        </div>
+        <div class="events-list">
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">9:00</div><span class="ei-period">AM</span></div>
+            <div class="ei-icon">🙏</div>
+            <div class="ei-content">
+              <div class="ei-name">Morning Puja &amp; Aarti</div>
+              <p class="ei-desc">Traditional morning worship with mantras, offerings, and pushpanjali. All devotees are welcome to participate.</p>
+              <span class="ei-loc">📍 Main Hall</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">10:30</div><span class="ei-period">AM</span></div>
+            <div class="ei-icon">🎨</div>
+            <div class="ei-content">
+              <div class="ei-name">Children's Art Competition</div>
+              <p class="ei-desc">Kids ages 4–16 compete in themed art challenges celebrating Durga Puja mythology. Prizes, medals, and certificates for all participants.</p>
+              <span class="ei-loc">📍 Foyer &amp; Lobby</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">12:00</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🛍️</div>
+            <div class="ei-content">
+              <div class="ei-name">Mela &amp; Shopping Bazaar Opens</div>
+              <p class="ei-desc">Browse traditional sarees, jewelry, sindoor, artisan crafts, clothing, and festive goods from vendors across the Indian subcontinent.</p>
+              <span class="ei-loc">📍 Ground Floor</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">1:00</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🍛</div>
+            <div class="ei-content">
+              <div class="ei-name">Authentic Bengali Lunch</div>
+              <p class="ei-desc">Luchi, alur dom, misti doi, rosogolla, chutney, and more. Taste Bengal in New Jersey.</p>
+              <span class="ei-loc">📍 Dining Hall</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">3:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🪔</div>
+            <div class="ei-content">
+              <div class="ei-name">Dhunuchi Naach Exhibition</div>
+              <p class="ei-desc">Watch master performers demonstrate the sacred incense-lamp dance. Community participation welcome during designated segments.</p>
+              <span class="ei-loc">📍 Main Stage</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">5:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🎶</div>
+            <div class="ei-content">
+              <div class="ei-name">Evening Cultural Program</div>
+              <p class="ei-desc">Opening night concert featuring the Nandi Sisters. An electrifying evening of Bollywood, folk fusion, and devotional music.</p>
+              <span class="ei-loc">📍 Main Auditorium</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">9:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🌙</div>
+            <div class="ei-content">
+              <div class="ei-name">Evening Aarti &amp; Closing</div>
+              <p class="ei-desc">Collective evening prayer and aarti ceremony. Day one concludes with the Goddess's blessing.</p>
+              <span class="ei-loc">📍 Main Hall</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="rv d1">
+        <div class="day-col-head">
+          <div class="day-num-label">Day Two</div>
+          <div class="day-title">Sunday</div>
+          <div class="day-date">October 18, 2026</div>
+          <span class="day-bn">রবিবার · ১৮ অক্টোবর</span>
+        </div>
+        <div class="events-list">
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">9:00</div><span class="ei-period">AM</span></div>
+            <div class="ei-icon">🙏</div>
+            <div class="ei-content">
+              <div class="ei-name">Morning Puja &amp; Pushpanjali</div>
+              <p class="ei-desc">The final day's morning worship — devotees offer flowers to the Goddess in a deeply moving collective ceremony. Sindoor offerings for married women.</p>
+              <span class="ei-loc">📍 Main Hall</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">10:30</div><span class="ei-period">AM</span></div>
+            <div class="ei-icon">🎭</div>
+            <div class="ei-content">
+              <div class="ei-name">Talent Show — All Ages</div>
+              <p class="ei-desc">Perform in dance, music, drama, or spoken word. Adult and children's categories. Cash prizes and trophies for winners.</p>
+              <span class="ei-loc">📍 Main Auditorium</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">12:00</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🛍️</div>
+            <div class="ei-content">
+              <div class="ei-name">Mela &amp; Bazaar Continues</div>
+              <p class="ei-desc">Final day of shopping. Vendors often offer special prices. Don't miss the handloom sarees and handcrafted jewelry.</p>
+              <span class="ei-loc">📍 Ground Floor</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">1:00</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🍚</div>
+            <div class="ei-content">
+              <div class="ei-name">Bhog Prasad &amp; Community Lunch</div>
+              <p class="ei-desc">Sacred food offered to the Goddess and shared with all — khichuri, labra, payesh, chutney, sandesh. The act of shared bhog dissolves all boundaries.</p>
+              <span class="ei-loc">📍 Dining Hall</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">3:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🔴</div>
+            <div class="ei-content">
+              <div class="ei-name">Sindoor Khela Ceremony</div>
+              <p class="ei-desc">Married women apply vermilion to the Goddess and to each other in this beautiful, joyful, and deeply emotional Bengali tradition. The farewell begins.</p>
+              <span class="ei-loc">📍 Main Hall</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">5:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">🎶</div>
+            <div class="ei-content">
+              <div class="ei-name">Grand Finale Concert</div>
+              <p class="ei-desc">Rupankar Bagchi &amp; Lakkhichhara close UTSOV 2026 in a night of Bengali folk, modern, and Baul music that you will carry in your heart forever.</p>
+              <span class="ei-loc">📍 Main Auditorium</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time">9:30</div><span class="ei-period">PM</span></div>
+            <div class="ei-icon">💐</div>
+            <div class="ei-content">
+              <div class="ei-name">Vijaya Dasami &amp; Farewell</div>
+              <p class="ei-desc">Final aarti, blessings, and the emotional farewell to Maa Durga. Seek the elders' blessings. Until next year — Asche Bochor Abar Hobe.</p>
+              <span class="ei-loc">📍 Main Hall</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKETS -->
+<section class="section-red" id="tickets">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-label s-label-cream rv">জয় মা দুর্গা</span>
+      <h2 class="s-title s-title-white rv d1">Get Your Passes</h2>
+      <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
+      <p class="s-sub s-sub-light rv d2" style="max-width:55ch;margin:.9rem auto 0">Choose the experience that's right for you. All passes include puja rituals, cultural program, and access to the mela bazaar.</p>
+    </div>
+    <div class="tickets-grid">
+      <div class="ticket-card rv">
+        <div class="tc-top">
+          <div class="tc-tier">Single Day</div>
+          <div class="tc-name">Day Pass</div>
+          <div class="tc-price">$45 <span>/ person</span></div>
+        </div>
+        <div class="tc-body">
+          <ul class="tc-features">
+            <li>Access for one day (Sat or Sun)</li>
+            <li>Morning &amp; evening puja rituals</li>
+            <li>Cultural concert (one evening)</li>
+            <li>Mela bazaar access</li>
+            <li>Bhog prasad</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline" style="width:100%">Get Day Pass</a>
+        </div>
+      </div>
+      <div class="ticket-card featured rv d1">
+        <div class="tc-top featured-top">
+          <div class="tc-tier">Most Popular</div>
+          <div class="tc-name">Weekend Pass</div>
+          <div class="tc-price">$75 <span>/ person</span></div>
+        </div>
+        <div class="tc-body">
+          <ul class="tc-features">
+            <li>Full 2-day access</li>
+            <li>Both cultural concerts</li>
+            <li>Pushpanjali &amp; all puja rituals</li>
+            <li>Sindoor Khela ceremony</li>
+            <li>Bhog prasad both days</li>
+            <li>Priority seating for concerts</li>
+          </ul>
+          <a href="contact.html" class="btn btn-gold" style="width:100%">Get Weekend Pass</a>
+        </div>
+      </div>
+      <div class="ticket-card rv d2">
+        <div class="tc-top">
+          <div class="tc-tier">Family Bundle</div>
+          <div class="tc-name">Family of 4</div>
+          <div class="tc-price">$240 <span>/ family</span></div>
+        </div>
+        <div class="tc-body">
+          <ul class="tc-features">
+            <li>Weekend access for 4 people</li>
+            <li>2 adults + 2 children (under 12)</li>
+            <li>All concerts &amp; rituals</li>
+            <li>Art competition entry included</li>
+            <li>Talent show registration</li>
+            <li>Family photo opportunity</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline" style="width:100%">Get Family Pass</a>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:.82rem;color:rgba(255,255,255,.45);font-family:var(--f-label);letter-spacing:.06em">Children under 5 are free. Senior citizen discounts available. Contact us for group bookings.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-cream">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-label s-label-saffron rv">Questions?</span>
+      <h2 class="s-title s-title-dark rv d1">Frequently Asked</h2>
+      <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item rv">
+        <div class="faq-q"><span>Where is the event held?</span><div class="faq-arrow">▼</div></div>
+        <div class="faq-a"><p>Jo Ann Magistro Performing Arts Center, East Brunswick, New Jersey. Ample free parking is available at the venue. The center is also accessible via public transport.</p></div>
+      </div>
+      <div class="faq-item rv d1">
+        <div class="faq-q"><span>What is the dress code?</span><div class="faq-arrow">▼</div></div>
+        <div class="faq-a"><p>There is no strict dress code, but many attendees dress in traditional Indian attire — sarees, salwar kameez, kurtas. On Sunday, we encourage white with red borders (lal-paar sada saree) to honor the sacred tradition of Sindoor Khela.</p></div>
+      </div>
+      <div class="faq-item rv d2">
+        <div class="faq-q"><span>Is food included in the ticket price?</span><div class="faq-arrow">▼</div></div>
+        <div class="faq-a"><p>Bhog prasad (sacred communal food) is included for all pass holders. Additional food is available for purchase from vendors throughout both days. We have a full Bengali menu including vegetarian and non-vegetarian options.</p></div>
+      </div>
+      <div class="faq-item rv">
+        <div class="faq-q"><span>Can non-Bengalis / non-Hindus attend?</span><div class="faq-arrow">▼</div></div>
+        <div class="faq-a"><p>Absolutely yes! UTSOV is a community celebration welcoming everyone regardless of background, faith, or heritage. Durga Puja is about joy, art, community, and the triumph of good over evil — a message for all of humanity. Come as you are.</p></div>
+      </div>
+      <div class="faq-item rv d1">
+        <div class="faq-q"><span>How do I register for the talent show or art competition?</span><div class="faq-arrow">▼</div></div>
+        <div class="faq-a"><p>Talent show and art competition registrations open in September 2026. Visit our contact page to sign up for updates, or email utsov@utsov.org. Family pass holders get automatic priority registration.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-in">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="ft-brand-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
+        <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
+        <div class="ft-socials">
+          <a href="#" class="ft-social-btn" aria-label="Instagram">📷</a>
+          <a href="#" class="ft-social-btn" aria-label="Facebook">👤</a>
+          <a href="#" class="ft-social-btn" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+      <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="#tickets">Get Passes</a></li><li><a href="sponsorship.html">Become a Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
+      <div class="ft-col"><h5>Contact</h5><ul><li>(201) 787-6861</li><li><a href="mailto:utsov@utsov.org">utsov@utsov.org</a></li><li>46 Linden Ln, Plainsboro, NJ</li><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="ft-bottom">
+      <span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3) Non-Profit</span>
+      <div class="ft-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="floating-durga" title="জয় মা দুর্গা">
+  <img src="maa1_corner.png" alt="Jai Maa Durga" style="width:80px;height:auto;display:block">
+</div>
+
+<script>
+const header=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>60)},{ passive:true });
+const toggle=document.getElementById('menuToggle');const menu=document.getElementById('navMenu');
+toggle.addEventListener('click',()=>{menu.classList.toggle('open');toggle.classList.toggle('open');});
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{const item=q.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');}));
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');obs.unobserve(en.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

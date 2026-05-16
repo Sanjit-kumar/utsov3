@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philanthropy — UTSOV Durga Puja 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#5C0000;--red:#8B1A1A;--red-mid:#A52020;--red-bright:#C0392B;
+  --cream:#FFFDF8;--cream-warm:#FFF5EC;--ivory:#FFF0E5;--blush:#FFE8E0;
+  --saffron:#E07830;--saffron-lt:#F09844;--marigold:#FF9933;
+  --gold:#C9A84C;--gold-lt:#E8C97A;
+  --black:#1A0000;--on-red:rgba(255,255,255,.95);--on-red-muted:rgba(255,255,255,.62);
+  --on-cream:#1A0000;--on-cream-mid:#6B1010;--on-cream-muted:#9B3030;
+  --bdr-red:rgba(139,26,26,.15);--bdr-gold:rgba(201,168,76,.4);--bdr-white:rgba(255,255,255,.18);
+  --r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
+  --f-display:'Bebas Neue',sans-serif;--f-serif:'EB Garamond',serif;--f-label:'Josefin Sans',sans-serif;--f-bn:'Noto Serif Bengali',serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);background:var(--cream);color:var(--on-cream);overflow-x:hidden}
+
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.9rem 2.5rem;transition:background .35s,box-shadow .35s,border-color .35s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(255,253,248,.97);backdrop-filter:blur(20px);border-color:var(--bdr-red);box-shadow:0 2px 20px rgba(139,26,26,.08)}
+nav{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:2rem}
+.nav-logo img{height:44px;width:auto;display:block}
+.nav-logo-fb{font-family:var(--f-display);font-size:2rem;color:var(--red-dark);letter-spacing:.06em;text-decoration:none;line-height:1}
+nav ul{display:flex;list-style:none;gap:2.25rem;margin-left:auto}
+nav ul a{color:var(--on-cream-mid);text-decoration:none;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;padding:.2rem 0;border-bottom:1.5px solid transparent}
+nav ul a:hover,nav ul a.active{color:var(--red);border-bottom-color:var(--red)}
+.nav-ctas{display:flex;gap:.65rem;margin-left:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .25s;cursor:pointer;border:none;white-space:nowrap;padding:.6rem 1.4rem;border-radius:var(--r-full)}
+.btn-red{background:var(--red);color:var(--cream);box-shadow:0 4px 16px rgba(139,26,26,.3)}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.5px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:var(--blush)}
+.btn-saffron{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#fff;box-shadow:0 4px 16px rgba(224,120,48,.4)}
+.btn-saffron:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#2a0000;font-weight:800}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-outline-w{background:transparent;border:1.5px solid rgba(255,255,255,.5);color:var(--on-red)}
+.btn-outline-w:hover{background:rgba(255,255,255,.1)}
+.btn-lg{padding:.85rem 2.5rem;font-size:.82rem}
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;z-index:501}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--red);transition:all .3s;border-radius:2px}
+.menu-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:940px){.menu-toggle{display:flex}nav ul{display:none;position:fixed;inset:0;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:500}nav ul.open{display:flex}nav ul a{font-size:1.1rem}.nav-ctas{display:none}}
+
+.rv{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}
+
+/* PAGE HERO */
+.page-hero{position:relative;padding:8rem 2.5rem 5rem;background:var(--cream);overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--red),var(--saffron),var(--marigold),var(--saffron),var(--red))}
+.page-hero::after{content:'';position:absolute;top:0;left:0;right:0;height:70%;background:radial-gradient(ellipse 80% 100% at 50% 0%,rgba(139,26,26,.07) 0%,transparent 70%);pointer-events:none}
+.ph-inner{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center}
+.ph-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--blush);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.4rem 1.2rem;font-family:var(--f-label);font-size:.68rem;font-weight:700;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.25rem}
+.ph-bn{font-family:var(--f-bn);font-size:clamp(1.1rem,2vw,1.5rem);color:var(--on-cream-mid);font-weight:600;display:block;margin-bottom:.6rem}
+.ph-title{font-family:var(--f-display);font-size:clamp(3.5rem,8vw,7rem);color:var(--red-dark);line-height:.9;margin-bottom:.75rem;letter-spacing:.01em}
+.ph-divider{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;margin:.9rem auto}
+.ph-sub{font-family:var(--f-serif);font-style:italic;font-size:clamp(1rem,2vw,1.15rem);color:var(--on-cream-mid);line-height:1.7;max-width:60ch;margin:0 auto}
+
+/* SECTION UTILS */
+.s-in{max-width:1280px;margin:0 auto;padding:5.5rem 2rem}
+.s-head{text-align:center;margin-bottom:3.5rem}
+.s-label{display:inline-block;font-family:var(--f-label);font-size:.64rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.7rem}
+.s-label-red{color:var(--red-mid)}.s-label-saffron{color:var(--saffron)}.s-label-gold{color:var(--gold)}.s-label-cream{color:var(--gold-lt)}
+.s-title{font-family:var(--f-display);font-size:clamp(2.5rem,5vw,4rem);line-height:.95;letter-spacing:.01em;margin-bottom:.6rem}
+.s-title-dark{color:var(--red-dark)}.s-title-white{color:var(--on-red)}
+.s-sub{font-family:var(--f-serif);font-size:1rem;line-height:1.8}
+.s-sub-dark{color:var(--on-cream-mid)}.s-sub-light{color:var(--on-red-muted)}
+.ornament{display:flex;align-items:center;gap:.9rem;margin:.75rem auto 0;justify-content:center;opacity:.65}
+.ornament::before,.ornament::after{content:'';flex:1;height:1px;max-width:80px;background:linear-gradient(90deg,transparent,currentColor)}
+.ornament span{font-size:.7rem;letter-spacing:.2em}
+.section-cream{background:var(--cream)}.section-ivory{background:var(--ivory)}.section-blush{background:var(--blush)}
+.section-red{background:var(--red-dark)}.section-redmid{background:var(--red)}
+
+/* IMPACT STATS */
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:4rem}
+.stat-card{text-align:center;padding:2.5rem 1.25rem;background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-xl);transition:border-color .3s,box-shadow .3s}
+.stat-card:hover{border-color:var(--red);box-shadow:0 8px 30px rgba(92,0,0,.1)}
+.stat-num{font-family:var(--f-display);font-size:3.5rem;color:var(--red-dark);line-height:1;display:block;letter-spacing:.01em}
+.stat-lbl{font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--on-cream-muted);text-transform:uppercase;margin-top:.6rem;display:block}
+@media(max-width:760px){.stats-strip{grid-template-columns:repeat(2,1fr)}}
+
+/* MISSION BLOCK */
+.mission-block{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:start}
+.mission-text p{font-size:1.05rem;color:var(--on-cream-mid);line-height:1.9;margin-bottom:1.25rem}
+.mission-quote{font-family:var(--f-serif);font-style:italic;font-size:1.05rem;color:var(--red-dark);border-left:3px solid var(--saffron);padding-left:1.25rem;line-height:1.75}
+.values-list{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+.value-item{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.25rem;background:var(--cream);border:1.5px solid var(--bdr-red);border-left:4px solid var(--red);border-radius:0 var(--r-md) var(--r-md) 0;transition:border-color .25s,box-shadow .25s}
+.value-item:hover{border-color:var(--red);box-shadow:0 4px 20px rgba(92,0,0,.08)}
+.vi-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.vi-text h4{font-family:var(--f-label);font-size:.85rem;font-weight:700;color:var(--on-cream);margin-bottom:.2rem;letter-spacing:.03em}
+.vi-text p{font-size:.88rem;color:var(--on-cream-mid);line-height:1.65}
+@media(max-width:800px){.mission-block{grid-template-columns:1fr;gap:2.5rem}}
+
+/* ORG CARDS */
+.org-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.org-card{background:var(--cream);border-radius:var(--r-xl);overflow:hidden;border:1.5px solid var(--bdr-red);box-shadow:0 4px 20px rgba(92,0,0,.05);transition:transform .3s,box-shadow .3s}
+.org-card:hover{transform:translateY(-5px);box-shadow:0 18px 50px rgba(92,0,0,.12)}
+.oc-banner{height:100px;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.oc-b1{background:linear-gradient(135deg,var(--red-dark),var(--red))}
+.oc-b2{background:linear-gradient(135deg,#0A2A3A,#1A5A7A)}
+.oc-b3{background:linear-gradient(135deg,#1A3A0A,#3A7A20)}
+.oc-b4{background:linear-gradient(135deg,#3A200A,#8A5020)}
+.oc-b5{background:linear-gradient(135deg,#2A0A3A,#6A2A8A)}
+.oc-b6{background:linear-gradient(135deg,#0A3A2A,#1A7A5A)}
+.oc-body{padding:1.5rem}
+.oc-name{font-family:var(--f-label);font-size:.92rem;font-weight:700;color:var(--on-cream);margin-bottom:.25rem;letter-spacing:.02em}
+.oc-location{font-family:var(--f-label);font-size:.62rem;font-weight:600;letter-spacing:.1em;color:var(--red);text-transform:uppercase;margin-bottom:.75rem}
+.oc-desc{font-size:.9rem;color:var(--on-cream-mid);line-height:1.7}
+@media(max-width:720px){.org-grid{grid-template-columns:1fr}}
+
+/* DONATE */
+.donate-options{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.donate-card{background:rgba(255,253,248,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:var(--r-xl);padding:2rem 1.75rem;text-align:center;transition:border-color .3s,background .3s,transform .3s}
+.donate-card:hover{border-color:var(--gold-lt);background:rgba(232,201,122,.08);transform:translateY(-4px)}
+.donate-card.featured{border-color:var(--gold-lt);background:rgba(232,201,122,.1)}
+.dc-amount{font-family:var(--f-display);font-size:3rem;color:var(--gold-lt);line-height:1;margin-bottom:.5rem;letter-spacing:.01em}
+.dc-name{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--on-red-muted);text-transform:uppercase;margin-bottom:1.25rem}
+.dc-desc{font-size:.9rem;color:var(--on-red-muted);line-height:1.7;margin-bottom:1.5rem}
+@media(max-width:760px){.donate-options{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{background:var(--red-dark);border-top:3px solid var(--gold)}
+.ft-in{max-width:1280px;margin:0 auto;padding:4rem 2rem 1.5rem}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.ft-brand-logo img{height:40px;width:auto;display:block;margin-bottom:1rem}
+.ft-brand-logo-fb{font-family:var(--f-display);font-size:2.2rem;color:var(--gold-lt);letter-spacing:.06em;display:block;margin-bottom:1rem}
+.ft-brand p{font-size:.82rem;color:var(--on-red-muted);line-height:1.8;max-width:28ch;margin-bottom:1.25rem}
+.ft-socials{display:flex;gap:.65rem}
+.ft-social-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;font-size:.85rem;text-decoration:none;transition:background .2s}
+.ft-social-btn:hover{background:rgba(201,168,76,.25)}
+.ft-col h5{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.18em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:1.1rem}
+.ft-col ul{list-style:none}
+.ft-col ul li{font-size:.8rem;color:var(--on-red-muted);margin-bottom:.6rem}
+.ft-col ul li a{color:rgba(255,253,248,.5);text-decoration:none;transition:color .2s}
+.ft-col ul li a:hover{color:var(--gold-lt)}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:rgba(255,253,248,.3);flex-wrap:wrap;gap:.75rem}
+.ft-legal{display:flex;gap:1.5rem}
+.ft-legal a{color:rgba(255,253,248,.3);text-decoration:none;transition:color .2s}
+.ft-legal a:hover{color:var(--gold-lt)}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:480px){.ft-grid{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}}
+
+.floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
+@keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</head>
+<body>
+<header id="siteHeader">
+  <nav>
+    <a href="index.html" class="nav-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=nav-logo-fb>UTSOV</span>'"></a>
+    <ul id="navMenu">
+      <li><a href="artists.html">Artists</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="philanthropy.html" class="active">Philanthropy</a></li>
+      <li><a href="sponsorship.html">Sponsor</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
+      <a href="events.html#tickets" class="btn btn-red">Get Passes</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="ph-inner">
+    <div class="ph-badge rv">❤️ Giving Back Since 2014</div>
+    <span class="ph-bn rv">সেবা ও দান — মায়ের আশীর্বাদে</span>
+    <h1 class="ph-title rv d1">More Than<br>a Festival</h1>
+    <div class="ph-divider rv d1"></div>
+    <p class="ph-sub rv d2">In the spirit of Maa Durga — the divine mother who protects all — UTSOV dedicates itself to lifting lives and serving communities across two continents.</p>
+  </div>
+</div>
+
+<!-- IMPACT STATS -->
+<section class="section-cream">
+  <div class="s-in">
+    <div class="stats-strip">
+      <div class="stat-card rv"><span class="stat-num">8+</span><span class="stat-lbl">Organizations Supported</span></div>
+      <div class="stat-card rv d1"><span class="stat-num">10+</span><span class="stat-lbl">Years of Giving</span></div>
+      <div class="stat-card rv d2"><span class="stat-num">2</span><span class="stat-lbl">Countries Reached</span></div>
+      <div class="stat-card rv d3"><span class="stat-num">∞</span><span class="stat-lbl">Lives Touched</span></div>
+    </div>
+
+    <div class="s-head" style="margin-bottom:2.5rem">
+      <span class="s-label s-label-saffron rv">Our Mission</span>
+      <h2 class="s-title s-title-dark rv d1">Celebration &amp; Compassion</h2>
+      <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
+    </div>
+    <div class="mission-block">
+      <div class="mission-text rv">
+        <p>UTSOV was founded on a simple truth: that the greatest offering we can make to Maa Durga — the Divine Mother who shelters every living being — is to shelter and uplift her children. Every ticket purchased, every sponsorship received, every dollar donated flows directly into causes that nourish lives.</p>
+        <p>We are a 501(c)(3) non-profit organization. Every year, our community unites not just to celebrate, but to serve. The festival is the celebration — the philanthropy is the prayer.</p>
+        <p class="mission-quote">"She who protects the universe carries her strength in compassion. We carry ours in community."</p>
+      </div>
+      <div class="values-list rv d1">
+        <div class="value-item"><div class="vi-icon">🍽️</div><div class="vi-text"><h4>Nourishment</h4><p>Feeding the hungry in NJ and partnering with food banks and shelters serving Indian diaspora communities.</p></div></div>
+        <div class="value-item"><div class="vi-icon">🏫</div><div class="vi-text"><h4>Education</h4><p>Funding scholarships, school supplies, and literacy programs for underprivileged children in West Bengal and New Jersey.</p></div></div>
+        <div class="value-item"><div class="vi-icon">🏥</div><div class="vi-text"><h4>Healthcare</h4><p>Supporting mobile health clinics and healthcare access initiatives for underserved rural communities in Bengal and NJ.</p></div></div>
+        <div class="value-item"><div class="vi-icon">🌱</div><div class="vi-text"><h4>Community Resilience</h4><p>Disaster relief for cyclone and flood survivors in Bengal, and emergency community support in New Jersey.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORG WE SUPPORT -->
+<section class="section-ivory">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-label s-label-red rv">Who We Support</span>
+      <h2 class="s-title s-title-dark rv d1">Organizations We Stand With</h2>
+      <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
+      <p class="s-sub s-sub-dark rv d2" style="max-width:58ch;margin:.9rem auto 0">These are the organizations and causes that UTSOV's community has rallied behind — year after year, with growing love and commitment.</p>
+    </div>
+    <div class="org-grid">
+      <div class="org-card rv">
+        <div class="oc-banner oc-b1">❤️</div>
+        <div class="oc-body">
+          <div class="oc-name">Durga Puja Cyclone Relief Fund</div>
+          <div class="oc-location">West Bengal, India</div>
+          <p class="oc-desc">Emergency relief for cyclone-affected families in coastal Bengal. UTSOV has raised over $25,000 for survivors of Cyclone Amphan and subsequent storms — providing food, shelter materials, and school supplies.</p>
+        </div>
+      </div>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b2">🏥</div>
+        <div class="oc-body">
+          <div class="oc-name">Community Health NJ</div>
+          <div class="oc-location">New Jersey, USA</div>
+          <p class="oc-desc">Partnering with Community Health NJ to bring free health screenings, blood pressure checks, diabetes awareness, and wellness resources to the South Asian community in the tri-state area.</p>
+        </div>
+      </div>
+      <div class="org-card rv d2">
+        <div class="oc-banner oc-b3">📚</div>
+        <div class="oc-body">
+          <div class="oc-name">Vidyashree School Fund</div>
+          <div class="oc-location">Bankura District, West Bengal</div>
+          <p class="oc-desc">Sponsoring education for 50+ underprivileged children in rural Bengal — providing school fees, textbooks, uniforms, and mid-day meals for an entire academic year, funded by UTSOV donations.</p>
+        </div>
+      </div>
+      <div class="org-card rv d3">
+        <div class="oc-banner oc-b4">🍛</div>
+        <div class="oc-body">
+          <div class="oc-name">NJ Community Food Bank</div>
+          <div class="oc-location">Central New Jersey, USA</div>
+          <p class="oc-desc">Every year, UTSOV volunteers distribute food packages and cooked meals to New Jersey families in need. The act of sharing bhog — sacred food — extends beyond the puja grounds into our neighbors' homes.</p>
+        </div>
+      </div>
+      <div class="org-card rv">
+        <div class="oc-banner oc-b5">👩‍🏫</div>
+        <div class="oc-body">
+          <div class="oc-name">BOAS NJ Women's Scholarship</div>
+          <div class="oc-location">New Jersey, USA</div>
+          <p class="oc-desc">In partnership with BOAS NJ, we fund merit-and-need scholarships for young South Asian women pursuing higher education. Empowering women is honoring Durga — the supreme manifestation of Shakti.</p>
+        </div>
+      </div>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b6">🌿</div>
+        <div class="oc-body">
+          <div class="oc-name">Sundarbans Mangrove Project</div>
+          <div class="oc-location">Sundarbans, West Bengal</div>
+          <p class="oc-desc">Supporting reforestation and ecological restoration in the Sundarbans — the mangrove forest that protects Bengal's coastal communities. Caring for Maa Durga's earth is an act of devotion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section class="section-red" id="donate">
+  <div class="s-in">
+    <div class="s-head">
+      <span class="s-label s-label-cream rv">Make a Difference</span>
+      <h2 class="s-title s-title-white rv d1">Donate to Our Causes</h2>
+      <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
+      <p class="s-sub s-sub-light rv d2" style="max-width:55ch;margin:.9rem auto 0">Your donation is 100% tax-deductible. Every rupee and every dollar goes directly to the people who need it most.</p>
+    </div>
+    <div class="donate-options">
+      <div class="donate-card rv">
+        <div class="dc-amount">$25</div>
+        <div class="dc-name">A Blessing</div>
+        <p class="dc-desc">Feeds a family of four for one week through our NJ food bank partnership. The divine mother's grace — shared through your hands.</p>
+        <a href="contact.html" class="btn btn-outline-w" style="width:100%">Donate $25</a>
+      </div>
+      <div class="donate-card featured rv d1">
+        <div class="dc-amount">$100</div>
+        <div class="dc-name">A Shakti</div>
+        <p class="dc-desc">Sponsors a child's education for one month in rural Bengal — textbooks, meals, and the chance at a better future. The most powerful offering to the Goddess.</p>
+        <a href="contact.html" class="btn btn-gold" style="width:100%">Donate $100</a>
+      </div>
+      <div class="donate-card rv d2">
+        <div class="dc-amount">$500</div>
+        <div class="dc-name">A Mahayagya</div>
+        <p class="dc-desc">Funds a complete health screening camp for 50 people, OR sponsors an entire semester of schooling for 3 children. Your name honored at the puja.</p>
+        <a href="contact.html" class="btn btn-outline-w" style="width:100%">Donate $500</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:.82rem;color:rgba(255,255,255,.45);font-family:var(--f-label);letter-spacing:.06em">UTSOV Inc. is a registered 501(c)(3) organization. All donations are tax-deductible under US law. EIN available upon request.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-in">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="ft-brand-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
+        <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
+        <div class="ft-socials"><a href="#" class="ft-social-btn">📷</a><a href="#" class="ft-social-btn">👤</a><a href="#" class="ft-social-btn">▶️</a></div>
+      </div>
+      <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="#donate">Donate</a></li></ul></div>
+      <div class="ft-col"><h5>Contact</h5><ul><li>(201) 787-6861</li><li><a href="mailto:utsov@utsov.org">utsov@utsov.org</a></li><li>46 Linden Ln, Plainsboro, NJ</li><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3)</span><div class="ft-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+  </div>
+</footer>
+
+<div class="floating-durga" title="জয় মা দুর্গা">
+  <img src="maa1_corner.png" alt="Jai Maa Durga" style="width:80px;height:auto;display:block">
+</div>
+
+<script>
+const header=document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>60)},{ passive:true });
+const toggle=document.getElementById('menuToggle');const menu=document.getElementById('navMenu');
+toggle.addEventListener('click',()=>{menu.classList.toggle('open');toggle.classList.toggle('open');});
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');obs.unobserve(en.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

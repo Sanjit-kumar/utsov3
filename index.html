@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTSOV — Durga Puja 2026 | New Jersey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Brand reds */
+  --red-dark:#5C0000;
+  --red:#8B1A1A;
+  --red-mid:#A52020;
+  --red-bright:#C0392B;
+  /* Warm neutrals */
+  --cream:#FFFDF8;
+  --cream-warm:#FFF5EC;
+  --ivory:#FFF0E5;
+  --blush:#FFE8E0;
+  /* Saffron accent */
+  --saffron:#E07830;
+  --saffron-lt:#F09844;
+  --marigold:#FF9933;
+  /* Gold */
+  --gold:#C9A84C;
+  --gold-lt:#E8C97A;
+  /* Text */
+  --black:#1A0000;
+  --on-red:rgba(255,255,255,.95);
+  --on-red-muted:rgba(255,255,255,.62);
+  --on-cream:#1A0000;
+  --on-cream-mid:#6B1010;
+  --on-cream-muted:#9B3030;
+  /* Borders */
+  --bdr-red:rgba(139,26,26,.15);
+  --bdr-saffron:rgba(224,120,48,.3);
+  --bdr-white:rgba(255,255,255,.18);
+  /* Radius */
+  --r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
+  /* Fonts */
+  --f-display:'Bebas Neue',sans-serif;
+  --f-serif:'EB Garamond',serif;
+  --f-label:'Josefin Sans',sans-serif;
+  --f-bn:'Noto Serif Bengali',serif;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);background:var(--cream);color:var(--on-cream);overflow-x:hidden}
+
+/* ── NAV ── */
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.9rem 2.5rem;transition:background .35s,box-shadow .35s,border-color .35s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(255,253,248,.97);backdrop-filter:blur(20px);border-color:var(--bdr-red);box-shadow:0 2px 20px rgba(139,26,26,.08)}
+nav{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:2rem}
+.nav-logo img{height:44px;width:auto;display:block}
+nav ul{display:flex;list-style:none;gap:2.25rem;margin-left:auto}
+nav ul a{color:var(--on-cream-mid);text-decoration:none;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;padding:.2rem 0;border-bottom:1.5px solid transparent}
+nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
+.nav-ctas{display:flex;gap:.65rem;margin-left:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .25s;cursor:pointer;border:none;white-space:nowrap;padding:.6rem 1.4rem;border-radius:var(--r-full)}
+.btn-red{background:var(--red);color:var(--cream);box-shadow:0 4px 16px rgba(139,26,26,.3)}
+.btn-red:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,26,26,.4)}
+.btn-outline{background:transparent;border:1.5px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:var(--blush)}
+.btn-saffron{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#fff;box-shadow:0 4px 16px rgba(224,120,48,.4)}
+.btn-saffron:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(224,120,48,.55)}
+.btn-xl{padding:.85rem 2.5rem;font-size:.82rem}
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;z-index:501}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--red);transition:all .3s;border-radius:2px}
+.menu-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:940px){
+  .menu-toggle{display:flex}
+  nav ul{display:none;position:fixed;inset:0;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:500}
+  nav ul.open{display:flex}
+  nav ul a{font-size:1.1rem}
+  .nav-ctas{display:none}
+}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}.rv.d4{transition-delay:.48s}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;align-items:stretch;justify-content:center;overflow:hidden;padding-top:80px}
+
+/* Bengali watermark */
+.hero-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--f-bn);font-size:clamp(14vw,20vw,28rem);line-height:1;color:rgba(139,26,26,.04);white-space:nowrap;pointer-events:none;z-index:0;user-select:none}
+
+/* Top saffron strip */
+.hero-strip{position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--red),var(--saffron),var(--marigold),var(--saffron),var(--red))}
+
+/* Main hero content */
+.hero-stage{position:relative;z-index:3;max-width:1360px;margin:0 auto;padding:3rem 2.5rem 2.5rem;width:100%}
+
+/* Pre-hero info bar */
+.hero-info-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem}
+.hib-date{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);background:var(--blush);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.4rem 1.1rem}
+.hib-live{display:flex;align-items:center;gap:.4rem;font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--on-cream-muted)}
+.hib-dot{width:7px;height:7px;border-radius:50%;background:var(--saffron);animation:pulseDot 1.8s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* ── HERO DURGA BACKGROUND IMAGE ── */
+.hero-durga-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% center;opacity:.52;z-index:1;pointer-events:none}
+
+/* ── HERO GRADIENT VEIL (left = readable / right = image shows through) ── */
+.hero-bg-veil{position:absolute;inset:0;background:linear-gradient(108deg,
+  rgba(255,253,248,.95) 0%,rgba(255,253,248,.88) 18%,
+  rgba(255,253,248,.65) 36%,rgba(255,253,248,.28) 55%,
+  rgba(255,253,248,.08) 72%,rgba(255,253,248,0) 90%);
+  z-index:2;pointer-events:none}
+
+/* ── HERO MAIN TITLE BLOCK ── */
+.hero-main-block{position:relative;z-index:3;display:flex;flex-direction:column;align-items:flex-start;max-width:60%;margin:1.25rem 0 2rem}
+.hero-pre{font-family:var(--f-bn);font-size:clamp(1.1rem,2vw,1.75rem);color:var(--saffron);font-weight:600;margin-bottom:.65rem;display:flex;align-items:center;gap:.65rem;line-height:1.3}
+.hero-pre::before{content:'';width:26px;height:2.5px;background:var(--saffron);border-radius:2px;flex-shrink:0}
+.hero-headline{display:flex;flex-direction:column;gap:0;line-height:.85;margin-bottom:.9rem}
+.hh-line{font-family:var(--f-display);font-size:clamp(7rem,16.5vw,18rem);line-height:.85;letter-spacing:.01em;margin:0;display:block}
+.hh-solid{color:var(--red-dark);text-shadow:0 3px 40px rgba(255,253,248,.5)}
+.hh-outline{color:transparent;-webkit-text-stroke:2.5px var(--red-mid);paint-order:stroke fill}
+.hero-sub-row{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.hero-loc-tag{font-family:var(--f-label);font-size:.64rem;font-weight:700;letter-spacing:.16em;color:var(--on-cream-mid);text-transform:uppercase;display:flex;align-items:center;gap:.35rem}
+.hero-year-badge{font-family:var(--f-display);font-size:clamp(1.6rem,3vw,2.6rem);color:var(--saffron);letter-spacing:.22em;border-left:3px solid var(--saffron);padding-left:.85rem;line-height:1}
+
+@media(max-width:960px){
+  .hero-main-block{max-width:100%}
+  .hero-bg-veil{background:linear-gradient(180deg,rgba(255,253,248,.9) 0%,rgba(255,253,248,.72) 50%,rgba(255,253,248,.55) 100%)}
+  .hh-line{font-size:clamp(5rem,18vw,10rem)}
+}
+@media(max-width:560px){.hh-line{font-size:clamp(4rem,20vw,8rem)}.hero-sub-row{flex-direction:column;align-items:flex-start;gap:.6rem}}
+
+/* Hero bottom area */
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-top:1.5rem}
+.hero-tagline{display:flex;flex-direction:column;gap:.6rem;max-width:520px}
+.hero-tagline .ht-bn{font-family:var(--f-bn);font-size:clamp(1.2rem,2.5vw,1.9rem);color:var(--red);font-weight:600;line-height:1.3}
+.hero-tagline .ht-sub{font-family:var(--f-serif);font-style:italic;font-size:clamp(.95rem,1.5vw,1.2rem);color:var(--on-cream-muted);line-height:1.7}
+.hero-meta-right{display:flex;flex-direction:column;gap:.75rem;align-items:flex-end}
+.hero-meta-detail{text-align:right}
+.hmd-label{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.18em;color:var(--on-cream-muted);text-transform:uppercase;display:block;margin-bottom:.15rem}
+.hmd-val{font-family:var(--f-serif);font-size:1rem;font-weight:600;color:var(--on-cream)}
+.hero-ctas{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* Countdown */
+.hero-countdown{background:var(--red);border-radius:var(--r-lg);padding:1.1rem 1.5rem;display:flex;gap:1.5rem;align-items:center}
+.cd-unit{text-align:center}
+.cd-num{font-family:var(--f-display);font-size:2.2rem;color:var(--cream);line-height:1;display:block}
+.cd-lbl{font-family:var(--f-label);font-size:.5rem;color:rgba(255,253,248,.5);letter-spacing:.12em;text-transform:uppercase;display:block;margin-top:.2rem}
+.cd-sep{font-family:var(--f-display);font-size:1.8rem;color:rgba(255,253,248,.35);align-self:flex-start;margin-top:.1rem}
+
+@media(max-width:900px){
+  .hero-split{flex-direction:column;gap:1rem;align-items:center;text-align:center}
+  .hs-word{flex:none;font-size:clamp(5rem,18vw,10rem)}
+  .hs-left{text-align:center;padding-right:0}
+  .hs-right{text-align:center;padding-left:0}
+  .hs-center{width:clamp(180px,55vw,320px)}
+  .hero-bottom{flex-direction:column;align-items:center;text-align:center}
+  .hero-meta-right{align-items:center}
+  .hero-meta-detail{text-align:center}
+  .hero-ctas{justify-content:center}
+}
+@media(max-width:560px){
+  .hs-word{font-size:clamp(4rem,20vw,8rem)}
+  .hero-countdown{gap:1rem;padding:.85rem 1.25rem}
+  .cd-num{font-size:1.8rem}
+}
+
+/* ── GARLAND DIVIDER ── */
+.garland-band{height:62px;position:relative;background:url('garland.svg') repeat-x left top / auto 62px;overflow:hidden}
+.garland-band::before{display:none}
+
+/* ── MARQUEE BAND ── */
+.marquee-band{background:var(--red);padding:.85rem 0;overflow:hidden;white-space:nowrap}
+.mq-inner{display:inline-flex;animation:mqScroll 38s linear infinite}
+.mq-text{font-family:var(--f-bn);font-size:1rem;color:rgba(255,253,248,.88);padding-right:5rem;letter-spacing:.04em}
+@keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION BASE ── */
+.s-in{max-width:1360px;margin:0 auto;padding:6rem 2.5rem}
+.s-eyebrow{font-family:var(--f-label);font-size:.64rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;display:inline-block;margin-bottom:.65rem}
+.s-eyebrow-red{color:var(--red)}
+.s-eyebrow-saffron{color:var(--saffron)}
+.s-eyebrow-cream{color:rgba(255,253,248,.7)}
+.s-title-huge{font-family:var(--f-display);font-size:clamp(3.5rem,7vw,7rem);line-height:.92;letter-spacing:.01em}
+.s-title-huge.on-cream{color:var(--red-dark)}
+.s-title-huge.on-red{color:var(--cream)}
+.s-title-huge.on-saffron{color:var(--red-dark)}
+.s-body{font-family:var(--f-serif);font-size:1.05rem;line-height:1.85;color:var(--on-cream-mid)}
+.s-body.on-red{color:var(--on-red-muted)}
+.section-cream{background:var(--cream-warm)}
+.section-white{background:#fff}
+.section-red{background:var(--red)}
+.section-reddk{background:var(--red-dark)}
+.section-ivory{background:var(--ivory)}
+.section-blush{background:var(--blush)}
+.section-saffron{background:linear-gradient(135deg,var(--saffron),var(--marigold))}
+
+/* ── ABOUT / STATS ── */
+.stats-magazine{display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start}
+.stats-left{display:flex;flex-direction:column;gap:2rem}
+.stat-big{border-left:4px solid var(--saffron);padding-left:1.25rem}
+.stat-big .sb-num{font-family:var(--f-display);font-size:clamp(4rem,8vw,7rem);color:var(--red);line-height:.9}
+.stat-big .sb-lbl{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.16em;color:var(--on-cream-muted);text-transform:uppercase;margin-top:.4rem}
+.stats-right{display:flex;flex-direction:column;gap:1.5rem;padding-top:1rem}
+.about-lead{font-family:var(--f-serif);font-size:clamp(1.2rem,2.2vw,1.55rem);font-weight:500;color:var(--on-cream);line-height:1.65}
+.about-body{font-family:var(--f-serif);font-size:1.05rem;color:var(--on-cream-mid);line-height:1.85}
+.about-pull{border-left:4px solid var(--red);padding:1.25rem 1.5rem;background:var(--blush);border-radius:0 var(--r-md) var(--r-md) 0}
+.about-pull p{font-family:var(--f-serif);font-style:italic;font-size:1.1rem;color:var(--on-cream);line-height:1.65}
+.about-pull cite{font-family:var(--f-label);font-size:.62rem;color:var(--red);font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:block;margin-top:.5rem}
+.about-badges{display:flex;gap:.65rem;flex-wrap:wrap}
+.about-badge{display:inline-flex;align-items:center;gap:.4rem;background:#fff;border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.4rem 1rem;font-family:var(--f-label);font-size:.65rem;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:860px){.stats-magazine{grid-template-columns:1fr;gap:3rem}}
+
+/* ── FIVE DAYS (horizontal) ── */
+.days-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.day-pillar{padding:2.5rem 1.5rem;border-right:1px solid rgba(255,253,248,.12);position:relative;transition:background .3s;overflow:hidden}
+.day-pillar:last-child{border-right:none}
+.day-pillar::after{content:attr(data-ritual);position:absolute;bottom:-1rem;right:-1rem;font-size:7rem;opacity:.07;line-height:1;pointer-events:none;user-select:none;z-index:0;transition:opacity .3s}
+.day-pillar:hover::after{opacity:.12}
+.day-pillar>*{position:relative;z-index:1}
+.day-pillar:hover{background:rgba(255,253,248,.06)}
+.day-pillar.highlight{background:rgba(255,253,248,.08)}
+.dp-number{font-family:var(--f-bn);font-size:5rem;color:rgba(255,253,248,.12);line-height:1;display:block;margin-bottom:.5rem}
+.dp-name-bn{font-family:var(--f-bn);font-size:1.6rem;color:var(--cream);font-weight:700;display:block;margin-bottom:.1rem}
+.dp-name-en{font-family:var(--f-display);font-size:2rem;color:rgba(255,253,248,.5);display:block;letter-spacing:.05em;margin-bottom:1rem}
+.dp-divider{width:32px;height:2px;background:var(--saffron);margin-bottom:1rem;border-radius:2px}
+.dp-desc{font-family:var(--f-serif);font-size:.88rem;color:rgba(255,253,248,.65);line-height:1.75}
+.dp-highlight-badge{position:absolute;top:1rem;right:1rem;background:var(--saffron);color:#fff;font-family:var(--f-label);font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .6rem;border-radius:var(--r-full)}
+@media(max-width:1000px){.days-row{grid-template-columns:repeat(3,1fr)}.day-pillar{border-right:1px solid rgba(255,253,248,.12)}}
+@media(max-width:640px){.days-row{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.days-row{grid-template-columns:1fr}}
+
+/* ── ARTISTS (alternating full-width rows) ── */
+.artist-row{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:420px;border-bottom:1px solid var(--bdr-red)}
+.artist-row:last-child{border-bottom:none}
+.artist-row.reversed .ar-visual{order:2}
+.artist-row.reversed .ar-text{order:1}
+.ar-visual{background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:8rem;position:relative;min-height:340px;overflow:hidden;flex-direction:column;gap:0}
+.ar-v1{background:linear-gradient(135deg,#3D0000,#7B0000,#C0392B,#E87722)}
+.ar-v2{background:linear-gradient(135deg,#1A0A3D,#4D2070,#9B2FA0,#D44EB0)}
+.ar-v3{background:linear-gradient(135deg,#3A2000,#7A4A10,#D4831A,var(--marigold))}
+.ar-visual-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(255,248,240,.15) 100%)}
+.ar-visual.reversed .ar-visual-overlay{background:linear-gradient(to left,transparent 60%,rgba(255,248,240,.15) 100%)}
+.ar-text{padding:3.5rem 4rem;display:flex;flex-direction:column;justify-content:center;gap:1.1rem;background:var(--cream)}
+.ar-eyebrow{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--saffron);text-transform:uppercase}
+.ar-name{font-family:var(--f-display);font-size:clamp(2.5rem,4.5vw,4rem);color:var(--red-dark);line-height:1;letter-spacing:.01em}
+.ar-role{font-family:var(--f-label);font-size:.66rem;font-weight:700;letter-spacing:.14em;color:var(--on-cream-muted);text-transform:uppercase}
+.ar-bio{font-family:var(--f-serif);font-size:.98rem;color:var(--on-cream-mid);line-height:1.8}
+.ar-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.ar-tag{background:var(--blush);border:1px solid var(--bdr-red);border-radius:var(--r-full);padding:.2rem .75rem;font-family:var(--f-label);font-size:.6rem;font-weight:600;color:var(--red);letter-spacing:.06em;text-transform:uppercase}
+.ar-link{font-family:var(--f-label);font-size:.7rem;font-weight:700;color:var(--red);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s,color .2s}
+.ar-link:hover{gap:.6rem;color:var(--red-dark)}
+@media(max-width:820px){.artist-row{grid-template-columns:1fr}.artist-row.reversed .ar-visual{order:0}.artist-row.reversed .ar-text{order:1}.ar-visual{min-height:240px}.ar-text{padding:2rem 2rem}}
+
+/* ── TRADITIONS (2x2 on white) ── */
+.traditions-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.trad-card{padding:3.5rem 3rem;border-right:1px solid var(--bdr-red);border-bottom:1px solid var(--bdr-red);transition:background .3s;position:relative;overflow:hidden}
+.trad-card:nth-child(even){border-right:none}
+.trad-card:nth-child(3),.trad-card:nth-child(4){border-bottom:none}
+.trad-card:hover{background:var(--blush)}
+.trad-card::before{content:attr(data-bg);position:absolute;right:-1rem;bottom:-1.5rem;font-size:9rem;line-height:1;opacity:.06;pointer-events:none;user-select:none;z-index:0;transition:opacity .3s}
+.trad-card:hover::before{opacity:.1}
+.trad-card>*{position:relative;z-index:1}
+.tc-icon-big{font-size:3.5rem;margin-bottom:1.25rem;display:block}
+.tc-name{font-family:var(--f-display);font-size:clamp(2rem,3.5vw,3rem);color:var(--red-dark);line-height:.95;margin-bottom:.3rem;letter-spacing:.01em}
+.tc-name-bn{font-family:var(--f-bn);font-size:1.1rem;color:var(--saffron);display:block;font-weight:600;margin-bottom:1rem}
+.tc-desc{font-family:var(--f-serif);font-size:.98rem;color:var(--on-cream-mid);line-height:1.8}
+@media(max-width:720px){.traditions-grid{grid-template-columns:1fr}.trad-card{border-right:none}.trad-card:nth-child(odd){border-right:none}}
+
+/* ── EVENTS (3 cols, saffron bg) ── */
+.events-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.ev-card{background:rgba(255,253,248,.15);border:1.5px solid rgba(255,253,248,.25);border-radius:var(--r-xl);padding:2rem 1.75rem;backdrop-filter:blur(8px);transition:background .3s,transform .3s}
+.ev-card:hover{background:rgba(255,253,248,.22);transform:translateY(-4px)}
+.ev-card-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.ev-day-tag{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.15em;color:rgba(255,253,248,.7);text-transform:uppercase;margin-bottom:.4rem}
+.ev-name{font-family:var(--f-display);font-size:1.8rem;color:var(--cream);line-height:1;margin-bottom:.75rem;letter-spacing:.02em}
+.ev-desc{font-family:var(--f-serif);font-size:.9rem;color:rgba(255,253,248,.75);line-height:1.75}
+.ev-time{font-family:var(--f-label);font-size:.62rem;font-weight:700;color:rgba(255,253,248,.55);letter-spacing:.1em;text-transform:uppercase;margin-top:1rem}
+@media(max-width:860px){.events-grid-3{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.events-grid-3{grid-template-columns:1fr}}
+
+/* ── SPONSOR ── */
+.sponsor-feature{display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:center;background:var(--cream);border-radius:var(--r-xl);padding:3.5rem;box-shadow:0 8px 40px rgba(139,26,26,.1);margin-bottom:4rem;border:1.5px solid var(--bdr-red)}
+.sf-badge{background:var(--red);border-radius:var(--r-lg);padding:2rem 2.5rem;text-align:center;min-width:160px}
+.sf-tier{font-family:var(--f-label);font-size:.55rem;font-weight:700;letter-spacing:.22em;color:rgba(255,253,248,.6);text-transform:uppercase;margin-bottom:.4rem}
+.sf-name{font-family:var(--f-display);font-size:2rem;color:var(--cream);line-height:1.1}
+.sf-sub{font-family:var(--f-label);font-size:.6rem;color:rgba(255,253,248,.45);margin-top:.35rem;letter-spacing:.08em}
+.sf-content h3{font-family:var(--f-display);font-size:clamp(2rem,3.5vw,3rem);color:var(--red-dark);margin-bottom:.85rem}
+.sf-content p{font-family:var(--f-serif);font-size:1rem;color:var(--on-cream-mid);line-height:1.8;margin-bottom:1.25rem}
+@media(max-width:680px){.sponsor-feature{grid-template-columns:1fr;text-align:center}.sf-badge{min-width:auto}}
+.sponsors-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.sp-tile{background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-lg);padding:1.5rem;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--f-display);font-size:1.1rem;color:var(--red-dark);gap:.3rem;transition:background .3s,border-color .3s}
+.sp-tile small{font-family:var(--f-label);font-size:.58rem;color:var(--on-cream-muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.sp-tile:hover{background:var(--blush);border-color:var(--red)}
+.sp-tile.vacant{color:rgba(26,0,0,.25)}
+.sp-tile.vacant small{color:rgba(26,0,0,.18)}
+@media(max-width:680px){.sponsors-grid-4{grid-template-columns:1fr 1fr}}
+
+/* ── PHILANTHROPY (red bg) ── */
+.phil-split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.phil-left p{font-family:var(--f-serif);font-size:1.05rem;color:var(--on-red-muted);line-height:1.85;margin-top:1rem}
+.phil-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.pstat{padding:1.4rem;background:rgba(255,253,248,.07);border:1px solid var(--bdr-white);border-radius:var(--r-lg)}
+.pstat .ps-n{font-family:var(--f-display);font-size:3.2rem;color:var(--cream);line-height:1}
+.pstat .ps-l{font-family:var(--f-label);font-size:.63rem;color:rgba(255,253,248,.5);letter-spacing:.12em;text-transform:uppercase;margin-top:.25rem}
+.phil-right{display:flex;flex-direction:column;gap:1.25rem}
+.phil-block{display:flex;gap:1.25rem;align-items:flex-start;background:rgba(255,253,248,.06);border:1px solid var(--bdr-white);border-radius:var(--r-lg);padding:1.4rem}
+.pb-icon{font-size:2rem;flex-shrink:0}
+.pb-text h4{font-family:var(--f-display);font-size:1.5rem;color:var(--cream);margin-bottom:.2rem}
+.pb-text p{font-family:var(--f-serif);font-size:.88rem;color:var(--on-red-muted);line-height:1.65}
+@media(max-width:800px){.phil-split{grid-template-columns:1fr;gap:3rem}}
+
+/* ── FOOTER ── */
+footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
+.ft-in{max-width:1360px;margin:0 auto;padding:4.5rem 2.5rem 1.75rem}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.ft-brand-logo img{height:40px;width:auto;display:block;margin-bottom:1rem}
+.ft-brand p{font-family:var(--f-serif);font-size:.88rem;color:rgba(255,253,248,.42);line-height:1.8;max-width:26ch;margin-bottom:1.25rem}
+.ft-socials{display:flex;gap:.6rem}
+.ft-social-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,253,248,.07);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.85rem;transition:background .2s}
+.ft-social-btn:hover{background:rgba(255,253,248,.14)}
+.ft-col h5{font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.2em;color:var(--saffron-lt);text-transform:uppercase;margin-bottom:1.1rem}
+.ft-col ul{list-style:none}
+.ft-col ul li{font-family:var(--f-serif);font-size:.85rem;color:rgba(255,253,248,.38);margin-bottom:.6rem}
+.ft-col ul li a{color:rgba(255,253,248,.45);text-decoration:none;transition:color .2s}
+.ft-col ul li a:hover{color:var(--saffron-lt)}
+.ft-bottom{border-top:1px solid rgba(255,253,248,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-label);font-size:.68rem;color:rgba(255,253,248,.22);flex-wrap:wrap;gap:.75rem}
+.ft-legal{display:flex;gap:1.5rem}
+.ft-legal a{color:rgba(255,253,248,.22);text-decoration:none;transition:color .2s}
+.ft-legal a:hover{color:var(--saffron-lt)}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:480px){.ft-grid{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}}
+
+/* ── CENTER HELPERS ── */
+.text-center{text-align:center}
+.text-left{text-align:left}
+.mb-1{margin-bottom:1rem}
+.mb-2{margin-bottom:2rem}
+.mt-3{margin-top:3rem}
+.gap-2{gap:2rem}
+
+/* ── BACKGROUND PHOTO IMAGES (day pillars, traditions, artists) ── */
+.day-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.28;z-index:0;mix-blend-mode:luminosity}
+.day-pillar:hover .day-bg-img{opacity:.38;transition:opacity .3s}
+.ar-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:0}
+.trad-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.35;z-index:0}
+.trad-card:hover .trad-bg-img{opacity:.48;transition:opacity .3s}
+
+/* ── HERO WAVES ── */
+.hero-waves{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.wave-blob{position:absolute;border-radius:50%;filter:blur(80px)}
+.wb1{width:680px;height:680px;background:radial-gradient(circle,rgba(224,120,48,.18) 0%,transparent 70%);top:-220px;left:-160px;animation:wf1 11s ease-in-out infinite}
+.wb2{width:600px;height:600px;background:radial-gradient(circle,rgba(139,26,26,.15) 0%,transparent 70%);top:-80px;right:-120px;animation:wf2 14s ease-in-out infinite}
+.wb3{width:480px;height:480px;background:radial-gradient(circle,rgba(46,125,50,.11) 0%,transparent 70%);bottom:60px;left:22%;animation:wf3 16s ease-in-out infinite}
+.wb4{width:420px;height:420px;background:radial-gradient(circle,rgba(255,153,51,.13) 0%,transparent 70%);bottom:-80px;right:20%;animation:wf1 12s ease-in-out infinite reverse}
+@keyframes wf1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(45px,-35px) scale(1.12)}66%{transform:translate(-25px,22px) scale(.94)}}
+@keyframes wf2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-55px,35px) scale(1.18)}}
+@keyframes wf3{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(35px,-45px) scale(1.09)}80%{transform:translate(-18px,25px) scale(1.03)}}
+
+/* ── FLOATING DURGA ── */
+.floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
+@keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="hdr">
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="logo_utsov.png" alt="UTSOV — Durga Puja New Jersey">
+    </a>
+    <ul id="navMenu">
+      <li><a href="artists.html">Artists</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="philanthropy.html">Philanthropy</a></li>
+      <li><a href="sponsorship.html">Sponsor</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
+      <a href="events.html#tickets" class="btn btn-red">Get Passes</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-strip"></div>
+  <div class="hero-waves">
+    <div class="wave-blob wb1"></div>
+    <div class="wave-blob wb2"></div>
+    <div class="wave-blob wb3"></div>
+    <div class="wave-blob wb4"></div>
+  </div>
+  <div class="hero-wm">দুর্গাপূজা</div>
+
+  <!-- Full-section Durga Maa background — edge to edge, till the garland -->
+  <img class="hero-durga-bg" src="Maa1_nobg_straight_fixed.png" alt="">
+  <!-- Gradient veil: left side opaque for text, right fades to show Maa Durga -->
+  <div class="hero-bg-veil"></div>
+
+  <div class="hero-stage">
+    <!-- Top info bar -->
+    <div class="hero-info-bar rv">
+      <span class="hib-date">🗓 October 17–18, 2026 · New Jersey</span>
+      <span class="hib-live"><span class="hib-dot"></span>Registrations Open Now</span>
+    </div>
+
+    <!-- MAIN TITLE BLOCK -->
+    <div class="hero-main-block">
+      <div class="hero-pre rv">আসছেন মা — শারদ উৎসব ২০২৬</div>
+
+      <div class="hero-headline">
+        <span class="hh-line hh-solid rv d1">DURGA</span>
+        <span class="hh-line hh-outline rv d2">PUJA</span>
+      </div>
+
+      <div class="hero-sub-row rv d2">
+        <span class="hero-loc-tag">📍 Jo Ann Magistro PAC · East Brunswick NJ</span>
+        <span class="hero-year-badge">2026</span>
+      </div>
+
+      <div class="hero-ctas rv d3">
+        <a href="events.html#tickets" class="btn btn-red btn-xl">Get Your Passes</a>
+        <a href="sponsorship.html" class="btn btn-outline btn-xl">Become a Sponsor</a>
+      </div>
+    </div>
+
+    <!-- Bottom area: tagline + countdown -->
+    <div class="hero-bottom">
+      <div class="hero-tagline rv d3">
+        <span class="ht-bn">মায়ের আগমনে মেতে উঠুক নিউ জার্সি</span>
+        <span class="ht-sub">Five sacred days of devotion, music, colour, and community — where Bengal meets New Jersey. The Goddess returns.</span>
+      </div>
+
+      <div class="hero-meta-right rv d3">
+        <div class="hero-countdown" id="countdown-box">
+          <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Days</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Hrs</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Min</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Sec</span></div>
+        </div>
+        <div class="hero-meta-detail rv d3">
+          <span class="hmd-label">Venue</span>
+          <span class="hmd-val">Jo Ann Magistro PAC, East Brunswick NJ</span>
+        </div>
+        <div class="hero-meta-detail rv d3">
+          <span class="hmd-label">Organization</span>
+          <span class="hmd-val">501(c)(3) Non-Profit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARLAND -->
+<div class="garland-band"></div>
+
+<!-- MARQUEE BAND -->
+<div class="marquee-band">
+  <span class="mq-inner">
+    <span class="mq-text">মা দুর্গা ✦ জয় মা দুর্গা ✦ শারদ উৎসব ২০২৬ ✦ সপ্তমী · অষ্টমী · নবমী · দশমী ✦ মহালয়া ✦ সিঁদুর খেলা ✦ ধুনুচি নাচ ✦ ঢাকের বাজনা ✦ মহিষাসুরমর্দিনী ✦ বোধন ✦ বিসর্জন ✦ আসছেন মা ✦</span>
+    <span class="mq-text">মা দুর্গা ✦ জয় মা দুর্গা ✦ শারদ উৎসব ২০২৬ ✦ সপ্তমী · অষ্টমী · নবমী · দশমী ✦ মহালয়া ✦ সিঁদুর খেলা ✦ ধুনুচি নাচ ✦ ঢাকের বাজনা ✦ মহিষাসুরমর্দিনী ✦ বোধন ✦ বিসর্জন ✦ আসছেন মা ✦</span>
+  </span>
+</div>
+
+<!-- ═══════════════ ABOUT DURGA PUJA (cream, magazine layout) ═════════════════ -->
+<section class="section-cream">
+  <div class="s-in">
+    <div class="stats-magazine">
+      <!-- Left: Big stats -->
+      <div class="stats-left">
+        <span class="s-eyebrow s-eyebrow-red rv">About the Festival</span>
+        <div class="stat-big rv d1">
+          <div class="sb-num">500+</div>
+          <div class="sb-lbl">Years of Tradition</div>
+        </div>
+        <div class="stat-big rv d2">
+          <div class="sb-num">UNESCO</div>
+          <div class="sb-lbl">Intangible Heritage 2021</div>
+        </div>
+        <div class="stat-big rv d3">
+          <div class="sb-num">5</div>
+          <div class="sb-lbl">Sacred Days of Celebration</div>
+        </div>
+        <div class="stat-big rv d4">
+          <div class="sb-num">10+</div>
+          <div class="sb-lbl">Years UTSOV in New Jersey</div>
+        </div>
+      </div>
+
+      <!-- Right: Editorial text -->
+      <div class="stats-right rv">
+        <h2 class="s-title-huge on-cream">What is<br>Durga Puja?</h2>
+        <p class="about-lead">Durga Puja is not a festival. It is a homecoming. For five sacred days each autumn, Maa Durga descends from Mount Kailash to her earthly home — and the world erupts in joy, devotion, and colour.</p>
+        <p class="about-body">The celebration commemorates the Goddess's triumph over Mahishasura — the buffalo demon who threatened the cosmic order. Where evil is vanquished, she arrives: ten-armed, astride her lion, fierce and maternal at once. The festival is simultaneously the most solemn act of devotion and the wildest, most joyful celebration you will ever witness.</p>
+        <div class="about-pull">
+          <p>"Durga Puja is what happens when an entire civilization pours its love, grief, gratitude, and hope into five days of art, music, prayer, and communion."</p>
+          <cite>— Bengal's living tradition, 500+ years old</cite>
+        </div>
+        <div class="about-badges">
+          <span class="about-badge">🏛️ UNESCO Heritage</span>
+          <span class="about-badge">🌍 Celebrated Worldwide</span>
+          <span class="about-badge">🙏 501(c)(3) Non-Profit</span>
+          <span class="about-badge">🎶 Live Artists</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARLAND -->
+<div class="garland-band"></div>
+
+<!-- ═══════════════ FIVE SACRED DAYS (deep red, horizontal pillars) ══════════════ -->
+<section class="section-red">
+  <div class="s-in">
+    <div class="text-center mb-2">
+      <span class="s-eyebrow s-eyebrow-cream rv">পাঁচ দিনের শারদ উৎসব</span>
+      <h2 class="s-title-huge on-red rv d1" style="margin-top:.3rem">Five Sacred Days</h2>
+    </div>
+    <p class="s-body on-red rv d2" style="text-align:center;max-width:60ch;margin:1rem auto 3.5rem">From the first whispered awakening to the tearful farewell — five days that stop the world and set the Bengali soul free.</p>
+  </div>
+  <div class="days-row">
+    <div class="day-pillar rv" data-ritual="🌿">
+      <img class="day-bg-img" src="day_shasthi.jpg" alt="">
+      <span class="dp-number">৬</span>
+      <span class="dp-name-bn">ষষ্ঠী</span>
+      <span class="dp-name-en">SHASHTHI</span>
+      <div class="dp-divider"></div>
+      <p class="dp-desc">Bodhan — the formal awakening of Maa Durga. At dusk, the Goddess is invoked from the bilva tree. The festival begins with the lighting of the first lamp.</p>
+    </div>
+    <div class="day-pillar rv d1" data-ritual="🌸">
+      <img class="day-bg-img" src="day_saptami.jpg" alt="">
+      <span class="dp-number">৭</span>
+      <span class="dp-name-bn">সপ্তমী</span>
+      <span class="dp-name-en">SAPTAMI</span>
+      <div class="dp-divider"></div>
+      <p class="dp-desc">Predawn ritual bathing of Nabapatrika, the sacred plantain. The Goddess's eyes are ceremonially opened in Chakkhu Daan. Worship begins in full.</p>
+    </div>
+    <div class="day-pillar highlight rv d2" data-ritual="🪷">
+      <img class="day-bg-img" src="day_ashtami.jpg" alt="">
+      <span class="dp-highlight-badge">Most Auspicious</span>
+      <span class="dp-number">৮</span>
+      <span class="dp-name-bn">অষ্টমী</span>
+      <span class="dp-name-en">ASHTAMI</span>
+      <div class="dp-divider"></div>
+      <p class="dp-desc">The holiest day. Pushpanjali — flower offerings. Kumari Puja — a young girl worshipped as the living Goddess. Sandhi Puja at the precise juncture of Ashtami and Navami.</p>
+    </div>
+    <div class="day-pillar rv d3" data-ritual="🔥">
+      <img class="day-bg-img" src="day_navami.jpg" alt="">
+      <span class="dp-number">৯</span>
+      <span class="dp-name-bn">নবমী</span>
+      <span class="dp-name-en">NAVAMI</span>
+      <div class="dp-divider"></div>
+      <p class="dp-desc">Dhunuchi Naach — the mesmerizing incense-lamp dance to dhak beats. Hom fire ritual. The final night of full worship. A night of music, dance, and divine surrender.</p>
+    </div>
+    <div class="day-pillar rv d4" data-ritual="🔴">
+      <img class="day-bg-img" src="day_dashami.jpg" alt="">
+      <span class="dp-number">১০</span>
+      <span class="dp-name-bn">দশমী</span>
+      <span class="dp-name-en">DASHAMI</span>
+      <div class="dp-divider"></div>
+      <p class="dp-desc">Sindoor Khela — the joyful vermilion ritual. Tearful Visarjan as the idol enters the river. Asche bochor abar hobe — she will come again next year.</p>
+    </div>
+  </div>
+  <div class="s-in" style="padding-top:2.5rem;text-align:center">
+    <a href="events.html" class="btn btn-saffron btn-xl rv">View Full Schedule →</a>
+  </div>
+</section>
+
+<!-- GARLAND -->
+<div class="garland-band"></div>
+
+<!-- ═══════════════ FEATURED ARTISTS (cream, alternating full-width) ═══════════ -->
+<section class="section-cream">
+  <div class="s-in" style="padding-bottom:2rem">
+    <span class="s-eyebrow s-eyebrow-red rv">UTSOV 2026 Line-Up</span>
+    <h2 class="s-title-huge on-cream rv d1" style="margin-top:.25rem">Featured<br>Artists</h2>
+    <p class="s-body rv d2" style="max-width:55ch;margin-top:1rem">India's most celebrated voices — brought to New Jersey to bless, entertain, and move our community.</p>
+  </div>
+</section>
+
+<div class="section-white">
+  <!-- Nandi Sisters -->
+  <div class="artist-row rv">
+    <div class="ar-visual ar-v1">
+      <img class="ar-photo" src="artist_nandi.jpg" alt="Nandi Sisters" style="object-position:center 20%">
+      <div class="ar-visual-overlay"></div>
+    </div>
+    <div class="ar-text">
+      <span class="ar-eyebrow">✦ Headliner — Oct 17 · Evening</span>
+      <h3 class="ar-name">Nandi Sisters</h3>
+      <span class="ar-role">Bollywood &amp; Folk Fusion</span>
+      <p class="ar-bio">Rising stars mentored by A.R. Rahman, the Nandi Sisters have taken India's music world by storm with their stunning harmonies, Carnatic roots, and electric stage presence. Their viral Balcony Concert series has brought joy to millions. UTSOV 2026 is their New Jersey debut.</p>
+      <div class="ar-tags">
+        <span class="ar-tag">Bollywood</span><span class="ar-tag">Folk</span><span class="ar-tag">Carnatic</span><span class="ar-tag">Duo</span>
+      </div>
+      <a href="artists.html" class="ar-link">Full Profile →</a>
+    </div>
+  </div>
+
+  <!-- Rupankar -->
+  <div class="artist-row reversed rv">
+    <div class="ar-visual ar-v2">
+      <img class="ar-photo" src="artist_rupankar.jpg" alt="Rupankar Bagchi" style="object-position:38% 28%">
+      <div class="ar-visual-overlay" style="background:linear-gradient(to left,transparent 60%,rgba(26,10,61,.18) 100%)"></div>
+    </div>
+    <div class="ar-text">
+      <span class="ar-eyebrow">✦ Headliner — Oct 18 · Evening</span>
+      <h3 class="ar-name">Rupankar Bagchi</h3>
+      <span class="ar-role">Bengali Folk &amp; Modern</span>
+      <p class="ar-bio">The beloved voice of Bengal. National Award-winning artist whose songs are woven into the fabric of Bengali life — from the intimacy of kitchen radios to the grandeur of concert stages. His music bridges folk, Rabindrasangeet, and contemporary Bengali pop across generations.</p>
+      <div class="ar-tags">
+        <span class="ar-tag">Bengali Folk</span><span class="ar-tag">Modern</span><span class="ar-tag">Rabindra</span>
+      </div>
+      <a href="artists.html" class="ar-link">Full Profile →</a>
+    </div>
+  </div>
+
+  <!-- Lakkhichhara -->
+  <div class="artist-row rv">
+    <div class="ar-visual ar-v3">
+      <img class="ar-photo" src="artist_lak.jpg" alt="Lakkhichhara & Raju Das Baul" style="object-position:center 22%">
+      <div class="ar-visual-overlay"></div>
+    </div>
+    <div class="ar-text">
+      <span class="ar-eyebrow">✦ Grand Finale — Oct 18</span>
+      <h3 class="ar-name">Lakkhichhara<br>&amp; Raju Das Baul</h3>
+      <span class="ar-role">Baul &amp; Folk Fusion</span>
+      <p class="ar-bio">A rare convergence of Baul mysticism and modern Bengali folk. Lakkhichhara have redefined how a generation hears their cultural roots; Raju Das Baul is a living embodiment of the wandering minstrel tradition. Together — raw, joyful, transcendent.</p>
+      <div class="ar-tags">
+        <span class="ar-tag">Baul</span><span class="ar-tag">Folk Rock</span><span class="ar-tag">Fusion</span>
+      </div>
+      <a href="artists.html" class="ar-link">Full Profile →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TRADITIONS (white, 2x2 big grid) ═══════════════════════ -->
+<section class="section-ivory">
+  <div class="s-in" style="padding-bottom:2rem">
+    <span class="s-eyebrow s-eyebrow-red rv">Living Traditions</span>
+    <h2 class="s-title-huge on-cream rv d1" style="margin-top:.25rem">The Soul of<br>Durga Puja</h2>
+  </div>
+  <div class="traditions-grid">
+    <div class="trad-card rv" data-bg="🥁">
+      <img class="trad-bg-img" src="trad_dhak.jpg" alt="">
+      <span class="tc-icon-big">🥁</span>
+      <h3 class="tc-name">DHAK<br>BEATS</h3>
+      <span class="tc-name-bn">ঢাকের বাজনা</span>
+      <p class="tc-desc">The thunderous heartbeat of the festival. Hereditary dhaki drummers play the large barrel drum that announces the Goddess's arrival. When the dhak sounds, every Bengali heart knows — Maa has come. The rhythm is ancient, primal, and utterly unforgettable.</p>
+    </div>
+    <div class="trad-card rv d1" data-bg="🔥">
+      <img class="trad-bg-img" src="trad_dhunuchi.jpg" alt="" style="object-position:center 15%">
+      <span class="tc-icon-big">🪔</span>
+      <h3 class="tc-name">DHUNUCHI<br>NAACH</h3>
+      <span class="tc-name-bn">ধুনুচি নাচ</span>
+      <p class="tc-desc">Devotees hold clay pots of burning coconut husks and incense, dancing barefoot before the Goddess. An act of total surrender — the body becomes prayer. Performed to the dhak's hypnotic beat, this sacred dance transcends the physical and touches the divine.</p>
+    </div>
+    <div class="trad-card rv d2" data-bg="🔴">
+      <img class="trad-bg-img" src="trad_sindoor.jpg" alt="">
+      <span class="tc-icon-big">🔴</span>
+      <h3 class="tc-name">SINDOOR<br>KHELA</h3>
+      <span class="tc-name-bn">সিঁদুর খেলা</span>
+      <p class="tc-desc">On Dashami, married women apply vermilion — sindoor — to the Goddess and to each other. A joyful, tearful, deeply emotional ritual. The red sindoor is simultaneously a blessing, a celebration of Shakti, and a farewell that breaks every heart.</p>
+    </div>
+    <div class="trad-card rv d3" data-bg="🍽️">
+      <img class="trad-bg-img" src="trad_bhog.jpg" alt="">
+      <span class="tc-icon-big">🍽️</span>
+      <h3 class="tc-name">COMMUNITY<br>BHOG</h3>
+      <span class="tc-name-bn">ভোগ প্রসাদ</span>
+      <p class="tc-desc">Sacred food — khichuri, labra, payesh, luchi, mishti — first offered to the Goddess, then shared freely with all. At the bhog table, all social distinctions dissolve. Every person is equal before the Mother. To eat bhog is to receive her grace.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EVENTS (saffron, 3-col grid) ════════════════════════════ -->
+<section class="section-saffron">
+  <div class="s-in">
+    <div class="text-center mb-2">
+      <span class="s-eyebrow s-eyebrow-cream rv">Two Days in New Jersey</span>
+      <h2 class="s-title-huge rv d1" style="color:#fff;margin-top:.3rem">Events &amp;<br>Activities</h2>
+      <p style="font-family:var(--f-serif);font-size:1.05rem;color:rgba(255,255,255,.8);margin:1rem auto 3rem;max-width:55ch;line-height:1.8" class="rv d2">Morning pujas to late-night concerts — every moment crafted to celebrate, connect, and inspire.</p>
+    </div>
+    <div class="events-grid-3">
+      <div class="ev-card rv">
+        <span class="ev-card-icon">🙏</span>
+        <div class="ev-day-tag">Both Days</div>
+        <div class="ev-name">Puja Rituals &amp; Aarti</div>
+        <p class="ev-desc">Traditional morning and evening puja — pushpanjali, dhunuchi naach, Vedic chants. Connect with the divine through ancient ritual and collective devotion.</p>
+        <div class="ev-time">Morning &amp; Evening</div>
+      </div>
+      <div class="ev-card rv d1">
+        <span class="ev-card-icon">🎨</span>
+        <div class="ev-day-tag">Day 1 — Saturday, Oct 17</div>
+        <div class="ev-name">Art Competition</div>
+        <p class="ev-desc">Kids ages 4–16 showcase creativity in themed Durga Puja art challenges. Prizes, medals, and certificates for all participants.</p>
+        <div class="ev-time">Morning — Oct 17</div>
+      </div>
+      <div class="ev-card rv d2">
+        <span class="ev-card-icon">🎭</span>
+        <div class="ev-day-tag">Day 2 — Sunday, Oct 18</div>
+        <div class="ev-name">Talent Show</div>
+        <p class="ev-desc">Adults and children perform in dance, music, and drama. A stage for every age, a spotlight for every gift. Cash prizes and trophies.</p>
+        <div class="ev-time">Morning — Oct 18</div>
+      </div>
+      <div class="ev-card rv">
+        <span class="ev-card-icon">🍛</span>
+        <div class="ev-day-tag">Both Days</div>
+        <div class="ev-name">Authentic Bengali Food</div>
+        <p class="ev-desc">Misti doi, fish curry, luchi, mishti, and the sacred bhog prasad. The full flavors of Bengal, right here in New Jersey.</p>
+        <div class="ev-time">All Day</div>
+      </div>
+      <div class="ev-card rv d1">
+        <span class="ev-card-icon">🛍️</span>
+        <div class="ev-day-tag">Both Days</div>
+        <div class="ev-name">Mela Bazaar</div>
+        <p class="ev-desc">Traditional sarees, sindoor, jewelry, handcrafted artisan goods, and festive items from vendors across the Indian subcontinent.</p>
+        <div class="ev-time">All Day</div>
+      </div>
+      <div class="ev-card rv d2">
+        <span class="ev-card-icon">🎶</span>
+        <div class="ev-day-tag">Both Evenings</div>
+        <div class="ev-name">Live Cultural Concert</div>
+        <p class="ev-desc">World-class performances beginning at 5:30 PM each evening. The heartbeat of UTSOV — two nights you will carry with you forever.</p>
+        <div class="ev-time">5:30 PM — Both Days</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="rv">
+      <a href="events.html" class="btn btn-red btn-xl">View Full Schedule →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GARLAND -->
+<div class="garland-band"></div>
+
+<!-- ═══════════════ SPONSORS (cream section) ═════════════════════════════ -->
+<section class="section-cream">
+  <div class="s-in">
+    <div class="sponsor-feature rv">
+      <div class="sf-badge" style="background:linear-gradient(160deg,#8B1A1A,#5C0000);display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div class="sf-tier" style="font-size:.5rem;letter-spacing:.25em">TITLE SPONSOR</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:#E8C97A;line-height:.9;text-align:center;letter-spacing:.04em">PC<br>CHANDRA</div>
+        <div style="font-family:'Josefin Sans',sans-serif;font-size:.55rem;color:rgba(255,253,248,.5);letter-spacing:.15em;text-transform:uppercase">Jewellers Est. 1964</div>
+        <div style="width:50px;height:2px;background:linear-gradient(90deg,transparent,#E8C97A,transparent);margin:.2rem 0"></div>
+        <div style="font-family:'Noto Serif Bengali',serif;font-size:.85rem;color:rgba(232,201,122,.7)">সোনার গয়না</div>
+      </div>
+      <div class="sf-content">
+        <h3>Where Gold Meets Devotion</h3>
+        <p style="font-style:italic;font-size:1.1rem;color:var(--red-dark);border-left:3px solid var(--saffron);padding-left:1rem;margin-bottom:1rem">"যেমন সোনা দেবীকে সাজায়, তেমনি পিসি চন্দ্র সাজায় আমাদের প্রতিটি শুভমুহূর্ত।"<br><span style="font-family:'Josefin Sans',sans-serif;font-size:.65rem;color:var(--on-cream-muted);letter-spacing:.1em">As gold adorns the Goddess, PC Chandra adorns every auspicious moment of our lives.</span></p>
+        <p>For over six decades, PC Chandra Jewellers has been the keeper of Bengali dreams — present at every bride's moment, every child's first gold, every puja that calls for something precious. Their partnership with UTSOV is a meeting of two souls equally devoted to Bengali heritage, community, and the timeless beauty of tradition.</p>
+        <a href="sponsorship.html" class="btn btn-outline">Become a Partner →</a>
+      </div>
+    </div>
+    <div class="s-eyebrow s-eyebrow-red rv" style="display:block;margin-bottom:1.5rem">Community Partners</div>
+    <div class="sponsors-grid-4 rv d1">
+      <div class="sp-tile">PC Chandra<small>Gold Partner</small></div>
+      <div class="sp-tile">BOAS NJ<small>Community Partner</small></div>
+      <div class="sp-tile">Community Health NJ<small>Health Partner</small></div>
+      <div class="sp-tile vacant">Your Brand Here<small>Become a Sponsor</small></div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem" class="rv">
+      <a href="sponsorship.html" class="btn btn-red btn-xl">View Packages →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PHILANTHROPY (red, impact) ════════════════════════════ -->
+<section class="section-reddk">
+  <div class="s-in">
+    <div class="phil-split">
+      <div class="phil-left">
+        <span class="s-eyebrow s-eyebrow-saffron rv">Giving Back</span>
+        <h2 class="s-title-huge on-red rv d1" style="margin-top:.3rem">More Than<br>a Festival</h2>
+        <p class="s-body on-red rv d2">UTSOV is rooted in the belief that celebration and compassion are inseparable. The Divine Mother shelters all her children — and we honor her by caring for ours. Every year, UTSOV's community unites to support organizations in New Jersey and across India.</p>
+        <div class="phil-stats rv d2">
+          <div class="pstat"><div class="ps-n">8+</div><div class="ps-l">Organizations Supported</div></div>
+          <div class="pstat"><div class="ps-n">10+</div><div class="ps-l">Years of Giving</div></div>
+          <div class="pstat"><div class="ps-n">2</div><div class="ps-l">Countries Reached</div></div>
+          <div class="pstat"><div class="ps-n">∞</div><div class="ps-l">Lives Touched</div></div>
+        </div>
+        <div style="margin-top:2rem" class="rv">
+          <a href="philanthropy.html" class="btn btn-saffron btn-xl">Our Philanthropy →</a>
+        </div>
+      </div>
+      <div class="phil-right rv d1">
+        <div class="phil-block">
+          <div class="pb-icon">🍽️</div>
+          <div class="pb-text"><h4>NJ Food Bank</h4><p>Feeding families in New Jersey through our community food distribution partnership.</p></div>
+        </div>
+        <div class="phil-block">
+          <div class="pb-icon">📚</div>
+          <div class="pb-text"><h4>Vidyashree School Fund</h4><p>Sponsoring education for 50+ underprivileged children in rural West Bengal.</p></div>
+        </div>
+        <div class="phil-block">
+          <div class="pb-icon">🏥</div>
+          <div class="pb-text"><h4>Community Health NJ</h4><p>Free health screenings and wellness programs for South Asian families in the tri-state area.</p></div>
+        </div>
+        <div class="phil-block">
+          <div class="pb-icon">❤️</div>
+          <div class="pb-text"><h4>Cyclone Relief Fund</h4><p>Emergency aid for cyclone survivors in coastal Bengal — food, shelter, school supplies.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═════════════════════════════════════════════ -->
+<footer>
+  <div class="ft-in">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="ft-brand-logo">
+          <img src="logo_utsov.png" alt="UTSOV">
+        </div>
+        <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
+        <div class="ft-socials">
+          <a href="#" class="ft-social-btn" aria-label="Instagram">📷</a>
+          <a href="#" class="ft-social-btn" aria-label="Facebook">👤</a>
+          <a href="#" class="ft-social-btn" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="artists.html">Artists</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="philanthropy.html">Philanthropy</a></li>
+          <li><a href="sponsorship.html">Sponsor</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Get Involved</h5>
+        <ul>
+          <li><a href="events.html#tickets">Get Passes</a></li>
+          <li><a href="sponsorship.html">Become a Sponsor</a></li>
+          <li><a href="contact.html#volunteer">Volunteer</a></li>
+          <li><a href="philanthropy.html#donate">Donate</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Contact</h5>
+        <ul>
+          <li>(201) 787-6861</li>
+          <li><a href="mailto:utsov@utsov.org">utsov@utsov.org</a></li>
+          <li>46 Linden Ln, Plainsboro, NJ</li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3) Non-Profit</span>
+      <div class="ft-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="floating-durga" title="জয় মা দুর্গা">
+  <img src="maa1_corner.png" alt="Jai Maa Durga" style="width:80px;height:auto;display:block">
+</div>
+
+<script>
+// COUNTDOWN
+(function(){
+  function tick(){
+    const target=new Date('2026-10-17T17:30:00'),now=new Date(),diff=target-now;
+    if(diff<=0){document.getElementById('countdown-box').innerHTML='<span style="font-family:var(--f-display);font-size:1.8rem;color:var(--cream);letter-spacing:.04em">Durga Puja is Here! 🙏</span>';return;}
+    const d=Math.floor(diff/864e5),h=Math.floor((diff%864e5)/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3);
+    document.getElementById('cd-d').textContent=String(d).padStart(3,'0');
+    document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+})();
+
+// NAV SCROLL
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>60),{passive:true});
+hdr.classList.toggle('scrolled',scrollY>60);
+
+// HAMBURGER
+const toggle=document.getElementById('menuToggle');
+const menu=document.getElementById('navMenu');
+toggle.addEventListener('click',()=>{menu.classList.toggle('open');toggle.classList.toggle('open');});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.classList.remove('open');}));
+
+// HERO TEXT ENTRANCE ANIMATION
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.hero .rv').forEach((el,i)=>{
+    setTimeout(()=>{el.classList.add('in');},300+i*120);
+  });
+});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:.07,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv:not(.hero .rv)').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

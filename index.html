@@ -3,7 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UTSOV — Durga Puja 2026 | New Jersey</title>
+<title>UTSOV — Durga Puja 2026 | New Jersey | East Brunswick NJ | Bengali Festival</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="UTSOV is New Jersey's biggest Durga Puja 2026 — October 17-18 at East Brunswick, NJ. Live concerts, Pushpanjali, Dhunuchi Naach, Sindoor Khela, Bengali food & Mela Bazaar. Tickets from $45. The nearest Durga Puja in New Jersey tri-state area.">
+<meta name="keywords" content="Durga Puja New Jersey, Durga Puja near me, Bengali festival NJ, UTSOV, Durga Puja 2026, Durga Puja East Brunswick, Navratri New Jersey, Indian festival NJ, Bengali cultural event New Jersey, Maa Durga NJ, Sindoor Khela NJ, Pushpanjali NJ, Dhunuchi Naach, Durga Puja tri-state, Durga Puja tickets NJ">
+<meta name="author" content="UTSOV Inc.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="theme-color" content="#8B1A1A">
+<link rel="canonical" href="https://utsov.org/">
+
+<!-- Geo Meta Tags (critical for local "near me" search) -->
+<meta name="geo.region" content="US-NJ">
+<meta name="geo.placename" content="East Brunswick, New Jersey">
+<meta name="geo.position" content="40.4188;-74.4229">
+<meta name="ICBM" content="40.4188, -74.4229">
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+<meta property="og:type" content="event">
+<meta property="og:title" content="UTSOV Durga Puja 2026 — New Jersey's Biggest Bengali Festival">
+<meta property="og:description" content="Join thousands at NJ's premier Durga Puja — Oct 17-18, 2026 at East Brunswick, NJ. Live concerts, traditional rituals, Bengali food, Mela Bazaar. Tickets from $45.">
+<meta property="og:url" content="https://utsov.org/">
+<meta property="og:image" content="https://utsov.org/images/maa1_corner.png">
+<meta property="og:image:alt" content="UTSOV Durga Puja 2026 New Jersey">
+<meta property="og:site_name" content="UTSOV — Durga Puja New Jersey">
+<meta property="og:locale" content="en_US">
+<meta property="event:start_time" content="2026-10-17T09:00:00-04:00">
+<meta property="event:end_time" content="2026-10-18T22:00:00-04:00">
+<meta property="event:location" content="Jo Ann Magistro PAC, East Brunswick, NJ">
+
+<!-- Pinterest -->
+<meta name="pinterest-rich-pin" content="true">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UTSOV Durga Puja 2026 — New Jersey">
+<meta name="twitter:description" content="NJ's biggest Durga Puja — Oct 17-18, 2026. Live concerts, traditional rituals, Bengali food. East Brunswick, NJ. Tickets from $45.">
+<meta name="twitter:image" content="https://utsov.org/images/maa1_corner.png">
+<meta name="twitter:image:alt" content="UTSOV Durga Puja 2026 New Jersey — Maa Durga">
+
+<!-- Language -->
+<meta http-equiv="content-language" content="en-US">
+<link rel="alternate" hreflang="en" href="https://utsov.org/">
+
+<!-- Sitemap + AI crawlers -->
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -11,9 +56,9 @@
 
 :root{
   /* Brand reds */
-  --red-dark:#5C0000;
-  --red:#8B1A1A;
-  --red-mid:#A52020;
+  --red-dark:#6B0E0E;
+  --red:#9E2424;
+  --red-mid:#B52E2E;
   --red-bright:#C0392B;
   /* Warm neutrals */
   --cream:#FFFDF8;
@@ -30,7 +75,7 @@
   /* Text */
   --black:#1A0000;
   --on-red:rgba(255,255,255,.95);
-  --on-red-muted:rgba(255,255,255,.62);
+  --on-red-muted:rgba(255,255,255,.80);
   --on-cream:#1A0000;
   --on-cream-mid:#6B1010;
   --on-cream-muted:#9B3030;
@@ -73,8 +118,13 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .menu-toggle.open span:nth-child(2){opacity:0}
 .menu-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 @media(max-width:940px){
-  .menu-toggle{display:flex}
-  nav ul{display:none;position:fixed;inset:0;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:500}
+  /* Always-on opaque header on mobile; backdrop-filter removed because it creates
+     a new containing block that causes position:fixed children (nav overlay) to
+     anchor to the header instead of the viewport — the root cause of the menu bug. */
+  header,header.scrolled{background:rgba(255,253,248,.97);backdrop-filter:none;border-bottom-color:var(--bdr-red);box-shadow:0 2px 12px rgba(139,26,26,.08)}
+  /* margin-left:auto pushes the toggle to the far right of the flex row */
+  .menu-toggle{display:flex;margin-left:auto;z-index:510;position:relative}
+  nav ul{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,253,248,.98);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:505;padding-top:70px}
   nav ul.open{display:flex}
   nav ul a{font-size:1.1rem}
   .nav-ctas{display:none}
@@ -99,8 +149,8 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 
 /* Pre-hero info bar */
 .hero-info-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem}
-.hib-date{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);background:var(--blush);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.4rem 1.1rem}
-.hib-live{display:flex;align-items:center;gap:.4rem;font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--on-cream-muted)}
+.hib-date{font-family:var(--f-label);font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(224,120,48,.08));border:1.5px solid rgba(201,168,76,.55);border-radius:var(--r-full);padding:.45rem 1.25rem}
+.hib-live{display:flex;align-items:center;gap:.4rem;font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--saffron)}
 .hib-dot{width:7px;height:7px;border-radius:50%;background:var(--saffron);animation:pulseDot 1.8s ease-in-out infinite}
 @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 
@@ -126,6 +176,10 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .hero-loc-tag{font-family:var(--f-label);font-size:.64rem;font-weight:700;letter-spacing:.16em;color:var(--on-cream-mid);text-transform:uppercase;display:flex;align-items:center;gap:.35rem}
 .hero-year-badge{font-family:var(--f-display);font-size:clamp(1.6rem,3vw,2.6rem);color:var(--saffron);letter-spacing:.22em;border-left:3px solid var(--saffron);padding-left:.85rem;line-height:1}
 
+.hero-date-highlight{display:flex;align-items:center;gap:.65rem;margin-bottom:1.25rem}
+.hdh-day{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron);opacity:.9}
+.hdh-sep{color:rgba(26,0,0,.2);font-size:.8rem}
+.hdh-date{font-family:var(--f-display);font-size:clamp(1.4rem,2.8vw,2.2rem);color:var(--red-dark);letter-spacing:.06em;line-height:1}
 @media(max-width:960px){
   .hero-main-block{max-width:100%}
   .hero-bg-veil{background:linear-gradient(180deg,rgba(255,253,248,.9) 0%,rgba(255,253,248,.72) 50%,rgba(255,253,248,.55) 100%)}
@@ -169,7 +223,7 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 }
 
 /* ── GARLAND DIVIDER ── */
-.garland-band{height:62px;position:relative;background:url('garland.svg') repeat-x left top / auto 62px;overflow:hidden}
+.garland-band{height:62px;position:relative;background:url('images/garland.svg') repeat-x left top / auto 62px;overflow:hidden}
 .garland-band::before{display:none}
 
 /* ── MARQUEE BAND ── */
@@ -188,7 +242,7 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .s-title-huge.on-cream{color:var(--red-dark)}
 .s-title-huge.on-red{color:var(--cream)}
 .s-title-huge.on-saffron{color:var(--red-dark)}
-.s-body{font-family:var(--f-serif);font-size:1.05rem;line-height:1.85;color:var(--on-cream-mid)}
+.s-body{font-family:var(--f-serif);font-size:1.12rem;line-height:1.9;color:var(--on-cream-mid)}
 .s-body.on-red{color:var(--on-red-muted)}
 .section-cream{background:var(--cream-warm)}
 .section-white{background:#fff}
@@ -218,16 +272,17 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .days-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
 .day-pillar{padding:2.5rem 1.5rem;border-right:1px solid rgba(255,253,248,.12);position:relative;transition:background .3s;overflow:hidden}
 .day-pillar:last-child{border-right:none}
+.day-pillar::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.48) 55%,rgba(0,0,0,.16) 100%);z-index:1;pointer-events:none}
 .day-pillar::after{content:attr(data-ritual);position:absolute;bottom:-1rem;right:-1rem;font-size:7rem;opacity:.07;line-height:1;pointer-events:none;user-select:none;z-index:0;transition:opacity .3s}
 .day-pillar:hover::after{opacity:.12}
-.day-pillar>*{position:relative;z-index:1}
+.day-pillar>*{position:relative;z-index:2}
 .day-pillar:hover{background:rgba(255,253,248,.06)}
 .day-pillar.highlight{background:rgba(255,253,248,.08)}
 .dp-number{font-family:var(--f-bn);font-size:5rem;color:rgba(255,253,248,.12);line-height:1;display:block;margin-bottom:.5rem}
-.dp-name-bn{font-family:var(--f-bn);font-size:1.6rem;color:var(--cream);font-weight:700;display:block;margin-bottom:.1rem}
-.dp-name-en{font-family:var(--f-display);font-size:2rem;color:rgba(255,253,248,.5);display:block;letter-spacing:.05em;margin-bottom:1rem}
+.dp-name-bn{font-family:var(--f-bn);font-size:1.75rem;color:var(--cream);font-weight:700;display:block;margin-bottom:.2rem;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.dp-name-en{font-family:var(--f-display);font-size:2rem;color:rgba(255,253,248,.88);display:block;letter-spacing:.05em;margin-bottom:1rem}
 .dp-divider{width:32px;height:2px;background:var(--saffron);margin-bottom:1rem;border-radius:2px}
-.dp-desc{font-family:var(--f-serif);font-size:.88rem;color:rgba(255,253,248,.65);line-height:1.75}
+.dp-desc{font-family:var(--f-serif);font-size:.96rem;color:rgba(255,253,248,.83);line-height:1.8}
 .dp-highlight-badge{position:absolute;top:1rem;right:1rem;background:var(--saffron);color:#fff;font-family:var(--f-label);font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .6rem;border-radius:var(--r-full)}
 @media(max-width:1000px){.days-row{grid-template-columns:repeat(3,1fr)}.day-pillar{border-right:1px solid rgba(255,253,248,.12)}}
 @media(max-width:640px){.days-row{grid-template-columns:1fr 1fr}}
@@ -248,7 +303,9 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .ar-eyebrow{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--saffron);text-transform:uppercase}
 .ar-name{font-family:var(--f-display);font-size:clamp(2.5rem,4.5vw,4rem);color:var(--red-dark);line-height:1;letter-spacing:.01em}
 .ar-role{font-family:var(--f-label);font-size:.66rem;font-weight:700;letter-spacing:.14em;color:var(--on-cream-muted);text-transform:uppercase}
-.ar-bio{font-family:var(--f-serif);font-size:.98rem;color:var(--on-cream-mid);line-height:1.8}
+.ar-bio{font-family:var(--f-serif);font-size:1.02rem;color:var(--on-cream-mid);line-height:1.88}
+.ar-bio strong{color:var(--red-dark);font-weight:700}
+.ar-role em{font-style:normal;color:var(--saffron);letter-spacing:.06em}
 .ar-tags{display:flex;flex-wrap:wrap;gap:.4rem}
 .ar-tag{background:var(--blush);border:1px solid var(--bdr-red);border-radius:var(--r-full);padding:.2rem .75rem;font-family:var(--f-label);font-size:.6rem;font-weight:600;color:var(--red);letter-spacing:.06em;text-transform:uppercase}
 .ar-link{font-family:var(--f-label);font-size:.7rem;font-weight:700;color:var(--red);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s,color .2s}
@@ -277,7 +334,7 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .ev-card-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
 .ev-day-tag{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.15em;color:rgba(255,253,248,.7);text-transform:uppercase;margin-bottom:.4rem}
 .ev-name{font-family:var(--f-display);font-size:1.8rem;color:var(--cream);line-height:1;margin-bottom:.75rem;letter-spacing:.02em}
-.ev-desc{font-family:var(--f-serif);font-size:.9rem;color:rgba(255,253,248,.75);line-height:1.75}
+.ev-desc{font-family:var(--f-serif);font-size:.97rem;color:rgba(255,253,248,.88);line-height:1.8}
 .ev-time{font-family:var(--f-label);font-size:.62rem;font-weight:700;color:rgba(255,253,248,.55);letter-spacing:.1em;text-transform:uppercase;margin-top:1rem}
 @media(max-width:860px){.events-grid-3{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.events-grid-3{grid-template-columns:1fr}}
@@ -290,7 +347,7 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .sf-sub{font-family:var(--f-label);font-size:.6rem;color:rgba(255,253,248,.45);margin-top:.35rem;letter-spacing:.08em}
 .sf-content h3{font-family:var(--f-display);font-size:clamp(2rem,3.5vw,3rem);color:var(--red-dark);margin-bottom:.85rem}
 .sf-content p{font-family:var(--f-serif);font-size:1rem;color:var(--on-cream-mid);line-height:1.8;margin-bottom:1.25rem}
-@media(max-width:680px){.sponsor-feature{grid-template-columns:1fr;text-align:center}.sf-badge{min-width:auto}}
+@media(max-width:680px){.sponsor-feature{grid-template-columns:1fr;text-align:center;justify-items:center}.sf-badge{min-width:auto;width:100%;max-width:320px}}
 .sponsors-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 .sp-tile{background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-lg);padding:1.5rem;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--f-display);font-size:1.1rem;color:var(--red-dark);gap:.3rem;transition:background .3s,border-color .3s}
 .sp-tile small{font-family:var(--f-label);font-size:.58rem;color:var(--on-cream-muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
@@ -301,7 +358,7 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 
 /* ── PHILANTHROPY (red bg) ── */
 .phil-split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.phil-left p{font-family:var(--f-serif);font-size:1.05rem;color:var(--on-red-muted);line-height:1.85;margin-top:1rem}
+.phil-left p{font-family:var(--f-serif);font-size:1.12rem;color:var(--on-red-muted);line-height:1.9;margin-top:1rem}
 .phil-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
 .pstat{padding:1.4rem;background:rgba(255,253,248,.07);border:1px solid var(--bdr-white);border-radius:var(--r-lg)}
 .pstat .ps-n{font-family:var(--f-display);font-size:3.2rem;color:var(--cream);line-height:1}
@@ -310,29 +367,42 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .phil-block{display:flex;gap:1.25rem;align-items:flex-start;background:rgba(255,253,248,.06);border:1px solid var(--bdr-white);border-radius:var(--r-lg);padding:1.4rem}
 .pb-icon{font-size:2rem;flex-shrink:0}
 .pb-text h4{font-family:var(--f-display);font-size:1.5rem;color:var(--cream);margin-bottom:.2rem}
-.pb-text p{font-family:var(--f-serif);font-size:.88rem;color:var(--on-red-muted);line-height:1.65}
+.pb-text p{font-family:var(--f-serif);font-size:.95rem;color:var(--on-red-muted);line-height:1.75}
 @media(max-width:800px){.phil-split{grid-template-columns:1fr;gap:3rem}}
 
 /* ── FOOTER ── */
-footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
-.ft-in{max-width:1360px;margin:0 auto;padding:4.5rem 2.5rem 1.75rem}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
-.ft-brand-logo img{height:40px;width:auto;display:block;margin-bottom:1rem}
-.ft-brand p{font-family:var(--f-serif);font-size:.88rem;color:rgba(255,253,248,.42);line-height:1.8;max-width:26ch;margin-bottom:1.25rem}
-.ft-socials{display:flex;gap:.6rem}
-.ft-social-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,253,248,.07);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.85rem;transition:background .2s}
+footer{background:var(--red-dark);border-top:3px solid var(--gold)}
+.ft-in{max-width:1360px;margin:0 auto;padding:2.5rem 2.5rem 1.25rem}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.ft-brand-logo img{height:38px;width:auto;display:block;margin-bottom:.75rem}
+.ft-brand p{font-family:var(--f-serif);font-size:.82rem;color:rgba(255,253,248,.42);line-height:1.75;max-width:26ch;margin-bottom:.85rem}
+.ft-socials{display:flex;gap:.4rem}
+.ft-social-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,253,248,.07);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.75rem;transition:background .2s}
 .ft-social-btn:hover{background:rgba(255,253,248,.14)}
-.ft-col h5{font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.2em;color:var(--saffron-lt);text-transform:uppercase;margin-bottom:1.1rem}
+.ft-col h5{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--saffron-lt);text-transform:uppercase;margin-bottom:.8rem}
 .ft-col ul{list-style:none}
-.ft-col ul li{font-family:var(--f-serif);font-size:.85rem;color:rgba(255,253,248,.38);margin-bottom:.6rem}
+.ft-col ul li{font-family:var(--f-serif);font-size:.78rem;color:rgba(255,253,248,.38);margin-bottom:.42rem}
 .ft-col ul li a{color:rgba(255,253,248,.45);text-decoration:none;transition:color .2s}
 .ft-col ul li a:hover{color:var(--saffron-lt)}
-.ft-bottom{border-top:1px solid rgba(255,253,248,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-label);font-size:.68rem;color:rgba(255,253,248,.22);flex-wrap:wrap;gap:.75rem}
-.ft-legal{display:flex;gap:1.5rem}
-.ft-legal a{color:rgba(255,253,248,.22);text-decoration:none;transition:color .2s}
+.ft-contacts{padding:.9rem 0 .8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.ftc-label{font-family:var(--f-label);font-size:.5rem;font-weight:700;letter-spacing:.22em;color:rgba(201,168,76,.52);text-transform:uppercase;margin-bottom:.45rem}
+.ftc-team{display:flex;flex-wrap:wrap}
+.ftc-person{display:inline-flex;align-items:baseline;gap:.35rem;padding-right:.8rem;margin-right:.8rem;border-right:1px solid rgba(255,255,255,.1);line-height:1.95;font-family:var(--f-label)}
+.ftc-person:last-child{border-right:none;padding-right:0;margin-right:0}
+.ftc-n{font-size:.65rem;color:rgba(255,253,248,.58);font-weight:600}
+.ftc-p{font-size:.62rem;color:rgba(255,253,248,.28);text-decoration:none;transition:color .2s}
+.ftc-p:hover{color:var(--gold-lt)}
+.ftc-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-family:var(--f-label);font-size:.63rem;margin-top:.3rem}
+.ftc-meta a{color:rgba(255,253,248,.42);text-decoration:none;transition:color .2s}
+.ftc-meta a:hover{color:var(--gold-lt)}
+.ftc-dot{color:rgba(255,255,255,.14)}
+.ftc-addr{color:rgba(255,253,248,.26)}
+.ft-bottom{padding-top:1rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-label);font-size:.65rem;color:rgba(255,253,248,.24);flex-wrap:wrap;gap:.5rem}
+.ft-legal{display:flex;gap:1.2rem}
+.ft-legal a{color:rgba(255,253,248,.24);text-decoration:none;transition:color .2s}
 .ft-legal a:hover{color:var(--saffron-lt)}
-@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:2rem}}
-@media(max-width:480px){.ft-grid{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}}
+@media(max-width:840px){.ft-top{grid-template-columns:1fr 1fr;gap:1.5rem}.ft-top>.ft-brand{grid-column:1/-1}.ftc-person{flex:0 0 50%;border-right:none;padding-right:0;margin-right:0;padding-bottom:.1rem}}
+@media(max-width:480px){.ft-top{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}.ftc-person{flex:0 0 100%}}
 
 /* ── CENTER HELPERS ── */
 .text-center{text-align:center}
@@ -343,8 +413,8 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
 .gap-2{gap:2rem}
 
 /* ── BACKGROUND PHOTO IMAGES (day pillars, traditions, artists) ── */
-.day-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.28;z-index:0;mix-blend-mode:luminosity}
-.day-pillar:hover .day-bg-img{opacity:.38;transition:opacity .3s}
+.day-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:.65;z-index:0}
+.day-pillar:hover .day-bg-img{opacity:.78;transition:opacity .3s}
 .ar-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:0}
 .trad-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.35;z-index:0}
 .trad-card:hover .trad-bg-img{opacity:.48;transition:opacity .3s}
@@ -363,15 +433,245 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
 /* ── FLOATING DURGA ── */
 .floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
 @keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE HERO REDESIGN + HIGHLIGHTS  (≤ 768px)
+   Desktop is completely untouched — every rule here is mobile-only.
+   ═══════════════════════════════════════════════════════════════ */
+/* Mobile image hidden by default; desktop image shown by default */
+.hero-durga-mobile{display:none}
+.mob-highlights{display:none}
+
+@media(max-width:768px){
+  /* Swap images: hide desktop, show mobile */
+  .hero-durga-desktop{display:none}
+  .hero-durga-mobile{display:block;object-position:center 12%;opacity:.82}
+
+  /* Bottom-anchored hero: Maa fills full screen height, text sits at base */
+  .hero{justify-content:flex-end;padding-top:0;min-height:100svh}
+  .hero-wm{display:none}
+
+  /* Gradient veil: saffron-dark at bottom, transparent at top so Maa shows */
+  .hero-bg-veil{background:linear-gradient(to top,
+    rgba(70,25,0,.92) 0%,rgba(90,35,0,.80) 22%,
+    rgba(110,45,5,.44) 48%,rgba(130,55,5,.12) 68%,
+    transparent 88%)}
+
+  /* Stage: hug the bottom with comfortable padding */
+  .hero-stage{padding:0 1.25rem 2rem}
+
+  /* Remove info bar — reclaim space */
+  .hero-info-bar{display:none}
+
+  /* Hero block: full width, no auto margins */
+  .hero-main-block{max-width:100%;margin:0}
+
+  /* Bengali pre-line: cream-muted */
+  .hero-pre{font-size:.88rem;color:rgba(255,253,248,.68);margin-bottom:.35rem}
+  .hero-pre::before{display:none}
+
+  /* DURGA / PUJA: cream on dark overlay */
+  .hh-solid{color:var(--cream);text-shadow:0 2px 18px rgba(0,0,0,.55)}
+  .hh-outline{-webkit-text-stroke-color:rgba(255,253,248,.48);color:transparent}
+
+  /* Location + year: keep horizontal on mobile (override 560px stacking) */
+  .hero-sub-row{flex-direction:row;align-items:center;gap:.75rem;margin-bottom:.6rem}
+  .hero-loc-tag{color:rgba(255,253,248,.58)}
+  .hero-year-badge{color:var(--saffron-lt);border-left-color:var(--saffron-lt);font-size:1.55rem;padding-left:.6rem}
+
+  /* Date highlight */
+  .hero-date-highlight{margin-bottom:1.25rem}
+  .hdh-date{color:var(--cream);font-size:1.3rem}
+  .hdh-day{color:var(--saffron-lt)}
+  .hdh-sep{color:rgba(255,255,255,.22)}
+
+  /* CTAs: side by side, equal width up to 178px each */
+  .hero-ctas{gap:.55rem;flex-wrap:nowrap;margin-top:.2rem}
+  .hero-ctas .btn-xl{padding:.72rem 1.2rem;font-size:.69rem;flex:1;justify-content:center;max-width:178px}
+
+  /* Hide bottom meta (countdown / venue) — saves prime real-estate */
+  .hero-bottom{display:none}
+
+  /* ── MOBILE HIGHLIGHTS ── */
+  .mob-highlights{display:block;background:var(--cream)}
+
+  /* Artist strip header */
+  .mob-artist-strip{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid var(--bdr-red)}
+  .mob-artist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .mob-ah-eyebrow{font-family:var(--f-label);font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+  .mob-ah-link{font-family:var(--f-label);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);text-decoration:none}
+
+  /* Two-card grid — both visible without scrolling */
+  .mob-artist-scroll{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+
+  /* Individual artist card */
+  .mob-artist-card{border-radius:var(--r-lg);padding:1rem;display:flex;flex-direction:column;gap:.4rem;overflow:hidden}
+  .mac-v1{background:linear-gradient(rgba(50,0,0,.68),rgba(25,0,0,.82)),url('images/imanmobilebadge.avif') center top/cover no-repeat}
+  .mac-v2{background:linear-gradient(rgba(26,10,61,.68),rgba(13,5,30,.82)),url('images/SSmobilebadge.avif') center top/cover no-repeat}
+  .mac-night{font-family:var(--f-label);font-size:.5rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,253,248,.5)}
+  .mac-name{font-family:var(--f-display);font-size:1.05rem;color:var(--cream);line-height:1.1;letter-spacing:.01em;margin-top:.1rem}
+  .mac-role{font-family:var(--f-label);font-size:.54rem;color:rgba(255,253,248,.55);letter-spacing:.08em;text-transform:uppercase}
+  .mac-award{font-family:var(--f-serif);font-size:.8rem;color:var(--gold-lt);font-style:italic;padding-top:.3rem;border-top:1px solid rgba(255,255,255,.1);margin-top:.1rem}
+  .mac-link{font-family:var(--f-label);font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,253,248,.72);text-decoration:none;padding-top:.5rem}
+
+  /* PC Chandra title sponsor strip */
+  .mob-sponsor-band{display:flex;align-items:center;justify-content:center;gap:.8rem;padding:.9rem 1.25rem;background:linear-gradient(135deg,#2A0000,#5C0000);border-bottom:3px solid rgba(201,168,76,.35)}
+  .msb-label{font-family:var(--f-label);font-size:.46rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+  .msb-logo-wrap{background:rgba(255,253,248,.97);border-radius:var(--r-sm);padding:.5rem .9rem;display:flex;align-items:center;justify-content:center}
+  .msb-logo{max-height:46px;max-width:140px;object-fit:contain;display:block}
+  .msb-tagline{font-family:var(--f-bn);font-size:.7rem;color:rgba(232,201,122,.72);white-space:nowrap}
+
+  /* SS Brothers — show full head on mobile */
+  .ar-v2 .ar-photo{object-position:center 8%}
+
+}
+
+/* ════════════════════════════════════════════════════
+   SPONSOR SHOWCASE — DESKTOP ONLY (≥941px)
+   Hidden on mobile; mobile uses .mob-sponsor-band
+   ════════════════════════════════════════════════════ */
+@media(max-width:940px){.sp-showcase{display:none}}
+.sp-showcase{position:relative;background:linear-gradient(165deg,#0C0000 0%,#1A0000 45%,#210505 72%,#140000 100%);overflow:hidden;padding:5rem 0 4.5rem}
+.sp-showcase::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,#C9A84C,#E8C97A,#FF9933,#E8C97A,#C9A84C,transparent)}
+.sp-sparks{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.sp-spark{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(201,168,76,.75);animation:spFloat linear infinite}
+@keyframes spFloat{0%{opacity:0;transform:translateY(110%)}8%{opacity:1}88%{opacity:.6}100%{opacity:0;transform:translateY(-80px)}}
+.sp-inner{max-width:1360px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:2;text-align:center}
+.sp-eyebrow{font-family:var(--f-label);font-size:.56rem;font-weight:700;letter-spacing:.36em;color:rgba(201,168,76,.45);text-transform:uppercase;margin-bottom:3.5rem;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+.sp-eyebrow::before{content:'';flex:1;max-width:240px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3))}
+.sp-eyebrow::after{content:'';flex:1;max-width:240px;height:1px;background:linear-gradient(90deg,rgba(201,168,76,.3),transparent)}
+/* ── Star sponsor block ── */
+.sp-star-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:4.5rem}
+.sp-star-crown{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--f-label);font-size:.5rem;font-weight:700;letter-spacing:.34em;color:var(--gold-lt);text-transform:uppercase;background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(224,120,48,.08));border:1.5px solid rgba(201,168,76,.42);border-radius:var(--r-full);padding:.5rem 2.2rem;margin-bottom:2.25rem}
+.sp-star-crown::before,.sp-star-crown::after{content:'★';color:var(--gold);font-size:.65rem}
+.sp-logo-orb{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:2.25rem}
+.sp-logo-orb::before{content:'';position:absolute;inset:-28px;border-radius:22px;background:radial-gradient(ellipse at center,rgba(201,168,76,.3) 0%,rgba(201,168,76,.06) 45%,transparent 68%);animation:orbPulse 3.2s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
+.sp-logo-box{background:rgba(255,253,248,.97);border-radius:14px;padding:1.1rem 2.8rem;border:1.5px solid rgba(201,168,76,.45);box-shadow:0 0 70px rgba(201,168,76,.22),0 14px 45px rgba(0,0,0,.65);position:relative;overflow:hidden}
+.sp-logo-box::after{content:'';position:absolute;top:0;left:-160%;width:55%;height:100%;background:linear-gradient(108deg,transparent,rgba(255,255,255,.68),transparent);animation:logoSweep 4.5s ease-in-out infinite}
+@keyframes logoSweep{0%{left:-160%}42%,100%{left:220%}}
+.sp-poem{font-family:var(--f-bn);font-size:clamp(.95rem,1.45vw,1.28rem);line-height:2.2;color:rgba(245,224,176,.82);margin-bottom:.5rem}
+.sp-poem-trans{font-family:var(--f-label);font-size:.57rem;letter-spacing:.11em;color:rgba(255,255,255,.27);text-transform:uppercase;margin:.2rem auto 1.35rem;max-width:65ch}
+.sp-tagline{font-family:var(--f-serif);font-style:italic;font-size:1.05rem;color:rgba(201,168,76,.62);margin-bottom:.35rem}
+.sp-since{font-family:var(--f-label);font-size:.5rem;letter-spacing:.22em;color:rgba(255,255,255,.2);text-transform:uppercase}
+/* ── Gold divider ── */
+.sp-gold-divider{display:flex;align-items:center;gap:1.5rem;margin:0 auto 3rem;max-width:480px}
+.sp-gold-divider::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5))}
+.sp-gold-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,168,76,.5),transparent)}
+.sp-gold-divider span{font-family:var(--f-label);font-size:.55rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;white-space:nowrap}
+/* ── Gold sponsor cards ── */
+.sp-gold-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1.25rem;text-align:left}
+.sp-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(201,168,76,.15);border-radius:var(--r-md);overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .35s,box-shadow .35s;display:flex;flex-direction:column;text-decoration:none}
+.sp-card:hover{transform:translateY(-12px);border-color:rgba(201,168,76,.52);box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 40px rgba(201,168,76,.12)}
+.sp-card-logo{width:100%;height:108px;display:flex;align-items:center;justify-content:center;padding:1.2rem 1.5rem;background:rgba(255,253,248,.97);border-bottom:1px solid rgba(201,168,76,.16);position:relative;overflow:hidden}
+.sp-card:hover .sp-card-logo::after{content:'';position:absolute;top:0;left:-80%;width:42%;height:100%;background:linear-gradient(108deg,transparent,rgba(255,255,255,.72),transparent);animation:cardShimmer .55s ease forwards}
+@keyframes cardShimmer{to{left:165%}}
+.sp-card-body{padding:1.1rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
+.sp-card-name{font-family:var(--f-label);font-size:.57rem;font-weight:700;letter-spacing:.15em;color:rgba(201,168,76,.88);text-transform:uppercase}
+.sp-card-line{font-family:var(--f-serif);font-style:italic;font-size:.79rem;color:rgba(255,255,255,.42);line-height:1.55;flex:1}
+.sp-gold-badge{font-family:var(--f-label);font-size:.45rem;letter-spacing:.18em;color:rgba(201,168,76,.38);text-transform:uppercase;padding:.18rem .6rem;border:1px solid rgba(201,168,76,.2);border-radius:var(--r-full);align-self:flex-start;margin-top:.2rem}
+
+/* ══════════════════════════════════════════════════════════════
+   SPONSOR HERO RANGOLI OVERLAY — DESKTOP ≥941px ONLY
+   Circular rangoli-border logos, right side of hero
+   ══════════════════════════════════════════════════════════════ */
+.sph-overlay{position:absolute;right:1rem;top:9rem;z-index:5;display:flex;flex-direction:column;align-items:flex-start;gap:3.6rem;pointer-events:none}
+@media(max-width:940px){.sph-overlay{display:none}}
+.sph-overlay a,.sph-overlay .sph-gold-item,.sph-overlay .sph-star{pointer-events:auto}
+
+/* Section eyebrow */
+.sph-eyebrow{font-family:var(--f-label);font-size:.48rem;letter-spacing:.32em;color:rgba(201,168,76,.55);text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+
+/* ── Rangoli ring spin ── */
+@keyframes rSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ── Orbit wrapper (sized to logo circle; rings bleed out absolutely) ── */
+.sph-orbit{position:relative;flex-shrink:0}
+.sph-orbit-lg{width:124px;height:124px}
+.sph-orbit-sm{width:84px;height:84px}
+
+/* ── Shared ring base ── */
+.sph-ring{position:absolute;border-radius:50%;pointer-events:none}
+
+/* Large orbit rings */
+/* ── Large orbit rings: SVG Bengali spike ring ── */
+.sph-orbit-lg .sph-r1{inset:-18px;background:url('images/rangoli-spike-ring.svg') center/100% 100% no-repeat;-webkit-mask:none;mask:none;animation:rSpin 22s linear infinite;filter:drop-shadow(0 0 5px rgba(191,42,20,.7)) drop-shadow(0 0 10px rgba(191,42,20,.35))}
+.sph-orbit-lg .sph-r2{inset:-32px;background:repeating-conic-gradient(rgba(201,168,76,.65) 0deg 3.5deg,transparent 3.5deg 6deg,rgba(224,120,48,.4) 6deg 7.5deg,transparent 7.5deg 12deg);-webkit-mask:radial-gradient(farthest-side,transparent 89%,#fff 90% 100%);mask:radial-gradient(farthest-side,transparent 89%,#fff 90% 100%);animation:rSpin 48s linear infinite reverse;filter:drop-shadow(0 0 3px rgba(201,168,76,.5))}
+.sph-orbit-lg .sph-r3{inset:-32px;background:url('images/rangoli-spike-ring.svg') center/100% 100% no-repeat;-webkit-mask:none;mask:none;opacity:.28;animation:rSpin 90s linear infinite reverse;filter:drop-shadow(0 0 3px rgba(191,42,20,.4))}
+
+/* Small orbit rings */
+/* ── Small orbit rings: SVG Bengali spike ring ── */
+.sph-orbit-sm .sph-r1{inset:-14px;background:url('images/rangoli-spike-ring.svg') center/100% 100% no-repeat;-webkit-mask:none;mask:none;animation:rSpin 18s linear infinite;filter:drop-shadow(0 0 4px rgba(191,42,20,.65)) drop-shadow(0 0 8px rgba(191,42,20,.3))}
+.sph-orbit-sm .sph-r2{inset:-26px;background:repeating-conic-gradient(rgba(201,168,76,.6) 0deg 4deg,transparent 4deg 7deg,rgba(224,120,48,.35) 7deg 9deg,transparent 9deg 12deg);-webkit-mask:radial-gradient(farthest-side,transparent 89%,#fff 90% 100%);mask:radial-gradient(farthest-side,transparent 89%,#fff 90% 100%);animation:rSpin 36s linear infinite reverse;filter:drop-shadow(0 0 2px rgba(201,168,76,.45))}
+
+/* ── Logo circle — transparent with golden glow ── */
+.sph-lc{border-radius:50%;overflow:visible;background:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(201,168,76,.75),0 0 50px rgba(201,168,76,.38),0 0 80px rgba(201,168,76,.18),inset 0 0 14px rgba(201,168,76,.15);border:1.5px solid rgba(201,168,76,.5);position:relative;z-index:2;width:100%;height:100%}
+.sph-orbit-lg .sph-lc{box-shadow:0 0 30px rgba(201,168,76,.85),0 0 65px rgba(201,168,76,.48),0 0 100px rgba(201,168,76,.22),inset 0 0 18px rgba(201,168,76,.18)}
+/* Logo pill: circular, semi-transparent, fills the inner ring circle */
+.sph-logo-pill{background:rgba(255,252,242,.55);border-radius:50%;width:100%;height:100%;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sph-orbit-sm .sph-logo-pill{background:rgba(255,252,242,.55)}
+/* Logo images: fill circle, mix-blend-mode removes white backgrounds (e.g. ICICI) */
+.sph-logo-pill img{width:88%;height:88%;object-fit:contain;mix-blend-mode:multiply;opacity:.92;display:block}
+
+/* ── HORIZONTAL ROW LAYOUT: circle-left | dotline | info-text-right ── */
+/* PC Chandra: top row with dotline+text, centered over the 2-col grid below */
+.sph-star{display:flex;flex-direction:row;align-items:center;gap:0;margin-bottom:.5rem;margin-left:50px}
+/* Gold items: column layout — circle on top, label below */
+.sph-gold-item{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-decoration:none;cursor:pointer}
+.sph-gold-item .sph-orbit-sm{margin-left:0}
+.sph-gold-item .sph-dotline{display:none}
+/* Gold 2-col grid: col-gap wide enough to clear ring bleeds (r2 = 26px each side) */
+.sph-gold-grid{display:grid;grid-template-columns:84px 84px;column-gap:3.5rem;row-gap:2rem}
+/* Sona: spans both cols, centered */
+.sph-gold-solo{grid-column:1/-1;justify-self:center}
+/* Info text below circle: center-aligned, compact */
+.sph-gold-item .sph-item-info{align-items:center;padding:.1rem .15rem;max-width:90px;min-width:0;padding-left:0;flex:none;width:84px}
+.sph-gold-item .sph-tagline-item{text-align:center;font-size:.57rem}
+.sph-gold-item .sph-name{text-align:center;letter-spacing:.1em}
+
+/* Right info area (text, left-aligned, extends toward page right edge) */
+.sph-item-info{display:flex;flex-direction:column;align-items:flex-start;gap:.18rem;padding-left:.6rem;flex:1;min-width:120px;max-width:175px}
+.sph-star-info{gap:.28rem}
+
+/* Dotted connecting line */
+.sph-dotline{width:44px;height:1px;background-image:repeating-linear-gradient(90deg,rgba(201,168,76,.58) 0,rgba(201,168,76,.58) 4px,transparent 4px,transparent 9px);flex-shrink:0}
+.sph-star .sph-dotline{background-image:repeating-linear-gradient(90deg,rgba(201,168,76,.68) 0,rgba(201,168,76,.68) 5px,transparent 5px,transparent 10px)}
+
+/* PC Chandra label and poem */
+.sph-star-badge{font-family:var(--f-label);font-size:.46rem;font-weight:700;letter-spacing:.28em;color:#0d0d0d;text-transform:uppercase;background:rgba(255,220,100,.55);border:1px solid rgba(201,168,76,.5);border-radius:var(--r-full);padding:.28rem .9rem;text-shadow:none}
+.sph-poem{font-family:var(--f-bn);font-size:.78rem;color:#0d0d0d;font-weight:700;text-align:left;line-height:1.75;text-shadow:none}
+.sph-tagline-main{font-family:var(--f-serif);font-style:italic;font-size:.63rem;font-weight:700;color:#0d0d0d;text-align:left;line-height:1.4;text-shadow:none}
+
+/* Sponsor tagline (gold items) — left-aligned, extends toward right edge */
+.sph-tagline-item{font-family:var(--f-serif);font-style:italic;font-size:.61rem;font-weight:700;color:#0d0d0d;text-align:left;line-height:1.4;text-shadow:none;max-width:168px}
+.sph-gold-item:hover .sph-orbit-sm .sph-r1{animation-duration:8s}
+.sph-gold-item:hover .sph-orbit-sm .sph-r2{animation-duration:14s}
+.sph-gold-item:hover .sph-lc{box-shadow:0 0 40px rgba(201,168,76,.98),0 0 80px rgba(201,168,76,.58),0 0 120px rgba(201,168,76,.28),inset 0 0 22px rgba(201,168,76,.22)}
+.sph-name{font-family:var(--f-label);font-size:.45rem;font-weight:700;letter-spacing:.12em;color:#0d0d0d;text-transform:uppercase;text-align:left;line-height:1.4;text-shadow:none;font-style:italic}
+.sph-line{font-family:var(--f-serif);font-style:italic;font-size:.62rem;color:rgba(255,255,255,.0);text-align:center;max-width:95px;line-height:1.4;transition:color .3s}
+.sph-gold-item:hover .sph-line{color:rgba(255,255,255,.38)}
+
+/* ══════════════════════════════════════════════════════════════
+   ANNOUNCE BAR — fixed strip below nav, desktop only ≥941px
+   ══════════════════════════════════════════════════════════════ */
+.announce-bar{position:fixed;top:65px;left:0;right:0;z-index:495;background:linear-gradient(90deg,#0A0000,#160000 35%,#160000 65%,#0A0000);border-bottom:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;gap:.9rem;padding:.5rem 2rem;font-family:var(--f-label);font-size:.59rem;font-weight:700;letter-spacing:.22em;color:rgba(201,168,76,.82);text-transform:uppercase;pointer-events:none;user-select:none}
+@media(max-width:940px){.announce-bar{display:none}}
+.ab-dot{width:5px;height:5px;border-radius:50%;background:var(--saffron);animation:pulseDot 1.8s ease-in-out infinite;display:inline-block;flex-shrink:0}
+@media(min-width:941px){.hero{padding-top:116px}}
+
+/* ══════════════════════════════════════════════════════════════
+   SPONSOR STRIP — horizontal rangoli circle row, desktop ≥941px
+   Replaces the old sp-showcase vertical card section
+   ══════════════════════════════════════════════════════════════ */
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <header id="hdr">
-  <nav>
+  <nav aria-label="Main navigation">
     <a href="index.html" class="nav-logo">
-      <img src="logo_utsov.png" alt="UTSOV — Durga Puja New Jersey">
+      <img src="images/logo_utsov.png" alt="UTSOV — Durga Puja New Jersey">
     </a>
     <ul id="navMenu">
       <li><a href="artists.html">Artists</a></li>
@@ -388,6 +688,15 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
   </nav>
 </header>
 
+<!-- ANNOUNCE BAR — desktop only, fixed below nav -->
+<div class="announce-bar" aria-hidden="true">
+  <span class="ab-dot"></span>
+  🎟 &nbsp; Early Bird Registration Opening Soon
+  <span class="ab-dot"></span>
+</div>
+
+<main>
+
 <!-- ═══════════════════════════════════════ HERO ══════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-strip"></div>
@@ -399,8 +708,10 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
   </div>
   <div class="hero-wm">দুর্গাপূজা</div>
 
-  <!-- Full-section Durga Maa background — edge to edge, till the garland -->
-  <img class="hero-durga-bg" src="Maa1_nobg_straight_fixed.png" alt="">
+  <!-- Desktop hero image (hidden on mobile) -->
+  <img class="hero-durga-bg hero-durga-desktop" src="images/Maa1_nobg_straight_fixed.png" alt="">
+  <!-- Mobile hero image — mobilemaa.png (hidden on desktop) -->
+  <img class="hero-durga-bg hero-durga-mobile" src="images/mobilemaa.png" alt="">
   <!-- Gradient veil: left side opaque for text, right fades to show Maa Durga -->
   <div class="hero-bg-veil"></div>
 
@@ -408,25 +719,29 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
     <!-- Top info bar -->
     <div class="hero-info-bar rv">
       <span class="hib-date">🗓 October 17–18, 2026 · New Jersey</span>
-      <span class="hib-live"><span class="hib-dot"></span>Registrations Open Now</span>
     </div>
 
     <!-- MAIN TITLE BLOCK -->
     <div class="hero-main-block">
       <div class="hero-pre rv">আসছেন মা — শারদ উৎসব ২০২৬</div>
 
-      <div class="hero-headline">
+      <h1 class="hero-headline">
         <span class="hh-line hh-solid rv d1">DURGA</span>
         <span class="hh-line hh-outline rv d2">PUJA</span>
-      </div>
+      </h1>
 
       <div class="hero-sub-row rv d2">
         <span class="hero-loc-tag">📍 Jo Ann Magistro PAC · East Brunswick NJ</span>
         <span class="hero-year-badge">2026</span>
       </div>
+      <div class="hero-date-highlight rv d2">
+        <span class="hdh-day">SAT–SUN</span>
+        <span class="hdh-sep">·</span>
+        <span class="hdh-date">OCTOBER 17 – 18</span>
+      </div>
 
       <div class="hero-ctas rv d3">
-        <a href="events.html#tickets" class="btn btn-red btn-xl">Get Your Passes</a>
+        <a href="events.html#tickets" class="btn btn-red btn-xl" id="heroPassBtn">Get Your Passes</a>
         <a href="sponsorship.html" class="btn btn-outline btn-xl">Become a Sponsor</a>
       </div>
     </div>
@@ -459,7 +774,192 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
       </div>
     </div>
   </div>
+
+  <!-- ══ SPONSOR CIRCLES — DESKTOP RIGHT COLUMN ══
+       Each item: [tagline info LEFT] [dotted line] [circle RIGHT]
+       Vertical stack, right-anchored to hero edge -->
+  <div class="sph-overlay">
+
+    <!-- PC Chandra: Star Sponsor — circle LEFT, text RIGHT -->
+    <div class="sph-star">
+      <div class="sph-orbit sph-orbit-lg">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-ring sph-r3"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="https://cdn.shopify.com/s/files/1/0697/8945/0462/files/New_163.714px59_3.webp?v=1737715600"
+                 alt="PC Chandra Jewellers"
+                 style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:.95rem;color:#8B1A1A;letter-spacing:.06em&quot;>PC CHANDRA</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info sph-star-info">
+        <div class="sph-star-badge">★ &nbsp; Star Sponsor &nbsp; ★</div>
+        <p class="sph-poem">সোনার আলোয় মায়ের পূজা সাজে,<br>পিসি চন্দ্রের শুভ আশীর্বাদে।</p>
+        <p class="sph-tagline-main">Where gold meets God — since 1939</p>
+      </div>
+    </div>
+
+  <!-- Gold sponsors: 2×2+1 pyramid grid -->
+  <div class="sph-gold-grid">
+
+    <!-- New York Life -->
+    <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="sph-gold-item">
+      <div class="sph-orbit sph-orbit-sm">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png"
+                 alt="New York Life" style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-size:.44rem;font-weight:700;color:#003087;line-height:1.2&quot;>NY LIFE</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info">
+        <div class="sph-tagline-item">Protecting families for 180+ years</div>
+        <div class="sph-name">New York Life</div>
+      </div>
+    </a>
+
+    <!-- RK Jewels -->
+    <a href="https://rkjewels.com" target="_blank" rel="noopener" class="sph-gold-item">
+      <div class="sph-orbit sph-orbit-sm">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="https://rkjewels.com/cdn/shop/files/Rk_Logo_PNG_Transparent.png?v=1707330978"
+                 alt="RK Jewels" style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-size:.5rem;font-weight:700;color:#8B0000&quot;>RK JEWELS</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info">
+        <div class="sph-tagline-item">22K gold, crafted with devotion</div>
+        <div class="sph-name">RK Jewels</div>
+      </div>
+    </a>
+
+    <!-- Tanishq -->
+    <a href="https://www.tanishq.com" target="_blank" rel="noopener" class="sph-gold-item">
+      <div class="sph-orbit sph-orbit-sm">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Tanishq_Logo.svg/250px-Tanishq_Logo.svg.png"
+                 alt="Tanishq" style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-size:.52rem;font-style:italic;font-family:serif;color:#7A4A10&quot;>tanishq</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info">
+        <div class="sph-tagline-item">India's gold, your story</div>
+        <div class="sph-name">Tanishq</div>
+      </div>
+    </a>
+
+    <!-- ICICI Bank -->
+    <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="sph-gold-item">
+      <div class="sph-orbit sph-orbit-sm">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="images/logo_icici.png"
+                 alt="ICICI Bank" style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-size:.48rem;font-weight:700;color:#B02A1D&quot;>ICICI</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info">
+        <div class="sph-tagline-item">Bridging India &amp; America</div>
+        <div class="sph-name">ICICI Bank</div>
+      </div>
+    </a>
+
+    <!-- Sona Jewelers: spans both columns, centered -->
+    <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="sph-gold-item sph-gold-solo">
+      <div class="sph-orbit sph-orbit-sm">
+        <div class="sph-ring sph-r1"></div>
+        <div class="sph-ring sph-r2"></div>
+        <div class="sph-lc">
+          <div class="sph-logo-pill">
+            <img src="https://www.sonajewelers.com/wp-content/uploads/2022/03/cropped-SONa-Logo.png"
+                 alt="Sona Jewelers" style="display:block"
+                 onerror="this.outerHTML='<span style=&quot;font-size:.44rem;font-weight:700;letter-spacing:.08em&quot;>SONA</span>'">
+          </div>
+        </div>
+      </div>
+      <div class="sph-dotline"></div>
+      <div class="sph-item-info">
+        <div class="sph-tagline-item">Where gold becomes legacy</div>
+        <div class="sph-name">Sona Jewelers</div>
+      </div>
+    </a>
+
+  </div><!-- end sph-gold-grid -->
+
+  </div>
+  <!-- ══ END SPONSOR CIRCLES ══ -->
+
 </section>
+
+<!-- ═══════ MOBILE ONLY: Artist teaser + PC Chandra sponsor band ═══════
+     Hidden on desktop via CSS (.mob-highlights{display:none})
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="mob-highlights">
+
+  <!-- Performing Artists horizontal scroll -->
+  <div class="mob-artist-strip">
+    <div class="mob-artist-header">
+      <span class="mob-ah-eyebrow">✦ UTSOV 2026 Line-Up</span>
+      <a href="artists.html" class="mob-ah-link">View All →</a>
+    </div>
+    <div class="mob-artist-scroll">
+
+      <!-- Night 1: Iman Chakraborty -->
+      <div class="mob-artist-card mac-v1">
+        <div class="mac-night">Night 1 · Oct 17</div>
+        <div class="mac-name">Iman Chakraborty</div>
+        <div class="mac-role">Rabindra Sangeet · Folk</div>
+        <div class="mac-award">🏆 National Award Winner</div>
+        <a href="artists.html" class="mac-link">Profile &amp; Info →</a>
+      </div>
+
+      <!-- Night 2: Sourendro–Soumyojit -->
+      <div class="mob-artist-card mac-v2">
+        <div class="mac-night">Night 2 · Oct 18</div>
+        <div class="mac-name">Sourendro–Soumyojit</div>
+        <div class="mac-role">Bengali Classical · Folk</div>
+        <div class="mac-award">✦ SS Brothers</div>
+        <a href="artists.html" class="mac-link">Profile &amp; Info →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PC Chandra Title Sponsor strip -->
+  <div class="mob-sponsor-band">
+    <div class="msb-label">Title Sponsor</div>
+    <div class="msb-logo-wrap">
+      <img src="https://cdn.shopify.com/s/files/1/0697/8945/0462/files/New_163.714px59_3.webp?v=1737715600"
+           alt="PC Chandra Jewellers" class="msb-logo"
+           onerror="this.parentNode.innerHTML='<span style=\'font-family:Bebas+Neue,sans-serif;font-size:.9rem;color:#8B1A1A;letter-spacing:.06em\'>PC CHANDRA</span>'">
+    </div>
+    <div class="msb-tagline">সোনার গয়না · Since 1939</div>
+  </div>
+
+</div>
+<!-- END MOBILE HIGHLIGHTS -->
 
 <!-- GARLAND -->
 <div class="garland-band"></div>
@@ -531,7 +1031,7 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
   </div>
   <div class="days-row">
     <div class="day-pillar rv" data-ritual="🌿">
-      <img class="day-bg-img" src="day_shasthi.jpg" alt="">
+      <img class="day-bg-img" src="images/day_shasthi.jpg" alt="">
       <span class="dp-number">৬</span>
       <span class="dp-name-bn">ষষ্ঠী</span>
       <span class="dp-name-en">SHASHTHI</span>
@@ -539,7 +1039,7 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
       <p class="dp-desc">Bodhan — the formal awakening of Maa Durga. At dusk, the Goddess is invoked from the bilva tree. The festival begins with the lighting of the first lamp.</p>
     </div>
     <div class="day-pillar rv d1" data-ritual="🌸">
-      <img class="day-bg-img" src="day_saptami.jpg" alt="">
+      <img class="day-bg-img" src="images/day_saptami.jpg" alt="">
       <span class="dp-number">৭</span>
       <span class="dp-name-bn">সপ্তমী</span>
       <span class="dp-name-en">SAPTAMI</span>
@@ -547,7 +1047,7 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
       <p class="dp-desc">Predawn ritual bathing of Nabapatrika, the sacred plantain. The Goddess's eyes are ceremonially opened in Chakkhu Daan. Worship begins in full.</p>
     </div>
     <div class="day-pillar highlight rv d2" data-ritual="🪷">
-      <img class="day-bg-img" src="day_ashtami.jpg" alt="">
+      <img class="day-bg-img" src="images/day_ashtami.jpg" alt="">
       <span class="dp-highlight-badge">Most Auspicious</span>
       <span class="dp-number">৮</span>
       <span class="dp-name-bn">অষ্টমী</span>
@@ -556,7 +1056,7 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
       <p class="dp-desc">The holiest day. Pushpanjali — flower offerings. Kumari Puja — a young girl worshipped as the living Goddess. Sandhi Puja at the precise juncture of Ashtami and Navami.</p>
     </div>
     <div class="day-pillar rv d3" data-ritual="🔥">
-      <img class="day-bg-img" src="day_navami.jpg" alt="">
+      <img class="day-bg-img" src="images/day_navami.jpg" alt="">
       <span class="dp-number">৯</span>
       <span class="dp-name-bn">নবমী</span>
       <span class="dp-name-en">NAVAMI</span>
@@ -564,7 +1064,7 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
       <p class="dp-desc">Dhunuchi Naach — the mesmerizing incense-lamp dance to dhak beats. Hom fire ritual. The final night of full worship. A night of music, dance, and divine surrender.</p>
     </div>
     <div class="day-pillar rv d4" data-ritual="🔴">
-      <img class="day-bg-img" src="day_dashami.jpg" alt="">
+      <img class="day-bg-img" src="images/day_dashami.jpg" alt="">
       <span class="dp-number">১০</span>
       <span class="dp-name-bn">দশমী</span>
       <span class="dp-name-en">DASHAMI</span>
@@ -590,59 +1090,42 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
 </section>
 
 <div class="section-white">
-  <!-- Nandi Sisters -->
+  <!-- Iman Chakraborty -->
   <div class="artist-row rv">
     <div class="ar-visual ar-v1">
-      <img class="ar-photo" src="artist_nandi.jpg" alt="Nandi Sisters" style="object-position:center 20%">
+      <img class="ar-photo" src="images/artist_iman.jpg" alt="Iman Chakraborty" style="object-position:center 18%">
       <div class="ar-visual-overlay"></div>
     </div>
     <div class="ar-text">
       <span class="ar-eyebrow">✦ Headliner — Oct 17 · Evening</span>
-      <h3 class="ar-name">Nandi Sisters</h3>
-      <span class="ar-role">Bollywood &amp; Folk Fusion</span>
-      <p class="ar-bio">Rising stars mentored by A.R. Rahman, the Nandi Sisters have taken India's music world by storm with their stunning harmonies, Carnatic roots, and electric stage presence. Their viral Balcony Concert series has brought joy to millions. UTSOV 2026 is their New Jersey debut.</p>
+      <h3 class="ar-name">Iman Chakraborty</h3>
+      <span class="ar-role">Rabindra Sangeet and Folk &amp; Contemporary</span>
+      <p class="ar-bio">National Award-winning vocalist whose voice has moved audiences from Kolkata to New York. Iman Chakraborty's extraordinary blend of Rabindra Sangeet, Bengali folk, and contemporary music makes her one of India's most beloved and versatile performers. On <strong>Saturday, October 17th</strong>, she brings an unforgettable evening of melody, nostalgia, and celebration to the UTSOV stage.</p>
       <div class="ar-tags">
-        <span class="ar-tag">Bollywood</span><span class="ar-tag">Folk</span><span class="ar-tag">Carnatic</span><span class="ar-tag">Duo</span>
+        <span class="ar-tag">Rabindra Sangeet</span><span class="ar-tag">Bengali Folk</span><span class="ar-tag">National Award</span><span class="ar-tag">Contemporary</span>
       </div>
       <a href="artists.html" class="ar-link">Full Profile →</a>
     </div>
   </div>
 
-  <!-- Rupankar -->
+  <!-- Sourendro-Soumyojit -->
   <div class="artist-row reversed rv">
     <div class="ar-visual ar-v2">
-      <img class="ar-photo" src="artist_rupankar.jpg" alt="Rupankar Bagchi" style="object-position:38% 28%">
+      <img class="ar-photo" src="images/artist_sourendro.jpg" alt="Sourendro–Soumyojit" style="object-position:center 30%">
       <div class="ar-visual-overlay" style="background:linear-gradient(to left,transparent 60%,rgba(26,10,61,.18) 100%)"></div>
     </div>
     <div class="ar-text">
       <span class="ar-eyebrow">✦ Headliner — Oct 18 · Evening</span>
-      <h3 class="ar-name">Rupankar Bagchi</h3>
-      <span class="ar-role">Bengali Folk &amp; Modern</span>
-      <p class="ar-bio">The beloved voice of Bengal. National Award-winning artist whose songs are woven into the fabric of Bengali life — from the intimacy of kitchen radios to the grandeur of concert stages. His music bridges folk, Rabindrasangeet, and contemporary Bengali pop across generations.</p>
+      <h3 class="ar-name">Sourendro–Soumyojit</h3>
+      <span class="ar-role">Rabindra Sangeet and Folk &amp; Contemporary · <em>SS Brothers</em></span>
+      <p class="ar-bio">Bengal's most celebrated musical duo bring to UTSOV a magical fusion of timeless Bengali classics, Rabindra Sangeet, folk traditions, and contemporary favorites. Sourendro–Soumyojit have spent decades weaving the full emotional spectrum of Bengal into their music — from devotion to joy to longing. <strong>Sunday, October 18th</strong> will be an evening of pure soul.</p>
       <div class="ar-tags">
-        <span class="ar-tag">Bengali Folk</span><span class="ar-tag">Modern</span><span class="ar-tag">Rabindra</span>
+        <span class="ar-tag">Bengali Classical</span><span class="ar-tag">Rabindrasangeet</span><span class="ar-tag">Folk</span><span class="ar-tag">SS Brothers</span>
       </div>
       <a href="artists.html" class="ar-link">Full Profile →</a>
     </div>
   </div>
 
-  <!-- Lakkhichhara -->
-  <div class="artist-row rv">
-    <div class="ar-visual ar-v3">
-      <img class="ar-photo" src="artist_lak.jpg" alt="Lakkhichhara & Raju Das Baul" style="object-position:center 22%">
-      <div class="ar-visual-overlay"></div>
-    </div>
-    <div class="ar-text">
-      <span class="ar-eyebrow">✦ Grand Finale — Oct 18</span>
-      <h3 class="ar-name">Lakkhichhara<br>&amp; Raju Das Baul</h3>
-      <span class="ar-role">Baul &amp; Folk Fusion</span>
-      <p class="ar-bio">A rare convergence of Baul mysticism and modern Bengali folk. Lakkhichhara have redefined how a generation hears their cultural roots; Raju Das Baul is a living embodiment of the wandering minstrel tradition. Together — raw, joyful, transcendent.</p>
-      <div class="ar-tags">
-        <span class="ar-tag">Baul</span><span class="ar-tag">Folk Rock</span><span class="ar-tag">Fusion</span>
-      </div>
-      <a href="artists.html" class="ar-link">Full Profile →</a>
-    </div>
-  </div>
 </div>
 
 <!-- ═══════════════ TRADITIONS (white, 2x2 big grid) ═══════════════════════ -->
@@ -653,28 +1136,28 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
   </div>
   <div class="traditions-grid">
     <div class="trad-card rv" data-bg="🥁">
-      <img class="trad-bg-img" src="trad_dhak.jpg" alt="">
+      <img class="trad-bg-img" src="images/trad_dhak.jpg" alt="">
       <span class="tc-icon-big">🥁</span>
       <h3 class="tc-name">DHAK<br>BEATS</h3>
       <span class="tc-name-bn">ঢাকের বাজনা</span>
       <p class="tc-desc">The thunderous heartbeat of the festival. Hereditary dhaki drummers play the large barrel drum that announces the Goddess's arrival. When the dhak sounds, every Bengali heart knows — Maa has come. The rhythm is ancient, primal, and utterly unforgettable.</p>
     </div>
     <div class="trad-card rv d1" data-bg="🔥">
-      <img class="trad-bg-img" src="trad_dhunuchi.jpg" alt="" style="object-position:center 15%">
+      <img class="trad-bg-img" src="images/trad_dhunuchi.jpg" alt="" style="object-position:center 15%">
       <span class="tc-icon-big">🪔</span>
       <h3 class="tc-name">DHUNUCHI<br>NAACH</h3>
       <span class="tc-name-bn">ধুনুচি নাচ</span>
       <p class="tc-desc">Devotees hold clay pots of burning coconut husks and incense, dancing barefoot before the Goddess. An act of total surrender — the body becomes prayer. Performed to the dhak's hypnotic beat, this sacred dance transcends the physical and touches the divine.</p>
     </div>
     <div class="trad-card rv d2" data-bg="🔴">
-      <img class="trad-bg-img" src="trad_sindoor.jpg" alt="">
+      <img class="trad-bg-img" src="images/trad_sindoor.jpg" alt="">
       <span class="tc-icon-big">🔴</span>
       <h3 class="tc-name">SINDOOR<br>KHELA</h3>
       <span class="tc-name-bn">সিঁদুর খেলা</span>
       <p class="tc-desc">On Dashami, married women apply vermilion — sindoor — to the Goddess and to each other. A joyful, tearful, deeply emotional ritual. The red sindoor is simultaneously a blessing, a celebration of Shakti, and a farewell that breaks every heart.</p>
     </div>
     <div class="trad-card rv d3" data-bg="🍽️">
-      <img class="trad-bg-img" src="trad_bhog.jpg" alt="">
+      <img class="trad-bg-img" src="images/trad_bhog.jpg" alt="">
       <span class="tc-icon-big">🍽️</span>
       <h3 class="tc-name">COMMUNITY<br>BHOG</h3>
       <span class="tc-name-bn">ভোগ প্রসাদ</span>
@@ -744,34 +1227,127 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
 <!-- GARLAND -->
 <div class="garland-band"></div>
 
-<!-- ═══════════════ SPONSORS (cream section) ═════════════════════════════ -->
-<section class="section-cream">
-  <div class="s-in">
-    <div class="sponsor-feature rv">
-      <div class="sf-badge" style="background:linear-gradient(160deg,#8B1A1A,#5C0000);display:flex;flex-direction:column;align-items:center;gap:.5rem">
-        <div class="sf-tier" style="font-size:.5rem;letter-spacing:.25em">TITLE SPONSOR</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:#E8C97A;line-height:.9;text-align:center;letter-spacing:.04em">PC<br>CHANDRA</div>
-        <div style="font-family:'Josefin Sans',sans-serif;font-size:.55rem;color:rgba(255,253,248,.5);letter-spacing:.15em;text-transform:uppercase">Jewellers Est. 1964</div>
-        <div style="width:50px;height:2px;background:linear-gradient(90deg,transparent,#E8C97A,transparent);margin:.2rem 0"></div>
-        <div style="font-family:'Noto Serif Bengali',serif;font-size:.85rem;color:rgba(232,201,122,.7)">সোনার গয়না</div>
+<!-- ════════════════════════════════════════════════════════
+     SPONSOR STRIP — rangoli circles — DESKTOP (≥941px) ONLY
+     Mobile sees .mob-sponsor-band inside .mob-highlights
+     ════════════════════════════════════════════════════════ -->
+
+<!-- ════════ OLD sp-showcase — replaced by spn-strip above ════════ -->
+<section class="sp-showcase" style="display:none" aria-hidden="true">
+  <div class="sp-inner">
+
+    <div class="sp-eyebrow rv">UTSOV 2026 &nbsp;·&nbsp; Proudly Supported By</div>
+
+    <!-- ── STAR SPONSOR: PC Chandra ── -->
+    <div class="sp-star-wrap rv">
+      <div class="sp-star-crown">Star Sponsor</div>
+
+      <div class="sp-logo-orb">
+        <div class="sp-logo-box">
+          <img src="https://cdn.shopify.com/s/files/1/0697/8945/0462/files/New_163.714px59_3.webp?v=1737715600"
+               alt="PC Chandra Jewellers"
+               style="max-height:58px;max-width:190px;object-fit:contain;display:block"
+               onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:2rem;color:#8B1A1A;letter-spacing:.06em&quot;>PC CHANDRA</span>'">
+        </div>
       </div>
-      <div class="sf-content">
-        <h3>Where Gold Meets Devotion</h3>
-        <p style="font-style:italic;font-size:1.1rem;color:var(--red-dark);border-left:3px solid var(--saffron);padding-left:1rem;margin-bottom:1rem">"যেমন সোনা দেবীকে সাজায়, তেমনি পিসি চন্দ্র সাজায় আমাদের প্রতিটি শুভমুহূর্ত।"<br><span style="font-family:'Josefin Sans',sans-serif;font-size:.65rem;color:var(--on-cream-muted);letter-spacing:.1em">As gold adorns the Goddess, PC Chandra adorns every auspicious moment of our lives.</span></p>
-        <p>For over six decades, PC Chandra Jewellers has been the keeper of Bengali dreams — present at every bride's moment, every child's first gold, every puja that calls for something precious. Their partnership with UTSOV is a meeting of two souls equally devoted to Bengali heritage, community, and the timeless beauty of tradition.</p>
-        <a href="sponsorship.html" class="btn btn-outline">Become a Partner →</a>
-      </div>
+
+      <p class="sp-poem">
+        সোনার আলোয় মায়ের পূজা সাজে,<br>
+        পিসি চন্দ্রের শুভ আশীর্বাদে।
+      </p>
+      <p class="sp-poem-trans">As gold adorns the Goddess, PC Chandra's blessings illuminate every sacred moment</p>
+      <p class="sp-tagline">Adorning Bengali traditions, one auspicious moment at a time</p>
+      <p class="sp-since">Title Sponsor &nbsp;·&nbsp; Est. 1939 &nbsp;·&nbsp; Kolkata &amp; New Jersey</p>
     </div>
-    <div class="s-eyebrow s-eyebrow-red rv" style="display:block;margin-bottom:1.5rem">Community Partners</div>
-    <div class="sponsors-grid-4 rv d1">
-      <div class="sp-tile">PC Chandra<small>Gold Partner</small></div>
-      <div class="sp-tile">BOAS NJ<small>Community Partner</small></div>
-      <div class="sp-tile">Community Health NJ<small>Health Partner</small></div>
-      <div class="sp-tile vacant">Your Brand Here<small>Become a Sponsor</small></div>
+
+    <!-- ── GOLD SPONSORS ── -->
+    <div class="sp-gold-divider rv">
+      <span>✦ &nbsp; Gold Sponsors &nbsp; ✦</span>
     </div>
-    <div style="text-align:center;margin-top:2.5rem" class="rv">
-      <a href="sponsorship.html" class="btn btn-red btn-xl">View Packages →</a>
+
+    <div class="sp-gold-row rv">
+
+      <!-- New York Life -->
+      <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="sp-card">
+        <div class="sp-card-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png"
+               alt="New York Life Insurance"
+               style="max-height:68px;max-width:150px;object-fit:contain"
+               onerror="this.outerHTML='<div style=&quot;font-size:.85rem;font-weight:700;color:#003087;text-align:center;line-height:1.3&quot;>NEW YORK<br>LIFE</div>'">
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-card-name">New York Life</div>
+          <div class="sp-card-line">Protecting South Asian families with trust for 180+ years</div>
+          <div class="sp-gold-badge">Gold Sponsor</div>
+        </div>
+      </a>
+
+      <!-- RK Jewels -->
+      <a href="https://rkjewels.com" target="_blank" rel="noopener" class="sp-card">
+        <div class="sp-card-logo">
+          <img src="https://rkjewels.com/cdn/shop/files/Rk_Logo_PNG_Transparent.png?v=1707330978"
+               alt="RK Jewels"
+               style="max-height:88px;max-width:160px;object-fit:contain"
+               onerror="this.outerHTML='<div style=&quot;font-size:1.5rem;font-weight:700;color:#8B0000&quot;>RK JEWELS</div>'">
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-card-name">RK Jewels</div>
+          <div class="sp-card-line">22K gold artistry at the heart of Iselin, Oak Tree Rd</div>
+          <div class="sp-gold-badge">Gold Sponsor</div>
+        </div>
+      </a>
+
+      <!-- Tanishq -->
+      <a href="https://www.tanishq.com" target="_blank" rel="noopener" class="sp-card">
+        <div class="sp-card-logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Tanishq_Logo.svg/250px-Tanishq_Logo.svg.png"
+               alt="Tanishq"
+               style="max-height:64px;max-width:175px;object-fit:contain"
+               onerror="this.outerHTML='<div style=&quot;font-size:1.5rem;font-style:italic;font-family:serif;color:#7A4A10&quot;>tanishq</div>'">
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-card-name">Tanishq</div>
+          <div class="sp-card-line">India's most cherished fine jewelry — a Titan legacy</div>
+          <div class="sp-gold-badge">Gold Sponsor</div>
+        </div>
+      </a>
+
+      <!-- ICICI Bank -->
+      <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="sp-card">
+        <div class="sp-card-logo">
+          <img src="images/logo_icici.png"
+               alt="ICICI Bank"
+               style="max-width:150px;max-height:100px;object-fit:contain"
+               onerror="this.outerHTML='<div style=&quot;font-size:1.1rem;font-weight:700;color:#B02A1D&quot;>ICICI BANK</div>'">
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-card-name">ICICI Bank</div>
+          <div class="sp-card-line">Your trusted bridge between India and America</div>
+          <div class="sp-gold-badge">Gold Sponsor</div>
+        </div>
+      </a>
+
+      <!-- Sona Jewelers -->
+      <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="sp-card">
+        <div class="sp-card-logo">
+          <img src="https://www.sonajewelers.com/wp-content/uploads/2022/03/cropped-SONa-Logo.png"
+               alt="Sona Jewelers"
+               style="max-height:88px;max-width:172px;object-fit:contain"
+               onerror="this.outerHTML='<div style=&quot;font-size:1rem;font-weight:700;letter-spacing:.12em&quot;>SONA JEWELERS</div>'">
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-card-name">Sona Jewelers</div>
+          <div class="sp-card-line">Iselin's pioneering jeweler — 4.7★ across 1,300+ reviews</div>
+          <div class="sp-gold-badge">Gold Sponsor</div>
+        </div>
+      </a>
+
+    </div><!-- /.sp-gold-row -->
+
+    <div style="text-align:center;margin-top:3rem" class="rv">
+      <a href="sponsorship.html" class="btn" style="background:transparent;border:1.5px solid rgba(201,168,76,.38);color:rgba(201,168,76,.75);font-size:.63rem;letter-spacing:.18em;padding:.75rem 2.2rem">View All Sponsors &amp; Packages →</a>
     </div>
+
   </div>
 </section>
 
@@ -784,9 +1360,9 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
         <h2 class="s-title-huge on-red rv d1" style="margin-top:.3rem">More Than<br>a Festival</h2>
         <p class="s-body on-red rv d2">UTSOV is rooted in the belief that celebration and compassion are inseparable. The Divine Mother shelters all her children — and we honor her by caring for ours. Every year, UTSOV's community unites to support organizations in New Jersey and across India.</p>
         <div class="phil-stats rv d2">
-          <div class="pstat"><div class="ps-n">8+</div><div class="ps-l">Organizations Supported</div></div>
-          <div class="pstat"><div class="ps-n">10+</div><div class="ps-l">Years of Giving</div></div>
-          <div class="pstat"><div class="ps-n">2</div><div class="ps-l">Countries Reached</div></div>
+          <div class="pstat"><div class="ps-n">12+</div><div class="ps-l">Organizations Supported</div></div>
+          <div class="pstat"><div class="ps-n">13+</div><div class="ps-l">Years of Service</div></div>
+          <div class="pstat"><div class="ps-n">3+</div><div class="ps-l">Countries Reached</div></div>
           <div class="pstat"><div class="ps-n">∞</div><div class="ps-l">Lives Touched</div></div>
         </div>
         <div style="margin-top:2rem" class="rv">
@@ -815,62 +1391,249 @@ footer{background:var(--red-dark);border-top:1px solid rgba(255,253,248,.1)}
   </div>
 </section>
 
+</main>
 <!-- ═══════════════ FOOTER ═════════════════════════════════════════════ -->
 <footer>
   <div class="ft-in">
-    <div class="ft-grid">
+    <div class="ft-top">
       <div class="ft-brand">
-        <div class="ft-brand-logo">
-          <img src="logo_utsov.png" alt="UTSOV">
-        </div>
+        <div class="ft-brand-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
         <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
-        <div class="ft-socials">
-          <a href="#" class="ft-social-btn" aria-label="Instagram">📷</a>
-          <a href="#" class="ft-social-btn" aria-label="Facebook">👤</a>
-          <a href="#" class="ft-social-btn" aria-label="YouTube">▶️</a>
-        </div>
+        <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
-      <div class="ft-col">
-        <h5>Navigate</h5>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="artists.html">Artists</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="philanthropy.html">Philanthropy</a></li>
-          <li><a href="sponsorship.html">Sponsor</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h5>Get Involved</h5>
-        <ul>
-          <li><a href="events.html#tickets">Get Passes</a></li>
-          <li><a href="sponsorship.html">Become a Sponsor</a></li>
-          <li><a href="contact.html#volunteer">Volunteer</a></li>
-          <li><a href="philanthropy.html#donate">Donate</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h5>Contact</h5>
-        <ul>
-          <li>(201) 787-6861</li>
-          <li><a href="mailto:utsov@utsov.org">utsov@utsov.org</a></li>
-          <li>46 Linden Ln, Plainsboro, NJ</li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">YouTube</a></li>
-        </ul>
-      </div>
+      <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
     </div>
-    <div class="ft-bottom">
-      <span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3) Non-Profit</span>
-      <div class="ft-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    <div class="ft-contacts">
+      <div class="ftc-label">Team Contacts</div>
+      <div class="ftc-team"><span class="ftc-person"><span class="ftc-n">Ayan Chattaraj</span><a href="tel:+12017876861" class="ftc-p">201.787.6861</a></span><span class="ftc-person"><span class="ftc-n">Goutam De</span><a href="tel:+15165191434" class="ftc-p">516.519.1434</a></span><span class="ftc-person"><span class="ftc-n">Joydeep Chakraborty</span><a href="tel:+17325434928" class="ftc-p">732.543.4928</a></span><span class="ftc-person"><span class="ftc-n">Subrata Maitra</span><a href="tel:+16468723639" class="ftc-p">646.872.3639</a></span></div>
+      <div class="ftc-meta"><a href="mailto:utsov@utsov.org">utsov@utsov.org</a><span class="ftc-dot">·</span><span class="ftc-addr">46 Linden Ln, Plainsboro, NJ 08536</span></div>
     </div>
+    <div class="ft-bottom"><span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3)</span><div class="ft-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></div></div>
   </div>
 </footer>
 
-<div class="floating-durga" title="জয় মা দুর্গা">
-  <img src="maa1_corner.png" alt="Jai Maa Durga" style="width:80px;height:auto;display:block">
-</div>
+<!-- ═══ STRUCTURED DATA / JSON-LD SCHEMAS ═══ -->
+
+<!-- 1. Event Schema — most critical for "durga puja near me" Google ranking -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "UTSOV Durga Puja 2026",
+  "alternateName": ["Durga Puja New Jersey 2026", "UTSOV 2026", "Bengali Festival New Jersey"],
+  "description": "UTSOV Durga Puja 2026 is New Jersey's largest annual Durga Puja celebration. Two days of traditional worship, world-class live cultural concerts, Pushpanjali, Dhunuchi Naach, Sindoor Khela, Community Bhog, Mela Bazaar, children's art competition, and talent show. Organized by Utsov Inc., a 501(c)(3) non-profit.",
+  "startDate": "2026-10-17T09:00:00-04:00",
+  "endDate": "2026-10-18T22:00:00-04:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Jo Ann Magistro Performing Arts Center",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "East Brunswick",
+      "addressLocality": "East Brunswick",
+      "addressRegion": "NJ",
+      "postalCode": "08816",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "40.4188",
+      "longitude": "-74.4229"
+    }
+  },
+  "image": ["https://utsov.org/images/logo_utsov.png"],
+  "url": "https://utsov.org/",
+  "organizer": {
+    "@type": "Organization",
+    "name": "Utsov Inc.",
+    "url": "https://utsov.org",
+    "email": "utsov@utsov.org",
+    "telephone": "+12017876861",
+    "nonprofitStatus": "Nonprofit501c3"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Day Pass",
+      "price": "45",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://utsov.org/events.html#tickets",
+      "validFrom": "2026-01-01"
+    },
+    {
+      "@type": "Offer",
+      "name": "Weekend Pass",
+      "price": "75",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://utsov.org/events.html#tickets",
+      "validFrom": "2026-01-01"
+    },
+    {
+      "@type": "Offer",
+      "name": "Family of 4",
+      "price": "240",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://utsov.org/events.html#tickets",
+      "validFrom": "2026-01-01"
+    }
+  ],
+  "performer": [
+    {"@type": "Person", "name": "Iman Chakraborty"},
+    {"@type": "PerformingGroup", "name": "Sourendro–Soumyojit"}
+  ],
+  "inLanguage": ["en", "bn"],
+  "keywords": "Durga Puja, New Jersey, Bengali festival, Hindu festival, Navratri, East Brunswick, NJ, tri-state, Pushpanjali, Dhunuchi Naach, Sindoor Khela, Visarjan, Bengali music, Baul music, Bollywood concert"
+}
+</script>
+
+<!-- 2. Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "UTSOV Inc.",
+  "alternateName": ["UTSOV", "Utsov Durga Puja New Jersey"],
+  "url": "https://utsov.org",
+  "logo": "https://utsov.org/images/logo_utsov.png",
+  "description": "UTSOV is a 501(c)(3) non-profit organization hosting New Jersey's annual Durga Puja celebration. Founded over a decade ago, UTSOV unites the South Asian community through culture, devotion, and philanthropy.",
+  "foundingDate": "2014",
+  "nonprofitStatus": "Nonprofit501c3",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "46 Linden Ln",
+    "addressLocality": "Plainsboro",
+    "addressRegion": "NJ",
+    "postalCode": "08536",
+    "addressCountry": "US"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-201-787-6861",
+    "email": "utsov@utsov.org",
+    "contactType": "customer service",
+    "areaServed": ["New Jersey", "New York", "Connecticut", "Pennsylvania"],
+    "availableLanguage": ["English", "Bengali"]
+  },
+  "sameAs": [
+    "https://utsov.org",
+    "https://utsov2.web.app"
+  ],
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": "40.4188",
+      "longitude": "-74.4229"
+    },
+    "geoRadius": "100000"
+  }
+}
+</script>
+
+<!-- 3. WebSite Schema with SearchAction -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "UTSOV — Durga Puja New Jersey",
+  "url": "https://utsov.org",
+  "description": "Official website of UTSOV Durga Puja 2026 — New Jersey's largest Bengali festival. October 17-18, East Brunswick, NJ.",
+  "inLanguage": ["en", "bn"],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Utsov Inc.",
+    "logo": "https://utsov.org/images/logo_utsov.png"
+  }
+}
+</script>
+
+<!-- 4. FAQ Schema — generates rich snippet in Google results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where is Durga Puja celebrated near New Jersey?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UTSOV Durga Puja 2026 is held at Jo Ann Magistro Performing Arts Center in East Brunswick, New Jersey on October 17-18, 2026. It is the largest Durga Puja celebration in New Jersey and the tri-state area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is UTSOV Durga Puja?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UTSOV is New Jersey's premier annual Durga Puja celebration, organized by Utsov Inc. (501(c)(3) non-profit). It features two days of traditional puja rituals, live cultural concerts, Dhunuchi Naach, Sindoor Khela, Community Bhog, Mela Bazaar, and philanthropy programs serving thousands of families."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is Durga Puja 2026 in New Jersey?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UTSOV Durga Puja 2026 takes place on Saturday October 17 and Sunday October 18, 2026. Gates open at 9:00 AM both days. Evening concerts begin at 5:30 PM."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much are Durga Puja tickets in New Jersey?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UTSOV 2026 tickets start at $45 for a Day Pass, $75 for a Weekend Pass (both days), and $240 for a Family of 4. Children under 5 are free. Visit utsov.org/events.html for tickets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can anyone attend Durga Puja at UTSOV?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! UTSOV welcomes everyone regardless of background, faith, or heritage. Durga Puja is a celebration of joy, culture, and community open to all."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there parking at UTSOV Durga Puja?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, ample free parking is available at Jo Ann Magistro Performing Arts Center, East Brunswick, NJ. The venue is also accessible via NJ Transit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What food is available at UTSOV Durga Puja?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UTSOV serves authentic Bengali food including khichuri, luchi, alur dom, misti doi, rosogolla, and the sacred bhog prasad. The Community Bhog is included for all pass holders. Additional food vendors operate all day."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- 5. BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "UTSOV Durga Puja New Jersey",
+      "item": "https://utsov.org/"
+    }
+  ]
+}
+</script>
 
 <script>
 // COUNTDOWN
@@ -910,6 +1673,84 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
 },{threshold:.07,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv:not(.hero .rv)').forEach(el=>obs.observe(el));
+
+// Sponsor showcase — floating gold sparks (desktop only)
+(function(){
+  const w=document.getElementById('spSparks');
+  if(!w||window.innerWidth<941)return;
+  for(let i=0;i<22;i++){
+    const s=document.createElement('div');
+    s.className='sp-spark';
+    const sz=(Math.random()*2+1).toFixed(1);
+    s.style.cssText=`left:${(Math.random()*100).toFixed(1)}%;width:${sz}px;height:${sz}px;animation-duration:${(Math.random()*14+9).toFixed(1)}s;animation-delay:-${(Math.random()*18).toFixed(1)}s;opacity:${(Math.random()*.5+.25).toFixed(2)}`;
+    w.appendChild(s);
+  }
+})();
+</script>
+
+<!-- REGISTRATION COMING SOON MODAL (shared with events page) -->
+<style>
+#cs-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(10,0,0,.88);backdrop-filter:blur(12px);padding:1.5rem}
+#cs-overlay.open{display:flex}
+.cs-modal{background:linear-gradient(160deg,#3D0000 0%,#5C0000 35%,#1A0A00 100%);border:1px solid rgba(201,168,76,.35);border-radius:36px;max-width:580px;width:100%;padding:3rem 3.5rem;position:relative;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(139,26,26,.3)}
+.cs-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#8B1A1A,#E07830,#C9A84C,#E07830,#8B1A1A);border-radius:36px 36px 0 0}
+.cs-close{position:absolute;top:1.25rem;right:1.25rem;background:rgba(255,253,248,.1);border:1px solid rgba(255,253,248,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;color:rgba(255,253,248,.7);transition:background .2s}
+.cs-close:hover{background:rgba(255,253,248,.2)}
+.cs-diya{font-size:2.8rem;display:block;margin-bottom:1.25rem;animation:diyaFloat 3s ease-in-out infinite}
+.cs-badge{font-family:'Josefin Sans',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#C9A84C;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:9999px;padding:.3rem 1rem;display:inline-block;margin-bottom:1.5rem}
+.cs-bn{font-family:'Noto Serif Bengali',serif;font-size:clamp(1rem,2.5vw,1.25rem);color:rgba(255,253,248,.92);line-height:1.9;margin-bottom:1.5rem;font-weight:600}
+.cs-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,#E07830,transparent);margin:0 auto 1.5rem}
+.cs-en{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(.9rem,1.8vw,1.05rem);color:rgba(255,253,248,.65);line-height:1.85;margin-bottom:2rem}
+.cs-notify-wrap{display:flex;gap:.6rem;max-width:380px;margin:0 auto 1rem}
+.cs-notify-wrap input{flex:1;background:rgba(255,253,248,.08);border:1.5px solid rgba(255,253,248,.2);border-radius:9999px;padding:.65rem 1.25rem;font-family:'Josefin Sans',sans-serif;font-size:.68rem;color:#FFFDF8;letter-spacing:.04em;outline:none;transition:border-color .2s}
+.cs-notify-wrap input::placeholder{color:rgba(255,253,248,.35)}
+.cs-notify-wrap input:focus{border-color:rgba(201,168,76,.6)}
+.cs-notify-btn{background:linear-gradient(135deg,#C9A84C,#E07830);color:#2a0000;font-family:'Josefin Sans',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:9999px;padding:.65rem 1.25rem;cursor:pointer;white-space:nowrap;transition:transform .2s}
+.cs-notify-btn:hover{transform:translateY(-1px)}
+.cs-note{font-family:'Josefin Sans',sans-serif;font-size:.58rem;color:rgba(255,253,248,.3);letter-spacing:.06em}
+.cs-date-badge{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,253,248,.08);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:rgba(201,168,76,.8);letter-spacing:.06em}
+@media(max-width:540px){.cs-modal{padding:2.5rem 1.75rem}.cs-notify-wrap{flex-direction:column}}
+</style>
+
+<div id="cs-overlay" role="dialog" aria-modal="true" aria-label="Registration Opening Soon" onclick="if(event.target===this)closeComingSoon()">
+  <div class="cs-modal">
+    <button class="cs-close" onclick="closeComingSoon()" aria-label="Close">✕</button>
+    <span class="cs-diya">🪔</span>
+    <div class="cs-badge">UTSOV 2026 · 🎟 Early Bird Registration Opening Soon</div>
+    <p class="cs-bn">
+      আসছেন মা — শিউলির সুগন্ধে,<br>
+      কাশফুলের ছন্দে, এই শরতে।<br>
+      তোমার আসন সাজানো হচ্ছে —<br>
+      একটু অপেক্ষা করো, বন্ধু,<br>
+      শীঘ্রই খুলবে উৎসবের দ্বার।
+    </p>
+    <div class="cs-divider"></div>
+    <p class="cs-en">
+      The Mother is coming — carried on the fragrance of shiuli blossoms,<br>
+      in the soft sway of kash grass, this sacred autumn.<br>
+      Your seat at her festival is being lovingly prepared.<br>
+      Wait just a little, dear friend —<br>
+      <em>the doors of UTSOV 2026 will open soon.</em> ✦
+    </p>
+    <div class="cs-notify-wrap">
+      <input type="email" id="cs-email" placeholder="your@email.com" aria-label="Email for notification">
+      <button class="cs-notify-btn" onclick="handleNotify()">Notify Me</button>
+    </div>
+    <p class="cs-note">We'll send you one email when registration opens. No spam, ever.</p>
+    <div class="cs-date-badge">October 17 – 18, 2026 · East Brunswick, NJ</div>
+  </div>
+</div>
+
+<script>
+function showComingSoon(){document.getElementById('cs-overlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var e=document.getElementById('cs-email');if(e)e.focus();},300);}
+function closeComingSoon(){document.getElementById('cs-overlay').classList.remove('open');document.body.style.overflow='';}
+function handleNotify(){var email=document.getElementById('cs-email').value.trim();var btn=document.querySelector('.cs-notify-btn');if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('cs-email').style.borderColor='rgba(192,57,43,.7)';document.getElementById('cs-email').focus();return;}btn.textContent='Saving…';btn.disabled=true;fetch('api/contacts.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'add',name:'',email:email,topic:'notify-registration',message:'Notify me when registration opens — UTSOV 2026'})}).catch(function(){}).finally(function(){document.querySelector('.cs-notify-wrap').innerHTML='<p style="font-family:\'Noto Serif Bengali\',serif;font-size:1rem;color:rgba(255,253,248,.9);text-align:center;padding:.5rem 0;width:100%">🙏 ধন্যবাদ! আমরা জানাবো — Thank you! We\'ll let you know.</p>';var n=document.querySelector('.cs-note');if(n)n.style.display='none';});}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComingSoon();});
+// Intercept all "Get Passes" CTAs on the home page
+document.addEventListener('DOMContentLoaded',function(){
+  ['heroPassBtn'].concat([]).forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('click',function(e){e.preventDefault();showComingSoon();});});
+  document.querySelectorAll('a[href="events.html#tickets"],a[href="#tickets"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();showComingSoon();});});
+});
 </script>
 </body>
 </html>

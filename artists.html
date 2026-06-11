@@ -18,7 +18,7 @@
 <meta property="og:title" content="Artists &amp; Live Concerts — UTSOV Durga Puja 2026 New Jersey">
 <meta property="og:description" content="World-class live concerts at NJ's biggest Durga Puja. Oct 17-18, East Brunswick NJ. Bengali folk, Baul, Bollywood, and more.">
 <meta property="og:url" content="https://utsov.org/artists.html">
-<meta property="og:image" content="https://utsov.org/logo_utsov.png">
+<meta property="og:image" content="https://utsov.org/images/logo_utsov.png">
 <meta property="og:image:alt" content="UTSOV Durga Puja 2026 — Artists & Live Concerts New Jersey">
 <meta property="og:image:type" content="image/png">
 <meta property="og:locale" content="en_US">
@@ -29,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Live Artists at UTSOV Durga Puja 2026 — NJ">
 <meta name="twitter:description" content="World-class live concerts at NJ's biggest Durga Puja. Oct 17-18, East Brunswick NJ.">
-<meta name="twitter:image" content="https://utsov.org/logo_utsov.png">
+<meta name="twitter:image" content="https://utsov.org/images/logo_utsov.png">
 <meta name="twitter:image:alt" content="UTSOV Artists Live Concert Durga Puja New Jersey">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,11 +37,11 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red-dark:#5C0000;--red:#8B1A1A;--red-mid:#A52020;--red-bright:#C0392B;
+  --red-dark:#6B0E0E;--red:#9E2424;--red-mid:#B52E2E;--red-bright:#C0392B;
   --cream:#FFFDF8;--cream-warm:#FFF5EC;--ivory:#FFF0E5;--blush:#FFE8E0;
   --saffron:#E07830;--saffron-lt:#F09844;--marigold:#FF9933;
   --gold:#C9A84C;--gold-lt:#E8C97A;
-  --black:#1A0000;--on-red:rgba(255,255,255,.95);--on-red-muted:rgba(255,255,255,.62);
+  --black:#1A0000;--on-red:rgba(255,255,255,.95);--on-red-muted:rgba(255,255,255,.80);
   --on-cream:#1A0000;--on-cream-mid:#6B1010;--on-cream-muted:#9B3030;
   --bdr-red:rgba(139,26,26,.15);--bdr-gold:rgba(201,168,76,.4);--bdr-white:rgba(255,255,255,.18);
   --r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
@@ -123,7 +123,9 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .fa-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--blush);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.35rem 1rem;font-family:var(--f-label);font-size:.62rem;font-weight:700;color:var(--red);letter-spacing:.12em;text-transform:uppercase;width:fit-content}
 .fa-name{font-family:var(--f-display);font-size:clamp(2.5rem,4vw,3.8rem);color:var(--red-dark);line-height:.95;letter-spacing:.01em}
 .fa-role{font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--saffron);text-transform:uppercase}
-.fa-bio{font-size:1rem;color:var(--on-cream-mid);line-height:1.85}
+.fa-bio{font-size:1.08rem;color:var(--on-cream-mid);line-height:1.92}
+.fa-bio strong{color:var(--red-dark);font-weight:700}
+.fa-aka{font-family:var(--f-label);font-size:.68rem;color:var(--saffron-lt);letter-spacing:.09em;margin-top:.3rem;margin-bottom:.1rem;font-style:italic}
 .fa-tags{display:flex;flex-wrap:wrap;gap:.5rem}
 .fa-tag{background:var(--blush);border:1px solid var(--bdr-red);border-radius:var(--r-full);padding:.25rem .85rem;font-family:var(--f-label);font-size:.62rem;color:var(--on-cream-mid);letter-spacing:.06em;text-transform:uppercase}
 .fa-highlights{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
@@ -161,30 +163,43 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 
 /* FOOTER */
 footer{background:var(--red-dark);border-top:3px solid var(--gold)}
-.ft-in{max-width:1280px;margin:0 auto;padding:4rem 2rem 1.5rem}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
-.ft-brand-logo img{height:40px;width:auto;display:block;margin-bottom:1rem}
-.ft-brand-logo-fb{font-family:var(--f-display);font-size:2.2rem;color:var(--gold-lt);letter-spacing:.06em;display:block;margin-bottom:1rem}
-.ft-brand p{font-size:.82rem;color:var(--on-red-muted);line-height:1.8;max-width:28ch;margin-bottom:1.25rem}
-.ft-socials{display:flex;gap:.65rem}
-.ft-social-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;font-size:.85rem;text-decoration:none;transition:background .2s}
+.ft-in{max-width:1280px;margin:0 auto;padding:2.5rem 2rem 1.25rem}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.ft-brand-logo img{height:38px;width:auto;display:block;margin-bottom:.75rem}
+.ft-brand-logo-fb{font-family:var(--f-display);font-size:2rem;color:var(--gold-lt);letter-spacing:.06em;display:block;margin-bottom:.75rem}
+.ft-brand p{font-size:.76rem;color:var(--on-red-muted);line-height:1.72;max-width:28ch;margin-bottom:.85rem}
+.ft-socials{display:flex;gap:.4rem}
+.ft-social-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--bdr-white);display:flex;align-items:center;justify-content:center;font-size:.75rem;text-decoration:none;transition:background .2s}
 .ft-social-btn:hover{background:rgba(201,168,76,.25)}
-.ft-col h5{font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.18em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:1.1rem}
+.ft-col h5{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.18em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:.8rem}
 .ft-col ul{list-style:none}
-.ft-col ul li{font-size:.8rem;color:var(--on-red-muted);margin-bottom:.6rem}
-.ft-col ul li a{color:rgba(255,253,248,.5);text-decoration:none;transition:color .2s}
+.ft-col ul li{font-size:.73rem;color:var(--on-red-muted);margin-bottom:.42rem}
+.ft-col ul li a{color:rgba(255,253,248,.45);text-decoration:none;transition:color .2s}
 .ft-col ul li a:hover{color:var(--gold-lt)}
-.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:rgba(255,253,248,.3);flex-wrap:wrap;gap:.75rem}
-.ft-legal{display:flex;gap:1.5rem}
-.ft-legal a{color:rgba(255,253,248,.3);text-decoration:none;transition:color .2s}
+.ft-contacts{padding:.9rem 0 .8rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.ftc-label{font-family:var(--f-label);font-size:.5rem;font-weight:700;letter-spacing:.22em;color:rgba(201,168,76,.52);text-transform:uppercase;margin-bottom:.45rem}
+.ftc-team{display:flex;flex-wrap:wrap}
+.ftc-person{display:inline-flex;align-items:baseline;gap:.35rem;padding-right:.8rem;margin-right:.8rem;border-right:1px solid rgba(255,255,255,.1);line-height:1.95;font-family:var(--f-label)}
+.ftc-person:last-child{border-right:none;padding-right:0;margin-right:0}
+.ftc-n{font-size:.65rem;color:rgba(255,253,248,.58);font-weight:600}
+.ftc-p{font-size:.62rem;color:rgba(255,253,248,.28);text-decoration:none;transition:color .2s}
+.ftc-p:hover{color:var(--gold-lt)}
+.ftc-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-family:var(--f-label);font-size:.63rem;margin-top:.3rem}
+.ftc-meta a{color:rgba(255,253,248,.42);text-decoration:none;transition:color .2s}
+.ftc-meta a:hover{color:var(--gold-lt)}
+.ftc-dot{color:rgba(255,255,255,.14)}
+.ftc-addr{color:rgba(255,253,248,.26)}
+.ft-bottom{padding-top:1rem;display:flex;justify-content:space-between;align-items:center;font-size:.65rem;color:rgba(255,253,248,.24);flex-wrap:wrap;gap:.5rem}
+.ft-legal{display:flex;gap:1.2rem}
+.ft-legal a{color:rgba(255,253,248,.24);text-decoration:none;transition:color .2s}
 .ft-legal a:hover{color:var(--gold-lt)}
-@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:2rem}}
-@media(max-width:480px){.ft-grid{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}}
+@media(max-width:840px){.ft-top{grid-template-columns:1fr 1fr;gap:1.5rem}.ft-top>.ft-brand{grid-column:1/-1}.ftc-person{flex:0 0 50%;border-right:none;padding-right:0;margin-right:0;padding-bottom:.1rem}}
+@media(max-width:480px){.ft-top{grid-template-columns:1fr}.ft-bottom{justify-content:center;text-align:center}.ftc-person{flex:0 0 100%}}
 
 .floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
 @keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 /* ── DARK HERO + PETAL RAIN (utsov2.web.app style) ── */
-.page-hero.dark-hero{background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(92,0,0,.9) 0%,transparent 68%),radial-gradient(ellipse 80% 50% at 50% 110%,rgba(10,0,0,.92) 0%,transparent 55%),#0A0000}
+.page-hero.dark-hero{background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(130,15,15,.72) 0%,transparent 65%),radial-gradient(ellipse 80% 50% at 50% 110%,rgba(25,0,0,.75) 0%,transparent 55%),#2C0808}
 .dark-hero .ph-badge{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.45);color:#E8C97A}
 .dark-hero .ph-bn{color:rgba(245,224,176,.8)}
 .dark-hero .ph-title{color:#FFFFFF}
@@ -198,7 +213,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 <body>
 <header id="siteHeader">
   <nav aria-label="Main navigation">
-    <a href="index.html" class="nav-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=nav-logo-fb>UTSOV</span>'"></a>
+    <a href="index.html" class="nav-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=nav-logo-fb>UTSOV</span>'"></a>
     <ul id="navMenu">
       <li><a href="artists.html" class="active">Artists</a></li>
       <li><a href="events.html">Events</a></li>
@@ -233,15 +248,15 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <!-- Iman Chakraborty -->
     <div class="featured-artist rv">
       <div class="fa-visual" style="background:linear-gradient(135deg,#3D0000,#8B1A1A,#C0392B,#E07830)">
-        <img class="fa-photo" src="artist_iman.jpg" alt="Iman Chakraborty — National Award-winning vocalist performing at UTSOV Durga Puja 2026, New Jersey" style="object-position:center 18%">
+        <img class="fa-photo" src="images/artist_iman.jpg" alt="Iman Chakraborty — National Award-winning vocalist performing at UTSOV Durga Puja 2026, New Jersey" style="object-position:center 18%">
         <div class="fa-photo-overlay"></div>
-        <span class="fa-photo-label">Headliner — Oct 17</span>
+        <span class="fa-photo-label">Headliner — <strong>Sat, Oct 17</strong></span>
       </div>
       <div class="fa-content">
         <span class="fa-badge">✦ Opening Night Headliner</span>
         <h2 class="fa-name">Iman Chakraborty</h2>
-        <div class="fa-role">Rabindra Sangeet &amp; Bengali Folk</div>
-        <p class="fa-bio">National Award-winning voice who has captivated audiences across the globe with her soulful singing and electrifying stage presence. Renowned for her beautiful blend of Rabindra Sangeet, Bengali folk, and contemporary music, Iman promises an unforgettable evening of melody, nostalgia, and celebration, bringing the vibrant spirit of Bengal to the UTSAV stage on October 17, 2026.</p>
+        <div class="fa-role">Rabindra Sangeet and Folk &amp; Contemporary</div>
+        <p class="fa-bio">National Award-winning voice who has captivated audiences across the globe with her soulful singing and electrifying stage presence. Renowned for her beautiful blend of Rabindra Sangeet, Bengali folk, and contemporary music, Iman promises an unforgettable evening of melody, nostalgia, and celebration, bringing the vibrant spirit of Bengal to the UTSOV stage on <strong>Saturday, October 17th, 2026</strong>.</p>
         <div class="fa-tags">
           <span class="fa-tag">Rabindra Sangeet</span><span class="fa-tag">Bengali Folk</span><span class="fa-tag">National Award</span><span class="fa-tag">Contemporary</span>
         </div>
@@ -257,20 +272,21 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <!-- Sourendro-Soumyojit -->
     <div class="featured-artist reverse rv">
       <div class="fa-visual" style="background:linear-gradient(135deg,#1A0A3D,#4D2070,#9B2FA0,#D44EB0)">
-        <img class="fa-photo" src="artist_sourendro.jpg" alt="Sourendro–Soumyojit — Bengal's celebrated musical duo performing at UTSOV Durga Puja 2026, New Jersey" style="object-position:center 25%">
+        <img class="fa-photo" src="images/artist_sourendro.jpg" alt="Sourendro–Soumyojit — Bengal's celebrated musical duo performing at UTSOV Durga Puja 2026, New Jersey" style="object-position:center 25%">
         <div class="fa-photo-overlay"></div>
-        <span class="fa-photo-label">Headliner — Oct 18</span>
+        <span class="fa-photo-label">Headliner — <strong>Sun, Oct 18</strong></span>
       </div>
       <div class="fa-content">
         <span class="fa-badge">✦ Grand Evening Headliner</span>
         <h2 class="fa-name">Sourendro–Soumyojit</h2>
-        <div class="fa-role">Bengali Classical &amp; Contemporary</div>
-        <p class="fa-bio">Bengal's celebrated musical duo, bring to the stage a magical fusion of timeless Bengali classics, Rabindra Sangeet, folk traditions, and contemporary favorites. An unforgettable evening on October 18th, 2026 — soul-stirring melodies and breathtaking harmonies in a celebration of Bengal's greatest musical traditions.</p>
+        <div class="fa-aka">Popularly known as <strong>SS Brothers</strong></div>
+        <div class="fa-role">Rabindra Sangeet and Folk &amp; Contemporary</div>
+        <p class="fa-bio">Bengal's celebrated musical duo brings to the stage a magical fusion of timeless Bengali classics, Rabindra Sangeet, folk traditions, and contemporary favorites. Join them on <strong>Sunday, October 18th, 2026</strong> for an evening of soul-stirring melodies and breathtaking harmonies in celebration of Bengal's greatest musical traditions.</p>
         <div class="fa-tags">
           <span class="fa-tag">Bengali Classical</span><span class="fa-tag">Rabindrasangeet</span><span class="fa-tag">Folk</span><span class="fa-tag">Duo</span>
         </div>
         <div class="fa-highlights">
-          <div class="fa-hl"><span>Grammy</span><small>Nominated</small></div>
+          <div class="fa-hl"><span>National</span><small>Award Winner</small></div>
           <div class="fa-hl"><span>30+</span><small>Years in Music</small></div>
           <div class="fa-hl"><span>Bengali</span><small>Classics</small></div>
           <div class="fa-hl"><span>Headliner</span><small>Oct 18 Evening</small></div>
@@ -358,27 +374,25 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   </div>
 </section>
 
-<!-- Photo credits (required by CC BY-SA 4.0 license) -->
-<div style="background:var(--cream-warm);border-top:1px solid var(--bdr-red);padding:.75rem 2.5rem;text-align:right">
-  <p style="font-family:'Josefin Sans',sans-serif;font-size:.58rem;color:var(--on-cream-muted);letter-spacing:.06em">
-    Photo credits: Iman Chakraborty — Sudipto Bakshi / <a href="https://commons.wikimedia.org/wiki/File:ImanChakkoty_(cropped).jpg" target="_blank" rel="noopener" style="color:inherit">CC BY-SA 4.0</a> &nbsp;·&nbsp; Sourendro–Soumyojit — Debarshi Sarkar / <a href="https://commons.wikimedia.org/wiki/File:SoumyojitDas%26SourendroMullick.jpg" target="_blank" rel="noopener" style="color:inherit">CC BY-SA 4.0</a>
-  </p>
-</div>
 
 </main>
 <footer>
   <div class="ft-in">
-    <div class="ft-grid">
+    <div class="ft-top">
       <div class="ft-brand">
-        <div class="ft-brand-logo"><img src="logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
+        <div class="ft-brand-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
         <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
-        <div class="ft-socials"><a href="#" class="ft-social-btn">📷</a><a href="#" class="ft-social-btn">👤</a><a href="#" class="ft-social-btn">▶️</a></div>
+        <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
       <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
       <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
-      <div class="ft-col"><h5>Contact</h5><ul><li>(201) 787-6861</li><li><a href="mailto:utsov@utsov.org">utsov@utsov.org</a></li><li>46 Linden Ln, Plainsboro, NJ</li><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
     </div>
-    <div class="ft-bottom"><span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3)</span><div class="ft-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+    <div class="ft-contacts">
+      <div class="ftc-label">Team Contacts</div>
+      <div class="ftc-team"><span class="ftc-person"><span class="ftc-n">Ayan Chattaraj</span><a href="tel:+12017876861" class="ftc-p">201.787.6861</a></span><span class="ftc-person"><span class="ftc-n">Goutam De</span><a href="tel:+15165191434" class="ftc-p">516.519.1434</a></span><span class="ftc-person"><span class="ftc-n">Joydeep Chakraborty</span><a href="tel:+17325434928" class="ftc-p">732.543.4928</a></span><span class="ftc-person"><span class="ftc-n">Subrata Maitra</span><a href="tel:+16468723639" class="ftc-p">646.872.3639</a></span></div>
+      <div class="ftc-meta"><a href="mailto:utsov@utsov.org">utsov@utsov.org</a><span class="ftc-dot">·</span><span class="ftc-addr">46 Linden Ln, Plainsboro, NJ 08536</span></div>
+    </div>
+    <div class="ft-bottom"><span>&copy; 2026 Utsov Inc. All rights reserved. | 501(c)(3)</span><div class="ft-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></div></div>
   </div>
 </footer>
 
@@ -414,10 +428,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   ]
 }
 </script>
-
-<div class="floating-durga" title="জয় মা দুর্গা">
-  <img src="maa1_corner.png" alt="Jai Maa Durga" style="width:80px;height:auto;display:block">
-</div>
 
 <script>
 // ── PETAL RAIN (utsov2.web.app) ──
@@ -470,7 +480,7 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
   <div class="cs-modal">
     <button class="cs-close" onclick="closeComingSoon()" aria-label="Close">✕</button>
     <span class="cs-diya">🪔</span>
-    <div class="cs-badge">UTSOV 2026 · Registration Opening Soon</div>
+    <div class="cs-badge">UTSOV 2026 · 🎟 Early Bird Registration Opening Soon</div>
     <p class="cs-bn">
       আসছেন মা — শিউলির সুগন্ধে,<br>
       কাশফুলের ছন্দে, এই শরতে।<br>

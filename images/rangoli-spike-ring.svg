@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">
+  <!-- 24 red teardrop/flame spikes pointing outward — Bengali rangoli outer ring style -->
+  <!-- Spike: narrow base at radius 47, curved sides, pointed tip at radius 59 -->
+  <g fill="#BF2A14" opacity="0.92">
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(15)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(30)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(45)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(60)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(75)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(90)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(105)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(120)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(135)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(150)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(165)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(180)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(195)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(210)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(225)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(240)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(255)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(270)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(285)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(300)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(315)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(330)"/>
+    <path d="M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z" transform="rotate(345)"/>
+  </g>
+  <!-- 12 inner gold dots between spikes for depth -->
+  <g fill="#C9A84C" opacity="0.55">
+    <circle cx="0" cy="-44" r="1.8"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(30)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(60)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(90)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(120)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(150)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(180)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(210)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(240)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(270)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(300)"/>
+    <circle cx="0" cy="-44" r="1.8" transform="rotate(330)"/>
+  </g>
+</svg>

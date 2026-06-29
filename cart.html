@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Passes — UTSOV Durga Puja 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#6B0E0E;--red:#9E2424;
+  --cream:#FFFDF8;--ivory:#FFF0E5;--blush:#FFE8E0;
+  --saffron:#E07830;--marigold:#FF9933;--gold:#C9A84C;--gold-lt:#E8C97A;
+  --on-cream:#1A0000;--on-cream-mid:#6B1010;--on-cream-muted:#9B3030;
+  --bdr-red:rgba(139,26,26,.15);
+  --r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
+  --f-display:'Bebas Neue',sans-serif;--f-serif:'EB Garamond',serif;--f-label:'Josefin Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+header{background:var(--red-dark);padding:1rem 2rem;border-bottom:2px solid rgba(201,168,76,.4)}
+.hdr-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.hdr-logo{font-family:var(--f-display);font-size:1.8rem;color:var(--gold-lt);letter-spacing:.06em}
+.hdr-nav{display:flex;gap:1.5rem;align-items:center}
+.hdr-nav a{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,253,248,.45);transition:color .2s}
+.hdr-nav a:hover{color:var(--gold-lt)}
+.hdr-badge{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.35);border-radius:var(--r-full);padding:.3rem .9rem;font-family:var(--f-label);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-lt)}
+
+/* MAIN */
+main{flex:1;padding:2.5rem 2rem}
+.page-in{max-width:1100px;margin:0 auto}
+
+/* PAGE HEADER */
+.page-hdr{text-align:center;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--bdr-red)}
+.page-hdr h1{font-family:var(--f-display);font-size:clamp(3rem,6vw,5rem);color:var(--red-dark);letter-spacing:.01em;line-height:.95;margin-bottom:.4rem}
+.page-hdr p{font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);font-size:1rem}
+
+/* PASS CARDS GRID */
+.passes-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:1.25rem}
+.passes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+.pass-card{background:var(--ivory);border:2px solid var(--bdr-red);border-radius:var(--r-xl);padding:1.75rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s;position:relative;overflow:hidden}
+.pass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--saffron),var(--gold));opacity:0;transition:opacity .25s}
+.pass-card:hover{border-color:rgba(139,26,26,.35);box-shadow:0 8px 32px rgba(139,26,26,.1)}
+.pass-card:hover::before{opacity:1}
+.pass-card.selected{border-color:var(--red);box-shadow:0 8px 40px rgba(139,26,26,.18)}
+.pass-card.selected::before{opacity:1}
+.pc-badge{font-family:var(--f-label);font-size:.56rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:.6rem}
+.pc-name{font-family:var(--f-display);font-size:2rem;color:var(--red-dark);letter-spacing:.02em;line-height:.95;margin-bottom:.25rem}
+.pc-tagline{font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);font-size:.85rem;margin-bottom:1.1rem}
+.pc-price{font-family:var(--f-display);font-size:2.8rem;color:var(--red-dark);letter-spacing:.01em;line-height:1;margin-bottom:.2rem}
+.pc-price span{font-family:var(--f-label);font-size:.65rem;color:var(--on-cream-muted);letter-spacing:.06em;font-weight:600;vertical-align:middle;margin-left:.3rem}
+.pc-savings{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);margin-bottom:1.1rem;height:.9rem}
+.pc-divider{height:1px;background:var(--bdr-red);margin:.9rem 0}
+.pc-incl{list-style:none;display:flex;flex-direction:column;gap:.45rem;flex:1;margin-bottom:1.5rem}
+.pc-incl li{display:flex;align-items:flex-start;gap:.45rem;font-size:.82rem;color:var(--on-cream-mid);line-height:1.5}
+.pc-incl li::before{content:'✦';color:var(--saffron);font-size:.5rem;flex-shrink:0;margin-top:.25rem}
+.pc-qty-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.pc-qty-label{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--on-cream-muted)}
+.stepper{display:flex;align-items:center;background:rgba(139,26,26,.05);border:1.5px solid var(--bdr-red);border-radius:var(--r-full)}
+.stepper button{background:none;border:none;color:var(--on-cream-muted);font-size:1rem;width:32px;height:32px;cursor:pointer;transition:color .2s;display:flex;align-items:center;justify-content:center;border-radius:var(--r-full)}
+.stepper button:hover{color:var(--red)}
+.stepper button:disabled{opacity:.3;cursor:default}
+.stepper-val{font-family:var(--f-display);font-size:1.2rem;color:var(--red-dark);width:28px;text-align:center;user-select:none}
+.pc-line-total{margin-left:auto;font-family:var(--f-display);font-size:1.3rem;color:var(--red-dark);letter-spacing:.01em}
+.btn-add{background:var(--red-dark);color:#FFF8F0;font-family:var(--f-label);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:var(--r-full);padding:.7rem 1.25rem;cursor:pointer;width:100%;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-add:hover{background:var(--red);transform:translateY(-1px)}
+.btn-add.added{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#2A0000}
+
+/* POPULAR BADGE */
+.pc-popular{position:absolute;top:1.1rem;right:1.1rem;background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#2a0000;font-family:var(--f-label);font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:var(--r-full);padding:.25rem .65rem}
+
+/* CART SECTION */
+.cart-section{background:linear-gradient(155deg,#3D0000 0%,#5C1010 40%,#2A0808 100%);border-radius:var(--r-xl);padding:2rem 2.5rem;border:1.5px solid rgba(201,168,76,.3);display:none}
+.cart-section.visible{display:block}
+.cart-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.cart-hdr-title{font-family:var(--f-display);font-size:2rem;color:#FFF;letter-spacing:.02em;line-height:1}
+.cart-count{background:var(--gold);color:#2a0000;font-family:var(--f-label);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:var(--r-full);padding:.25rem .75rem}
+.cart-rows{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+.cart-row{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;background:rgba(255,253,248,.05);border:1px solid rgba(255,253,248,.08);border-radius:var(--r-lg)}
+.cr-name{font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.06em;color:rgba(255,253,248,.85)}
+.cr-detail{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.42);letter-spacing:.04em;margin-top:.15rem}
+.cr-price{font-family:var(--f-display);font-size:1.5rem;color:var(--gold);letter-spacing:.02em}
+.cr-remove{background:none;border:none;color:rgba(255,253,248,.25);font-size:.9rem;cursor:pointer;padding:.25rem .4rem;border-radius:var(--r-md);transition:color .2s}
+.cr-remove:hover{color:rgba(255,100,100,.7)}
+.cart-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);margin-bottom:1.5rem}
+.cart-total-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.75rem}
+.cart-total-label{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,253,248,.45)}
+.cart-total-val{font-family:var(--f-display);font-size:3rem;color:var(--gold);letter-spacing:.02em;line-height:1}
+.btn-checkout{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#2A0000;font-family:var(--f-label);font-size:.82rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-full);padding:1rem 2rem;cursor:pointer;width:100%;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(224,120,48,.5);display:block;text-align:center;text-decoration:none}
+.btn-checkout:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(224,120,48,.65)}
+.cart-secure{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.85rem;font-family:var(--f-label);font-size:.58rem;color:rgba(255,253,248,.22);letter-spacing:.06em}
+.cart-clear{text-align:center;margin-top:.85rem;font-family:var(--f-label);font-size:.6rem;color:rgba(255,253,248,.28);letter-spacing:.06em;cursor:pointer;transition:color .2s}
+.cart-clear:hover{color:rgba(255,100,100,.6)}
+
+/* FOOTER */
+footer{background:var(--red-dark);border-top:2px solid rgba(201,168,76,.3);padding:1.25rem 2rem;text-align:center;font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.28);letter-spacing:.06em}
+footer a{color:rgba(255,253,248,.4);transition:color .2s}
+footer a:hover{color:var(--gold-lt)}
+
+/* DAY SELECTION */
+.day-select-wrap{margin-bottom:2.5rem}
+.day-select-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:1rem}
+.day-select-group{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.day-opt{cursor:pointer;flex:1;min-width:150px;max-width:240px}
+.day-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.day-opt-inner{background:var(--ivory);border:2px solid var(--bdr-red);border-radius:var(--r-lg);padding:1rem 1.5rem;transition:all .25s;text-align:center;height:100%}
+.day-opt:has(input:checked) .day-opt-inner{background:var(--blush);border-color:var(--red);box-shadow:0 4px 20px rgba(139,26,26,.14)}
+.day-opt-name{font-family:var(--f-display);font-size:1.4rem;color:var(--red-dark);letter-spacing:.02em;line-height:1}
+.day-opt-date{font-family:var(--f-label);font-size:.6rem;color:var(--on-cream-muted);letter-spacing:.06em;margin-top:.25rem}
+.day-opt-badge{font-family:var(--f-label);font-size:.52rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);margin-top:.4rem}
+
+/* STUDENT PASS NOTE */
+.pc-student-note{font-family:var(--f-label);font-size:.58rem;letter-spacing:.06em;color:var(--on-cream-muted);margin-top:.5rem;display:flex;align-items:center;gap:.3rem}
+
+@media(max-width:860px){.passes-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.passes-grid{grid-template-columns:1fr}.day-select-group{flex-direction:column}.day-opt{max-width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-in">
+    <a href="index.html" class="hdr-logo">UTSOV</a>
+    <div class="hdr-nav">
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+      <span class="hdr-badge">&#127882; Oct 17–18, 2026</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-in">
+
+    <div class="page-hdr">
+      <h1>Get Your Passes</h1>
+      <p>UTSOV Durga Puja 2026 &middot; Oct 17–18 &middot; East Brunswick, NJ</p>
+    </div>
+
+    <!-- DAY SELECTION -->
+    <div class="day-select-label">Step 1 &mdash; Choose Your Days</div>
+    <div class="day-select-group">
+      <label class="day-opt">
+        <input type="radio" name="days" value="both" checked onchange="onDayChange()">
+        <div class="day-opt-inner">
+          <div class="day-opt-name">Both Days</div>
+          <div class="day-opt-date">Sat Oct 17 &amp; Sun Oct 18</div>
+          <div class="day-opt-badge">Best Value</div>
+        </div>
+      </label>
+      <label class="day-opt">
+        <input type="radio" name="days" value="saturday" onchange="onDayChange()">
+        <div class="day-opt-inner">
+          <div class="day-opt-name">Saturday Only</div>
+          <div class="day-opt-date">Oct 17, 2026</div>
+          <div class="day-opt-badge">&nbsp;</div>
+        </div>
+      </label>
+      <label class="day-opt">
+        <input type="radio" name="days" value="sunday" onchange="onDayChange()">
+        <div class="day-opt-inner">
+          <div class="day-opt-name">Sunday Only</div>
+          <div class="day-opt-date">Oct 18, 2026</div>
+          <div class="day-opt-badge">&nbsp;</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="passes-label">Step 2 &mdash; Select a Pass</div>
+
+    <div class="passes-grid">
+
+      <!-- PASS 1: Single Adult -->
+      <div class="pass-card" id="card-1">
+        <div class="pc-badge">Adult Pass</div>
+        <div class="pc-name">Single<br>Day Pass</div>
+        <div class="pc-tagline" id="pc-tag-1">One adult, both days</div>
+        <div class="pc-price"><span id="pc-price-1">$85</span> <span id="pc-unit-1">per person</span></div>
+        <div class="pc-savings" id="pc-save-1">&nbsp;</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-incl">
+          <li id="pc-feat-1-access">Full access – selected day</li>
+          <li id="pc-feat-1-concert">Evening concert – selected day</li>
+          <li>Community Bhog meal</li>
+          <li>All puja rituals &amp; Aarti</li>
+          <li>Mela &amp; Shopping Bazaar</li>
+        </ul>
+        <div class="pc-qty-row">
+          <span class="pc-qty-label">Qty</span>
+          <div class="stepper">
+            <button onclick="stepQty(1,-1)" disabled id="minus-1">&#8722;</button>
+            <div class="stepper-val" id="qty-1">1</div>
+            <button onclick="stepQty(1,1)" id="plus-1">+</button>
+          </div>
+          <div class="pc-line-total" id="lt-1">$85</div>
+        </div>
+        <button class="btn-add" id="btn-1" onclick="addToCart(1)">&#128722; Add to Cart</button>
+      </div>
+
+      <!-- PASS 2: Couple -->
+      <div class="pass-card" id="card-2" style="position:relative">
+        <div class="pc-popular">Most Popular</div>
+        <div class="pc-badge">Couple Pass</div>
+        <div class="pc-name">Two<br>Day Passes</div>
+        <div class="pc-tagline" id="pc-tag-2">Two adults, both days</div>
+        <div class="pc-price"><span id="pc-price-2">$135</span> <span id="pc-unit-2">for 2</span></div>
+        <div class="pc-savings" id="pc-save-2">$67.50 per person &mdash; save vs two singles</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-incl">
+          <li>2 × full access Sat &amp; Sun</li>
+          <li>Both evening concerts</li>
+          <li>2 × Community Bhog meal</li>
+          <li>All puja rituals &amp; Aarti</li>
+          <li>Mela &amp; Shopping Bazaar</li>
+        </ul>
+        <div class="pc-qty-row">
+          <span class="pc-qty-label">Sets</span>
+          <div class="stepper">
+            <button onclick="stepQty(2,-1)" disabled id="minus-2">&#8722;</button>
+            <div class="stepper-val" id="qty-2">1</div>
+            <button onclick="stepQty(2,1)" id="plus-2">+</button>
+          </div>
+          <div class="pc-line-total" id="lt-2">$135</div>
+        </div>
+        <button class="btn-add" id="btn-2" onclick="addToCart(2)">&#128722; Add to Cart</button>
+      </div>
+
+      <!-- PASS 4: Student -->
+      <div class="pass-card" id="card-4">
+        <div class="pc-badge">Student Pass</div>
+        <div class="pc-name">Student<br>Pass</div>
+        <div class="pc-tagline" id="pc-tag-4">Both days &middot; Valid student ID at venue</div>
+        <div class="pc-price"><span id="pc-price-4">$65</span> <span id="pc-unit-4">per student</span></div>
+        <div class="pc-savings" id="pc-save-4">Student discount &mdash; ID verified at entry</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-incl">
+          <li>Full access per selected days</li>
+          <li>Evening concerts</li>
+          <li>Community Bhog meal</li>
+          <li>All puja rituals &amp; Aarti</li>
+          <li>Mela &amp; Shopping Bazaar</li>
+        </ul>
+        <div class="pc-student-note">&#9432; Valid student ID required at venue for entry</div>
+        <div class="pc-qty-row">
+          <span class="pc-qty-label">Qty</span>
+          <div class="stepper">
+            <button onclick="stepQty(4,-1)" disabled id="minus-4">&#8722;</button>
+            <div class="stepper-val" id="qty-4">1</div>
+            <button onclick="stepQty(4,1)" id="plus-4">+</button>
+          </div>
+          <div class="pc-line-total" id="lt-4">$65</div>
+        </div>
+        <button class="btn-add" id="btn-4" onclick="addToCart(4)">&#128722; Add to Cart</button>
+      </div>
+
+    </div>
+
+    <!-- CART -->
+    <div class="cart-section" id="cartSection">
+      <div class="cart-hdr">
+        <div class="cart-hdr-title">Your Cart</div>
+        <div class="cart-count" id="cartCount">0 passes</div>
+      </div>
+      <div class="cart-rows" id="cartRows"></div>
+      <div class="cart-divider"></div>
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cartTotal">$0.00</span>
+      </div>
+      <a href="checkout.html" class="btn-checkout" id="checkoutBtn">Proceed to Checkout &#8594;</a>
+      <div class="cart-secure">&#128274; Secure checkout powered by PayPal &middot; No PayPal account needed</div>
+      <div class="cart-clear" onclick="clearCart()">&#10005; Clear cart</div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <a href="events.html">Events</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a>
+  &mdash; &copy; 2026 Utsov Inc.
+</footer>
+
+<script>
+// Fixed pass prices — never change with day selection
+var PASSES = {
+  1: { label:'Adult Pass',   passesPerSet:1, setPrice:85  },
+  2: { label:'Couple Pass',  passesPerSet:2, setPrice:135 },
+  4: { label:'Student Pass', passesPerSet:1, setPrice:65  },
+};
+var DAY_LABELS   = { both:'Both Days (Oct 17–18)', saturday:'Saturday, Oct 17', sunday:'Sunday, Oct 18' };
+var DAY_TAG      = { both:'both days', saturday:'Saturday only', sunday:'Sunday only' };
+var DAY_ACCESS   = { both:'Full access – select one day', saturday:'Full access Saturday, Oct 17', sunday:'Full access Sunday, Oct 18' };
+var DAY_CONCERT  = { both:'Evening concert – select one day', saturday:'Saturday evening concert', sunday:'Sunday evening concert' };
+
+var selectedDays = 'both';
+var cardQty = { 1:1, 2:1, 4:1 };
+var cart = [];
+
+// ── day selection: prices stay fixed; auto-highlights the right card ───────────
+function onDayChange() {
+  var el = document.querySelector('input[name="days"]:checked');
+  selectedDays = el ? el.value : 'both';
+
+  // Cards 1 and 4 have day-variable taglines and features; card 2 always covers both days
+  document.getElementById('pc-tag-1').textContent          = 'One adult, ' + DAY_TAG[selectedDays];
+  document.getElementById('pc-feat-1-access').textContent  = DAY_ACCESS[selectedDays];
+  document.getElementById('pc-feat-1-concert').textContent = DAY_CONCERT[selectedDays];
+  document.getElementById('pc-tag-4').textContent          = 'One student · ' + DAY_TAG[selectedDays] + ' · ID at venue';
+
+  // Auto-select recommended card: Both Days → $135, single day → $85
+  clearCart();
+  addToCart(selectedDays === 'both' ? 2 : 1);
+}
+
+// ── card stepper ───────────────────────────────────────────────────────────────
+function stepQty(passId, delta) {
+  cardQty[passId] = Math.max(1, Math.min(5, cardQty[passId] + delta));
+  var sets = cardQty[passId];
+  document.getElementById('qty-' + passId).textContent = sets;
+  document.getElementById('lt-' + passId).textContent  = '$' + (sets * PASSES[passId].setPrice);
+  document.getElementById('minus-' + passId).disabled  = sets <= 1;
+  document.getElementById('plus-' + passId).disabled   = sets >= 5;
+}
+
+// ── add to cart ────────────────────────────────────────────────────────────────
+function addToCart(passId) {
+  var sets   = cardQty[passId];
+  var line   = sets * PASSES[passId].setPrice;
+  var passes = sets * PASSES[passId].passesPerSet;
+  cart = cart.filter(function(i){ return i.passId !== passId; });
+  cart.push({ passId:passId, sets:sets, totalPasses:passes, lineTotal:line, isStudent:(passId===4) });
+  renderCart();
+  highlightCard(passId);
+  document.getElementById('cartSection').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function highlightCard(passId) {
+  [1,2,4].forEach(function(id) {
+    document.getElementById('card-' + id).classList.toggle('selected', id === passId);
+  });
+  var btn = document.getElementById('btn-' + passId);
+  btn.textContent = '✓ Added to Cart';
+  btn.classList.add('added');
+  setTimeout(function() { btn.innerHTML = '&#128722; Update Cart'; btn.classList.add('added'); }, 1400);
+}
+
+// ── remove / clear ─────────────────────────────────────────────────────────────
+function removeItem(passId) {
+  cart = cart.filter(function(i){ return i.passId !== passId; });
+  document.getElementById('card-' + passId).classList.remove('selected');
+  var btn = document.getElementById('btn-' + passId);
+  btn.innerHTML = '&#128722; Add to Cart';
+  btn.classList.remove('added');
+  renderCart();
+}
+
+function clearCart() {
+  cart = [];
+  [1,2,4].forEach(function(id) {
+    document.getElementById('card-' + id).classList.remove('selected');
+    var btn = document.getElementById('btn-' + id);
+    btn.innerHTML = '&#128722; Add to Cart';
+    btn.classList.remove('added');
+  });
+  renderCart();
+}
+
+// ── render cart panel ──────────────────────────────────────────────────────────
+function renderCart() {
+  var section = document.getElementById('cartSection');
+  if (cart.length === 0) {
+    section.classList.remove('visible');
+    ['utsov_cart_qty','utsov_cart_amount','utsov_cart_days','utsov_cart_days_label','utsov_cart_is_student']
+      .forEach(function(k){ sessionStorage.removeItem(k); });
+    return;
+  }
+  section.classList.add('visible');
+  var totalPasses = cart.reduce(function(s,i){ return s + i.totalPasses; }, 0);
+  var grandTotal  = cart.reduce(function(s,i){ return s + i.lineTotal;   }, 0);
+  var hasStudent  = cart.some(function(i){ return i.isStudent; });
+  sessionStorage.setItem('utsov_cart_qty',        totalPasses);
+  sessionStorage.setItem('utsov_cart_amount',      grandTotal.toFixed(2));
+  sessionStorage.setItem('utsov_cart_days',        selectedDays);
+  sessionStorage.setItem('utsov_cart_days_label',  DAY_LABELS[selectedDays]);
+  sessionStorage.setItem('utsov_cart_is_student',  hasStudent ? '1' : '0');
+  document.getElementById('cartCount').textContent = totalPasses + ' pass' + (totalPasses !== 1 ? 'es' : '');
+  document.getElementById('cartTotal').textContent = '$' + grandTotal.toFixed(2);
+  var rows = document.getElementById('cartRows');
+  rows.innerHTML = '';
+  cart.forEach(function(item) {
+    var row = document.createElement('div');
+    row.className = 'cart-row';
+    row.innerHTML =
+      '<div>' +
+        '<div class="cr-name">' + PASSES[item.passId].label + '</div>' +
+        '<div class="cr-detail">' + item.sets + ' set' + (item.sets !== 1 ? 's' : '') +
+          ' · ' + DAY_LABELS[selectedDays] + ' · $' + PASSES[item.passId].setPrice + '/set</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:.9rem">' +
+        '<div class="cr-price">$' + item.lineTotal.toFixed(2) + '</div>' +
+        '<button class="cr-remove" onclick="removeItem(' + item.passId + ')" aria-label="Remove">&#10005;</button>' +
+      '</div>';
+    rows.appendChild(row);
+  });
+}
+
+// ── init ───────────────────────────────────────────────────────────────────────
+(function() {
+  var saved = parseInt(sessionStorage.getItem('utsov_cart_qty'), 10);
+  if (saved > 0) {
+    // Restore a prior session cart
+    var passId = saved <= 1 ? 1 : saved <= 2 ? 2 : 1;
+    var sets   = Math.max(1, Math.ceil(saved / PASSES[passId].passesPerSet));
+    cardQty[passId] = sets;
+    stepQty(passId, 0);
+    addToCart(passId);
+  } else {
+    // Fresh visit — auto-highlight the default recommendation for "Both Days"
+    onDayChange();
+  }
+})();
+</script>
+</body>
+</html>

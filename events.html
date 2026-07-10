@@ -180,28 +180,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
 .floating-durga{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99;animation:diyaFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(201,168,76,.75)) drop-shadow(0 4px 22px rgba(139,26,26,.35));cursor:default;width:80px;height:auto}
 @keyframes diyaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.paypal-btn-wrap{min-height:45px;margin-top:.5rem}
-/* ── COMING SOON MODAL ── */
-#cs-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(10,0,0,.88);backdrop-filter:blur(12px);padding:1.5rem}
-#cs-overlay.open{display:flex}
-.cs-modal{background:linear-gradient(160deg,#3D0000 0%,#5C0000 35%,#1A0A00 100%);border:1px solid rgba(201,168,76,.35);border-radius:var(--r-xl);max-width:580px;width:100%;padding:3rem 3.5rem;position:relative;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(139,26,26,.3)}
-.cs-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red),var(--saffron),var(--gold),var(--saffron),var(--red));border-radius:var(--r-xl) var(--r-xl) 0 0}
-.cs-close{position:absolute;top:1.25rem;right:1.25rem;background:rgba(255,253,248,.1);border:1px solid rgba(255,253,248,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;color:rgba(255,253,248,.7);transition:background .2s}
-.cs-close:hover{background:rgba(255,253,248,.2)}
-.cs-diya{font-size:2.8rem;display:block;margin-bottom:1.25rem;animation:diyaFloat 3s ease-in-out infinite}
-.cs-badge{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:var(--r-full);padding:.3rem 1rem;display:inline-block;margin-bottom:1.5rem}
-.cs-bn{font-family:'Noto Serif Bengali',serif;font-size:clamp(1rem,2.5vw,1.25rem);color:rgba(255,253,248,.92);line-height:1.9;margin-bottom:1.5rem;font-weight:600}
-.cs-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,var(--saffron),transparent);margin:0 auto 1.5rem}
-.cs-en{font-family:var(--f-serif);font-style:italic;font-size:clamp(.9rem,1.8vw,1.05rem);color:rgba(255,253,248,.65);line-height:1.85;margin-bottom:2rem}
-.cs-notify-wrap{display:flex;gap:.6rem;max-width:380px;margin:0 auto 1rem}
-.cs-notify-wrap input{flex:1;background:rgba(255,253,248,.08);border:1.5px solid rgba(255,253,248,.2);border-radius:var(--r-full);padding:.65rem 1.25rem;font-family:var(--f-label);font-size:.68rem;color:var(--cream);letter-spacing:.04em;outline:none;transition:border-color .2s}
-.cs-notify-wrap input::placeholder{color:rgba(255,253,248,.35)}
-.cs-notify-wrap input:focus{border-color:rgba(201,168,76,.6)}
-.cs-notify-btn{background:linear-gradient(135deg,var(--gold),var(--saffron));color:#2a0000;font-family:var(--f-label);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:var(--r-full);padding:.65rem 1.25rem;cursor:pointer;white-space:nowrap;transition:transform .2s}
-.cs-notify-btn:hover{transform:translateY(-1px)}
-.cs-note{font-family:var(--f-label);font-size:.58rem;color:rgba(255,253,248,.3);letter-spacing:.06em}
-.cs-date-badge{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,253,248,.08);font-family:var(--f-display);font-size:1.4rem;color:rgba(201,168,76,.8);letter-spacing:.06em}
-@media(max-width:540px){.cs-modal{padding:2.5rem 1.75rem}.cs-notify-wrap{flex-direction:column}}
 /* ── DARK HERO + PETAL RAIN (utsov2.web.app style) ── */
 .page-hero.dark-hero{background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(130,15,15,.72) 0%,transparent 65%),radial-gradient(ellipse 80% 50% at 50% 110%,rgba(25,0,0,.75) 0%,transparent 55%),#2C0808}
 .dark-hero .ph-badge{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.45);color:#E8C97A}
@@ -227,7 +205,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     </ul>
     <div class="nav-ctas">
       <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
-      <a href="#tickets" class="btn btn-red">Get Passes</a>
+      <a href="cart.html" class="btn btn-red">Get Passes</a>
     </div>
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
   </nav>
@@ -269,9 +247,18 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
             <div class="ei-icon">🙏</div>
             <div class="ei-content">
-              <div class="ei-name">Morning Puja &amp; Aarti</div>
-              <p class="ei-desc">Traditional morning worship with mantras, offerings, and pushpanjali. All devotees are welcome to participate.</p>
-              <span class="ei-loc">📍 Main Hall</span>
+              <div class="ei-name">Puja &amp; Anjali</div>
+              <p class="ei-desc">Traditional worship with mantras, offerings, and pushpanjali. All devotees are welcome to participate.</p>
+              <span class="ei-loc">📍 Cafeteria</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
+            <div class="ei-icon">🍚</div>
+            <div class="ei-content">
+              <div class="ei-name">Bhog Prasad</div>
+              <p class="ei-desc">Sacred food blessed and offered to the Goddess, shared with all devotees right after anjali — a small taste of grace before the day's festivities continue.</p>
+              <span class="ei-loc">📍 Cafeteria</span>
             </div>
           </div>
           <div class="event-item">
@@ -289,25 +276,16 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <div class="ei-content">
               <div class="ei-name">Mela &amp; Shopping Bazaar Opens</div>
               <p class="ei-desc">Browse traditional sarees, jewelry, sindoor, artisan crafts, clothing, and festive goods from vendors across the Indian subcontinent.</p>
-              <span class="ei-loc">📍 Ground Floor</span>
+              <span class="ei-loc">📍 Cafeteria Dining Area</span>
             </div>
           </div>
           <div class="event-item">
             <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
             <div class="ei-icon">🍛</div>
             <div class="ei-content">
-              <div class="ei-name">Authentic Bengali Lunch</div>
-              <p class="ei-desc">Luchi, alur dom, misti doi, rosogolla, chutney, and more. Taste Bengal in New Jersey.</p>
-              <span class="ei-loc">📍 Dining Hall</span>
-            </div>
-          </div>
-          <div class="event-item">
-            <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
-            <div class="ei-icon">🪔</div>
-            <div class="ei-content">
-              <div class="ei-name">Dhunuchi Naach Exhibition</div>
-              <p class="ei-desc">Watch master performers demonstrate the sacred incense-lamp dance. Community participation welcome during designated segments.</p>
-              <span class="ei-loc">📍 Main Stage</span>
+              <div class="ei-name"><a href="menu.html" style="color:inherit;text-decoration:none;border-bottom:1.5px dotted var(--red)">Sandhya Bhoj — Bengali Dinner</a></div>
+              <p class="ei-desc">Kosha mangsho, chingri malai curry, shahi paneer, garom roshogolla, and more royal Bengali flavors. <a href="menu.html" style="color:var(--red);font-weight:600">View full menu →</a></p>
+              <span class="ei-loc">📍 Cafeteria Dining</span>
             </div>
           </div>
           <div class="event-item">
@@ -323,7 +301,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
             <div class="ei-icon">🌙</div>
             <div class="ei-content">
-              <div class="ei-name">Evening Aarti &amp; Closing</div>
+              <div class="ei-name">Evening Aarti</div>
               <p class="ei-desc">Collective evening prayer and aarti ceremony. Day one concludes with the Goddess's blessing.</p>
               <span class="ei-loc">📍 Main Hall</span>
             </div>
@@ -344,9 +322,18 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
             <div class="ei-icon">🙏</div>
             <div class="ei-content">
-              <div class="ei-name">Morning Puja &amp; Pushpanjali</div>
+              <div class="ei-name">Puja &amp; Pushpanjali</div>
               <p class="ei-desc">The final day's morning worship — devotees offer flowers to the Goddess in a deeply moving collective ceremony. Sindoor offerings for married women.</p>
-              <span class="ei-loc">📍 Main Hall</span>
+              <span class="ei-loc">📍 Cafeteria</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
+            <div class="ei-icon">🍚</div>
+            <div class="ei-content">
+              <div class="ei-name">Bhog Prasad</div>
+              <p class="ei-desc">Sacred food blessed and offered to the Goddess, shared with all devotees right after pushpanjali — a small taste of grace before the day's farewell festivities begin.</p>
+              <span class="ei-loc">📍 Cafeteria</span>
             </div>
           </div>
           <div class="event-item">
@@ -364,16 +351,16 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <div class="ei-content">
               <div class="ei-name">Mela &amp; Bazaar Continues</div>
               <p class="ei-desc">Final day of shopping. Vendors often offer special prices. Don't miss the handloom sarees and handcrafted jewelry.</p>
-              <span class="ei-loc">📍 Ground Floor</span>
+              <span class="ei-loc">📍 Cafeteria Dining Area</span>
             </div>
           </div>
           <div class="event-item">
             <div class="ei-time-block"><div class="ei-time" style="font-size:.85rem;color:var(--on-cream-muted)">TBD</div><span class="ei-period"></span></div>
-            <div class="ei-icon">🍚</div>
+            <div class="ei-icon">🪔</div>
             <div class="ei-content">
-              <div class="ei-name">Bhog Prasad &amp; Community Lunch</div>
-              <p class="ei-desc">Sacred food offered to the Goddess and shared with all — khichuri, labra, payesh, chutney, sandesh. The act of shared bhog dissolves all boundaries.</p>
-              <span class="ei-loc">📍 Dining Hall</span>
+              <div class="ei-name">Dhunuchi Naach Exhibition</div>
+              <p class="ei-desc">Watch master performers demonstrate the sacred incense-lamp dance. Community participation welcome during designated segments.</p>
+              <span class="ei-loc">📍 Main Stage</span>
             </div>
           </div>
           <div class="event-item">
@@ -429,7 +416,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       </div>
       <div class="faq-item rv d2">
         <div class="faq-q"><span>Is food included in the ticket price?</span><div class="faq-arrow">▼</div></div>
-        <div class="faq-a"><p>Bhog prasad (sacred communal food) is included for all pass holders. Additional food is available for purchase from vendors throughout both days. <strong>Dinner options will also be available — these can be selected during registration (ticketing fees apply).</strong> We have a full Bengali menu including vegetarian and non-vegetarian options.</p></div>
+        <div class="faq-a"><p>Bhog prasad (sacred communal food) is included for all pass holders. Additional food is available for purchase from vendors throughout both days. <strong><a href="menu.html" style="color:var(--red)">Dinner options</a> will also be available — these can be selected during registration (ticketing fees apply).</strong> We have a full Bengali menu including vegetarian and non-vegetarian options — see the <a href="menu.html" style="color:var(--red)">full menu</a>.</p></div>
       </div>
       <div class="faq-item rv">
         <div class="faq-q"><span>Can non-Bengalis / non-Hindus attend?</span><div class="faq-arrow">▼</div></div>
@@ -457,7 +444,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
       <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
-      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="cart.html">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
     </div>
     <div class="ft-contacts">
       <div class="ftc-label">Team Contacts</div>
@@ -491,9 +478,9 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     }
   },
   "offers": [
-    {"@type":"Offer","name":"Day Pass","availability":"https://schema.org/PreOrder","url":"https://utsov.org/events.html#tickets"},
-    {"@type":"Offer","name":"Weekend Pass","availability":"https://schema.org/PreOrder","url":"https://utsov.org/events.html#tickets"},
-    {"@type":"Offer","name":"Family of 4","availability":"https://schema.org/PreOrder","url":"https://utsov.org/events.html#tickets"}
+    {"@type":"Offer","name":"Day Pass","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Weekend Pass","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Family of 4","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"}
   ],
   "organizer": {"@type":"Organization","name":"Utsov Inc.","url":"https://utsov.org","telephone":"+12017876861"}
 }
@@ -522,82 +509,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 }
 </script>
 
-<!-- REGISTRATION COMING SOON MODAL -->
-<div id="cs-overlay" role="dialog" aria-modal="true" aria-label="Registration Opening Soon" onclick="if(event.target===this)closeComingSoon()">
-  <div class="cs-modal">
-    <button class="cs-close" onclick="closeComingSoon()" aria-label="Close">✕</button>
-    <span class="cs-diya">🪔</span>
-    <div class="cs-badge">UTSOV 2026 · 🎟 Early Bird Registration Opening Soon</div>
-
-    <p class="cs-bn">
-      আসছেন মা — শিউলির সুগন্ধে,<br>
-      কাশফুলের ছন্দে, এই শরতে।<br>
-      তোমার আসন সাজানো হচ্ছে —<br>
-      একটু অপেক্ষা করো, বন্ধু,<br>
-      শীঘ্রই খুলবে উৎসবের দ্বার।
-    </p>
-
-    <div class="cs-divider"></div>
-
-    <p class="cs-en">
-      The Mother is coming — carried on the fragrance of shiuli blossoms,<br>
-      in the soft sway of kash grass, this sacred autumn.<br>
-      Your seat at her festival is being lovingly prepared.<br>
-      Wait just a little, dear friend —<br>
-      <em>the doors of UTSOV 2026 will open soon.</em> ✦
-    </p>
-
-    <div class="cs-notify-wrap">
-      <input type="email" id="cs-email" placeholder="your@email.com" aria-label="Email for notification">
-      <button class="cs-notify-btn" onclick="handleNotify()">Notify Me</button>
-    </div>
-    <p class="cs-note">We'll send you one email when registration opens. No spam, ever.</p>
-
-    <div class="cs-date-badge">October 17 – 18, 2026 · East Brunswick, NJ</div>
-  </div>
-</div>
-
-<script>
-function showComingSoon() {
-  document.getElementById('cs-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(function(){ document.getElementById('cs-email').focus(); }, 300);
-}
-function closeComingSoon() {
-  document.getElementById('cs-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function handleNotify() {
-  var email = document.getElementById('cs-email').value.trim();
-  var btn = document.querySelector('.cs-notify-btn');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('cs-email').style.borderColor = 'rgba(192,57,43,.7)';
-    document.getElementById('cs-email').focus();
-    return;
-  }
-  btn.textContent = 'Saving…';
-  btn.disabled = true;
-  fetch('api/contacts.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'add', name: '', email: email, topic: 'notify-registration', message: 'Notify me when registration opens — UTSOV 2026' })
-  }).catch(function(){}).finally(function(){
-    document.querySelector('.cs-notify-wrap').innerHTML = '<p style="font-family:\'Noto Serif Bengali\',serif;font-size:1rem;color:rgba(255,253,248,.9);text-align:center;padding:.5rem 0;width:100%">🙏 ধন্যবাদ! আমরা জানাবো — Thank you! We\'ll let you know.</p>';
-    document.querySelector('.cs-note').style.display = 'none';
-  });
-}
-document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeComingSoon(); });
-// Intercept footer "Get Passes" link on this page
-document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('a[href="#tickets"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      if(window.location.pathname.includes('events') || window.location.pathname === '/'){
-        // let it scroll naturally — the ticket section shows the coming-soon state inline
-      }
-    });
-  });
-});
-</script>
 <script>
 // ── PETAL RAIN (utsov2.web.app) ──
 (function(){

@@ -174,17 +174,18 @@ footer a:hover{color:var(--gold-lt)}
 
     <div class="passes-grid">
 
-      <!-- PASS 1: Single Adult -->
-      <div class="pass-card" id="card-1">
-        <div class="pc-badge">Adult Pass</div>
-        <div class="pc-name">Single<br>Day Pass</div>
-        <div class="pc-tagline" id="pc-tag-1">One adult, both days</div>
-        <div class="pc-price"><span id="pc-price-1">$85</span> <span id="pc-unit-1">per person</span></div>
-        <div class="pc-savings" id="pc-save-1">&nbsp;</div>
+      <!-- PASS 1: Patron (12+) -->
+      <div class="pass-card" id="card-1" style="position:relative">
+        <div class="pc-popular">Most Popular</div>
+        <div class="pc-badge">Patron Pass</div>
+        <div class="pc-name">Patron<br>Pass</div>
+        <div class="pc-tagline" id="pc-tag-1">Ages 12 &amp; above &middot; both days</div>
+        <div class="pc-price"><span id="pc-price-1">$135</span> <span id="pc-unit-1">per person</span></div>
+        <div class="pc-savings" id="pc-save-1">Patron (12+) &middot; Pujo + Bhog + Concert + <a href="menu.html" style="color:inherit">Dinner</a></div>
         <div class="pc-divider"></div>
         <ul class="pc-incl">
-          <li id="pc-feat-1-access">Full access – selected day</li>
-          <li id="pc-feat-1-concert">Evening concert – selected day</li>
+          <li id="pc-feat-1-access">Full access &ndash; both days</li>
+          <li id="pc-feat-1-concert">Both evening concerts</li>
           <li>Community Bhog meal</li>
           <li>All puja rituals &amp; Aarti</li>
           <li>Mela &amp; Shopping Bazaar</li>
@@ -196,35 +197,34 @@ footer a:hover{color:var(--gold-lt)}
             <div class="stepper-val" id="qty-1">1</div>
             <button onclick="stepQty(1,1)" id="plus-1">+</button>
           </div>
-          <div class="pc-line-total" id="lt-1">$85</div>
+          <div class="pc-line-total" id="lt-1">$135</div>
         </div>
         <button class="btn-add" id="btn-1" onclick="addToCart(1)">&#128722; Add to Cart</button>
       </div>
 
-      <!-- PASS 2: Couple -->
-      <div class="pass-card" id="card-2" style="position:relative">
-        <div class="pc-popular">Most Popular</div>
-        <div class="pc-badge">Couple Pass</div>
-        <div class="pc-name">Two<br>Day Passes</div>
-        <div class="pc-tagline" id="pc-tag-2">Two adults, both days</div>
-        <div class="pc-price"><span id="pc-price-2">$135</span> <span id="pc-unit-2">for 2</span></div>
-        <div class="pc-savings" id="pc-save-2">$67.50 per person &mdash; save vs two singles</div>
+      <!-- PASS 2: Kids (6–12) -->
+      <div class="pass-card" id="card-2">
+        <div class="pc-badge">Kids Pass</div>
+        <div class="pc-name">Kids<br>Pass</div>
+        <div class="pc-tagline" id="pc-tag-2">Ages 6&ndash;12 &middot; both days</div>
+        <div class="pc-price"><span id="pc-price-2">$85</span> <span id="pc-unit-2">per child</span></div>
+        <div class="pc-savings" id="pc-save-2">Kids (6&ndash;12) &middot; Pujo + Bhog + Concert + <a href="menu.html" style="color:inherit">Dinner</a></div>
         <div class="pc-divider"></div>
         <ul class="pc-incl">
-          <li>2 × full access Sat &amp; Sun</li>
-          <li>Both evening concerts</li>
-          <li>2 × Community Bhog meal</li>
+          <li id="pc-feat-2-access">Full access &ndash; both days</li>
+          <li id="pc-feat-2-concert">Both evening concerts</li>
+          <li>Community Bhog meal</li>
           <li>All puja rituals &amp; Aarti</li>
           <li>Mela &amp; Shopping Bazaar</li>
         </ul>
         <div class="pc-qty-row">
-          <span class="pc-qty-label">Sets</span>
+          <span class="pc-qty-label">Qty</span>
           <div class="stepper">
             <button onclick="stepQty(2,-1)" disabled id="minus-2">&#8722;</button>
             <div class="stepper-val" id="qty-2">1</div>
             <button onclick="stepQty(2,1)" id="plus-2">+</button>
           </div>
-          <div class="pc-line-total" id="lt-2">$135</div>
+          <div class="pc-line-total" id="lt-2">$85</div>
         </div>
         <button class="btn-add" id="btn-2" onclick="addToCart(2)">&#128722; Add to Cart</button>
       </div>
@@ -233,13 +233,13 @@ footer a:hover{color:var(--gold-lt)}
       <div class="pass-card" id="card-4">
         <div class="pc-badge">Student Pass</div>
         <div class="pc-name">Student<br>Pass</div>
-        <div class="pc-tagline" id="pc-tag-4">Both days &middot; Valid student ID at venue</div>
-        <div class="pc-price"><span id="pc-price-4">$65</span> <span id="pc-unit-4">per student</span></div>
-        <div class="pc-savings" id="pc-save-4">Student discount &mdash; ID verified at entry</div>
+        <div class="pc-tagline" id="pc-tag-4">High school / college &middot; both days</div>
+        <div class="pc-price"><span id="pc-price-4">$105</span> <span id="pc-unit-4">per student</span></div>
+        <div class="pc-savings" id="pc-save-4">Student discount &middot; ID verified at entry</div>
         <div class="pc-divider"></div>
         <ul class="pc-incl">
-          <li>Full access per selected days</li>
-          <li>Evening concerts</li>
+          <li id="pc-feat-4-access">Full access &ndash; both days</li>
+          <li id="pc-feat-4-concert">Both evening concerts</li>
           <li>Community Bhog meal</li>
           <li>All puja rituals &amp; Aarti</li>
           <li>Mela &amp; Shopping Bazaar</li>
@@ -252,7 +252,7 @@ footer a:hover{color:var(--gold-lt)}
             <div class="stepper-val" id="qty-4">1</div>
             <button onclick="stepQty(4,1)" id="plus-4">+</button>
           </div>
-          <div class="pc-line-total" id="lt-4">$65</div>
+          <div class="pc-line-total" id="lt-4">$105</div>
         </div>
         <button class="btn-add" id="btn-4" onclick="addToCart(4)">&#128722; Add to Cart</button>
       </div>
@@ -285,51 +285,72 @@ footer a:hover{color:var(--gold-lt)}
 </footer>
 
 <script>
-// Fixed pass prices — never change with day selection
+// Prices per person, vary by day selection — Early Bird 1 (07/10 – 08/09)
 var PASSES = {
-  1: { label:'Adult Pass',   passesPerSet:1, setPrice:85  },
-  2: { label:'Couple Pass',  passesPerSet:2, setPrice:135 },
-  4: { label:'Student Pass', passesPerSet:1, setPrice:65  },
+  1: { label:'Patron Pass',  passesPerSet:1, prices:{both:135, saturday:85,  sunday:75}  },
+  2: { label:'Kids Pass',    passesPerSet:1, prices:{both:85,  saturday:50,  sunday:50}  },
+  4: { label:'Student Pass', passesPerSet:1, prices:{both:105, saturday:70,  sunday:60}  },
 };
-var DAY_LABELS   = { both:'Both Days (Oct 17–18)', saturday:'Saturday, Oct 17', sunday:'Sunday, Oct 18' };
-var DAY_TAG      = { both:'both days', saturday:'Saturday only', sunday:'Sunday only' };
-var DAY_ACCESS   = { both:'Full access – select one day', saturday:'Full access Saturday, Oct 17', sunday:'Full access Sunday, Oct 18' };
-var DAY_CONCERT  = { both:'Evening concert – select one day', saturday:'Saturday evening concert', sunday:'Sunday evening concert' };
+var DAY_LABELS = { both:'Both Days (Oct 17–18)', saturday:'Saturday, Oct 17', sunday:'Sunday, Oct 18' };
+var DAY_TAG    = { both:'both days', saturday:'Saturday only', sunday:'Sunday only' };
 
 var selectedDays = 'both';
 var cardQty = { 1:1, 2:1, 4:1 };
 var cart = [];
 
-// ── day selection: prices stay fixed; auto-highlights the right card ───────────
+function getPrice(passId) { return PASSES[passId].prices[selectedDays]; }
+
+// ── day selection: update prices + taglines for all cards ─────────────────────
 function onDayChange() {
   var el = document.querySelector('input[name="days"]:checked');
   selectedDays = el ? el.value : 'both';
+  var isDual   = selectedDays === 'both';
+  var dayTag   = DAY_TAG[selectedDays];
+  var accessTxt   = isDual ? 'Full access – both days'   : 'Full access – ' + (selectedDays === 'saturday' ? 'Saturday, Oct 17' : 'Sunday, Oct 18');
+  var concertTxt  = isDual ? 'Both evening concerts'          : (selectedDays === 'saturday' ? 'Saturday' : 'Sunday') + ' evening concert';
 
-  // Cards 1 and 4 have day-variable taglines and features; card 2 always covers both days
-  document.getElementById('pc-tag-1').textContent          = 'One adult, ' + DAY_TAG[selectedDays];
-  document.getElementById('pc-feat-1-access').textContent  = DAY_ACCESS[selectedDays];
-  document.getElementById('pc-feat-1-concert').textContent = DAY_CONCERT[selectedDays];
-  document.getElementById('pc-tag-4').textContent          = 'One student · ' + DAY_TAG[selectedDays] + ' · ID at venue';
+  document.getElementById('pc-tag-1').textContent = 'Ages 12 & above · ' + dayTag;
+  document.getElementById('pc-tag-2').textContent = 'Ages 6–12 · ' + dayTag;
+  document.getElementById('pc-tag-4').textContent = 'High school / college · ' + dayTag + ' · ID at venue';
 
-  // Auto-select recommended card: Both Days → $135, single day → $85
+  [1, 2, 4].forEach(function(id) {
+    var p = getPrice(id);
+    document.getElementById('pc-price-' + id).textContent = '$' + p;
+    document.getElementById('lt-' + id).textContent       = '$' + (cardQty[id] * p);
+    document.getElementById('pc-feat-' + id + '-access').textContent  = accessTxt;
+    document.getElementById('pc-feat-' + id + '-concert').textContent = concertTxt;
+  });
+
   clearCart();
-  addToCart(selectedDays === 'both' ? 2 : 1);
+  addToCart(1); // Default to Patron Pass on day change
 }
 
 // ── card stepper ───────────────────────────────────────────────────────────────
 function stepQty(passId, delta) {
-  cardQty[passId] = Math.max(1, Math.min(5, cardQty[passId] + delta));
-  var sets = cardQty[passId];
+  cardQty[passId] = Math.max(1, Math.min(20, cardQty[passId] + delta));
+  var sets  = cardQty[passId];
+  var price = getPrice(passId);
   document.getElementById('qty-' + passId).textContent = sets;
-  document.getElementById('lt-' + passId).textContent  = '$' + (sets * PASSES[passId].setPrice);
+  document.getElementById('lt-' + passId).textContent  = '$' + (sets * price);
   document.getElementById('minus-' + passId).disabled  = sets <= 1;
-  document.getElementById('plus-' + passId).disabled   = sets >= 5;
+  document.getElementById('plus-' + passId).disabled   = sets >= 20;
+  // If this pass is already in the cart, update it live without re-adding
+  for (var i = 0; i < cart.length; i++) {
+    if (cart[i].passId === passId) {
+      cart[i].sets        = sets;
+      cart[i].totalPasses = sets * PASSES[passId].passesPerSet;
+      cart[i].lineTotal   = sets * price;
+      renderCart();
+      break;
+    }
+  }
 }
 
 // ── add to cart ────────────────────────────────────────────────────────────────
 function addToCart(passId) {
   var sets   = cardQty[passId];
-  var line   = sets * PASSES[passId].setPrice;
+  var price  = getPrice(passId);
+  var line   = sets * price;
   var passes = sets * PASSES[passId].passesPerSet;
   cart = cart.filter(function(i){ return i.passId !== passId; });
   cart.push({ passId:passId, sets:sets, totalPasses:passes, lineTotal:line, isStudent:(passId===4) });
@@ -374,7 +395,9 @@ function renderCart() {
   var section = document.getElementById('cartSection');
   if (cart.length === 0) {
     section.classList.remove('visible');
-    ['utsov_cart_qty','utsov_cart_amount','utsov_cart_days','utsov_cart_days_label','utsov_cart_is_student']
+    ['utsov_cart_qty','utsov_cart_amount','utsov_cart_days','utsov_cart_days_label','utsov_cart_is_student',
+     'utsov_cart_patron_qty','utsov_cart_patron_price','utsov_cart_student_qty','utsov_cart_student_price',
+     'utsov_cart_adults_qty','utsov_cart_adults_unit_price','utsov_cart_kids_qty','utsov_cart_kids_unit_price']
       .forEach(function(k){ sessionStorage.removeItem(k); });
     return;
   }
@@ -382,11 +405,28 @@ function renderCart() {
   var totalPasses = cart.reduce(function(s,i){ return s + i.totalPasses; }, 0);
   var grandTotal  = cart.reduce(function(s,i){ return s + i.lineTotal;   }, 0);
   var hasStudent  = cart.some(function(i){ return i.isStudent; });
-  sessionStorage.setItem('utsov_cart_qty',        totalPasses);
-  sessionStorage.setItem('utsov_cart_amount',      grandTotal.toFixed(2));
-  sessionStorage.setItem('utsov_cart_days',        selectedDays);
-  sessionStorage.setItem('utsov_cart_days_label',  DAY_LABELS[selectedDays]);
-  sessionStorage.setItem('utsov_cart_is_student',  hasStudent ? '1' : '0');
+  // Per-type breakdown: patron(1), student(4), kids(2)
+  var patronQty = 0, patronAmt = 0, studentQty = 0, studentAmt = 0, kidsQty = 0, kidsAmt = 0;
+  cart.forEach(function(item) {
+    if (item.passId === 1) { patronQty  += item.totalPasses; patronAmt  += item.lineTotal; }
+    if (item.passId === 4) { studentQty += item.totalPasses; studentAmt += item.lineTotal; }
+    if (item.passId === 2) { kidsQty    += item.totalPasses; kidsAmt    += item.lineTotal; }
+  });
+  var adultQty = patronQty + studentQty;
+  var adultAmt = patronAmt + studentAmt;
+  sessionStorage.setItem('utsov_cart_qty',                 totalPasses);
+  sessionStorage.setItem('utsov_cart_amount',              grandTotal.toFixed(2));
+  sessionStorage.setItem('utsov_cart_days',                selectedDays);
+  sessionStorage.setItem('utsov_cart_days_label',          DAY_LABELS[selectedDays]);
+  sessionStorage.setItem('utsov_cart_is_student',          hasStudent ? '1' : '0');
+  sessionStorage.setItem('utsov_cart_patron_qty',          patronQty);
+  sessionStorage.setItem('utsov_cart_patron_price',        patronQty  > 0 ? (patronAmt  / patronQty).toFixed(2)  : getPrice(1).toString());
+  sessionStorage.setItem('utsov_cart_student_qty',         studentQty);
+  sessionStorage.setItem('utsov_cart_student_price',       studentQty > 0 ? (studentAmt / studentQty).toFixed(2) : getPrice(4).toString());
+  sessionStorage.setItem('utsov_cart_adults_qty',          adultQty);
+  sessionStorage.setItem('utsov_cart_adults_unit_price',   adultQty > 0 ? (adultAmt / adultQty).toFixed(2) : getPrice(1).toString());
+  sessionStorage.setItem('utsov_cart_kids_qty',            kidsQty);
+  sessionStorage.setItem('utsov_cart_kids_unit_price',     kidsQty  > 0 ? (kidsAmt  / kidsQty).toFixed(2)  : getPrice(2).toString());
   document.getElementById('cartCount').textContent = totalPasses + ' pass' + (totalPasses !== 1 ? 'es' : '');
   document.getElementById('cartTotal').textContent = '$' + grandTotal.toFixed(2);
   var rows = document.getElementById('cartRows');
@@ -397,8 +437,7 @@ function renderCart() {
     row.innerHTML =
       '<div>' +
         '<div class="cr-name">' + PASSES[item.passId].label + '</div>' +
-        '<div class="cr-detail">' + item.sets + ' set' + (item.sets !== 1 ? 's' : '') +
-          ' · ' + DAY_LABELS[selectedDays] + ' · $' + PASSES[item.passId].setPrice + '/set</div>' +
+        '<div class="cr-detail">' + item.sets + ' × ' + DAY_LABELS[selectedDays] + ' · $' + getPrice(item.passId) + '/person</div>' +
       '</div>' +
       '<div style="display:flex;align-items:center;gap:.9rem">' +
         '<div class="cr-price">$' + item.lineTotal.toFixed(2) + '</div>' +
@@ -412,14 +451,10 @@ function renderCart() {
 (function() {
   var saved = parseInt(sessionStorage.getItem('utsov_cart_qty'), 10);
   if (saved > 0) {
-    // Restore a prior session cart
-    var passId = saved <= 1 ? 1 : saved <= 2 ? 2 : 1;
-    var sets   = Math.max(1, Math.ceil(saved / PASSES[passId].passesPerSet));
-    cardQty[passId] = sets;
-    stepQty(passId, 0);
-    addToCart(passId);
+    cardQty[1] = Math.max(1, saved);
+    stepQty(1, 0);
+    addToCart(1);
   } else {
-    // Fresh visit — auto-highlight the default recommendation for "Both Days"
     onDayChange();
   }
 })();

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — UTSOV Durga Puja 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- PayPal JS SDK — client-id filled dynamically from REPLACE_ME placeholder -->
+<script id="paypal-sdk"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#6B0E0E;--red:#9E2424;
+  --cream:#FFFDF8;--ivory:#FFF0E5;--blush:#FFE8E0;
+  --saffron:#E07830;--marigold:#FF9933;--gold:#C9A84C;--gold-lt:#E8C97A;
+  --black:#1A0000;--on-red:rgba(255,255,255,.95);
+  --on-cream:#1A0000;--on-cream-mid:#6B1010;--on-cream-muted:#9B3030;
+  --bdr-red:rgba(139,26,26,.15);
+  --r-sm:6px;--r-md:14px;--r-lg:22px;--r-xl:36px;--r-full:9999px;
+  --f-display:'Bebas Neue',sans-serif;--f-serif:'EB Garamond',serif;--f-label:'Josefin Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+header{background:var(--red-dark);padding:1rem 2rem;border-bottom:2px solid rgba(201,168,76,.4)}
+.hdr-in{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.hdr-logo{font-family:var(--f-display);font-size:1.8rem;color:var(--gold-lt);letter-spacing:.06em}
+.hdr-back{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,253,248,.55);display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.hdr-back:hover{color:var(--gold-lt)}
+.progress-bar{background:rgba(201,168,76,.12);border-bottom:1px solid rgba(201,168,76,.2);padding:.5rem 2rem}
+.progress-in{max-width:960px;margin:0 auto;display:flex;gap:0;align-items:center}
+.prog-step{font-family:var(--f-label);font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,168,76,.42);display:flex;align-items:center;gap:.5rem}
+.prog-step.active{color:var(--gold-lt)}
+.prog-step.done{color:rgba(201,168,76,.7)}
+.prog-dot{width:20px;height:20px;border-radius:50%;background:rgba(201,168,76,.18);border:1.5px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:rgba(201,168,76,.5);flex-shrink:0}
+.prog-step.active .prog-dot{background:var(--gold);border-color:var(--gold);color:#2a0000}
+.prog-step.done .prog-dot{background:rgba(201,168,76,.4);border-color:rgba(201,168,76,.5);color:rgba(255,253,248,.8)}
+.prog-line{flex:1;height:1px;background:rgba(201,168,76,.2);margin:0 .6rem;max-width:60px}
+
+/* MAIN LAYOUT */
+main{flex:1;padding:3rem 2rem}
+.co-in{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:2.5rem;align-items:start}
+.co-title{font-family:var(--f-display);font-size:3.5rem;color:var(--red-dark);letter-spacing:.01em;margin-bottom:.3rem}
+.co-subtitle{font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);margin-bottom:2rem}
+
+/* BUYER FORM */
+.buyer-form{background:var(--ivory);border:1.5px solid var(--bdr-red);border-radius:var(--r-xl);padding:2.25rem;margin-bottom:1.5rem}
+.bf-section-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:.6rem}
+.bf-section-label::after{content:'';flex:1;height:1px;background:var(--bdr-red)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-row.full{grid-template-columns:1fr}
+.form-row:last-child{margin-bottom:0}
+.field-wrap{display:flex;flex-direction:column;gap:.35rem}
+label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--on-cream-muted)}
+label span.req{color:var(--red);margin-left:.2rem}
+input[type=text],input[type=email],input[type=tel]{background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-md);padding:.7rem 1rem;font-family:var(--f-serif);font-size:.95rem;color:var(--on-cream);outline:none;transition:border-color .2s;width:100%}
+input:focus{border-color:var(--red)}
+input.err{border-color:rgba(192,57,43,.7);background:rgba(192,57,43,.04)}
+.field-err{font-family:var(--f-label);font-size:.58rem;color:var(--red);letter-spacing:.04em;display:none}
+.field-err.show{display:block}
+.field-note{font-family:var(--f-serif);font-style:italic;font-size:.78rem;color:var(--on-cream-muted);margin-top:.1rem}
+
+/* SELECT */
+select{background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%239B3030' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E") no-repeat right 1rem center/.65rem;border:1.5px solid var(--bdr-red);border-radius:var(--r-md);padding:.7rem 2.5rem .7rem 1rem;font-family:var(--f-serif);font-size:.95rem;color:var(--on-cream);outline:none;transition:border-color .2s;width:100%;appearance:none;-webkit-appearance:none;cursor:pointer}
+select:focus{border-color:var(--red)}
+
+/* TEXTAREA */
+textarea{background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-md);padding:.7rem 1rem;font-family:var(--f-serif);font-size:.95rem;color:var(--on-cream);outline:none;transition:border-color .2s;width:100%;resize:vertical;min-height:72px;line-height:1.5}
+textarea:focus{border-color:var(--red)}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;gap:.7rem;margin-top:.25rem}
+.stpr-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--bdr-red);background:var(--cream);color:var(--on-cream-mid);font-size:1.2rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;user-select:none;font-family:var(--f-label);padding:0}
+.stpr-btn:hover{background:var(--blush);border-color:var(--red);color:var(--red)}
+.stpr-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.stpr-val{font-family:var(--f-display);font-size:1.7rem;color:var(--on-cream);min-width:2.2rem;text-align:center;line-height:1}
+
+/* RADIO PILLS */
+.radio-group{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.45rem}
+.radio-opt{display:flex;align-items:center;gap:.4rem;background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-full);padding:.45rem .9rem;cursor:pointer;transition:all .2s}
+.radio-opt:has(input:checked){background:var(--blush);border-color:var(--red)}
+.radio-opt input[type=radio]{accent-color:var(--red);width:14px;height:14px;cursor:pointer;flex-shrink:0}
+.radio-opt-text{font-family:var(--f-label);font-size:.68rem;font-weight:600;letter-spacing:.06em;color:var(--on-cream)}
+
+/* FOOD MIXED BREAKDOWN */
+.food-sub{background:rgba(139,26,26,.04);border:1px dashed rgba(139,26,26,.25);border-radius:var(--r-lg);padding:1.1rem 1.25rem;margin-top:.85rem;display:none}
+.food-sub.show{display:block}
+.food-sub-title{font-family:var(--f-label);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:.85rem}
+.food-sub .form-row{margin-bottom:0}
+
+/* CHECKBOXES */
+.check-group{display:flex;flex-direction:column;gap:.9rem}
+.check-opt{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer}
+.check-opt input[type=checkbox]{accent-color:var(--red);width:17px;height:17px;cursor:pointer;flex-shrink:0;margin-top:.12rem}
+.check-opt-text{display:flex;flex-direction:column;gap:.18rem}
+.check-opt-label{font-family:var(--f-label);font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--on-cream)}
+.check-opt-hint{font-family:var(--f-serif);font-style:italic;font-size:.8rem;color:var(--on-cream-muted)}
+
+/* PAYPAL SECTION */
+.paypal-section{background:var(--ivory);border:1.5px solid var(--bdr-red);border-radius:var(--r-xl);padding:2.25rem}
+.pp-title{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--on-cream-muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.pp-title::after{content:'';flex:1;height:1px;background:var(--bdr-red)}
+.pp-note{font-family:var(--f-label);font-size:.65rem;color:var(--on-cream-muted);letter-spacing:.04em;margin-bottom:1.25rem;display:flex;align-items:center;gap:.4rem}
+#paypal-button-container{min-height:50px}
+#paypal-button-container.disabled{opacity:.45;pointer-events:none;cursor:not-allowed}
+.pp-disabled-msg{font-family:var(--f-label);font-size:.65rem;color:var(--on-cream-muted);text-align:center;padding:.75rem;background:rgba(139,26,26,.05);border-radius:var(--r-md);margin-bottom:.75rem;display:none}
+.pp-disabled-msg.show{display:block}
+
+/* ORDER SUMMARY sidebar */
+.order-summary{background:linear-gradient(155deg,#3D0000 0%,#5C1010 40%,#2A0808 100%);border-radius:var(--r-xl);padding:2rem;border:1.5px solid rgba(201,168,76,.3);position:sticky;top:2rem}
+.os-title{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:1.25rem}
+.os-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;font-family:var(--f-label);font-size:.75rem;color:rgba(255,253,248,.6);letter-spacing:.04em}
+.os-row strong{color:rgba(255,253,248,.85)}
+.os-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);margin:1rem 0}
+.os-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.os-total-label{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,253,248,.5)}
+.os-total-val{font-family:var(--f-display);font-size:2.6rem;color:var(--gold);letter-spacing:.02em;line-height:1}
+.os-change{margin-top:1rem;text-align:center;font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.3);letter-spacing:.06em;cursor:pointer;transition:color .2s}
+.os-change:hover{color:var(--gold-lt)}
+.os-secure{display:flex;flex-direction:column;gap:.4rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.06);font-family:var(--f-label);font-size:.6rem;color:rgba(255,253,248,.25);letter-spacing:.06em}
+.os-secure span{display:flex;align-items:center;gap:.4rem}
+
+/* ERROR BANNER */
+#errorBanner{display:none;background:rgba(192,57,43,.12);border:1.5px solid rgba(192,57,43,.4);border-radius:var(--r-md);padding:.85rem 1.2rem;font-family:var(--f-label);font-size:.72rem;color:#7a1010;letter-spacing:.04em;margin-bottom:1rem}
+#errorBanner.show{display:block}
+
+/* SUCCESS STATE */
+#successState{display:none;text-align:center;padding:3.5rem 1rem;grid-column:1/-1}
+.ss-icon{font-size:3.5rem;display:block;margin-bottom:1rem}
+.ss-title{font-family:var(--f-display);font-size:3.5rem;color:var(--red-dark);letter-spacing:.01em;margin-bottom:.5rem}
+.ss-sub{font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);font-size:1.1rem;margin-bottom:.5rem}
+.ss-note{font-family:var(--f-label);font-size:.68rem;color:var(--on-cream-muted);letter-spacing:.06em;margin-top:.75rem}
+.ss-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.btn-home{background:var(--red-dark);color:var(--cream);font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:var(--r-full);padding:.8rem 2rem;cursor:pointer;text-decoration:none;transition:background .2s}
+.btn-home:hover{background:var(--red)}
+
+/* FOOTER */
+footer{background:var(--red-dark);border-top:2px solid rgba(201,168,76,.3);padding:1.25rem 2rem;text-align:center;font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.28);letter-spacing:.06em}
+footer a{color:rgba(255,253,248,.4);transition:color .2s}
+footer a:hover{color:var(--gold-lt)}
+
+@media(max-width:860px){.co-in{grid-template-columns:1fr}.order-summary{position:static}.form-row{grid-template-columns:1fr}#osSidebar{order:-1}}
+@media(max-width:540px){.co-title{font-size:2.5rem}.buyer-form,.paypal-section{padding:1.5rem}}
+
+/* DONATION SECTION */
+.donate-section{max-width:580px;margin:3rem auto 0;background:linear-gradient(150deg,#1A0000 0%,#3D0000 50%,#1A0808 100%);border-radius:var(--r-xl);padding:2.5rem;border:1.5px solid rgba(201,168,76,.3)}
+#donateSection{display:none}
+.donate-header{text-align:center;margin-bottom:2rem}
+.donate-eyebrow{font-family:var(--f-label);font-size:.56rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.5rem}
+.donate-title{font-family:var(--f-display);font-size:2.6rem;color:var(--cream);letter-spacing:.02em;line-height:1;margin-bottom:.5rem}
+.donate-sub{font-family:var(--f-serif);font-style:italic;color:rgba(255,253,248,.5);font-size:.95rem}
+.donate-body{display:grid;grid-template-columns:1fr;gap:1.2rem;align-items:start}
+.donate-field-wrap{display:flex;flex-direction:column;gap:.35rem}
+.donate-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,253,248,.45)}
+.donate-input{background:rgba(255,253,248,.07);border:1.5px solid rgba(255,253,248,.15);border-radius:var(--r-md);padding:.7rem 1rem;font-family:var(--f-serif);font-size:.95rem;color:var(--cream);outline:none;transition:border-color .2s;width:100%}
+.donate-input::placeholder{color:rgba(255,253,248,.25)}
+.donate-input:focus{border-color:rgba(201,168,76,.6)}
+.donate-input.derr{border-color:rgba(192,57,43,.7)}
+.donate-amount-wrap{position:relative}
+.donate-amount-wrap .donate-dollar{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-family:var(--f-serif);font-size:.95rem;color:rgba(255,253,248,.45);pointer-events:none}
+.donate-amount-wrap .donate-input{padding-left:1.7rem}
+.donate-err{font-family:var(--f-label);font-size:.58rem;color:#e87070;letter-spacing:.04em;display:none;margin-top:.2rem}
+.donate-err.show{display:block}
+.donate-pp-wrap{margin-top:1.25rem}
+.donate-pp-note{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.28);letter-spacing:.06em;margin-bottom:1rem;text-align:center}
+#donate-button-container{min-height:50px;max-width:360px;margin:0 auto}
+#donate-button-container.disabled{opacity:.4;pointer-events:none}
+.donate-disabled-msg{font-family:var(--f-label);font-size:.65rem;color:rgba(255,253,248,.3);text-align:center;padding:.6rem;margin-bottom:.75rem;display:none}
+.donate-disabled-msg.show{display:block}
+#donate-error{display:none;background:rgba(192,57,43,.18);border:1.5px solid rgba(192,57,43,.45);border-radius:var(--r-md);padding:.75rem 1.1rem;font-family:var(--f-label);font-size:.7rem;color:#e87070;letter-spacing:.04em;margin-bottom:.85rem}
+#donate-error.show{display:block}
+#donate-success{display:none;text-align:center;padding:2rem 1rem}
+.ds-icon{font-size:2.8rem;display:block;margin-bottom:.75rem}
+.ds-title{font-family:var(--f-display);font-size:2.4rem;color:var(--gold-lt);letter-spacing:.02em;margin-bottom:.4rem}
+.ds-sub{font-family:var(--f-serif);font-style:italic;color:rgba(255,253,248,.6);font-size:.95rem}
+.ds-note{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.35);letter-spacing:.06em;margin-top:.6rem}
+@media(max-width:680px){.donate-section{padding:1.5rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-in">
+    <a href="index.html" class="hdr-logo">UTSOV</a>
+    <a href="cart.html" class="hdr-back">&#8592; Back to Cart</a>
+  </div>
+</header>
+<div class="progress-bar">
+  <div class="progress-in">
+    <div class="prog-step done"><div class="prog-dot">&#10003;</div><span>Select</span></div>
+    <div class="prog-line"></div>
+    <div class="prog-step done"><div class="prog-dot">&#10003;</div><span>Review Cart</span></div>
+    <div class="prog-line"></div>
+    <div class="prog-step active"><div class="prog-dot">3</div><span>Checkout</span></div>
+  </div>
+</div>
+
+<main>
+  <div class="co-in" id="coGrid">
+
+    <!-- Left column: form + PayPal -->
+    <div id="formCol">
+      <h1 class="co-title">Register &amp; Pay</h1>
+      <p class="co-subtitle">Tell us about your group &mdash; your email is your confirmation.</p>
+
+      <div id="errorBanner" role="alert"></div>
+
+      <!-- 1. Your Information -->
+      <div class="buyer-form">
+        <div class="bf-section-label">Your Information</div>
+        <div class="form-row">
+          <div class="field-wrap">
+            <label for="co-name">Full Name<span class="req">*</span></label>
+            <input type="text" id="co-name" placeholder="Your full name" autocomplete="name" maxlength="200">
+            <span class="field-err" id="err-name">Please enter your name.</span>
+          </div>
+          <div class="field-wrap">
+            <label for="co-phone">Phone<span class="req">*</span></label>
+            <input type="tel" id="co-phone" placeholder="+1 (555) 000-0000" autocomplete="tel" maxlength="50">
+            <span class="field-err" id="err-phone">Please enter your phone number.</span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field-wrap">
+            <label for="co-email">Email Address<span class="req">*</span></label>
+            <input type="email" id="co-email" placeholder="you@example.com" autocomplete="email" maxlength="254">
+            <span class="field-err" id="err-email">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="field-wrap">
+            <label for="co-city">City / Town</label>
+            <input type="text" id="co-city" placeholder="East Brunswick, NJ" autocomplete="address-level2" maxlength="100">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Attendee Details -->
+      <div class="buyer-form">
+        <div class="bf-section-label">Attendee Details</div>
+        <div class="form-row">
+          <div class="field-wrap">
+            <label>Adults (Age 12+)<span class="req">*</span></label>
+            <div class="stepper">
+              <button type="button" class="stpr-btn" id="btn-adults-minus" onclick="stepAdults(-1)">&#8722;</button>
+              <span class="stpr-val" id="val-adults">1</span>
+              <button type="button" class="stpr-btn" onclick="stepAdults(1)">&#43;</button>
+            </div>
+            <input type="hidden" id="co-adults" value="1">
+          </div>
+          <div class="field-wrap">
+            <label>Kids (Age 6&ndash;12)</label>
+            <div class="stepper">
+              <button type="button" class="stpr-btn" id="btn-kids612-minus" onclick="stepKids612(-1)" disabled>&#8722;</button>
+              <span class="stpr-val" id="val-kids612">0</span>
+              <button type="button" class="stpr-btn" onclick="stepKids612(1)">&#43;</button>
+            </div>
+            <input type="hidden" id="co-kids612" value="0">
+            <span class="field-note">Charged at kids pass rate.</span>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:.85rem">
+          <div class="field-wrap">
+            <label>Children Under 6</label>
+            <div class="stepper">
+              <button type="button" class="stpr-btn" id="btn-children-minus" onclick="stepChildren(-1)" disabled>&#8722;</button>
+              <span class="stpr-val" id="val-children">0</span>
+              <button type="button" class="stpr-btn" onclick="stepChildren(1)">&#43;</button>
+            </div>
+            <input type="hidden" id="co-children" value="0">
+            <span class="field-note">Under 6 enter free &mdash; not charged.</span>
+          </div>
+        </div>
+
+        <!-- Attendee Names — embedded, always visible -->
+        <div style="margin-top:1.5rem">
+          <div class="bf-section-label" style="margin-bottom:.65rem">Names of All Attendees</div>
+          <p class="field-note" style="margin-bottom:.85rem">Enter names for every person attending &mdash; used for check-in and your confirmation email.</p>
+          <div class="form-row full" style="margin-bottom:.5rem">
+            <div class="field-wrap">
+              <label>Attendee 1 &mdash; Primary Registrant</label>
+              <span class="field-note">Your name is already captured in the &ldquo;Full Name&rdquo; field above.</span>
+            </div>
+          </div>
+          <div id="attendeeNameFields"></div>
+        </div>
+      </div>
+
+      <!-- 3. Food & Dining -->
+      <div class="buyer-form">
+        <div class="bf-section-label">Food &amp; Dining</div>
+        <div class="form-row full">
+          <div class="field-wrap">
+            <label>Meal Preference<span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-opt">
+                <input type="radio" name="food" value="vegetarian" onchange="onFoodChange()">
+                <span class="radio-opt-text">Vegetarian</span>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="food" value="nonvegetarian" checked onchange="onFoodChange()">
+                <span class="radio-opt-text">Non-Vegetarian</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Stay Connected -->
+      <div class="buyer-form">
+        <div class="bf-section-label">Stay Connected</div>
+        <div class="check-group">
+          <label class="check-opt">
+            <input type="checkbox" id="co-email-updates" checked>
+            <div class="check-opt-text">
+              <span class="check-opt-label">Email updates</span>
+              <span class="check-opt-hint">Schedule, artist announcements &amp; event-day reminders.</span>
+            </div>
+          </label>
+        </div>
+        <div class="form-row full" style="margin-top:1.25rem">
+          <div class="field-wrap">
+            <label for="co-heard">How did you hear about UTSOV?</label>
+            <select id="co-heard">
+              <option value="">Select one&hellip;</option>
+              <option value="social">Social Media</option>
+              <option value="friend">Friend / Family</option>
+              <option value="community">Community Newsletter / Email</option>
+              <option value="flyer">Flyer / Poster</option>
+              <option value="search">Google / Web Search</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="paypal-section">
+        <div class="pp-title">Payment</div>
+        <p class="pp-note">&#128274; Secure checkout &middot; All major cards accepted &middot; No PayPal account needed</p>
+        <div class="pp-disabled-msg" id="ppDisabledMsg">Complete your details above to unlock payment.</div>
+        <div id="paypal-button-container" class="disabled"></div>
+      </div>
+    </div>
+
+    <!-- Right column: order summary -->
+    <div class="order-summary" id="osSidebar">
+      <div class="os-title">Order Summary</div>
+      <div class="os-row" id="osPatronRow" style="display:none"><span>Patron Pass (12+)</span><strong id="osPatronCount">0</strong></div>
+      <div class="os-row" id="osStudentPassRow" style="display:none"><span>Student Pass</span><strong id="osStudentCount">0</strong></div>
+      <div class="os-row" id="osKidsPassRow" style="display:none"><span>Kids Pass (6&ndash;12)</span><strong id="osKidsPassCount">0</strong></div>
+      <div class="os-row"><span>Days</span><strong id="osDays">Both Days</strong></div>
+      <div class="os-row" id="osChildrenRow" style="display:none"><span>Children (U6, free)</span><strong id="osChildren">0</strong></div>
+      <div class="os-row"><span>Meal Choice</span><strong id="osFood">Non-Vegetarian</strong></div>
+      <div class="os-row" id="osStudentRow" style="display:none"><span>Note</span><strong style="color:var(--gold-lt)">Student ID req.</strong></div>
+      <div class="os-row"><span>Service fee</span><strong>$0.00</strong></div>
+      <div class="os-divider"></div>
+      <div class="os-total-row">
+        <span class="os-total-label">Total</span>
+        <span class="os-total-val" id="osTotal">$85.00</span>
+      </div>
+      <div class="os-change" onclick="window.location.href='cart.html'">&#8592; Edit cart</div>
+      <div class="os-secure">
+        <span>&#128274; Payments processed by PayPal</span>
+        <span>&#9989; SSL encrypted connection</span>
+        <span>&#10067; Questions? <a href="mailto:utsov@utsov.org" style="color:rgba(255,253,248,.4)">utsov@utsov.org</a></span>
+      </div>
+    </div>
+
+    <!-- Success state (shown after payment) -->
+    <div id="successState">
+      <span class="ss-icon">&#127882;</span>
+      <div class="ss-title">You're Going to UTSOV!</div>
+      <p class="ss-sub">Your payment is confirmed. Check your inbox for your confirmation email.</p>
+      <p class="ss-note">Order ID: <span id="ssOrderId" style="font-family:monospace;letter-spacing:.05em"></span></p>
+      <p class="ss-note" style="margin-top:.4rem">Passes are valid for both days — Oct 17 &amp; 18, 2026.</p>
+      <div class="ss-actions">
+        <a href="events.html" class="btn-home">View Full Schedule</a>
+        <a href="index.html" class="btn-home">Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+  <!-- DONATION SECTION -->
+  <div class="donate-section" id="donateSection">
+
+    <div class="donate-header">
+      <span class="donate-eyebrow">&#10047; Optional &nbsp;&middot;&nbsp; Add a Gift</span>
+      <div class="donate-title">Support Our Causes</div>
+      <p class="donate-sub">Want to give a little more? Your donation supports UTSOV&rsquo;s community partners in NJ &amp; Bengal. Any amount is welcome.</p>
+    </div>
+
+    <div id="donate-success">
+      <span class="ds-icon">&#10084;&#65039;</span>
+      <div class="ds-title">Thank You!</div>
+      <p class="ds-sub">Your donation has been received. We are truly grateful.</p>
+      <p class="ds-note">A confirmation has been sent to your email.</p>
+    </div>
+
+    <div class="donate-body" id="donateForm">
+      <div id="donate-error"></div>
+
+      <div class="donate-field-wrap">
+        <label class="donate-label" for="don-name">Your Name</label>
+        <input class="donate-input" type="text" id="don-name" placeholder="Full name" maxlength="200" oninput="checkDonateReady()">
+        <span class="donate-err" id="derr-name">Please enter your name.</span>
+      </div>
+
+      <div class="donate-field-wrap">
+        <label class="donate-label" for="don-email">Email Address</label>
+        <input class="donate-input" type="email" id="don-email" placeholder="you@example.com" maxlength="254" oninput="checkDonateReady()">
+        <span class="donate-err" id="derr-email">Please enter a valid email.</span>
+      </div>
+
+      <div class="donate-field-wrap" style="grid-column:1/-1">
+        <label class="donate-label" for="don-amount">Donation Amount (USD)</label>
+        <div class="donate-amount-wrap">
+          <span class="donate-dollar">$</span>
+          <input class="donate-input" type="number" id="don-amount" placeholder="Enter any amount" min="1" step="any" oninput="checkDonateReady()">
+        </div>
+        <span class="donate-err" id="derr-amount">Please enter a valid amount (minimum $1).</span>
+      </div>
+
+      <div class="donate-pp-wrap">
+        <div class="donate-disabled-msg show" id="donatePPMsg">Fill in your name, email and amount to donate.</div>
+        <p class="donate-pp-note">&#128274; Secure &middot; Powered by PayPal &middot; No PayPal account needed</p>
+        <div id="donate-button-container" class="disabled"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- END DONATION SECTION -->
+
+</main>
+
+<footer>
+  <a href="events.html">Events</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a>
+  &mdash; &copy; 2026 Utsov Inc.
+</footer>
+
+<script>
+// ── Read cart state from sessionStorage ────────────────────────────────────────
+var qty       = parseInt(sessionStorage.getItem('utsov_cart_qty'), 10)    || 1;
+var total     = parseFloat(sessionStorage.getItem('utsov_cart_amount'))   || (qty * 85);
+var cartDays  = sessionStorage.getItem('utsov_cart_days')       || 'both';
+var daysLabel = sessionStorage.getItem('utsov_cart_days_label') || 'Both Days (Oct 17–18)';
+var isStudent = sessionStorage.getItem('utsov_cart_is_student') === '1';
+if (qty < 1) qty = 1;
+if (qty > 20) qty = 20;
+
+// Per-type breakdown stored by cart page
+var patronQtyCart  = parseInt(sessionStorage.getItem('utsov_cart_patron_qty'),  10) || 0;
+var studentQtyCart = parseInt(sessionStorage.getItem('utsov_cart_student_qty'), 10) || 0;
+var kidsQtyCart    = parseInt(sessionStorage.getItem('utsov_cart_kids_qty'),    10) || 0;
+var patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_patron_price'))  || 135;
+var studentPrice   = parseFloat(sessionStorage.getItem('utsov_cart_student_price')) || 105;
+var kidsUnitPrice  = parseFloat(sessionStorage.getItem('utsov_cart_kids_unit_price')) || 85;
+// Fallback: if no per-type data (old cached sessionStorage), use adults total as patron
+var adultQtyCart   = patronQtyCart + studentQtyCart;
+if (adultQtyCart === 0) {
+  adultQtyCart   = parseInt(sessionStorage.getItem('utsov_cart_adults_qty'), 10) || qty;
+  patronQtyCart  = adultQtyCart;
+  patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_adults_unit_price')) || (total / Math.max(adultQtyCart, 1));
+}
+
+var FOOD_LABELS = { vegetarian:'Vegetarian', nonvegetarian:'Non-Vegetarian' };
+
+// Stepper state
+var adultsVal    = Math.max(1, adultQtyCart);
+var kids6to12Val = kidsQtyCart;
+var childrenVal  = 0;
+
+// Populate initial sidebar
+document.getElementById('osDays').textContent        = daysLabel;
+document.getElementById('co-adults').value           = adultsVal;
+document.getElementById('val-adults').textContent    = adultsVal;
+document.getElementById('btn-adults-minus').disabled = adultsVal <= 1;
+document.getElementById('co-kids612').value           = kids6to12Val;
+document.getElementById('val-kids612').textContent    = kids6to12Val;
+document.getElementById('btn-kids612-minus').disabled = kids6to12Val <= 0;
+if (studentQtyCart > 0) document.getElementById('osStudentRow').style.display = 'flex';
+
+recalcTotal();
+updateSidebar();
+updateAttendeeNames();
+
+// ── Steppers ───────────────────────────────────────────────────────────────────
+function stepAdults(d) {
+  adultsVal = Math.max(1, Math.min(20, adultsVal + d));
+  document.getElementById('co-adults').value           = adultsVal;
+  document.getElementById('val-adults').textContent    = adultsVal;
+  document.getElementById('btn-adults-minus').disabled = adultsVal <= 1;
+  recalcTotal();
+  updateSidebar();
+  updateAttendeeNames();
+  checkFormReady();
+}
+function stepKids612(d) {
+  kids6to12Val = Math.max(0, Math.min(20, kids6to12Val + d));
+  document.getElementById('co-kids612').value            = kids6to12Val;
+  document.getElementById('val-kids612').textContent     = kids6to12Val;
+  document.getElementById('btn-kids612-minus').disabled  = kids6to12Val <= 0;
+  recalcTotal();
+  updateSidebar();
+  updateAttendeeNames();
+}
+function stepChildren(d) {
+  childrenVal = Math.max(0, Math.min(20, childrenVal + d));
+  document.getElementById('co-children').value           = childrenVal;
+  document.getElementById('val-children').textContent    = childrenVal;
+  document.getElementById('btn-children-minus').disabled = childrenVal <= 0;
+  updateSidebar();
+}
+function recalcTotal() {
+  // patron fills adults beyond student count; student count is fixed from cart
+  var patronCount  = Math.max(0, adultsVal - studentQtyCart);
+  var studentCount = Math.min(studentQtyCart, adultsVal);
+  total = Math.round((patronCount * patronPrice + studentCount * studentPrice + kids6to12Val * kidsUnitPrice) * 100) / 100;
+  qty   = adultsVal + kids6to12Val;
+  document.getElementById('osTotal').textContent = '$' + total.toFixed(2);
+  document.getElementById('osPatronCount').textContent    = patronCount;
+  document.getElementById('osPatronRow').style.display    = patronCount  > 0 ? 'flex' : 'none';
+  document.getElementById('osStudentCount').textContent   = studentCount;
+  document.getElementById('osStudentPassRow').style.display = studentCount > 0 ? 'flex' : 'none';
+  document.getElementById('osKidsPassCount').textContent  = kids6to12Val;
+  document.getElementById('osKidsPassRow').style.display  = kids6to12Val > 0 ? 'flex' : 'none';
+}
+function onFoodChange() { updateSidebar(); }
+function getFood() {
+  var el = document.querySelector('input[name="food"]:checked');
+  return el ? el.value : 'nonvegetarian';
+}
+function updateSidebar() {
+  document.getElementById('osChildren').textContent      = childrenVal;
+  document.getElementById('osChildrenRow').style.display = childrenVal > 0 ? 'flex' : 'none';
+  document.getElementById('osFood').textContent          = FOOD_LABELS[getFood()] || 'Vegetarian';
+}
+
+// ── Attendee names: adults + kids 6-12 ────────────────────────────────────────
+function updateAttendeeNames() {
+  var container = document.getElementById('attendeeNameFields');
+  var saved = {};
+  for (var j = 2; j <= 40; j++) {
+    var ex = document.getElementById('co-attendee-' + j);
+    if (ex) saved[j] = ex.value;
+  }
+  container.innerHTML = '';
+  var totalBeyondPrimary = (adultsVal - 1) + kids6to12Val;
+  if (totalBeyondPrimary <= 0) {
+    var hint = document.createElement('p');
+    hint.className = 'field-note';
+    hint.style.marginTop = '.15rem';
+    hint.textContent = 'Add more adults or kids above to enter names for each attendee.';
+    container.appendChild(hint);
+    return;
+  }
+  // Adults 2 through adultsVal
+  for (var i = 2; i <= adultsVal; i++) {
+    appendNameField(container, i, 'Adult ' + i, saved);
+  }
+  // Kids 6-12
+  for (var k = 1; k <= kids6to12Val; k++) {
+    appendNameField(container, adultsVal + k, 'Child (6–12) ' + k, saved);
+  }
+}
+
+function appendNameField(container, idx, label, saved) {
+  var wrap = document.createElement('div');
+  wrap.className = 'form-row full';
+  wrap.style.marginTop = '.65rem';
+  var fw = document.createElement('div');
+  fw.className = 'field-wrap';
+  var lbl = document.createElement('label');
+  lbl.setAttribute('for', 'co-attendee-' + idx);
+  lbl.textContent = label;
+  var inp = document.createElement('input');
+  inp.type = 'text';
+  inp.id   = 'co-attendee-' + idx;
+  inp.placeholder = 'Full name';
+  inp.maxLength = 200;
+  inp.value = saved[idx] || '';
+  fw.appendChild(lbl);
+  fw.appendChild(inp);
+  wrap.appendChild(fw);
+  container.appendChild(wrap);
+}
+
+function getAttendeeNames() {
+  var names = [document.getElementById('co-name').value.trim()];
+  for (var i = 2; i <= adultsVal; i++) {
+    var el = document.getElementById('co-attendee-' + i);
+    names.push(el ? el.value.trim() : '');
+  }
+  for (var k = 1; k <= kids6to12Val; k++) {
+    var el = document.getElementById('co-attendee-' + (adultsVal + k));
+    names.push(el ? el.value.trim() : '');
+  }
+  return names;
+}
+
+// ── Mid-flow order recovery ────────────────────────────────────────────────────
+(function(){
+  var priorOrderId = sessionStorage.getItem('utsov_pending_order_id');
+  if (!priorOrderId) return;
+  fetch('api/checkout.php', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({action: 'capture', paypalOrderId: priorOrderId})
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d && d.msg === 'SUCCESS') showSuccess(priorOrderId);
+  }).catch(function(){});
+})();
+
+// ── Validation ─────────────────────────────────────────────────────────────────
+function validateForm() {
+  var ok = true;
+  function check(id, errId, test) {
+    var el = document.getElementById(id);
+    var valid = test(el.value.trim());
+    el.classList.toggle('err', !valid);
+    document.getElementById(errId).classList.toggle('show', !valid);
+    if (!valid) ok = false;
+  }
+  check('co-name',  'err-name',  function(v){ return v.length > 0; });
+  check('co-phone', 'err-phone', function(v){ return v.length > 0; });
+  check('co-email', 'err-email', function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); });
+  return ok;
+}
+
+function checkFormReady() {
+  var name  = document.getElementById('co-name').value.trim();
+  var phone = document.getElementById('co-phone').value.trim();
+  var email = document.getElementById('co-email').value.trim();
+  var ready = name.length > 0 && phone.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('paypal-button-container').classList.toggle('disabled', !ready);
+  document.getElementById('ppDisabledMsg').classList.toggle('show', !ready);
+}
+['co-name','co-phone','co-email'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', checkFormReady);
+});
+checkFormReady();
+
+function showError(msg) {
+  var el = document.getElementById('errorBanner');
+  el.textContent = msg;
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function hideError() { document.getElementById('errorBanner').classList.remove('show'); }
+
+function showSuccess(orderId) {
+  ['utsov_cart_qty','utsov_cart_amount','utsov_cart_days','utsov_cart_days_label','utsov_cart_is_student',
+   'utsov_cart_patron_qty','utsov_cart_patron_price','utsov_cart_student_qty','utsov_cart_student_price',
+   'utsov_cart_adults_qty','utsov_cart_adults_unit_price','utsov_cart_kids_qty','utsov_cart_kids_unit_price',
+   'utsov_pending_order_id'].forEach(function(k){ sessionStorage.removeItem(k); });
+  document.getElementById('formCol').style.display   = 'none';
+  document.getElementById('osSidebar').style.display = 'none';
+  document.getElementById('successState').style.display = 'block';
+  document.getElementById('ssOrderId').textContent = orderId;
+  document.getElementById('donateSection').style.display = 'block';
+  checkDonateReady();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── PayPal SDK ─────────────────────────────────────────────────────────────────
+var sdkScript = document.getElementById('paypal-sdk');
+var CLIENT_ID = 'ATr7beRI3jcLJ5xGhjqYnlkkl2QqUBCf1gLTbuYzVAEzPC6Wac3AM2rSARo3Z97xMfzlfKKz9yoZd5j1';
+sdkScript.src = 'https://www.paypal.com/sdk/js?client-id=' + CLIENT_ID + '&currency=USD';
+sdkScript.onload = function() {
+  paypal.Buttons({
+    style: {layout:'vertical', color:'gold', shape:'pill', label:'pay'},
+    createOrder: function(data, actions) {
+      if (!validateForm()) {
+        showError('Please fill in your name, phone number, and email address.');
+        return Promise.reject(new Error('Validation failed'));
+      }
+      hideError();
+      return fetch('api/checkout.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          action:         'create',
+          qty:            qty,
+          amount:         total,
+          name:           document.getElementById('co-name').value.trim(),
+          email:          document.getElementById('co-email').value.trim(),
+          phone:          document.getElementById('co-phone').value.trim(),
+          city:           document.getElementById('co-city').value.trim(),
+          adults:         adultsVal,
+          kids6to12:      kids6to12Val,
+          children:       childrenVal,
+          attendeeNames:  getAttendeeNames(),
+          food:           getFood(),
+          days:           cartDays,
+          isStudent:      isStudent,
+          emailUpdates:   document.getElementById('co-email-updates').checked,
+          heard:          document.getElementById('co-heard').value
+        })
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error('Server error (HTTP ' + r.status + '). Please try again.');
+        return r.json();
+      })
+      .then(function(d) {
+        if (d.err) { showError(d.err); return Promise.reject(new Error(d.err)); }
+        if (!d.paypalOrderId) { showError('Order could not be created. Please try again or contact utsov@utsov.org.'); return Promise.reject(new Error('No order ID')); }
+        sessionStorage.setItem('utsov_pending_order_id', d.paypalOrderId);
+        return d.paypalOrderId;
+      })
+      .catch(function(e) {
+        if (!document.getElementById('errorBanner').classList.contains('show')) {
+          showError(e.message || 'Payment setup failed. Please try again.');
+        }
+        return Promise.reject(e);
+      });
+    },
+    onApprove: function(data, actions) {
+      hideError();
+      return fetch('api/checkout.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: 'capture', paypalOrderId: data.orderID})
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.err) { showError(d.err); return; }
+        showSuccess(data.orderID);
+      });
+    },
+    onCancel: function() {
+      showError('Payment was cancelled. Your cart is still saved — you can try again.');
+    },
+    onError: function(err) {
+      if (!document.getElementById('errorBanner').classList.contains('show')) {
+        showError('A payment error occurred. Please try again or contact utsov@utsov.org.');
+      }
+      console.error(err);
+    }
+  }).render('#paypal-button-container');
+
+  // ── Donation PayPal button ────────────────────────────────────────────────────
+  paypal.Buttons({
+    style: {layout:'vertical', color:'silver', shape:'pill', label:'donate'},
+    createOrder: function(data, actions) {
+      if (!validateDonateForm()) return Promise.reject(new Error('Donation form invalid'));
+      hideDonateError();
+      var donAmount = parseFloat(document.getElementById('don-amount').value);
+      return fetch('api/donate.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          action: 'create',
+          name:   document.getElementById('don-name').value.trim(),
+          email:  document.getElementById('don-email').value.trim(),
+          amount: donAmount
+        })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.err) { showDonateError(d.err); return Promise.reject(new Error(d.err)); }
+        return d.paypalOrderId;
+      });
+    },
+    onApprove: function(data, actions) {
+      hideDonateError();
+      return fetch('api/donate.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: 'capture', paypalOrderId: data.orderID})
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.err) { showDonateError(d.err); return; }
+        document.getElementById('donateForm').style.display    = 'none';
+        document.getElementById('donate-success').style.display = 'block';
+      });
+    },
+    onCancel: function() {
+      showDonateError('Donation cancelled. You can try again anytime.');
+    },
+    onError: function(err) {
+      showDonateError('A payment error occurred. Please try again or contact utsov@utsov.org.');
+      console.error(err);
+    }
+  }).render('#donate-button-container');
+};
+sdkScript.onerror = function() {
+  document.getElementById('paypal-button-container').innerHTML =
+    '<p style="font-family:var(--f-label);font-size:.7rem;color:var(--on-cream-muted);text-align:center;padding:1rem">' +
+    'Payment service could not be loaded. Please refresh or contact utsov@utsov.org.</p>';
+};
+// ── Donation helpers ───────────────────────────────────────────────────────────
+function validateDonateForm() {
+  var ok = true;
+  function dcheck(id, errId, test) {
+    var el = document.getElementById(id);
+    var v  = el.value.trim();
+    var valid = test(v);
+    el.classList.toggle('derr', !valid);
+    document.getElementById(errId).classList.toggle('show', !valid);
+    if (!valid) ok = false;
+  }
+  dcheck('don-name',   'derr-name',   function(v){ return v.length > 0; });
+  dcheck('don-email',  'derr-email',  function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); });
+  dcheck('don-amount', 'derr-amount', function(v){ var n = parseFloat(v); return !isNaN(n) && n >= 1; });
+  return ok;
+}
+
+function checkDonateReady() {
+  var name   = document.getElementById('don-name').value.trim();
+  var email  = document.getElementById('don-email').value.trim();
+  var amount = parseFloat(document.getElementById('don-amount').value);
+  var ready  = name.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && !isNaN(amount) && amount >= 1;
+  document.getElementById('donate-button-container').classList.toggle('disabled', !ready);
+  document.getElementById('donatePPMsg').classList.toggle('show', !ready);
+}
+
+function showDonateError(msg) {
+  var el = document.getElementById('donate-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideDonateError() {
+  document.getElementById('donate-error').classList.remove('show');
+}
+
+// Pre-fill donation name/email from ticket form if already typed
+['co-name','co-email'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function() {
+    var donName  = document.getElementById('don-name');
+    var donEmail = document.getElementById('don-email');
+    if (!donName.dataset.touched)  donName.value  = document.getElementById('co-name').value;
+    if (!donEmail.dataset.touched) donEmail.value = document.getElementById('co-email').value;
+    checkDonateReady();
+  });
+});
+document.getElementById('don-name').addEventListener('input',  function(){ this.dataset.touched = '1'; });
+document.getElementById('don-email').addEventListener('input', function(){ this.dataset.touched = '1'; });
+</script>
+</body>
+</html>

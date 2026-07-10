@@ -2,6 +2,7 @@
 namespace UtsovAPI;
 use PDO;
 require(dirname(__FILE__).'/utils.php');
+require(dirname(__FILE__).'/email-builder.php');
 date_default_timezone_set('America/New_York');
 
 $_post = json_decode(file_get_contents("php://input"));
@@ -66,17 +67,60 @@ function addVol($post) {
         $stmt->bindParam(':memberrequest', $memberrequest);
         $stmt->execute();
 
-        $subject = "UTSOV Volunteer Sign-Up — " . sanitizeHeader($name);
-        $to      = 'utsov@utsov.org';
-        $headers = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: noreply@utsov.org\r\n";
-        $body = "<html><body style='font-family:Arial,sans-serif;color:#333'>"
-            . "<h2 style='color:#8B1A1A'>New Volunteer Sign-Up — UTSOV 2026</h2>"
-            . "<p><strong>Name:</strong> " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "</p>"
-            . "<p><strong>Email:</strong> <a href='mailto:" . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . "</a></p>"
-            . "<p><strong>Phone:</strong> " . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . "</p>"
-            . "<p><strong>Details:</strong><br>" . nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')) . "</p>"
+        // Pre-escape
+        $vSafeName  = htmlspecialchars($name,    ENT_QUOTES, 'UTF-8');
+        $vSafeEmail = htmlspecialchars($email,   ENT_QUOTES, 'UTF-8');
+        $vSafePhone = htmlspecialchars($phone,   ENT_QUOTES, 'UTF-8');
+        $vSafeMsg   = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+        $vSafeCity  = htmlspecialchars($city,    ENT_QUOTES, 'UTF-8');
+        $vSafeState = htmlspecialchars($state,   ENT_QUOTES, 'UTF-8');
+        $vHeaders   = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: noreply@utsov.org\r\n";
+
+        // Volunteer confirmation email — personalized PNG
+        $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: noreply@utsov.org\r\n";
+        if ($email) {
+            $vConfSubject = "Thank you for volunteering with UTSOV 2026!";
+            $vGreeting = array("Dear {$name},", 'Thank you for signing up to volunteer.', 'Your time and energy help make Durga Puja possible for our community.');
+            if ($memberrequest) $vGreeting[] = 'Membership request noted - details coming with our follow-up.';
+            $imgUrl = buildEmailImage(
+                'VOLUNTEER CONFIRMED', false,
+                'Welcome to the UTSOV 2026 Team!',
+                $vGreeting,
+                null, null,
+                array('Our coordinator will reach out soon with', 'details about roles, schedules, and the event.'),
+                $email . '_vol'
+            );
+            if ($imgUrl) {
+                $vConfBody =
+                    "<html><body style='margin:0;padding:20px 0;background-color:#0d0000;text-align:center;font-family:Arial,sans-serif;'>"
+                  . "<img src='{$imgUrl}' width='600' alt='UTSOV 2026 Volunteer Confirmed' style='display:block;margin:0 auto;max-width:100%;border:0;'>"
+                  . "<p style='color:#888;font-size:11px;margin:8px auto 0;max-width:600px;'>Volunteer confirmed: {$vSafeName} | {$vSafeEmail}</p>"
+                  . "</body></html>";
+            } else {
+                $vConfBody =
+                    "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto'>"
+                  . "<h2 style='color:#8B1A1A'>Welcome to the UTSOV 2026 volunteer team!</h2>"
+                  . "<p>Hi {$vSafeName}, thank you for signing up to volunteer!</p>"
+                  . "<p style='color:#8B1A1A'>-- The UTSOV Team</p></body></html>";
+            }
+            mail($email, sanitizeHeader($vConfSubject), $vConfBody, $mailHeaders);
+        }
+
+        // Admin notification
+        $subject = "UTSOV Volunteer Sign-Up - " . sanitizeHeader($name);
+        $locationDisp = ($vSafeCity || $vSafeState) ? trim($vSafeCity . ($vSafeCity && $vSafeState ? ', ' : '') . $vSafeState) : '';
+        $body = "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto'>"
+            . "<h2 style='color:#8B1A1A'>New Volunteer: {$vSafeName}</h2>"
+            . "<table style='border-collapse:collapse;font-size:14px'>"
+            . "<tr><td style='padding:4px 16px 4px 0'><b>Name:</b></td><td>{$vSafeName}</td></tr>"
+            . "<tr><td style='padding:4px 16px 4px 0'><b>Email:</b></td><td>{$vSafeEmail}</td></tr>"
+            . "<tr><td style='padding:4px 16px 4px 0'><b>Phone:</b></td><td>{$vSafePhone}</td></tr>"
+            . ($locationDisp ? "<tr><td style='padding:4px 16px 4px 0'><b>Location:</b></td><td>{$locationDisp}</td></tr>" : '')
+            . ($memberrequest ? "<tr><td style='padding:4px 16px 4px 0'><b>Membership:</b></td><td>Requested</td></tr>" : '')
+            . ($message ? "<tr><td style='padding:4px 16px 4px 0;vertical-align:top'><b>Message:</b></td><td>{$vSafeMsg}</td></tr>" : '')
+            . "</table>"
             . "</body></html>";
-        mail($to, $subject, $body, $headers);
+        mail('utsov@utsov.org', sanitizeHeader($subject), $body, $mailHeaders);
 
         $return['msg'] = 'SUCCESS';
     } catch(PDOException $e) {

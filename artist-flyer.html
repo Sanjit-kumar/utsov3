@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTSOV Durga Puja 2026 — Artist Flyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;display:flex;justify-content:center;align-items:flex-start;padding:2rem;min-height:100vh}
+
+/* ─── POSTER SHELL ─── */
+.poster{
+  width:800px;
+  background:#080000;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* deep red radial glow behind everything */
+.poster::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 30%, rgba(110,14,14,.55) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 80%, rgba(80,10,10,.4) 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* subtle noise texture */
+.poster::after{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1;
+}
+
+/* ─── DOUBLE GOLD FRAME ─── */
+.frame-outer{position:absolute;inset:10px;border:1px solid rgba(201,168,76,.22);pointer-events:none;z-index:20}
+.frame-inner{position:absolute;inset:15px;border:.5px solid rgba(201,168,76,.1);pointer-events:none;z-index:20}
+
+/* corner ornaments */
+.frame-outer::before,.frame-outer::after,
+.frame-inner::before,.frame-inner::after{
+  content:'';position:absolute;
+  width:18px;height:18px;
+  border-color:rgba(201,168,76,.55);border-style:solid;
+}
+.frame-outer::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.frame-outer::after{top:-1px;right:-1px;border-width:2px 2px 0 0}
+.frame-inner::before{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.frame-inner::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+
+/* ─── PETALS ─── */
+.petal{position:absolute;border-radius:50% 0 50% 50%;opacity:0;animation:petalfall linear infinite;pointer-events:none;z-index:2}
+@keyframes petalfall{
+  0%{transform:translateY(-30px) rotate(0deg) scale(1);opacity:.8}
+  80%{opacity:.4}
+  100%{transform:translateY(1300px) rotate(900deg) scale(.6);opacity:0}
+}
+
+/* ─── HEADER ─── */
+.hdr{position:relative;z-index:5;text-align:center;padding:3rem 2.5rem 1.25rem}
+
+.hdr-top-rule{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1.4rem}
+.rule-line{height:1px;width:100px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.6))}
+.rule-line.r{background:linear-gradient(90deg,rgba(201,168,76,.6),transparent)}
+.rule-gem{width:7px;height:7px;border:1.5px solid #C9A84C;transform:rotate(45deg);flex-shrink:0}
+.rule-dot{width:3px;height:3px;background:#C9A84C;border-radius:50%;flex-shrink:0}
+
+.wordmark{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:8.5rem;
+  letter-spacing:.1em;
+  line-height:.88;
+  background:linear-gradient(160deg,#A8823A 0%,#E8C97A 30%,#FFFBE8 50%,#E8C97A 70%,#C9A84C 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 40px rgba(201,168,76,.3));
+}
+
+.bengali-title{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:1.9rem;
+  font-weight:700;
+  color:#E07830;
+  letter-spacing:.04em;
+  margin-top:.4rem;
+  text-shadow:0 0 30px rgba(224,120,48,.4);
+}
+
+.event-line{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.45);
+  margin-top:.4rem;
+}
+
+.invocation{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:.95rem;
+  font-weight:400;
+  color:rgba(255,248,240,.45);
+  font-style:italic;
+  margin-top:1rem;
+  line-height:1.65;
+}
+
+/* ─── DIVIDER ─── */
+.divider{display:flex;align-items:center;gap:.7rem;padding:.6rem 2.5rem;position:relative;z-index:5}
+.div-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.35))}
+.div-line.r{background:linear-gradient(90deg,rgba(201,168,76,.35),transparent)}
+.div-text{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.52rem;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(201,168,76,.5);
+  white-space:nowrap;
+}
+
+/* ─── ARTIST PANELS ─── */
+.artists{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  padding:0 1.5rem 0;
+  position:relative;z-index:5;
+}
+.artists::before{
+  content:'';
+  position:absolute;top:10%;left:50%;
+  width:1px;height:80%;
+  background:linear-gradient(180deg,transparent,rgba(201,168,76,.3) 20%,rgba(201,168,76,.3) 80%,transparent);
+  transform:translateX(-50%);
+}
+
+.acard{
+  position:relative;
+  overflow:hidden;
+  border-radius:4px;
+}
+.acard:first-child{margin-right:.75rem}
+.acard:last-child{margin-left:.75rem}
+
+/* photo */
+.acard-photo{
+  width:100%;
+  height:460px;
+  object-fit:cover;
+  object-position:top center;
+  display:block;
+  border-radius:4px 4px 0 0;
+}
+
+/* gradient fade over bottom of photo into card bg */
+.acard-fade{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(0deg,
+    #080000 0%,
+    rgba(8,0,0,.9) 22%,
+    rgba(8,0,0,.5) 44%,
+    transparent 65%
+  );
+  border-radius:4px;
+}
+
+/* subtle gold glow at top of photo */
+.acard-glow{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent);
+}
+
+.acard-info{
+  position:relative;
+  padding:.9rem 1.1rem 1.4rem;
+}
+
+.acard-tag{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.52rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:#C9A84C;
+  display:flex;align-items:center;gap:.4rem;
+  margin-bottom:.5rem;
+}
+.acard-tag::before{content:'';width:16px;height:1px;background:#C9A84C;flex-shrink:0}
+
+.acard-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.4rem;
+  color:#FFFDF8;
+  letter-spacing:.04em;
+  line-height:1.0;
+}
+
+.acard-date{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.58rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#E07830;
+  margin-top:.35rem;
+}
+
+.acard-poem{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:.85rem;
+  color:rgba(255,248,240,.5);
+  line-height:1.7;
+  margin-top:.7rem;
+  font-style:italic;
+  border-left:2px solid rgba(201,168,76,.25);
+  padding-left:.7rem;
+}
+
+/* ─── FOOTER ─── */
+.footer{
+  position:relative;z-index:5;
+  text-align:center;
+  padding:1.25rem 2rem 3rem;
+}
+
+.footer-nights{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.58rem;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(201,168,76,.4);
+  margin-bottom:.6rem;
+}
+
+.footer-dates{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.6rem;
+  letter-spacing:.06em;line-height:1;
+  background:linear-gradient(135deg,#C9A84C,#E8C97A,#C9A84C);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.footer-where{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.6rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,248,240,.3);
+  margin-top:.3rem;
+}
+
+.footer-web{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.62rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(201,168,76,.5);
+  margin-top:.85rem;
+}
+</style>
+</head>
+<body>
+
+<div class="poster" id="poster">
+
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-top-rule">
+      <div class="rule-line"></div>
+      <div class="rule-dot"></div>
+      <div class="rule-gem"></div>
+      <div class="rule-dot"></div>
+      <div class="rule-line r"></div>
+    </div>
+
+    <div class="wordmark">UTSOV</div>
+    <div class="bengali-title">দুর্গা পূজা ২০২৬</div>
+    <div class="event-line">Celebration of Shakti &nbsp;·&nbsp; New Jersey</div>
+    <div class="invocation">
+      মায়ের আলোয় জ্বলে উঠুক প্রতিটি হৃদয়,<br>
+      সুর আর ভক্তির মেলায় মাতুক এই উৎসব-প্রাণ।
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="div-line"></div>
+    <div class="div-text">✦ &nbsp; Prime Artists &nbsp; ✦</div>
+    <div class="div-line r"></div>
+  </div>
+
+  <!-- ARTISTS -->
+  <div class="artists">
+
+    <!-- Iman Chakraborty -->
+    <div class="acard">
+      <img class="acard-photo" src="images/artist_iman.jpg" alt="Iman Chakraborty">
+      <div class="acard-glow"></div>
+      <div class="acard-fade"></div>
+      <div class="acard-info">
+        <div class="acard-tag">Bollywood · Bengali Singer</div>
+        <div class="acard-name">Iman<br>Chakraborty</div>
+        <div class="acard-date">Oct 17, 2026</div>
+        <div class="acard-poem">
+          সুরের সাধনায় মায়ের কাছে পৌঁছে যায় মন,<br>
+          ইমানের কণ্ঠে জাগে দেবীর আবাহন।
+        </div>
+      </div>
+    </div>
+
+    <!-- Sourendro-Soumyojit -->
+    <div class="acard">
+      <img class="acard-photo" src="images/artist_sourendro.jpg" alt="Sourendro Soumyojit">
+      <div class="acard-glow"></div>
+      <div class="acard-fade"></div>
+      <div class="acard-info">
+        <div class="acard-tag">Bangla · Bollywood · Bandish</div>
+        <div class="acard-name">Sourendro<br>Soumyojit</div>
+        <div class="acard-date">Oct 18, 2026</div>
+        <div class="acard-poem">
+          দুই সুরের মিলনে বাঁধা এক অনন্য তান,<br>
+          বাংলার রাগে, বলিউডের আলোয় — একই আনন্দ-গান।
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="divider" style="margin-top:1rem">
+    <div class="div-line"></div>
+    <div class="div-text">✦ &nbsp; Two Nights · Two Legends &nbsp; ✦</div>
+    <div class="div-line r"></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-nights">New Jersey &nbsp;·&nbsp; USA</div>
+    <div class="footer-dates">OCT 17 &amp; 18, 2026</div>
+    <div class="footer-where">Tickets &amp; Info</div>
+    <div class="footer-web">utsov.org</div>
+  </div>
+
+</div>
+
+<script>
+// Falling petals
+var colors = ['#E07830','#FF9933','#C9A84C','#E8C97A','#FFB347','#D4641A'];
+var poster = document.getElementById('poster');
+for (var i = 0; i < 22; i++) {
+  var p = document.createElement('div');
+  p.className = 'petal';
+  var sz = 5 + Math.random() * 9;
+  p.style.cssText = [
+    'left:' + (Math.random() * 100) + '%',
+    'top:-30px',
+    'width:' + sz + 'px',
+    'height:' + sz + 'px',
+    'background:' + colors[Math.floor(Math.random() * colors.length)],
+    'animation-duration:' + (7 + Math.random() * 9) + 's',
+    'animation-delay:' + (Math.random() * 10) + 's',
+    'opacity:0'
+  ].join(';');
+  poster.appendChild(p);
+}
+</script>
+</body>
+</html>

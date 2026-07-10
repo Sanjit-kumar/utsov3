@@ -223,7 +223,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     </ul>
     <div class="nav-ctas">
       <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
-      <a href="events.html#tickets" class="btn btn-red">Get Passes</a>
+      <a href="cart.html" class="btn btn-red">Get Passes</a>
     </div>
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
   </nav>
@@ -368,7 +368,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <h2 class="s-title s-title-white rv d1" style="margin-bottom:1rem">Secure Your Passes Today</h2>
     <p class="s-sub s-sub-light rv d2" style="max-width:50ch;margin:0 auto 2.5rem">Limited passes available. Join thousands celebrating Maa Durga's homecoming in New Jersey.</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap" class="rv">
-      <a href="events.html#tickets" class="btn btn-gold btn-lg">Get Your Passes →</a>
+      <a href="cart.html" class="btn btn-gold btn-lg">Get Your Passes →</a>
       <a href="sponsorship.html" class="btn btn-outline-w btn-lg">Become a Sponsor</a>
     </div>
   </div>
@@ -385,7 +385,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
       <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
-      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="cart.html">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
     </div>
     <div class="ft-contacts">
       <div class="ftc-label">Team Contacts</div>
@@ -415,7 +415,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     {"@type":"PerformingGroup","name":"Sourendro–Soumyojit","description":"Bengal's celebrated musical duo, Bengali classics and Rabindra Sangeet"}
   ],
   "organizer": {"@type":"Organization","name":"Utsov Inc.","url":"https://utsov.org"},
-  "offers": {"@type":"Offer","price":"45","priceCurrency":"USD","url":"https://utsov.org/events.html#tickets","availability":"https://schema.org/InStock"}
+  "offers": {"@type":"Offer","price":"45","priceCurrency":"USD","url":"https://utsov.org/cart.html","availability":"https://schema.org/InStock"}
 }
 </script>
 <script type="application/ld+json">
@@ -453,64 +453,5 @@ const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.t
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 </script>
 
-<style>
-#cs-overlay{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(10,0,0,.88);backdrop-filter:blur(12px);padding:1.5rem}
-#cs-overlay.open{display:flex}
-.cs-modal{background:linear-gradient(160deg,#3D0000 0%,#5C0000 35%,#1A0A00 100%);border:1px solid rgba(201,168,76,.35);border-radius:36px;max-width:580px;width:100%;padding:3rem 3.5rem;position:relative;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(139,26,26,.3)}
-.cs-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#8B1A1A,#E07830,#C9A84C,#E07830,#8B1A1A);border-radius:36px 36px 0 0}
-.cs-close{position:absolute;top:1.25rem;right:1.25rem;background:rgba(255,253,248,.1);border:1px solid rgba(255,253,248,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;color:rgba(255,253,248,.7);transition:background .2s}
-.cs-close:hover{background:rgba(255,253,248,.2)}
-.cs-diya{font-size:2.8rem;display:block;margin-bottom:1.25rem;animation:diyaFloat 3s ease-in-out infinite}
-.cs-badge{font-family:'Josefin Sans',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#C9A84C;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:9999px;padding:.3rem 1rem;display:inline-block;margin-bottom:1.5rem}
-.cs-bn{font-family:'Noto Serif Bengali',serif;font-size:clamp(1rem,2.5vw,1.25rem);color:rgba(255,253,248,.92);line-height:1.9;margin-bottom:1.5rem;font-weight:600}
-.cs-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,#E07830,transparent);margin:0 auto 1.5rem}
-.cs-en{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(.9rem,1.8vw,1.05rem);color:rgba(255,253,248,.65);line-height:1.85;margin-bottom:2rem}
-.cs-notify-wrap{display:flex;gap:.6rem;max-width:380px;margin:0 auto 1rem}
-.cs-notify-wrap input{flex:1;background:rgba(255,253,248,.08);border:1.5px solid rgba(255,253,248,.2);border-radius:9999px;padding:.65rem 1.25rem;font-family:'Josefin Sans',sans-serif;font-size:.68rem;color:#FFFDF8;letter-spacing:.04em;outline:none;transition:border-color .2s}
-.cs-notify-wrap input::placeholder{color:rgba(255,253,248,.35)}
-.cs-notify-wrap input:focus{border-color:rgba(201,168,76,.6)}
-.cs-notify-btn{background:linear-gradient(135deg,#C9A84C,#E07830);color:#2a0000;font-family:'Josefin Sans',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:9999px;padding:.65rem 1.25rem;cursor:pointer;white-space:nowrap;transition:transform .2s}
-.cs-notify-btn:hover{transform:translateY(-1px)}
-.cs-note{font-family:'Josefin Sans',sans-serif;font-size:.58rem;color:rgba(255,253,248,.3);letter-spacing:.06em}
-.cs-date-badge{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,253,248,.08);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:rgba(201,168,76,.8);letter-spacing:.06em}
-@media(max-width:540px){.cs-modal{padding:2.5rem 1.75rem}.cs-notify-wrap{flex-direction:column}}
-</style>
-
-<div id="cs-overlay" role="dialog" aria-modal="true" aria-label="Registration Opening Soon" onclick="if(event.target===this)closeComingSoon()">
-  <div class="cs-modal">
-    <button class="cs-close" onclick="closeComingSoon()" aria-label="Close">✕</button>
-    <span class="cs-diya">🪔</span>
-    <div class="cs-badge">UTSOV 2026 · 🎟 Early Bird Registration Opening Soon</div>
-    <p class="cs-bn">
-      আসছেন মা — শিউলির সুগন্ধে,<br>
-      কাশফুলের ছন্দে, এই শরতে।<br>
-      তোমার আসন সাজানো হচ্ছে —<br>
-      একটু অপেক্ষা করো, বন্ধু,<br>
-      শীঘ্রই খুলবে উৎসবের দ্বার।
-    </p>
-    <div class="cs-divider"></div>
-    <p class="cs-en">
-      The Mother is coming — carried on the fragrance of shiuli blossoms,<br>
-      in the soft sway of kash grass, this sacred autumn.<br>
-      Your seat at her festival is being lovingly prepared.<br>
-      Wait just a little, dear friend —<br>
-      <em>the doors of UTSOV 2026 will open soon.</em> ✦
-    </p>
-    <div class="cs-notify-wrap">
-      <input type="email" id="cs-email" placeholder="your@email.com" aria-label="Email for notification">
-      <button class="cs-notify-btn" onclick="handleNotify()">Notify Me</button>
-    </div>
-    <p class="cs-note">We'll send you one email when registration opens. No spam, ever.</p>
-    <div class="cs-date-badge">October 17 – 18, 2026 · East Brunswick, NJ</div>
-  </div>
-</div>
-
-<script>
-function showComingSoon(){document.getElementById('cs-overlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var e=document.getElementById('cs-email');if(e)e.focus();},300);}
-function closeComingSoon(){document.getElementById('cs-overlay').classList.remove('open');document.body.style.overflow='';}
-function handleNotify(){var email=document.getElementById('cs-email').value.trim();var btn=document.querySelector('.cs-notify-btn');if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('cs-email').style.borderColor='rgba(192,57,43,.7)';document.getElementById('cs-email').focus();return;}btn.textContent='Saving…';btn.disabled=true;fetch('api/contacts.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'add',name:'',email:email,topic:'notify-registration',message:'Notify me when registration opens — UTSOV 2026'})}).catch(function(){}).finally(function(){document.querySelector('.cs-notify-wrap').innerHTML='<p style="font-family:\'Noto Serif Bengali\',serif;font-size:1rem;color:rgba(255,253,248,.9);text-align:center;padding:.5rem 0;width:100%">🙏 ধন্যবাদ! আমরা জানাবো — Thank you! We\'ll let you know.</p>';var n=document.querySelector('.cs-note');if(n)n.style.display='none';});}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeComingSoon();});
-document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href="events.html#tickets"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();showComingSoon();});});});
-</script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+# Exclude Python virtual environments (contain executables)
+.venv/
+venv/
+env/
+ENV/
+
+# Git and Firebase internals
+.git/
+.firebase/
+
+# Common executable/script files
+deploy.py
+*.exe
+*.bat
+*.cmd
+*.msi
+*.sh
+*.ps1
+
+# Node and build artifacts
+node_modules/
+coverage/
+.nyc_output/
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+*.swp
+
+# Environment files
+.env
+.env.local

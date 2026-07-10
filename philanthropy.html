@@ -157,6 +157,35 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .dc-desc{font-size:.9rem;color:var(--on-red-muted);line-height:1.7;margin-bottom:1.5rem}
 @media(max-width:760px){.donate-options{grid-template-columns:1fr}}
 
+/* DONATE FORM WIDGET */
+.donate-widget{max-width:520px;margin:0 auto}
+.donate-field-wrap{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.donate-label{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,253,248,.45)}
+.donate-input{background:rgba(255,253,248,.07);border:1.5px solid rgba(255,253,248,.15);border-radius:var(--r-md);padding:.7rem 1rem;font-family:var(--f-serif);font-size:.95rem;color:var(--cream);outline:none;transition:border-color .2s;width:100%}
+.donate-input::placeholder{color:rgba(255,253,248,.25)}
+.donate-input:focus{border-color:rgba(201,168,76,.6)}
+.donate-input.derr{border-color:rgba(192,57,43,.7)}
+.donate-amount-wrap{position:relative}
+.donate-amount-wrap .donate-dollar{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-family:var(--f-serif);font-size:.95rem;color:rgba(255,253,248,.45);pointer-events:none}
+.donate-amount-wrap .donate-input{padding-left:1.7rem}
+.donate-err{font-family:var(--f-label);font-size:.58rem;color:#e87070;letter-spacing:.04em;display:none;margin-top:.2rem}
+.donate-err.show{display:block}
+.donate-quick-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+.donate-quick-btn{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.08em;border:1.5px solid rgba(201,168,76,.4);background:rgba(201,168,76,.06);color:var(--gold-lt);border-radius:var(--r-full);padding:.35rem .9rem;cursor:pointer;transition:all .2s}
+.donate-quick-btn:hover,.donate-quick-btn.active{background:rgba(201,168,76,.18);border-color:var(--gold-lt)}
+.ph-donate-pp-note{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.28);letter-spacing:.06em;margin-bottom:1rem;text-align:center}
+.ph-donate-disabled-msg{font-family:var(--f-label);font-size:.65rem;color:rgba(255,253,248,.3);text-align:center;padding:.6rem;margin-bottom:.75rem;display:none}
+.ph-donate-disabled-msg.show{display:block}
+#ph-donate-button-container{min-height:50px;max-width:360px;margin:0 auto}
+#ph-donate-button-container.disabled{opacity:.4;pointer-events:none}
+#ph-donate-error{display:none;background:rgba(192,57,43,.18);border:1.5px solid rgba(192,57,43,.45);border-radius:var(--r-md);padding:.75rem 1.1rem;font-family:var(--f-label);font-size:.7rem;color:#e87070;letter-spacing:.04em;margin-bottom:.85rem}
+#ph-donate-error.show{display:block}
+#ph-donate-success{display:none;text-align:center;padding:2.5rem 1rem}
+.ds-icon{font-size:2.8rem;display:block;margin-bottom:.75rem}
+.ds-title{font-family:var(--f-display);font-size:2.4rem;color:var(--gold-lt);letter-spacing:.02em;margin-bottom:.4rem}
+.ds-sub{font-family:var(--f-serif);font-style:italic;color:rgba(255,253,248,.6);font-size:.95rem}
+.ds-note{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.35);letter-spacing:.06em;margin-top:.6rem}
+
 /* FOOTER */
 footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 .ft-in{max-width:1280px;margin:0 auto;padding:2.5rem 2rem 1.25rem}
@@ -204,6 +233,25 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 .ph-petals{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .ph-petal{position:absolute;animation:petalFall linear infinite;border-radius:50% 0 50% 50%}
 @keyframes petalFall{0%{transform:translateY(-60px) rotate(0deg);opacity:0}8%{opacity:.6}92%{opacity:.4}100%{transform:translateY(110vh) rotate(500deg);opacity:0}}
+/* ── PRIOR ORG GRID (3-col for historical orgs) ── */
+.org-grid-3col{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.org-grid-3col{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.org-grid-3col{grid-template-columns:1fr}}
+/* CAUSE BRICKS — brick-style focus area badges at bottom of prior orgs */
+.cause-bricks-wrap{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--bdr-red);text-align:center}
+.cause-bricks{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;margin-top:.9rem}
+.cause-brick{display:inline-flex;align-items:center;gap:.45rem;background:var(--cream);border:1.5px solid var(--bdr-red);border-radius:var(--r-sm);padding:.5rem .95rem;font-family:var(--f-label);font-size:.62rem;font-weight:700;color:var(--red-dark);letter-spacing:.08em;text-transform:uppercase;box-shadow:0 2px 8px rgba(92,0,0,.06);transition:background .22s,box-shadow .22s,transform .18s}
+.cause-brick:hover{background:var(--blush);box-shadow:0 5px 18px rgba(92,0,0,.12);transform:translateY(-2px)}
+.cb-icon{font-size:.92rem}
+
+/* Hero poem / text split layout */
+.ph-hero-split{display:flex;gap:3rem;align-items:flex-start;text-align:left;margin-top:1.75rem;max-width:1050px;margin-left:auto;margin-right:auto}
+.ph-poem-col{flex:0 0 auto;max-width:46%}
+.ph-poem-col .ph-bn{font-size:clamp(.88rem,1.8vw,1.05rem);line-height:2.1;margin-bottom:0}
+.ph-poem-trans{font-family:var(--f-serif);font-style:italic;font-size:.85rem;color:rgba(255,255,255,.42);line-height:1.7;margin-top:.8rem}
+.ph-text-col{flex:1;text-align:left;padding-top:.2rem}
+.ph-text-col .ph-sub{text-align:left;margin-top:0}
+@media(max-width:700px){.ph-hero-split{flex-direction:column-reverse;gap:1.25rem}.ph-poem-col{max-width:100%}}
 </style>
 </head>
 <body>
@@ -219,54 +267,14 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     </ul>
     <div class="nav-ctas">
       <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
-      <a href="events.html#tickets" class="btn btn-red">Get Passes</a>
+      <a href="cart.html" class="btn btn-red">Get Passes</a>
     </div>
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
   </nav>
 </header>
 <main>
 
-<!-- ═══════════════════════════════════════════════════════════
-     COMING SOON — Full philanthropy content is preserved below
-     in HTML comments. Restore by removing comment wrappers.
-     ═══════════════════════════════════════════════════════════ -->
-
-<div class="page-hero dark-hero" style="min-height:100vh;display:flex;align-items:center;padding:6rem 2rem">
-  <div class="ph-petals" id="phPetals"></div>
-  <div class="ph-inner" style="max-width:780px">
-    <div class="ph-badge rv">🪔 UTSOV 2026 · Philanthropy</div>
-    <div class="ph-divider rv" style="margin-bottom:2rem"></div>
-
-    <p class="ph-bn rv" style="font-size:clamp(1.1rem,2.5vw,1.6rem);line-height:2;color:rgba(245,224,176,.92);margin-bottom:1.5rem">
-      দশভুজা মায়ের আশীর্বাদে,<br>
-      সেবার পথ খুলে যাবে।<br>
-      দানের আলোয় অন্ধকার সরবে —<br>
-      আমরা আসছি, একটু অপেক্ষা করো।
-    </p>
-
-    <div class="ph-divider rv d1" style="margin-bottom:1.5rem"></div>
-
-    <p class="ph-sub rv d1" style="color:rgba(255,255,255,.45);font-size:.88rem;letter-spacing:.06em;font-style:normal;font-family:var(--f-label);text-transform:uppercase;margin-bottom:2rem">
-      With the blessing of the ten-armed Mother, the path of service shall open wide.<br>
-      In the light of giving, darkness fades — we are coming, wait just a little.
-    </p>
-
-    <h1 class="ph-title rv d2" style="font-size:clamp(4rem,10vw,8rem);color:rgba(255,255,255,.15);letter-spacing:.08em;margin-bottom:1.5rem">Coming<br>Soon</h1>
-
-    <p class="rv d2" style="font-family:var(--f-label);font-size:.68rem;letter-spacing:.2em;color:rgba(201,168,76,.6);text-transform:uppercase;margin-bottom:2.5rem">
-      We are crafting something beautiful — our philanthropy story will be told here very soon.
-    </p>
-
-    <a href="index.html" class="btn btn-gold rv d2" style="padding:.85rem 2.5rem;font-size:.75rem">← Back to Home</a>
-  </div>
-</div>
-
-<!--
-=================================================================
-ORIGINAL PHILANTHROPY CONTENT — PRESERVED, NOT DELETED
-Restore by removing these comment tags when content is finalised
-=================================================================
-
+<!-- PAGE HERO -->
 <div class="page-hero dark-hero">
   <div class="ph-petals" id="phPetals"></div>
   <div class="ph-inner">
@@ -274,17 +282,28 @@ Restore by removing these comment tags when content is finalised
     <span class="ph-bn rv">সেবা ও দান — মায়ের আশীর্বাদে</span>
     <h1 class="ph-title rv d1">More Than<br>a Festival</h1>
     <div class="ph-divider rv d1"></div>
-    <p class="ph-sub rv d2">In the spirit of Maa Durga — the divine mother who protects all — UTSOV dedicates itself to lifting lives and serving communities across two continents.</p>
+    <div class="ph-hero-split rv d2">
+      <div class="ph-poem-col">
+        <p class="ph-bn">আমার ভাণ্ডার আছে ভরে<br>
+        তোমা-সবাকার ঘরে ঘরে।<br>
+        তোমরা চাহিলে সবে<br>
+        এ পাত্র অক্ষয় হবে…</p>
+        <p class="ph-poem-trans">My storehouse is full and overflowing, dwelling in the home of each and every one of you. If all of you ask together, this vessel shall become inexhaustible…</p>
+      </div>
+      <div class="ph-text-col">
+        <p class="ph-sub">In the spirit of Maa Durga — the divine mother who protects all — UTSOV dedicates itself to lifting lives and serving communities across two continents. No celebration is complete without giving back. Every ticket, every sponsorship, every volunteer hour flows into causes that truly matter.</p>
+      </div>
+    </div>
   </div>
 </div>
 
-[ IMPACT STATS ]
+<!-- IMPACT STATS -->
 <section class="section-cream">
   <div class="s-in">
     <div class="stats-strip">
-      <div class="stat-card rv"><span class="stat-num">12+</span><span class="stat-lbl">Organizations Supported</span></div>
-      <div class="stat-card rv d1"><span class="stat-num">12+</span><span class="stat-lbl">Years of Service</span></div>
-      <div class="stat-card rv d2"><span class="stat-num">3+</span><span class="stat-lbl">Countries Reached</span></div>
+      <div class="stat-card rv"><span class="stat-num">13+</span><span class="stat-lbl">Organizations Supported</span></div>
+      <div class="stat-card rv d1"><span class="stat-num">12+</span><span class="stat-lbl">Years of Giving</span></div>
+      <div class="stat-card rv d2"><span class="stat-num">3</span><span class="stat-lbl">Countries Impacted</span></div>
       <div class="stat-card rv d3"><span class="stat-num">∞</span><span class="stat-lbl">Lives Touched</span></div>
     </div>
 
@@ -293,161 +312,256 @@ Restore by removing these comment tags when content is finalised
       <h2 class="s-title s-title-dark rv d1">Celebration &amp; Compassion</h2>
       <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
     </div>
-    <div class="mission-block">
+    <div class="mission-block" style="grid-template-columns:1fr">
       <div class="mission-text rv">
-        <p>UTSOV was founded on a simple truth: that the greatest offering we can make to Maa Durga — the Divine Mother who shelters every living being — is to shelter and uplift her children. Every ticket purchased, every sponsorship received, every dollar donated flows directly into causes that nourish lives.</p>
-        <p>We are a 501(c)(3) non-profit organization. Every year, our community unites not just to celebrate, but to serve. The festival is the celebration — the philanthropy is the prayer.</p>
-        <p class="mission-quote">"She who protects the universe carries her strength in compassion. We carry ours in community."</p>
-      </div>
-      <div class="values-list rv d1">
-        <div class="value-item"><div class="vi-icon">🍽️</div><div class="vi-text"><h4>Nourishment</h4><p>Feeding the hungry in NJ and partnering with food banks and shelters serving Indian diaspora communities.</p></div></div>
-        <div class="value-item"><div class="vi-icon">🏫</div><div class="vi-text"><h4>Education</h4><p>Funding scholarships, school supplies, and literacy programs for underprivileged children in West Bengal and New Jersey.</p></div></div>
-        <div class="value-item"><div class="vi-icon">🏥</div><div class="vi-text"><h4>Healthcare</h4><p>Supporting mobile health clinics and healthcare access initiatives for underserved rural communities in Bengal and NJ.</p></div></div>
-        <div class="value-item"><div class="vi-icon">🌱</div><div class="vi-text"><h4>Community Resilience</h4><p>Disaster relief for cyclone and flood survivors in Bengal, and emergency community support in New Jersey.</p></div></div>
+        <p>No celebration is complete without giving back to the society and helping the less privileged of the world. Together, let's celebrate not only our culture and community, but also the power of kindness to transform lives.</p>
+        <p>As Utsov, our primary aspiration is to provide little relief to those who are in need for education, health support and social upliftment. We also contribute towards the cause for environmental development to make the world more greener for our future generations. Some portion of our contribution is reserved for any natural disasters during the year.</p>
+        <p class="mission-quote">Please join us on this mission to bring smile to many faces. No one has ever become poor by giving.</p>
       </div>
     </div>
   </div>
 </section>
 
-[ ORG WE SUPPORT ]
+<!-- 2025-26 CURRENT CHARITY PARTNERS -->
 <section class="section-ivory">
   <div class="s-in">
     <div class="s-head">
-      <span class="s-label s-label-red rv">Who We Support</span>
-      <h2 class="s-title s-title-dark rv d1">Organizations We Stand With</h2>
+      <span class="s-label s-label-red rv">2025 – 2026</span>
+      <h2 class="s-title s-title-dark rv d1">This Year's Charity Partners</h2>
       <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
-      <p class="s-sub s-sub-dark rv d2" style="max-width:58ch;margin:.9rem auto 0">These are the organizations and causes that UTSOV's community has rallied behind — year after year, with growing love and commitment.</p>
+      <p class="s-sub s-sub-dark rv d2" style="max-width:60ch;margin:.9rem auto 0">Four extraordinary organizations transforming lives across India and New Jersey. Your UTSOV ticket supports every one of them.</p>
     </div>
     <div class="org-grid">
       <div class="org-card rv">
-        <div class="oc-banner oc-b1">❤️</div>
+        <div class="oc-banner oc-b1">🏫</div>
         <div class="oc-body">
-          <div class="oc-name">Durga Puja Cyclone Relief Fund</div>
-          <div class="oc-location">West Bengal, India</div>
-          <p class="oc-desc">Emergency relief for cyclone-affected families in coastal Bengal. UTSOV has raised over $25,000 for survivors of Cyclone Amphan and subsequent storms — providing food, shelter materials, and school supplies.</p>
+          <div class="oc-name">STPN Trust — Education &amp; Safety</div>
+          <div class="oc-location">📍 West Bengal, India</div>
+          <p class="oc-desc">Supporting the STPN High School for Underprivileged &amp; Orphan Children through critical infrastructure — including fire safety systems, security, and emergency evacuation equipment. Every child deserves a safe place to learn and grow.</p>
         </div>
       </div>
       <div class="org-card rv d1">
-        <div class="oc-banner oc-b2">🏥</div>
+        <div class="oc-banner oc-b2">⚕️</div>
         <div class="oc-body">
-          <div class="oc-name">Community Health NJ</div>
-          <div class="oc-location">New Jersey, USA</div>
-          <p class="oc-desc">Partnering with Community Health NJ to bring free health screenings, blood pressure checks, diabetes awareness, and wellness resources to the South Asian community in the tri-state area.</p>
+          <div class="oc-name">Humanity — Sundarbans Satellite Health Clinic</div>
+          <div class="oc-location">📍 Sundarbans Delta, West Bengal</div>
+          <p class="oc-desc">A 4-bed medical facility in the remote Sundarbans delta serving thousands of patients with access to childbirth care and minor surgical procedures — bringing essential healthcare where none previously existed in this vulnerable coastal region.</p>
         </div>
       </div>
       <div class="org-card rv d2">
-        <div class="oc-banner oc-b3">📚</div>
+        <div class="oc-banner oc-b3">📖</div>
         <div class="oc-body">
-          <div class="oc-name">Vidyashree School Fund</div>
-          <div class="oc-location">Bankura District, West Bengal</div>
-          <p class="oc-desc">Sponsoring education for 50+ underprivileged children in rural Bengal — providing school fees, textbooks, uniforms, and mid-day meals for an entire academic year, funded by UTSOV donations.</p>
+          <div class="oc-name">Nayantara — Tribal Education &amp; Nutrition</div>
+          <div class="oc-location">📍 Birbhum District, West Bengal</div>
+          <p class="oc-desc">Reaching 26 tribal villages in Birbhum District, Nayantara ensures children from the most marginalized communities attend school and receive nutritious daily meals. Education and nutrition together — because hungry children cannot learn.</p>
         </div>
       </div>
       <div class="org-card rv d3">
-        <div class="oc-banner oc-b4">🍛</div>
+        <div class="oc-banner oc-b2" style="background:linear-gradient(135deg,#083A5C,#1060A0)">💧</div>
         <div class="oc-body">
-          <div class="oc-name">NJ Community Food Bank</div>
-          <div class="oc-location">Central New Jersey, USA</div>
-          <p class="oc-desc">Every year, UTSOV volunteers distribute food packages and cooked meals to New Jersey families in need. The act of sharing bhog — sacred food — extends beyond the puja grounds into our neighbors' homes.</p>
-        </div>
-      </div>
-      <div class="org-card rv">
-        <div class="oc-banner oc-b5">👩‍🏫</div>
-        <div class="oc-body">
-          <div class="oc-name">BOAS NJ Women's Scholarship</div>
-          <div class="oc-location">New Jersey, USA</div>
-          <p class="oc-desc">In partnership with BOAS NJ, we fund merit-and-need scholarships for young South Asian women pursuing higher education. Empowering women is honoring Durga — the supreme manifestation of Shakti.</p>
-        </div>
-      </div>
-      <div class="org-card rv d1">
-        <div class="oc-banner oc-b6">🌿</div>
-        <div class="oc-body">
-          <div class="oc-name">Sundarbans Mangrove Project</div>
-          <div class="oc-location">Sundarbans, West Bengal</div>
-          <p class="oc-desc">Supporting reforestation and ecological restoration in the Sundarbans — the mangrove forest that protects Bengal's coastal communities. Caring for Maa Durga's earth is an act of devotion.</p>
-        </div>
-      </div>
-      <div class="org-card rv d2">
-        <div class="oc-banner oc-b1">📖</div>
-        <div class="oc-body">
-          <div class="oc-name">Asha for Education — NJ Chapter</div>
-          <div class="oc-location">New Jersey / Pan-India</div>
-          <p class="oc-desc">Partnering with Asha for Education's NJ chapter to fund grassroots education projects across rural India — building classrooms, training teachers, and ensuring every child has the right to learn.</p>
-        </div>
-      </div>
-      <div class="org-card rv d3">
-        <div class="oc-banner oc-b2">👶</div>
-        <div class="oc-body">
-          <div class="oc-name">Pratham USA</div>
-          <div class="oc-location">Pan-India</div>
-          <p class="oc-desc">Supporting Pratham's mission to improve reading and numeracy for millions of under-resourced children across India. Because the love of learning is the greatest gift a community can give its children.</p>
-        </div>
-      </div>
-      <div class="org-card rv">
-        <div class="oc-banner oc-b3">💪</div>
-        <div class="oc-body">
-          <div class="oc-name">CARE India — Women's Empowerment</div>
-          <div class="oc-location">West Bengal &amp; Odisha, India</div>
-          <p class="oc-desc">Funding CARE India's livelihood and healthcare programs for women in rural West Bengal — microfinance, vocational training, and maternal health support. Shakti lives in every woman we uplift.</p>
-        </div>
-      </div>
-      <div class="org-card rv d1">
-        <div class="oc-banner oc-b4">🏘️</div>
-        <div class="oc-body">
-          <div class="oc-name">Covenant House NJ</div>
-          <div class="oc-location">Newark, New Jersey</div>
-          <p class="oc-desc">Helping homeless youth rebuild their lives in New Jersey — shelter, education, and job training for young people who have nowhere else to turn. Compassion without borders is how we honor the Mother.</p>
-        </div>
-      </div>
-      <div class="org-card rv d2">
-        <div class="oc-banner oc-b5">🌍</div>
-        <div class="oc-body">
-          <div class="oc-name">Association for India's Development (AID)</div>
-          <div class="oc-location">India &amp; USA</div>
-          <p class="oc-desc">Supporting AID's grassroots development projects — clean water, education, and livelihoods for India's most marginalized communities. Development that grows from the people, for the people.</p>
+          <div class="oc-name">Mukti — Water, Health &amp; Sanitation</div>
+          <div class="oc-location">📍 Rural West Bengal, India</div>
+          <p class="oc-desc">Through three life-changing programs — <strong>Jal Hi Kal</strong> (clean water), <strong>Mutko Dhara</strong> (sanitation), and <strong>Swastha Shongini</strong> (mobile health) — Mukti addresses the foundational needs of rural communities that formal systems have left behind.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-[ DONATE ]
-<section class="section-red" id="donate">
+<!-- PRIOR AFFILIATED ORGANIZATIONS -->
+<section class="section-cream" id="prior-orgs">
   <div class="s-in">
     <div class="s-head">
-      <span class="s-label s-label-cream rv">Make a Difference</span>
-      <h2 class="s-title s-title-white rv d1">Donate to Our Causes</h2>
+      <span class="s-label s-label-saffron rv">A Legacy of Giving</span>
+      <h2 class="s-title s-title-dark rv d1">Prior Affiliated Organizations</h2>
       <div class="ornament rv d1" style="color:var(--gold)"><span>✦</span></div>
-      <p class="s-sub s-sub-light rv d2" style="max-width:55ch;margin:.9rem auto 0">Your donation is 100% tax-deductible. Every dollar donated goes directly to the people who need it most.</p>
+      <p class="s-sub s-sub-dark rv d2" style="max-width:65ch;margin:.9rem auto 0">Over more than a decade, UTSOV's community has rallied behind causes stretching across continents — from flood-ravaged Kerala to hurricane-hit Texas, from hungry children in Bengal to isolated elderly in New York City.</p>
     </div>
-    <div class="donate-options">
-      <div class="donate-card rv">
-        <div class="dc-amount">$25</div>
-        <div class="dc-name">A Blessing</div>
-        <p class="dc-desc">Feeds a family of four for one week through our NJ food bank partnership. The divine mother's grace — shared through your hands.</p>
-        <a href="contact.html" class="btn btn-outline-w" style="width:100%">Donate $25</a>
+    <div class="org-grid org-grid-3col">
+      <div class="org-card rv">
+        <div class="oc-banner oc-b3" style="height:72px;font-size:2.2rem">🥗</div>
+        <div class="oc-body">
+          <div class="oc-name">Nourish NJ</div>
+          <div class="oc-location">📍 Central New Jersey</div>
+          <p class="oc-desc">Addressing food insecurity across central New Jersey through meal distribution and community food programs for families in need.</p>
+        </div>
       </div>
-      <div class="donate-card featured rv d1">
-        <div class="dc-amount">$100</div>
-        <div class="dc-name">A Shakti</div>
-        <p class="dc-desc">Sponsors a child's education for one month in rural Bengal — textbooks, meals, and the chance at a better future. The most powerful offering to the Goddess.</p>
-        <a href="contact.html" class="btn btn-gold" style="width:100%">Donate $100</a>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b4" style="height:72px;font-size:2.2rem">🍱</div>
+        <div class="oc-body">
+          <div class="oc-name">Meals on Wheels — NYC</div>
+          <div class="oc-location">📍 New York City</div>
+          <p class="oc-desc">Delivering nutrition and companionship to homebound elderly New Yorkers — ensuring no senior goes without a meal or a human connection.</p>
+        </div>
       </div>
-      <div class="donate-card rv d2">
-        <div class="dc-amount">$500</div>
-        <div class="dc-name">A Mahayagya</div>
-        <p class="dc-desc">Funds a complete health screening camp for 50 people, OR sponsors an entire semester of schooling for 3 children. Your name honored in our event program and acknowledged on stage.</p>
-        <a href="contact.html" class="btn btn-outline-w" style="width:100%">Donate $500</a>
+      <div class="org-card rv d2">
+        <div class="oc-banner oc-b1" style="height:72px;font-size:2.2rem">➕</div>
+        <div class="oc-body">
+          <div class="oc-name">American Red Cross</div>
+          <div class="oc-location">📍 United States</div>
+          <p class="oc-desc">First responders in disaster relief — UTSOV has rallied multiple community drives supporting Red Cross flood, hurricane, and emergency relief efforts across the country.</p>
+        </div>
+      </div>
+      <div class="org-card rv">
+        <div class="oc-banner oc-b5" style="height:72px;font-size:2.2rem">🎗️</div>
+        <div class="oc-body">
+          <div class="oc-name">American Cancer Society</div>
+          <div class="oc-location">📍 United States</div>
+          <p class="oc-desc">Supporting life-saving cancer research and patient care programs that have touched millions of American families fighting this disease.</p>
+        </div>
+      </div>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b2" style="height:72px;font-size:2.2rem">🌊</div>
+        <div class="oc-body">
+          <div class="oc-name">Hurricane Harvey Relief Fund</div>
+          <div class="oc-location">📍 Texas, USA</div>
+          <p class="oc-desc">Emergency aid for survivors of the 2017 catastrophic Texas flooding — one of the most destructive hurricanes in US history, displacing over 30,000 people.</p>
+        </div>
+      </div>
+      <div class="org-card rv d2">
+        <div class="oc-banner oc-b3" style="height:72px;font-size:2.2rem">🌽</div>
+        <div class="oc-body">
+          <div class="oc-name">Feeding Florida</div>
+          <div class="oc-location">📍 Florida, USA</div>
+          <p class="oc-desc">A statewide network of food banks ensuring food security for millions of Floridians facing hunger and economic hardship across the state.</p>
+        </div>
+      </div>
+      <div class="org-card rv">
+        <div class="oc-banner oc-b6" style="height:72px;font-size:2.2rem">⚕️</div>
+        <div class="oc-body">
+          <div class="oc-name">St. Jude Children's Research Hospital</div>
+          <div class="oc-location">📍 Memphis, Tennessee</div>
+          <p class="oc-desc">Pioneering treatments for childhood cancer and serious diseases — where no family ever receives a bill for treatment, housing, travel, or food.</p>
+        </div>
+      </div>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b4" style="height:72px;font-size:2.2rem">🤝</div>
+        <div class="oc-body">
+          <div class="oc-name">ADI — All India Relief Fund</div>
+          <div class="oc-location">📍 India</div>
+          <p class="oc-desc">Providing emergency disaster relief and long-term rehabilitation for underserved communities across India following natural and humanitarian crises.</p>
+        </div>
+      </div>
+      <div class="org-card rv d2">
+        <div class="oc-banner oc-b2" style="height:72px;font-size:2.2rem">🌧️</div>
+        <div class="oc-body">
+          <div class="oc-name">Kerala Flood Relief Fund</div>
+          <div class="oc-location">📍 Kerala, India</div>
+          <p class="oc-desc">Emergency support for survivors of the devastating 2018 Kerala floods — one of the worst natural disasters in the state's modern history, displacing over a million people.</p>
+        </div>
+      </div>
+      <div class="org-card rv">
+        <div class="oc-banner oc-b1" style="height:72px;font-size:2.2rem">🙏</div>
+        <div class="oc-body">
+          <div class="oc-name">Bharat Sevashram Sangha</div>
+          <div class="oc-location">📍 West Bengal &amp; USA</div>
+          <p class="oc-desc">A century-old humanitarian organization serving the destitute through food, shelter, and education programs across Bengal, India, and the diaspora worldwide.</p>
+        </div>
+      </div>
+      <div class="org-card rv d1">
+        <div class="oc-banner oc-b5" style="height:72px;font-size:2.2rem">🌱</div>
+        <div class="oc-body">
+          <div class="oc-name">Shrirampur Child Guidance Center</div>
+          <div class="oc-location">📍 Shrirampur, West Bengal</div>
+          <p class="oc-desc">Supporting the emotional and developmental wellbeing of children with special needs and learning challenges in Shrirampur, West Bengal.</p>
+        </div>
+      </div>
+      <div class="org-card rv d2">
+        <div class="oc-banner oc-b4" style="height:72px;font-size:2.2rem">🏔️</div>
+        <div class="oc-body">
+          <div class="oc-name">Nepal PM's Disaster Relief Fund</div>
+          <div class="oc-location">📍 Nepal</div>
+          <p class="oc-desc">Emergency aid and reconstruction support following the 2015 Nepal earthquake — a magnitude 7.8 disaster that claimed nearly 9,000 lives and left millions homeless.</p>
+        </div>
+      </div>
+      <div class="org-card rv">
+        <div class="oc-banner oc-b6" style="height:72px;font-size:2.2rem">🪔</div>
+        <div class="oc-body">
+          <div class="oc-name">Tapyasya</div>
+          <div class="oc-location">📍 India</div>
+          <p class="oc-desc">A volunteer-driven initiative dedicated to holistic community development through education, healthcare, and grassroots social action in underserved regions.</p>
+        </div>
       </div>
     </div>
-    <p style="text-align:center;margin-top:2rem;font-size:.82rem;color:rgba(255,255,255,.45);font-family:var(--f-label);letter-spacing:.06em">UTSOV Inc. is a registered 501(c)(3) organization. All donations are tax-deductible under US law. EIN available upon request.</p>
+
+    <!-- Cause focus areas — brick badges -->
+    <div class="cause-bricks-wrap rv">
+      <span class="s-label s-label-red" style="display:block;text-align:center;margin-bottom:.85rem;letter-spacing:.28em">Our Focus Areas</span>
+      <div class="cause-bricks">
+        <div class="cause-brick"><span class="cb-icon">🍽️</span>Nourishment</div>
+        <div class="cause-brick"><span class="cb-icon">🏫</span>Education</div>
+        <div class="cause-brick"><span class="cb-icon">🏥</span>Healthcare</div>
+        <div class="cause-brick"><span class="cb-icon">🤝</span>Social Upliftment</div>
+        <div class="cause-brick"><span class="cb-icon">🌱</span>Environmental Development</div>
+        <div class="cause-brick"><span class="cb-icon">🆘</span>Disaster Relief</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-=================================================================
-END OF ORIGINAL PHILANTHROPY CONTENT
-=================================================================
--->
+
+<!-- DONATE SECTION -->
+<section style="background:linear-gradient(150deg,#1A0000 0%,#3D0000 50%,#1A0808 100%);padding:4rem 1.5rem" id="donate">
+  <div class="s-in">
+    <div class="s-head" style="margin-bottom:2.5rem">
+      <span class="s-label" style="background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3)">&#10047; Give Now</span>
+      <h2 class="s-title" style="color:var(--cream)">Donate Directly</h2>
+      <div class="ornament" style="color:var(--gold)"><span>✦</span></div>
+      <p class="s-sub" style="color:rgba(255,253,248,.55);max-width:55ch;margin:.75rem auto 0">Support UTSOV&rsquo;s community causes — education for tribal children in Bengal, healthcare in the Sundarbans, food security in NJ, and more. No amount is too small.</p>
+    </div>
+
+    <div class="donate-widget">
+      <div id="ph-donate-success">
+        <span class="ds-icon">&#10084;&#65039;</span>
+        <div class="ds-title">Thank You!</div>
+        <p class="ds-sub">Your donation has been received. We are truly grateful.</p>
+        <p class="ds-note">A confirmation has been sent to your email.</p>
+      </div>
+
+      <div id="ph-donate-form">
+        <div id="ph-donate-error"></div>
+
+        <div class="donate-field-wrap">
+          <label class="donate-label" for="ph-don-name">Your Name</label>
+          <input class="donate-input" type="text" id="ph-don-name" placeholder="Full name" maxlength="200" oninput="phCheckDonateReady()">
+          <span class="donate-err" id="ph-derr-name">Please enter your name.</span>
+        </div>
+
+        <div class="donate-field-wrap">
+          <label class="donate-label" for="ph-don-email">Email Address</label>
+          <input class="donate-input" type="email" id="ph-don-email" placeholder="you@example.com" maxlength="254" oninput="phCheckDonateReady()">
+          <span class="donate-err" id="ph-derr-email">Please enter a valid email.</span>
+        </div>
+
+        <div class="donate-field-wrap">
+          <label class="donate-label">Quick Amount</label>
+          <div class="donate-quick-btns">
+            <button class="donate-quick-btn" onclick="phSetAmount(11)" type="button">$11</button>
+            <button class="donate-quick-btn" onclick="phSetAmount(25)" type="button">$25</button>
+            <button class="donate-quick-btn" onclick="phSetAmount(51)" type="button">$51</button>
+            <button class="donate-quick-btn" onclick="phSetAmount(101)" type="button">$101</button>
+          </div>
+        </div>
+
+        <div class="donate-field-wrap">
+          <label class="donate-label" for="ph-don-amount">Donation Amount (USD)</label>
+          <div class="donate-amount-wrap">
+            <span class="donate-dollar">$</span>
+            <input class="donate-input" type="number" id="ph-don-amount" placeholder="Enter any amount" min="1" step="any" oninput="phCheckDonateReady()">
+          </div>
+          <span class="donate-err" id="ph-derr-amount">Please enter a valid amount (minimum $1).</span>
+        </div>
+
+        <div style="margin-top:1.25rem">
+          <div class="ph-donate-disabled-msg show" id="ph-donatePPMsg">Fill in your name, email and amount to donate.</div>
+          <p class="ph-donate-pp-note">&#128274; Secure &middot; Powered by PayPal &middot; No PayPal account needed</p>
+          <div id="ph-donate-button-container" class="disabled"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
 <footer>
@@ -459,7 +573,7 @@ END OF ORIGINAL PHILANTHROPY CONTENT
         <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
       <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
-      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="events.html#tickets">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
+      <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="cart.html">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
     </div>
     <div class="ft-contacts">
       <div class="ftc-label">Team Contacts</div>
@@ -549,6 +663,64 @@ toggle.addEventListener('click',()=>{menu.classList.toggle('open');toggle.classL
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.classList.remove('open');}));
 const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');obs.unobserve(en.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// ── Philanthropy donate widget ─────────────────────────────────────────────────
+(function(){
+  var s=document.createElement('script');
+  s.src='https://www.paypal.com/sdk/js?client-id=ATr7beRI3jcLJ5xGhjqYnlkkl2QqUBCf1gLTbuYzVAEzPC6Wac3AM2rSARo3Z97xMfzlfKKz9yoZd5j1&currency=USD';
+  s.onload=function(){
+    paypal.Buttons({
+      style:{layout:'vertical',color:'silver',shape:'pill',label:'donate'},
+      createOrder:function(){
+        if(!phValidate())return Promise.reject(new Error('invalid'));
+        phHideErr();
+        return fetch('api/donate.php',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({action:'create',name:document.getElementById('ph-don-name').value.trim(),
+            email:document.getElementById('ph-don-email').value.trim(),
+            amount:parseFloat(document.getElementById('ph-don-amount').value)})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.err){phShowErr(d.err);return Promise.reject(new Error(d.err));}return d.paypalOrderId;});
+      },
+      onApprove:function(data){
+        phHideErr();
+        return fetch('api/donate.php',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({action:'capture',paypalOrderId:data.orderID})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.err){phShowErr(d.err);return;}
+          document.getElementById('ph-donate-form').style.display='none';
+          document.getElementById('ph-donate-success').style.display='block';
+        });
+      },
+      onCancel:function(){phShowErr('Donation cancelled. You can try again anytime.');},
+      onError:function(e){phShowErr('A payment error occurred. Please try again or contact utsov@utsov.org.');console.error(e);}
+    }).render('#ph-donate-button-container');
+  };
+  document.head.appendChild(s);
+})();
+function phCheckDonateReady(){
+  var n=document.getElementById('ph-don-name').value.trim();
+  var e=document.getElementById('ph-don-email').value.trim();
+  var a=parseFloat(document.getElementById('ph-don-amount').value);
+  var ok=n.length>0&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)&&!isNaN(a)&&a>=1;
+  document.getElementById('ph-donate-button-container').classList.toggle('disabled',!ok);
+  document.getElementById('ph-donatePPMsg').classList.toggle('show',!ok);
+}
+function phValidate(){
+  var ok=true;
+  function c(id,eid,fn){var el=document.getElementById(id);var v=el.value.trim();var valid=fn(v);el.classList.toggle('derr',!valid);document.getElementById(eid).classList.toggle('show',!valid);if(!valid)ok=false;}
+  c('ph-don-name','ph-derr-name',function(v){return v.length>0;});
+  c('ph-don-email','ph-derr-email',function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);});
+  c('ph-don-amount','ph-derr-amount',function(v){var n=parseFloat(v);return !isNaN(n)&&n>=1;});
+  return ok;
+}
+function phSetAmount(amt){
+  document.getElementById('ph-don-amount').value=amt;
+  document.querySelectorAll('.donate-quick-btn').forEach(function(b){b.classList.toggle('active',parseInt(b.textContent.replace('$',''))===amt);});
+  phCheckDonateReady();
+}
+function phShowErr(msg){var el=document.getElementById('ph-donate-error');el.textContent=msg;el.classList.add('show');}
+function phHideErr(){document.getElementById('ph-donate-error').classList.remove('show');}
 </script>
 </body>
 </html>

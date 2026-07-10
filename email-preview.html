@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UTSOV 2026 — Email Template Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0d0000; padding: 40px 0; }
+
+.email-card {
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 12px 80px rgba(0,0,0,0.9);
+}
+.email-card > .frame-img {
+  width: 100%;
+  display: block;
+}
+
+.bottom-rect {
+  position: absolute;
+  bottom:  3%;
+  left:    10.5%;
+  right:   10.5%;
+  height:  80px;
+  background: #FEF0DC;
+  border-bottom: 3px solid #8B1A1A;
+  z-index: 1;
+}
+
+.email-body {
+  position: absolute;
+  top:    33%;
+  bottom:  3%;
+  left:   10.5%;
+  right:  10.5%;
+  background: transparent;
+  padding: 10px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.durga-watermark {
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 105%;
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.badge, .heading, .greeting, .details-table, .closing, .signature {
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  display: inline-block;
+  background: #1a6b2e;
+  color: #fff;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 3px;
+  padding: 5px 22px 4px;
+  flex-shrink: 0;
+}
+
+.heading {
+  font-family: 'Cinzel', 'Times New Roman', serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #5C0000;
+  text-align: center;
+  letter-spacing: 1.5px;
+  line-height: 1.35;
+  flex-shrink: 0;
+}
+
+.greeting {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #2a0a00;
+  text-align: center;
+  line-height: 1.65;
+  flex-shrink: 0;
+}
+.greeting strong  { font-weight: 700; color: #5C0000; }
+.greeting .amount { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: #8B1A1A; }
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgba(139,26,26,0.2);
+  flex-shrink: 0;
+}
+.details-table .tbl-head td {
+  background: #8B1A1A;
+  padding: 7px 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  color: #C9A84C;
+}
+.details-table tr.row td {
+  padding: 6px 12px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(139,26,26,0.13);
+}
+.details-table tr.row td.lbl       { font-style:italic; font-weight:600; color:#7a3000; width:40%; }
+.details-table tr.row td.val       { font-weight:700; color:#1a0500; }
+.details-table tr.row td.val-total { font-family:'Cinzel',serif; font-size:16px; font-weight:700; color:#1a6b2e; }
+.details-table tr.row td.val-id    { font-family:'Courier New',monospace; font-size:11px; font-weight:700; color:#888; }
+
+.closing {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3a1200;
+  text-align: center;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+
+.signature {
+  font-family: 'Tangerine', cursive;
+  font-size: 30px;
+  font-weight: 700;
+  color: #8B1A1A;
+  text-align: center;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+.signature .team { font-size: 19px; color: #5C0000; }
+</style>
+</head>
+<body>
+
+<div class="email-card">
+
+  <img class="frame-img" src="emaildurga.png" alt="">
+  <div class="bottom-rect"></div>
+
+  <div class="email-body">
+
+    <img class="durga-watermark" src="emaildurga1.JPG" alt="">
+
+    <div class="badge">&#10003; &nbsp; BOOKING CONFIRMED</div>
+
+    <h1 class="heading">You&rsquo;re going to UTSOV 2026!</h1>
+
+    <p class="greeting">
+      Dear <strong>Sanjit Das</strong>,<br>
+      Your payment of <span class="amount">$220.00</span> has been received.<br>
+      Your <strong>2 passes</strong> are confirmed &mdash; we can&rsquo;t wait<br>
+      to celebrate Durga Puja with you!
+    </p>
+
+    <table class="details-table" cellpadding="0" cellspacing="0">
+      <tr class="tbl-head"><td colspan="2">BOOKING DETAILS</td></tr>
+      <tr class="row"><td class="lbl">Passes</td>            <td class="val">UTSOV 2026 &times; 2 passes</td></tr>
+      <tr class="row"><td class="lbl">Days</td>              <td class="val">Both Days (Oct 17 &amp; 18)</td></tr>
+      <tr class="row"><td class="lbl">Adults</td>            <td class="val">1 adult + 2 children</td></tr>
+      <tr class="row"><td class="lbl">Meal Preference</td>   <td class="val">Vegetarian</td></tr>
+      <tr class="row"><td class="lbl">Total Paid</td>        <td class="val-total">$220.00</td></tr>
+      <tr class="row"><td class="lbl">Order ID</td>          <td class="val-id">3XY45940A9285905E</td></tr>
+    </table>
+
+    <p class="closing">
+      Full schedule &amp; venue details will be shared closer to<br>
+      October 17&ndash;18, New Jersey. See you there!
+    </p>
+
+    <div class="signature">
+      Jai Maa Durga!<br>
+      <span class="team">— The UTSOV Team</span>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Note: The PHP email-builder.php generates a PNG image of this exact design
+     using GD with the same fonts, colours and layout. That PNG is what gets
+     sent as the email — so every inbox sees exactly what you see here. -->
+
+</body>
+</html>

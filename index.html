@@ -6,7 +6,7 @@
 <title>UTSOV — Durga Puja 2026 | New Jersey | East Brunswick NJ | Bengali Festival</title>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="New Jersey's biggest Durga Puja 2026 — Oct 17–18 at East Brunswick, NJ. Live concerts, Pushpanjali, Sindoor Khela, Bengali food & Mela Bazaar. Tickets from $85.">
+<meta name="description" content="New Jersey's biggest Durga Puja 2026 — Oct 17–18 at East Brunswick, NJ. Live concerts, Pushpanjali, Sindoor Khela, Bengali food & Mela Bazaar. Tickets from $50.">
 <meta name="keywords" content="Durga Puja New Jersey, Durga Puja near me, Bengali festival NJ, UTSOV, Durga Puja 2026, Durga Puja East Brunswick, Navratri New Jersey, Indian festival NJ, Bengali cultural event New Jersey, Maa Durga NJ, Sindoor Khela NJ, Pushpanjali NJ, Dhunuchi Naach, Durga Puja tri-state, Durga Puja tickets NJ">
 <meta name="author" content="UTSOV Inc.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -476,7 +476,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   /* Early Bird running ticker — mobile only, sits just above DURGA PUJA headline */
   .mob-eb-ticker{display:block;overflow:hidden;width:100%;margin-bottom:.5rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
   .mob-eb-track{display:inline-flex;white-space:nowrap;gap:3rem;animation:ebTickerScroll 13s linear infinite}
-  .mob-eb-track span{font-family:var(--f-label);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);text-shadow:0 1px 8px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.65);flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem}
+  .mob-eb-track a{font-family:var(--f-label);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.65);flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem}
 
   /* DURGA / PUJA: cream on dark overlay */
   .hh-solid{color:var(--cream);text-shadow:0 2px 18px rgba(0,0,0,.55)}
@@ -528,6 +528,11 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   .msb-logo-wrap{background:rgba(255,253,248,.97);border-radius:var(--r-sm);padding:.5rem .9rem;display:flex;align-items:center;justify-content:center}
   .msb-logo{max-height:46px;max-width:140px;object-fit:contain;display:block}
   .msb-tagline{font-family:var(--f-bn);font-size:.7rem;color:rgba(232,201,122,.72);white-space:nowrap}
+  .mob-sponsor-carousel{overflow:hidden;padding:1.1rem 1.25rem .6rem;background:var(--cream)}
+  .msc-track{display:flex;transition:transform .7s cubic-bezier(.65,0,.35,1)}
+  .msc-item{flex:0 0 50%;display:flex;align-items:center;justify-content:center;padding:0 .7rem;box-sizing:border-box;text-decoration:none}
+  .msc-item img{max-width:100%;max-height:56px;object-fit:contain}
+  .msc-item-photo img{max-height:76px;border-radius:8px;border:1.5px solid rgba(201,168,76,.5);box-shadow:0 3px 12px rgba(0,0,0,.15)}
 
   /* SS Brothers — show full head on mobile */
   .ar-v2 .ar-photo{object-position:center 8%}
@@ -616,14 +621,14 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 /* ── Logo circle — transparent with golden glow ── */
 .sph-lc{border-radius:50%;overflow:visible;background:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(201,168,76,.75),0 0 50px rgba(201,168,76,.38),0 0 80px rgba(201,168,76,.18),inset 0 0 14px rgba(201,168,76,.15);border:1.5px solid rgba(201,168,76,.5);position:relative;z-index:2;width:100%;height:100%}
 /* PC Chandra large orbit: logo pill as a centered rectangular card overlay on the video */
-.sph-orbit-lg .sph-lc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:168px;height:68px;border-radius:10px;overflow:visible;background:transparent;border:none;box-shadow:none;z-index:3}
+.sph-orbit-lg .sph-lc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:254px;height:103px;border-radius:10px;overflow:visible;background:transparent;border:none;box-shadow:0 4px 18px rgba(0,0,0,.35);z-index:3}
 /* Logo pill: circular, semi-transparent, fills the inner ring circle */
 .sph-logo-pill{background:rgba(255,252,242,.55);border-radius:50%;width:100%;height:100%;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .sph-orbit-sm .sph-logo-pill{background:rgba(255,252,242,.55)}
-.sph-orbit-lg .sph-logo-pill{background:transparent;border-radius:0}
+.sph-orbit-lg .sph-logo-pill{background:#FFFDF8;border-radius:10px;padding:.5rem .7rem}
 /* Logo images: fill circle, mix-blend-mode removes white backgrounds (e.g. ICICI) */
 .sph-logo-pill img{width:88%;height:88%;object-fit:contain;mix-blend-mode:multiply;opacity:.92;display:block;position:relative;z-index:2}
-.sph-orbit-lg .sph-logo-pill img{mix-blend-mode:multiply;opacity:.95;width:92%;height:92%}
+.sph-orbit-lg .sph-logo-pill img{mix-blend-mode:normal;opacity:1;width:100%;height:100%}
 /* PC Chandra video animation — WebM transparent, MP4 fallback uses multiply blend */
 .sph-pcc-vid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;object-fit:cover;pointer-events:none;z-index:1;mix-blend-mode:multiply}
 
@@ -644,6 +649,29 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 .sph-gold-row .sph-lc{border-radius:9px;box-shadow:0 0 14px rgba(201,168,76,.72),0 0 32px rgba(201,168,76,.4),0 0 55px rgba(201,168,76,.18),inset 0 0 8px rgba(201,168,76,.12);border:1.5px solid rgba(201,168,76,.52)}
 .sph-gold-row .sph-logo-pill{border-radius:7px;overflow:hidden}
 .sph-gold-row .sph-item-info{display:none}
+
+/* Samragnee Majumdar / New York Life - drawn rangoli animation behind her business card,
+   sits below PC Chandra (not overlapping the star sponsor's own ring/video). */
+.sph-nyl-spot{display:flex;justify-content:center;width:210px}
+.sph-nyl-stage{position:relative;width:190px;height:190px}
+.sph-nyl-stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.sph-nyl-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:148px;border-radius:9px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.25);border:1.5px solid rgba(201,168,76,.5);opacity:0;animation:rgbLogoFade 1s ease-out forwards;animation-delay:9.3s;z-index:3}
+.sph-nyl-card img{display:block;width:100%;height:auto}
+
+.rgb-center-dot{fill:#E07830;opacity:0;animation:rgbDotFade .5s ease-in forwards;animation-delay:.1s}
+@keyframes rgbDotFade{to{opacity:1}}
+@keyframes rgbLogoFade{to{opacity:1}}
+.rgb-shape-stroke{fill:none;stroke-linecap:round}
+.rgb-shape-fill{opacity:0}
+@keyframes rgbShapeDraw{0%{opacity:1}100%{opacity:1;stroke-dashoffset:0}}
+@keyframes rgbShapeStrokeOut{to{opacity:0}}
+@keyframes rgbShapeFillIn{to{opacity:1}}
+.rgb-string{fill:none;stroke:#E07830;stroke-width:.7;opacity:0;stroke-linecap:round}
+@keyframes rgbStringDraw{0%{opacity:.85}100%{opacity:.85;stroke-dashoffset:0}}
+.rgb-dot{opacity:0}
+@keyframes rgbDotPop{to{opacity:1}}
+.rgb-ring-outline{fill:none;opacity:0}
+@keyframes rgbRingDrawFade{0%{opacity:1}100%{opacity:1;stroke-dashoffset:0}}
 .sph-gold-row .sph-gold-item:hover .sph-lc{box-shadow:0 0 22px rgba(201,168,76,.95),0 0 48px rgba(201,168,76,.62),0 0 80px rgba(201,168,76,.3),inset 0 0 12px rgba(201,168,76,.2)}
 
 /* Right info area (text, left-aligned, extends toward page right edge) */
@@ -731,9 +759,12 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 /* ══════════════════════════════════════════════════════════════
    ANNOUNCE BAR — fixed strip below nav, desktop only ≥941px
    ══════════════════════════════════════════════════════════════ */
-.announce-bar{position:fixed;top:65px;left:0;right:0;z-index:495;background:linear-gradient(90deg,var(--gold-lt),var(--gold) 25%,var(--marigold) 50%,var(--gold) 75%,var(--gold-lt));border-bottom:1px solid rgba(26,0,0,.15);display:flex;align-items:center;justify-content:center;gap:1rem;padding:.7rem 2rem;font-family:var(--f-display);font-size:1.3rem;font-weight:400;letter-spacing:.09em;color:var(--black);text-transform:uppercase;pointer-events:none;user-select:none;box-shadow:0 3px 16px rgba(0,0,0,.22)}
+.announce-bar{position:fixed;top:65px;left:0;right:0;z-index:495;background:linear-gradient(90deg,var(--gold-lt),var(--gold) 25%,var(--marigold) 50%,var(--gold) 75%,var(--gold-lt));border-bottom:1px solid rgba(26,0,0,.15);display:flex;align-items:center;justify-content:center;gap:1rem;padding:.7rem 2rem;font-family:var(--f-display);font-size:1.3rem;font-weight:400;letter-spacing:.09em;color:var(--black);text-transform:uppercase;box-shadow:0 3px 16px rgba(0,0,0,.22)}
 @media(max-width:940px){.announce-bar{display:none}}
-.ab-dot{width:7px;height:7px;border-radius:50%;background:var(--red-dark);animation:pulseDot 1.8s ease-in-out infinite;display:inline-block;flex-shrink:0}
+.ab-dot{width:7px;height:7px;border-radius:50%;background:var(--red-dark);animation:pulseDot 1.8s ease-in-out infinite;display:inline-block;flex-shrink:0;pointer-events:none}
+.ab-link{color:inherit;text-decoration:none;cursor:pointer;transition:opacity .15s ease;animation:flashText 1.6s ease-in-out infinite}
+.ab-link:hover,.ab-link:focus-visible{opacity:.75;text-decoration:underline;animation-play-state:paused}
+@keyframes flashText{0%,100%{opacity:1}50%{opacity:.45}}
 @media(min-width:941px){.hero{padding-top:116px}}
 
 /* ══════════════════════════════════════════════════════════════
@@ -766,10 +797,10 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 </header>
 
 <!-- ANNOUNCE BAR — desktop only, fixed below nav -->
-<div class="announce-bar" aria-hidden="true">
-  <span class="ab-dot"></span>
-  🎟 &nbsp; Early Bird Registration Is Now Open!
-  <span class="ab-dot"></span>
+<div class="announce-bar">
+  <span class="ab-dot" aria-hidden="true"></span>
+  <a href="cart.html" class="ab-link">🎟 &nbsp; Early Bird Registration Is Now Open!</a>
+  <span class="ab-dot" aria-hidden="true"></span>
 </div>
 
 <main>
@@ -802,10 +833,10 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <div class="hero-main-block">
       <div class="hero-pre rv">আসছেন মা — শারদ উৎসব ২০২৬</div>
 
-      <div class="mob-eb-ticker" aria-hidden="true">
+      <div class="mob-eb-ticker">
         <div class="mob-eb-track">
-          <span>🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</span>
-          <span>🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</span>
+          <a href="cart.html">🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</a>
+          <a href="cart.html" aria-hidden="true" tabindex="-1">🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</a>
         </div>
       </div>
 
@@ -894,8 +925,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <!-- Bottom area: tagline + countdown -->
     <div class="hero-bottom">
       <div class="hero-tagline rv d3">
-        <span class="ht-bn">মায়ের আগমনে মেতে উঠুক নিউ জার্সি</span>
-        <span class="ht-sub">Five sacred days of devotion, music, colour, and community — where Bengal meets New Jersey. The Goddess returns.</span>
+        <span class="ht-bn">মায়ের আগমনে মেতে উঠুক নিউ জার্সি, নিউ ইয়র্ক, পেনসিলভানিয়া—Tri States সীমানা ছাপিয়ে আমেরিকার প্রতিটি বাঙালি হৃদয়।</span>
+        <span class="ht-sub">Five radiant days of devotion, dhak, dance, colour, and celebration — where Bengal's spirit travels far beyond borders.</span>
       </div>
 
       <div class="hero-meta-right rv d3">
@@ -935,8 +966,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         </video>
         <div class="sph-lc">
           <div class="sph-logo-pill">
-            <img src="https://cdn.shopify.com/s/files/1/0697/8945/0462/files/New_163.714px59_3.webp?v=1737715600"
-                 alt="PC Chandra Jewellers"
+            <img src="images/pc_chandra_logo_white.jpg"
+                 alt="PC Chandra Jewellers - Since 1939 - A jewel of jewels"
                  style="display:block"
                  onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:.95rem;color:#8B1A1A;letter-spacing:.06em&quot;>PC CHANDRA</span>'">
           </div>
@@ -947,6 +978,27 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <div class="sph-star-badge">★ &nbsp; Star Sponsor &nbsp; ★</div>
         <p class="sph-poem">সোনার আলোয় মায়ের পূজা সাজে,<br>পিসি চন্দ্রের শুভ আশীর্বাদে।</p>
         <p class="sph-tagline-main">Where gold meets God — since 1939</p>
+      </div>
+    </div>
+
+    <!-- Samragnee Majumdar - New York Life: drawn-rangoli animation behind her business card -->
+    <div class="sph-nyl-spot">
+      <div class="sph-nyl-stage" id="sphNylStageDesktop">
+        <svg viewBox="-78 -78 156 156">
+          <circle class="rgb-center-dot" cx="0" cy="0" r="4"/>
+          <g class="rgb-petals"></g>
+          <g class="rgb-curls"></g>
+          <g class="rgb-strings"></g>
+          <g class="rgb-leaves"></g>
+          <g class="rgb-innerDots"></g>
+          <g class="rgb-spikes"></g>
+          <g class="rgb-goldDots"></g>
+          <g class="rgb-outerDots"></g>
+          <g class="rgb-rings"></g>
+        </svg>
+        <div class="sph-nyl-card">
+          <img src="images/ny_life_business_card.jpg" alt="Samragnee Majumdar - New York Life Insurance">
+        </div>
       </div>
     </div>
 
@@ -999,6 +1051,30 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
            onerror="this.parentNode.innerHTML='<span style=\'font-family:Bebas+Neue,sans-serif;font-size:.9rem;color:#8B1A1A;letter-spacing:.06em\'>PC CHANDRA</span>'">
     </div>
     <div class="msb-tagline">সোনার গয়না · Since 1939</div>
+  </div>
+
+  <!-- All Sponsors carousel (mobile) - 2 visible at a time, auto-advances -->
+  <div class="mob-sponsor-carousel">
+    <div class="msc-track" id="mscTrack">
+      <a href="https://rkjewels.com" target="_blank" rel="noopener" class="msc-item">
+        <img src="https://rkjewels.com/cdn/shop/files/Rk_Logo_PNG_Transparent.png?v=1707330978" alt="RK Jewels">
+      </a>
+      <a href="https://www.tanishq.com" target="_blank" rel="noopener" class="msc-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Tanishq_Logo.svg/250px-Tanishq_Logo.svg.png" alt="Tanishq">
+      </a>
+      <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="msc-item">
+        <img src="images/logo_icici.png" alt="ICICI Bank">
+      </a>
+      <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="msc-item">
+        <img src="https://www.sonajewelers.com/wp-content/uploads/2022/03/cropped-SONa-Logo.png" alt="Sona Jewelers">
+      </a>
+      <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="msc-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png" alt="New York Life">
+      </a>
+      <a href="https://www.newyorklife.com/agent/smajumdar" target="_blank" rel="noopener" class="msc-item msc-item-photo">
+        <img src="images/ny_life_business_card.jpg" alt="Samragnee Majumdar - New York Life Insurance">
+      </a>
+    </div>
   </div>
 
 </div>
@@ -1204,7 +1280,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <span class="tc-icon-big">🍽️</span>
       <h3 class="tc-name">COMMUNITY<br>BHOG</h3>
       <span class="tc-name-bn">ভোগ প্রসাদ</span>
-      <p class="tc-desc">Sacred food — khichuri, labra, payesh, luchi, mishti — first offered to the Goddess, then shared freely with all. At the bhog table, all social distinctions dissolve. Every person is equal before the Mother. To eat bhog is to receive her grace.</p>
+      <p class="tc-desc">Sacred prasad — an abundance of seasonal fruits and traditional Bengali mishti like sandesh, narkel naru, and rasgulla — first offered to the Goddess, then shared freely with all. At the bhog table, all social distinctions dissolve. Every person is equal before the Mother. To eat bhog is to receive her grace.</p>
     </div>
   </div>
 </section>
@@ -1221,7 +1297,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <div class="ev-card rv">
         <span class="ev-card-icon">🙏</span>
         <div class="ev-day-tag">Both Days</div>
-        <div class="ev-name">Puja Rituals &amp; Aarti</div>
+        <div class="ev-name">Puja Rituals &amp; Anjali</div>
         <p class="ev-desc">Traditional morning and evening puja — pushpanjali, dhunuchi naach, Vedic chants. Connect with the divine through ancient ritual and collective devotion.</p>
         <div class="ev-time">Morning &amp; Evening</div>
       </div>
@@ -1232,18 +1308,11 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <p class="ev-desc">Kids ages 4–16 showcase creativity in themed Durga Puja art challenges. Prizes, medals, and certificates for all participants.</p>
         <div class="ev-time">Morning — Oct 17</div>
       </div>
-      <div class="ev-card rv d2">
-        <span class="ev-card-icon">🎭</span>
-        <div class="ev-day-tag">Day 2 — Sunday, Oct 18</div>
-        <div class="ev-name">Talent Show</div>
-        <p class="ev-desc">Adults and children perform in dance, music, and drama. A stage for every age, a spotlight for every gift. Cash prizes and trophies.</p>
-        <div class="ev-time">Morning — Oct 18</div>
-      </div>
       <div class="ev-card rv">
         <span class="ev-card-icon">🍛</span>
         <div class="ev-day-tag">Both Days</div>
         <div class="ev-name">Authentic Bengali Food</div>
-        <p class="ev-desc">Misti doi, fish curry, luchi, mishti, and the sacred bhog prasad. The full flavors of Bengal, right here in New Jersey.</p>
+        <p class="ev-desc">Kosha mangsho, chingri malai curry, Rui fish kalia, chicken rezala, vegetables, chutney, mishti, and the sacred bhog prasad. The full flavors of Bengal, right here in New Jersey.</p>
         <div class="ev-time">All Day</div>
       </div>
       <div class="ev-card rv d1">
@@ -1465,7 +1534,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   "@type": "Event",
   "name": "UTSOV Durga Puja 2026",
   "alternateName": ["Durga Puja New Jersey 2026", "UTSOV 2026", "Bengali Festival New Jersey"],
-  "description": "UTSOV Durga Puja 2026 is New Jersey's largest annual Durga Puja celebration. Two days of traditional worship, world-class live cultural concerts, Pushpanjali, Dhunuchi Naach, Sindoor Khela, Community Bhog, Mela Bazaar, children's art competition, and talent show. Organized by Utsov Inc., a 501(c)(3) non-profit.",
+  "description": "UTSOV Durga Puja 2026 is New Jersey's largest annual Durga Puja celebration. Two days of traditional worship, world-class live cultural concerts, Pushpanjali, Dhunuchi Naach, Sindoor Khela, Community Bhog, Mela Bazaar, and children's art competition. Organized by Utsov Inc., a 501(c)(3) non-profit.",
   "startDate": "2026-10-17T09:00:00-04:00",
   "endDate": "2026-10-18T22:00:00-04:00",
   "eventStatus": "https://schema.org/EventScheduled",
@@ -1631,7 +1700,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       "name": "How much are Durga Puja tickets in New Jersey?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "UTSOV 2026 tickets start at $45 for a Day Pass, $75 for a Weekend Pass (both days), and $240 for a Family of 4. Children under 5 are free. Visit utsov.org/events.html for tickets."
+        "text": "UTSOV 2026 tickets start at $50 for a Kids single-day pass. Patron (12+) passes start at $80 for a single day or $140 for both days, with Student pricing also available. Children under 6 attend free. Visit utsov.org/cart.html to register."
       }
     },
     {
@@ -1740,6 +1809,146 @@ document.querySelectorAll('.rv:not(.hero .rv)').forEach(el=>obs.observe(el));
   circles.forEach((circle, index) => {
     circle.style.setProperty('--delay', index);
   });
+})();
+
+// Samragnee Majumdar / New York Life - drawn rangoli animation (reusable builder,
+// same technique used for PC Chandra's test animation: staged stroke-dasharray
+// draw-in using the site's real rangoli-spike-ring.svg spike geometry).
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  function addPath(group, d, className, delay, extra) {
+    const el = document.createElementNS(NS, "path");
+    el.setAttribute("d", d);
+    el.setAttribute("class", className);
+    if (extra) for (const k in extra) el.setAttribute(k, extra[k]);
+    el.style.animationDelay = delay;
+    group.appendChild(el);
+  }
+  function addCircle(group, cx, cy, r, className, transform, delay, extra) {
+    const el = document.createElementNS(NS, "circle");
+    el.setAttribute("cx", cx); el.setAttribute("cy", cy); el.setAttribute("r", r);
+    el.setAttribute("class", className);
+    if (transform) el.setAttribute("transform", transform);
+    if (extra) for (const k in extra) el.setAttribute(k, extra[k]);
+    el.style.animationDelay = delay;
+    group.appendChild(el);
+  }
+  function drawShape(group, d, len, fillColor, strokeColor, t, drawDur, transform) {
+    const strokeEl = document.createElementNS(NS, "path");
+    strokeEl.setAttribute("d", d);
+    strokeEl.setAttribute("class", "rgb-shape-stroke");
+    if (transform) strokeEl.setAttribute("transform", transform);
+    strokeEl.setAttribute("stroke", strokeColor);
+    strokeEl.setAttribute("stroke-width", .9);
+    strokeEl.setAttribute("stroke-dasharray", len);
+    strokeEl.setAttribute("stroke-dashoffset", len);
+    strokeEl.style.cssText = `animation-name:rgbShapeDraw,rgbShapeStrokeOut;animation-duration:${drawDur}s,.3s;animation-fill-mode:forwards;animation-timing-function:ease-out,ease-in;animation-delay:${t}s,${t+drawDur}s`;
+    group.appendChild(strokeEl);
+
+    const fillEl = document.createElementNS(NS, "path");
+    fillEl.setAttribute("d", d);
+    fillEl.setAttribute("class", "rgb-shape-fill");
+    if (transform) fillEl.setAttribute("transform", transform);
+    fillEl.setAttribute("fill", fillColor);
+    fillEl.style.cssText = `animation:rgbShapeFillIn .35s ease-out forwards;animation-delay:${t+drawDur-0.05}s`;
+    group.appendChild(fillEl);
+  }
+
+  function buildRangoli(svg) {
+    if (!svg || svg.dataset.rgbBuilt) return;
+    svg.dataset.rgbBuilt = "1";
+    const petals = svg.querySelector('.rgb-petals');
+    const curls = svg.querySelector('.rgb-curls');
+    const strings = svg.querySelector('.rgb-strings');
+    const leaves = svg.querySelector('.rgb-leaves');
+    const innerDots = svg.querySelector('.rgb-innerDots');
+    const spikes = svg.querySelector('.rgb-spikes');
+    const goldDots = svg.querySelector('.rgb-goldDots');
+    const outerDots = svg.querySelector('.rgb-outerDots');
+    const rings = svg.querySelector('.rgb-rings');
+
+    let tt = 0.35;
+
+    const PETAL = "M0,-6 C-2.2,-9 -2.2,-12 0,-15 C2.2,-12 2.2,-9 0,-6 Z";
+    for (let i=0;i<10;i++){ drawShape(petals, PETAL, 18, "#E8934C", "#F0A868", tt, .22, `rotate(${i*36})`); tt += .09; }
+    tt += .15;
+
+    const CURL = "M0,-15 C4,-17 6,-21 4,-25 C2,-28 -2,-27 -3,-23 C-4,-20 -2,-17 0,-15 Z";
+    for (let i=0;i<10;i++){ drawShape(curls, CURL, 30, "#BF2A14", "#D14A2C", tt, .28, `rotate(${i*36+18})`); tt += .1; }
+    tt += .2;
+
+    for (let i=0;i<10;i++){
+      const len = 36;
+      addPath(strings, "M0,-17 Q7,-28 0,-39", "rgb-string", `${tt}s`, {
+        transform: `rotate(${i*36})`,
+        "stroke-dasharray": len, "stroke-dashoffset": len
+      });
+      strings.lastChild.style.cssText = `animation:rgbStringDraw .5s ease-in-out forwards;animation-delay:${tt}s`;
+      tt += .08;
+    }
+    tt += .25;
+
+    const LEAF = "M0,-26 C-4.5,-31 -4.5,-37 0,-41 C4.5,-37 4.5,-31 0,-26 Z";
+    for (let i=0;i<12;i++){ drawShape(leaves, LEAF, 34, "#8B1A1A", "#A83022", tt, .24, `rotate(${i*30+15})`); tt += .085; }
+    tt += .2;
+
+    for (let i=0;i<12;i++){
+      addCircle(innerDots, 0, -29, 1.4, "rgb-dot", `rotate(${i*30})`, `${tt}s`, { fill: "#C9A84C" });
+      innerDots.lastChild.style.cssText = `animation:rgbDotPop .3s ease-out forwards;animation-delay:${tt}s`;
+      tt += .04;
+    }
+    tt += .2;
+
+    const SPIKE = "M0,-47 L-3,-50 C-3.5,-55 -1,-58 0,-59 C1,-58 3.5,-55 3,-50Z";
+    for (let i=0;i<24;i++){ drawShape(spikes, SPIKE, 26, "#BF2A14", "#E07830", tt, .2, `rotate(${i*15})`); tt += .045; }
+    tt += .15;
+
+    for (let i=0;i<12;i++){
+      addCircle(goldDots, 0, -44, 1.8, "rgb-dot", `rotate(${i*30})`, `${tt}s`, { fill: "#C9A84C" });
+      goldDots.lastChild.style.cssText = `animation:rgbDotPop .3s ease-out forwards;animation-delay:${tt}s`;
+      tt += .035;
+    }
+    tt += .2;
+
+    for (let i=0;i<24;i++){
+      addCircle(outerDots, 0, -63, 1.1, "rgb-dot", `rotate(${i*15+7.5})`, `${tt}s`, { fill: "#E8934C" });
+      outerDots.lastChild.style.cssText = `animation:rgbDotPop .25s ease-out forwards;animation-delay:${tt}s`;
+      tt += .025;
+    }
+    tt += .2;
+
+    {
+      const circumference = 2*Math.PI*68;
+      addCircle(rings, 0, 0, 68, "rgb-ring-outline", null, `${tt}s`, {
+        stroke: "#E07830", "stroke-width": 1.2, "stroke-dasharray": "3 4", "stroke-dashoffset": circumference
+      });
+      rings.lastChild.style.cssText = `animation:rgbRingDrawFade 1.1s ease-in-out forwards;animation-delay:${tt}s`;
+      tt += 1.0;
+    }
+    {
+      const circumference = 2*Math.PI*74;
+      addCircle(rings, 0, 0, 74, "rgb-ring-outline", null, `${tt}s`, {
+        stroke: "#C9A84C", "stroke-width": .8, "stroke-dasharray": circumference, "stroke-dashoffset": circumference
+      });
+      rings.lastChild.style.cssText = `animation:rgbRingDrawFade 1s ease-in-out forwards;animation-delay:${tt}s`;
+      tt += 1.0;
+    }
+  }
+
+  document.querySelectorAll('#sphNylStageDesktop svg').forEach(buildRangoli);
+})();
+
+// Mobile "All Sponsors" carousel - 2 items visible, auto-advances every 3s
+(function(){
+  const track = document.getElementById('mscTrack');
+  if(!track) return;
+  const perView = 2;
+  const pages = Math.ceil(track.children.length / perView);
+  let page = 0;
+  setInterval(() => {
+    page = (page + 1) % pages;
+    track.style.transform = `translateX(-${page * 100}%)`;
+  }, 3000);
 })();
 
 </script>

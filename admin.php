@@ -49,6 +49,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     header('Location: admin.php?tab=admins'); exit;
 }
 
+// ─── Delete Registration (superadmin only) ────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_reg'
+    && adm_logged_in() && adm_is_super()) {
+    $regId = isset($_POST['reg_id']) ? (int)$_POST['reg_id'] : 0;
+    if ($regId > 0) {
+        try {
+            $db = new PDO("sqlite:".$GLOBALS['REG_DB']);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db->prepare('DELETE FROM tb_registrations WHERE id = ?')->execute(array($regId));
+        } catch(\Exception $e) {}
+    }
+    header('Location: admin.php#tables-blk'); exit;
+}
+
+// ─── Mark Registration Paid (any logged-in admin) ──────────────────────────────
+// For rows that never went through PayPal capture (e.g. Zelle/Venmo receipt uploads,
+// which land as status='pending_review') - lets an admin confirm the manual review is
+// done and flip the row to 'paid' so it's counted in revenue/passes and highlighted green.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'mark_paid'
+    && adm_logged_in()) {
+    $regId = isset($_POST['reg_id']) ? (int)$_POST['reg_id'] : 0;
+    if ($regId > 0) {
+        try {
+            $db = new PDO("sqlite:".$GLOBALS['REG_DB']);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db->prepare("UPDATE tb_registrations SET status='paid', updated_date=? WHERE id = ?")
+               ->execute(array(date('Y-m-d H:i:s'), $regId));
+        } catch(\Exception $e) {}
+    }
+    header('Location: admin.php#tables-blk'); exit;
+}
+
 // ─── CSV Export ───────────────────────────────────────────────────────────────
 if (isset($_GET['export']) && adm_logged_in()) {
     $allowed = array('registrations','donations','contacts','volunteers');
@@ -124,8 +156,11 @@ function sortDate($d){
 }
 function badge($s){
     $s=(string)$s;
-    if ($s==='paid')    return '<span class="badge bdg-paid">PAID</span>';
-    if ($s==='created') return '<span class="badge bdg-pend">PENDING</span>';
+    if ($s==='paid')            return '<span class="badge bdg-paid">PAID</span>';
+    if ($s==='created')         return '<span class="badge bdg-pend">PENDING</span>';
+    // Short label so it doesn't overflow the Status column's fixed width and clip the
+    // Mark Paid button that follows it in the same cell (PENDING_REVIEW was too long).
+    if ($s==='pending_review')  return '<span class="badge bdg-pend">REVIEW</span>';
     return '<span class="badge bdg-other">'.esc(strtoupper($s)).'</span>';
 }
 
@@ -168,9 +203,13 @@ if ($auth) {
         $yr = getYear($r['date']);
         if (!isset($regsByYear[$yr])) $regsByYear[$yr]=array('count'=>0,'revenue'=>0,'paid'=>0);
         $regsByYear[$yr]['count']++;
-        $regsByYear[$yr]['revenue'] += (float)$r['total_amount'];
-        $totRev += (float)$r['total_amount'];
+        // Revenue only counts PAID rows - a 'created' row is an abandoned/incomplete PayPal
+        // order (order was started but never captured) and represents no money actually
+        // collected. Previously this summed every row regardless of status, inflating
+        // Ticket Revenue by the dollar amount of every abandoned checkout attempt.
         if ($r['status']==='paid') {
+            $regsByYear[$yr]['revenue'] += (float)$r['total_amount'];
+            $totRev += (float)$r['total_amount'];
             $paidRegs++; $regsByYear[$yr]['paid']++;
             $totPasses   += (int)$r['qty'];
             $totAdults   += (int)(isset($r['adults'])     ? $r['adults']     : 0);
@@ -379,15 +418,23 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
 .srch:focus{border-color:var(--red);background:#fff}
 .csv-btn{background:var(--green);color:#fff;border:none;border-radius:7px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.04em;text-decoration:none;white-space:nowrap;font-family:var(--f)}
 .csv-btn:hover{opacity:.85}
-.tw{overflow-x:auto;border:1px solid var(--bdr);border-radius:12px;background:var(--card);box-shadow:var(--sh)}
+.del-btn{background:var(--red-lt);color:var(--red);border:1px solid var(--red-mid);border-radius:6px;padding:.3rem .5rem;font-size:.8rem;cursor:pointer;line-height:1}
+.del-btn:hover{background:var(--red);color:#fff}
+.paid-btn{background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:6px;padding:.15rem .4rem;font-size:.62rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;line-height:1.6;margin-left:.4rem}
+.paid-btn:hover{background:#166534;color:#fff}
+.tw{overflow-x:auto;overflow-y:auto;max-height:600px;border:1px solid var(--bdr);border-radius:12px;background:var(--card);box-shadow:var(--sh)}
 table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:.8rem}
-thead th{background:#f8f9fc;color:var(--muted);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;cursor:pointer;user-select:none;border-bottom:1px solid var(--bdr)}
+thead th{background:#f8f9fc;color:var(--muted);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;cursor:pointer;user-select:none;border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:2}
 thead th:hover{color:var(--text)}
 thead th::after{content:' ⇅';opacity:.25;font-size:.55rem}
 thead th.sa::after{content:' ↑';opacity:1}thead th.sd::after{content:' ↓';opacity:1}
 tbody tr{border-bottom:1px solid rgba(0,0,0,.04)}
 tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:#fafbfd}
+/* Same light green as the PAID status badge (.bdg-paid) - real, completed transactions
+   stand out at a glance without having to read the Status column. */
+tbody tr.row-paid{background:#dcfce7}
+tbody tr.row-paid:hover{background:#c3edc9}
 td{padding:.6rem 1rem;vertical-align:top;max-width:220px;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--muted);font-size:.75rem;line-height:1.55}td.mono{font-family:monospace;font-size:.72rem;color:var(--muted)}
 .empty td{text-align:center;color:var(--muted2);padding:3rem;font-style:italic}
@@ -686,12 +733,12 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     </div>
     <div class="tw"><table id="tr-regs">
       <thead><tr>
-        <th onclick="srt('tr-regs',0)">#</th><th onclick="srt('tr-regs',1)">Date</th><th onclick="srt('tr-regs',2)">Name</th><th onclick="srt('tr-regs',3)">Email</th><th onclick="srt('tr-regs',4)">Phone</th><th onclick="srt('tr-regs',5)">City</th><th onclick="srt('tr-regs',6)">Passes</th><th onclick="srt('tr-regs',7)">Adults</th><th onclick="srt('tr-regs',8)">Kids 6-12</th><th onclick="srt('tr-regs',9)">Under 6</th><th onclick="srt('tr-regs',10)">Total</th><th onclick="srt('tr-regs',11)">Days</th><th onclick="srt('tr-regs',12)">Food</th><th onclick="srt('tr-regs',13)">Student</th><th onclick="srt('tr-regs',14)">Heard From</th><th onclick="srt('tr-regs',15)">Status</th><th onclick="srt('tr-regs',16)">PayPal Order</th><th onclick="srt('tr-regs',17)">Capture ID</th><th onclick="srt('tr-regs',18)">Updated</th><th onclick="srt('tr-regs',19)">IP</th>
+        <th onclick="srt('tr-regs',0)">#</th><th onclick="srt('tr-regs',1)">Date</th><th onclick="srt('tr-regs',2)">Name</th><th onclick="srt('tr-regs',3)">Email</th><th onclick="srt('tr-regs',4)">Phone</th><th onclick="srt('tr-regs',5)">City</th><th onclick="srt('tr-regs',6)">Passes</th><th onclick="srt('tr-regs',7)">Adults</th><th onclick="srt('tr-regs',8)">Kids 6-12</th><th onclick="srt('tr-regs',9)">Under 6</th><th onclick="srt('tr-regs',10)">Total</th><th onclick="srt('tr-regs',11)">Days</th><th onclick="srt('tr-regs',12)">Food</th><th onclick="srt('tr-regs',13)">Student</th><th onclick="srt('tr-regs',14)">Heard From</th><th onclick="srt('tr-regs',15)">Status</th><th onclick="srt('tr-regs',16)">PayPal Order</th><th onclick="srt('tr-regs',17)">Capture ID</th><th onclick="srt('tr-regs',18)">Updated</th><th onclick="srt('tr-regs',19)">IP</th><?php if (adm_is_super()): ?><th></th><?php endif; ?>
       </tr></thead>
       <tbody>
-      <?php if (!$regs): ?><tr class="empty"><td colspan="20">No registrations yet.</td></tr>
+      <?php if (!$regs): ?><tr class="empty"><td colspan="<?php echo adm_is_super()?21:20; ?>">No registrations yet.</td></tr>
       <?php else: foreach ($regs as $r): ?>
-      <tr>
+      <tr<?php echo $r['status']==='paid' ? ' class="row-paid"' : ''; ?>>
         <td class="nw"><?php echo esc($r['id']); ?></td>
         <td class="nw"><?php echo fmtDate($r['date']); ?></td>
         <td><?php echo esc($r['name']); ?></td>
@@ -707,11 +754,29 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
         <td class="nw"><?php echo esc($r['food_pref']); ?></td>
         <td class="nw"><?php echo !empty($r['is_student'])?'<span class="yes">✓</span>':''; ?></td>
         <td><?php echo esc($r['heard_from']); ?></td>
-        <td class="nw"><?php echo badge($r['status']); ?></td>
+        <td class="nw">
+          <?php echo badge($r['status']); ?>
+          <?php if ($r['status'] !== 'paid'): ?>
+          <form method="post" style="display:inline" onsubmit="return confirm('Mark registration #<?php echo esc($r['id']); ?> (<?php echo esc($r['name']); ?>) as paid?');">
+            <input type="hidden" name="action" value="mark_paid">
+            <input type="hidden" name="reg_id" value="<?php echo esc($r['id']); ?>">
+            <button type="submit" class="paid-btn" title="Mark as paid">Mark Paid</button>
+          </form>
+          <?php endif; ?>
+        </td>
         <td class="mono"><?php echo esc($r['paypal_order_id']); ?></td>
         <td class="mono"><?php echo esc($r['paypal_capture_id']); ?></td>
         <td class="nw"><?php echo fmtDate($r['updated_date']); ?></td>
         <td class="mono"><?php echo esc($r['ipaddress']); ?></td>
+        <?php if (adm_is_super()): ?>
+        <td class="nw">
+          <form method="post" style="display:inline" onsubmit="return confirm('Delete registration #<?php echo esc($r['id']); ?> (<?php echo esc($r['name']); ?>)? This cannot be undone.');">
+            <input type="hidden" name="action" value="delete_reg">
+            <input type="hidden" name="reg_id" value="<?php echo esc($r['id']); ?>">
+            <button type="submit" class="del-btn" title="Delete registration">&#128465;</button>
+          </form>
+        </td>
+        <?php endif; ?>
       </tr>
       <?php endforeach; endif; ?>
       </tbody>
@@ -867,7 +932,7 @@ Chart.defaults.color       = '#6b7280';
 
 var CR='#8B1A1A',CG='#C9A84C',CB='#1d4ed8',CV='#059669',CO='#d97706',CP='#7c3aed',CT='#0891b2';
 var COLORS=[CR,CG,CB,CV,CO,CP,CT,'#64748b','#ec4899','#14b8a6'];
-function hex(c,a){ return c+(Math.round(a*255).toString(16).padStart(2,'0')); }
+function hex(c,a){ return c+a; }
 
 // PHP-injected data
 var years    = <?php echo $jsYears; ?>;

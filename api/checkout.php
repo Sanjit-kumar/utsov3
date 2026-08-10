@@ -182,9 +182,6 @@ function createOrder($post) {
     $allowedDays = ['both', 'saturday', 'sunday'];
     $daysSelection = (isset($post->days) && in_array($post->days, $allowedDays)) ? $post->days : 'both';
 
-    $allowedFood = ['vegetarian', 'nonvegetarian', 'nodinner'];
-    $foodPref = (isset($post->food) && in_array($post->food, $allowedFood)) ? $post->food : 'nonvegetarian';
-
     $isStudent     = !empty($post->isStudent) ? 1 : 0;
     $emailUpdates  = !empty($post->emailUpdates) ? 1 : 0;
     $whatsappUpd   = !empty($post->whatsapp) ? 1 : 0;
@@ -195,6 +192,16 @@ function createOrder($post) {
         ? $post->attendeeNames : [$name];
     $attendeeNames = array_map(function($n){ return mb_substr((string)$n, 0, 200); }, $attendeeNamesRaw);
     $attendeeNamesJson = json_encode(array_values($attendeeNames));
+
+    // Meal preference: one per attendee, array from client (mirrors attendee_names above).
+    // Same allowed values as before; invalid/missing entries default to nonvegetarian.
+    $allowedFood = ['vegetarian', 'nonvegetarian', 'nodinner'];
+    $foodPrefsRaw = isset($post->foodPrefs) && is_array($post->foodPrefs)
+        ? $post->foodPrefs : (isset($post->food) ? [$post->food] : ['nonvegetarian']);
+    $foodPrefs = array_map(function($f) use ($allowedFood){
+        return in_array($f, $allowedFood) ? $f : 'nonvegetarian';
+    }, $foodPrefsRaw);
+    $foodPrefsJson = json_encode(array_values($foodPrefs));
 
     // Validate amount sent from cart (min $40, max $5000 safety cap)
     $amount = filter_var(
@@ -259,7 +266,7 @@ function createOrder($post) {
             ':kids6to12'      => $kids6to12,
             ':children'       => $children,
             ':attendee_names' => $attendeeNamesJson,
-            ':food_pref'      => $foodPref,
+            ':food_pref'      => $foodPrefsJson,
             ':days'           => $daysSelection,
             ':is_student'     => $isStudent,
             ':email_updates'  => $emailUpdates,
@@ -350,7 +357,24 @@ function captureOrder($post) {
         $daysMap    = ['both' => 'Both Days (Oct 17 &amp; 18)', 'saturday' => 'Saturday, Oct 17', 'sunday' => 'Sunday, Oct 18'];
         $foodMap    = ['vegetarian' => 'Vegetarian', 'nonvegetarian' => 'Non-Vegetarian', 'nodinner' => 'No Dinner'];
         $daysDisp   = isset($daysMap[$row['days_selection']]) ? $daysMap[$row['days_selection']] : 'Both Days';
-        $foodDisp   = isset($foodMap[$row['food_pref']])       ? $foodMap[$row['food_pref']]       : 'Vegetarian';
+
+        // Meal preference: one per attendee, stored as a JSON array (mirrors attendee_names).
+        // Falls back to treating the whole value as one plain string for rows written
+        // before per-attendee meals existed.
+        $foodArr = json_decode($row['food_pref'], true);
+        if (!is_array($foodArr)) {
+            $foodArr = [$row['food_pref']];
+        }
+        $foodArr = array_map(function($f) use ($foodMap) {
+            return isset($foodMap[$f]) ? $foodMap[$f] : 'Non-Vegetarian';
+        }, $foodArr);
+        $vegCount = count(array_filter($foodArr, function($f){ return $f === 'Vegetarian'; }));
+        $nonVegCount = count($foodArr) - $vegCount;
+        $foodSummaryParts = [];
+        if ($nonVegCount > 0) $foodSummaryParts[] = "{$nonVegCount} Non-Veg";
+        if ($vegCount > 0) $foodSummaryParts[] = "{$vegCount} Veg";
+        $foodDisp = $foodSummaryParts ? implode(', ', $foodSummaryParts) : 'Non-Vegetarian';
+
         $adultsDisp = isset($row['adults'])   ? (int)$row['adults']   : $qty;
         $childDisp  = isset($row['children']) ? (int)$row['children'] : 0;
         $studentNote = !empty($row['is_student']) ? "<tr><td style='padding:4px 12px 4px 0'><strong>Pass Type:</strong></td><td>Student (bring valid student ID)</td></tr>" : '';
@@ -432,6 +456,16 @@ function captureOrder($post) {
         // Admin notification
         $adminSubject = "New UTSOV 2026 Registration - " . sanitizeHeader($name);
         $namesDisp = (!empty($namesArr) && count($namesArr) > 1) ? htmlspecialchars(implode(', ', $namesArr), ENT_QUOTES, 'UTF-8') : '';
+        $mealBreakdownDisp = '';
+        if (!empty($namesArr) && count($namesArr) > 1) {
+            $pairs = [];
+            foreach ($namesArr as $i => $n) {
+                $label = trim((string)$n) !== '' ? $n : ('Attendee ' . ($i + 1));
+                $meal  = isset($foodArr[$i]) ? $foodArr[$i] : 'Non-Vegetarian';
+                $pairs[] = htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . ' (' . $meal . ')';
+            }
+            $mealBreakdownDisp = implode(', ', $pairs);
+        }
         $adminBody = "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto'>"
             . "<h2 style='color:#8B1A1A'>New Registration: {$safeName}</h2>"
             . "<table style='border-collapse:collapse;font-size:14px'>"
@@ -446,6 +480,7 @@ function captureOrder($post) {
             . "<tr><td style='padding:4px 16px 4px 0'><b>Children (U6):</b></td><td>{$childDisp}</td></tr>"
             . "<tr><td style='padding:4px 16px 4px 0'><b>Meal:</b></td><td>{$foodDisp}</td></tr>"
             . ($namesDisp ? "<tr><td style='padding:4px 16px 4px 0'><b>Attendees:</b></td><td>{$namesDisp}</td></tr>" : '')
+            . ($mealBreakdownDisp ? "<tr><td style='padding:4px 16px 4px 0;vertical-align:top'><b>Meal per Attendee:</b></td><td>{$mealBreakdownDisp}</td></tr>" : '')
             . (!empty($row['is_student']) ? "<tr><td style='padding:4px 16px 4px 0'><b>Student Pass:</b></td><td>Yes</td></tr>" : '')
             . "<tr><td style='padding:4px 16px 4px 0'><b>Total:</b></td><td>\${$total}</td></tr>"
             . "<tr><td style='padding:4px 16px 4px 0'><b>PayPal Order ID:</b></td><td>{$safeOrder}</td></tr>"
@@ -455,7 +490,7 @@ function captureOrder($post) {
             . "<tr><td style='padding:4px 16px 4px 0'><b>Date:</b></td><td>{$updatedDate}</td></tr>"
             . "</table>"
             . "</body></html>";
-        mail('utsov@utsov.org', sanitizeHeader($adminSubject), $adminBody, $mailHeaders);
+        notifyAdmins(sanitizeHeader($adminSubject), $adminBody, $mailHeaders);
 
         $return['msg'] = 'SUCCESS';
 

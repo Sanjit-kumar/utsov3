@@ -126,6 +126,26 @@ $curUser = isset($_SESSION[ADMIN_SESSION]) ? $_SESSION[ADMIN_SESSION] : null;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function esc($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+
+// food_pref is stored as a JSON array (one entry per attendee) as of the per-attendee
+// meal preference feature. Falls back to treating the whole value as one plain string
+// for rows written before that existed.
+function foodPrefList($raw) {
+    if (empty($raw)) return [];
+    $arr = json_decode($raw, true);
+    if (!is_array($arr)) { $arr = [$raw]; }
+    return array_values(array_filter($arr, function($v){ return $v !== null && $v !== ''; }));
+}
+$FOOD_SHORT_LABELS = ['vegetarian' => 'Veg', 'nonvegetarian' => 'Non-Veg', 'nodinner' => 'No Dinner'];
+function foodPrefDisplay($raw) {
+    global $FOOD_SHORT_LABELS;
+    $list = foodPrefList($raw);
+    if (!$list) return '—';
+    $labels = array_map(function($f) use ($FOOD_SHORT_LABELS) {
+        return isset($FOOD_SHORT_LABELS[$f]) ? $FOOD_SHORT_LABELS[$f] : esc($f);
+    }, $list);
+    return implode(', ', $labels);
+}
 function fmtDate($d){
     if (!$d) return '—';
     if (preg_match('/^(\d{4})(\d{2})(\d{2}):(\d{2})(\d{2})(\d{2})$/', $d, $m))
@@ -221,7 +241,7 @@ if ($auth) {
         elseif ($r['status']==='created') $statusBreak['pending']++;
         else $statusBreak['other']++;
         if (!empty($r['city']))          { $c=trim($r['city']);      if(!isset($topCities[$c]))$topCities[$c]=0; $topCities[$c]++; }
-        if (!empty($r['food_pref']))     { $fp=$r['food_pref'];      if(!isset($foodPrefs[$fp]))$foodPrefs[$fp]=0; $foodPrefs[$fp]++; }
+        foreach (foodPrefList($r['food_pref']) as $fp) { if(!isset($foodPrefs[$fp]))$foodPrefs[$fp]=0; $foodPrefs[$fp]++; }
         if (!empty($r['days_selection'])){ $ds=$r['days_selection']; if(!isset($daysSel[$ds]))$daysSel[$ds]=0; $daysSel[$ds]++; }
         if (!empty($r['heard_from']))    { $hf=$r['heard_from'];     if(!isset($heardFrom[$hf]))$heardFrom[$hf]=0; $heardFrom[$hf]++; }
     }
@@ -273,7 +293,7 @@ if ($auth) {
     $jsVolsCount  = json_encode($mapCount($volsByYear));
     $jsTopCityL   = json_encode(array_keys($topCities));
     $jsTopCityD   = json_encode(array_values($topCities));
-    $jsFoodL      = json_encode(array_keys($foodPrefs));
+    $jsFoodL      = json_encode(array_map(function($f) use ($FOOD_SHORT_LABELS){ return isset($FOOD_SHORT_LABELS[$f]) ? $FOOD_SHORT_LABELS[$f] : $f; }, array_keys($foodPrefs)));
     $jsFoodD      = json_encode(array_values($foodPrefs));
     $jsDaysL      = json_encode(array_keys($daysSel));
     $jsDaysD      = json_encode(array_values($daysSel));
@@ -673,8 +693,8 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
       <div class="ic-dot grn">🍽️</div>
       <div>
         <div class="ic-lbl">Top Food Choice</div>
-        <div class="ic-val"><?php $ff=array_keys($foodPrefs); echo $ff ? esc($ff[0]) : '—'; ?></div>
-        <div class="ic-hint"><?php $fv=array_values($foodPrefs); echo $fv ? $fv[0].' order'.($fv[0]!=1?'s':'') : 'No data yet'; ?></div>
+        <div class="ic-val"><?php $ff=array_keys($foodPrefs); echo $ff ? esc(isset($FOOD_SHORT_LABELS[$ff[0]]) ? $FOOD_SHORT_LABELS[$ff[0]] : $ff[0]) : '—'; ?></div>
+        <div class="ic-hint"><?php $fv=array_values($foodPrefs); echo $fv ? $fv[0].' attendee'.($fv[0]!=1?'s':'') : 'No data yet'; ?></div>
       </div>
     </div>
     <div class="ic">
@@ -751,7 +771,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
         <td class="nw"><?php echo esc(isset($r['children'])?$r['children']:0); ?></td>
         <td class="nw amt">$<?php echo number_format((float)$r['total_amount'],2); ?></td>
         <td class="nw"><?php echo esc($r['days_selection']); ?></td>
-        <td class="nw"><?php echo esc($r['food_pref']); ?></td>
+        <td class="nw"><?php echo foodPrefDisplay($r['food_pref']); ?></td>
         <td class="nw"><?php echo !empty($r['is_student'])?'<span class="yes">✓</span>':''; ?></td>
         <td><?php echo esc($r['heard_from']); ?></td>
         <td class="nw">

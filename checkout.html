@@ -275,41 +275,31 @@ footer a:hover{color:var(--gold-lt)}
           </div>
         </div>
 
-        <!-- Attendee Names — embedded, always visible -->
+        <!-- Attendee Names + Meal Preference — embedded, always visible -->
         <div style="margin-top:1.5rem">
-          <div class="bf-section-label" style="margin-bottom:.65rem">Names of All Attendees</div>
-          <p class="field-note" style="margin-bottom:.85rem">Enter names for every person attending &mdash; used for check-in and your confirmation email.</p>
+          <div class="bf-section-label" style="margin-bottom:.65rem">Attendee Details &amp; Meal Preference</div>
+          <p class="field-note" style="margin-bottom:.85rem">Enter a name and meal preference for every person attending &mdash; each attendee can choose independently. Used for check-in, catering counts, and your confirmation email.</p>
           <div class="form-row full" style="margin-bottom:.5rem">
             <div class="field-wrap">
-              <label>Attendee 1 &mdash; Primary Registrant</label>
+              <label>Attendee 1 &mdash; Primary Registrant<span class="req">*</span></label>
               <span class="field-note">Your name is already captured in the &ldquo;Full Name&rdquo; field above.</span>
+              <div class="radio-group" style="margin-top:.5rem">
+                <label class="radio-opt">
+                  <input type="radio" name="food-1" value="nonvegetarian" checked onchange="updateSidebar()">
+                  <span class="radio-opt-text">Non-Vegetarian</span>
+                </label>
+                <label class="radio-opt">
+                  <input type="radio" name="food-1" value="vegetarian" onchange="updateSidebar()">
+                  <span class="radio-opt-text">Vegetarian</span>
+                </label>
+              </div>
             </div>
           </div>
           <div id="attendeeNameFields"></div>
         </div>
       </div>
 
-      <!-- 3. Food & Dining -->
-      <div class="buyer-form">
-        <div class="bf-section-label">Food &amp; Dining</div>
-        <div class="form-row full">
-          <div class="field-wrap">
-            <label>Meal Preference<span class="req">*</span></label>
-            <div class="radio-group">
-              <label class="radio-opt">
-                <input type="radio" name="food" value="vegetarian" onchange="onFoodChange()">
-                <span class="radio-opt-text">Vegetarian</span>
-              </label>
-              <label class="radio-opt">
-                <input type="radio" name="food" value="nonvegetarian" checked onchange="onFoodChange()">
-                <span class="radio-opt-text">Non-Vegetarian</span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. Stay Connected -->
+      <!-- 3. Stay Connected -->
       <div class="buyer-form">
         <div class="bf-section-label">Stay Connected</div>
         <div class="check-group">
@@ -375,7 +365,7 @@ footer a:hover{color:var(--gold-lt)}
       <div class="ss-title">You're Going to UTSOV!</div>
       <p class="ss-sub">Your payment is confirmed. Check your inbox for your confirmation email.</p>
       <p class="ss-note">Order ID: <span id="ssOrderId" style="font-family:monospace;letter-spacing:.05em"></span></p>
-      <p class="ss-note" style="margin-top:.4rem">Passes are valid for both days — Oct 17 &amp; 18, 2026.</p>
+      <p class="ss-note" style="margin-top:.4rem">Passes are valid for <span id="ssDaysLabel"></span>.</p>
       <div class="ss-actions">
         <a href="events.html" class="btn-home">View Full Schedule</a>
         <a href="index.html" class="btn-home">Back to Home</a>
@@ -465,8 +455,6 @@ if (adultQtyCart === 0) {
   patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_adults_unit_price')) || (total / Math.max(adultQtyCart, 1));
 }
 
-var FOOD_LABELS = { vegetarian:'Vegetarian', nonvegetarian:'Non-Vegetarian' };
-
 // Stepper state
 var adultsVal    = Math.max(1, adultQtyCart);
 var kids6to12Val = kidsQtyCart;
@@ -482,9 +470,9 @@ document.getElementById('val-kids612').textContent    = kids6to12Val;
 document.getElementById('btn-kids612-minus').disabled = kids6to12Val <= 0;
 if (studentQtyCart > 0) document.getElementById('osStudentRow').style.display = 'flex';
 
+updateAttendeeNames();
 recalcTotal();
 updateSidebar();
-updateAttendeeNames();
 
 // ── Steppers ───────────────────────────────────────────────────────────────────
 function stepAdults(d) {
@@ -492,9 +480,9 @@ function stepAdults(d) {
   document.getElementById('co-adults').value           = adultsVal;
   document.getElementById('val-adults').textContent    = adultsVal;
   document.getElementById('btn-adults-minus').disabled = adultsVal <= 1;
+  updateAttendeeNames();
   recalcTotal();
   updateSidebar();
-  updateAttendeeNames();
   checkFormReady();
 }
 function stepKids612(d) {
@@ -502,9 +490,9 @@ function stepKids612(d) {
   document.getElementById('co-kids612').value            = kids6to12Val;
   document.getElementById('val-kids612').textContent     = kids6to12Val;
   document.getElementById('btn-kids612-minus').disabled  = kids6to12Val <= 0;
+  updateAttendeeNames();
   recalcTotal();
   updateSidebar();
-  updateAttendeeNames();
 }
 function stepChildren(d) {
   childrenVal = Math.max(0, Math.min(20, childrenVal + d));
@@ -527,24 +515,42 @@ function recalcTotal() {
   document.getElementById('osKidsPassCount').textContent  = kids6to12Val;
   document.getElementById('osKidsPassRow').style.display  = kids6to12Val > 0 ? 'flex' : 'none';
 }
-function onFoodChange() { updateSidebar(); }
-function getFood() {
-  var el = document.querySelector('input[name="food"]:checked');
+function getAttendeeFood(idx) {
+  var el = document.querySelector('input[name="food-' + idx + '"]:checked');
   return el ? el.value : 'nonvegetarian';
+}
+function getFoodPrefs() {
+  var prefs = [getAttendeeFood(1)];
+  for (var i = 2; i <= adultsVal; i++) {
+    prefs.push(getAttendeeFood(i));
+  }
+  for (var k = 1; k <= kids6to12Val; k++) {
+    prefs.push(getAttendeeFood(adultsVal + k));
+  }
+  return prefs;
 }
 function updateSidebar() {
   document.getElementById('osChildren').textContent      = childrenVal;
   document.getElementById('osChildrenRow').style.display = childrenVal > 0 ? 'flex' : 'none';
-  document.getElementById('osFood').textContent          = FOOD_LABELS[getFood()] || 'Vegetarian';
+  var prefs = getFoodPrefs();
+  var vegCount = prefs.filter(function(p){ return p === 'vegetarian'; }).length;
+  var nonVegCount = prefs.length - vegCount;
+  var summary = [];
+  if (nonVegCount > 0) summary.push(nonVegCount + ' Non-Veg');
+  if (vegCount > 0) summary.push(vegCount + ' Veg');
+  document.getElementById('osFood').textContent = summary.join(', ') || 'Non-Vegetarian';
 }
 
-// ── Attendee names: adults + kids 6-12 ────────────────────────────────────────
+// ── Attendee names + meal preference: adults + kids 6-12 ──────────────────────
 function updateAttendeeNames() {
   var container = document.getElementById('attendeeNameFields');
-  var saved = {};
+  var savedNames = {};
+  var savedFood = {};
   for (var j = 2; j <= 40; j++) {
-    var ex = document.getElementById('co-attendee-' + j);
-    if (ex) saved[j] = ex.value;
+    var exN = document.getElementById('co-attendee-' + j);
+    if (exN) savedNames[j] = exN.value;
+    var exF = document.querySelector('input[name="food-' + j + '"]:checked');
+    if (exF) savedFood[j] = exF.value;
   }
   container.innerHTML = '';
   var totalBeyondPrimary = (adultsVal - 1) + kids6to12Val;
@@ -552,21 +558,21 @@ function updateAttendeeNames() {
     var hint = document.createElement('p');
     hint.className = 'field-note';
     hint.style.marginTop = '.15rem';
-    hint.textContent = 'Add more adults or kids above to enter names for each attendee.';
+    hint.textContent = 'Add more adults or kids above to enter names and meal preference for each attendee.';
     container.appendChild(hint);
     return;
   }
   // Adults 2 through adultsVal
   for (var i = 2; i <= adultsVal; i++) {
-    appendNameField(container, i, 'Adult ' + i, saved);
+    appendAttendeeField(container, i, 'Adult ' + i, savedNames, savedFood);
   }
   // Kids 6-12
   for (var k = 1; k <= kids6to12Val; k++) {
-    appendNameField(container, adultsVal + k, 'Child (6–12) ' + k, saved);
+    appendAttendeeField(container, adultsVal + k, 'Child (6–12) ' + k, savedNames, savedFood);
   }
 }
 
-function appendNameField(container, idx, label, saved) {
+function appendAttendeeField(container, idx, label, savedNames, savedFood) {
   var wrap = document.createElement('div');
   wrap.className = 'form-row full';
   wrap.style.marginTop = '.65rem';
@@ -580,9 +586,32 @@ function appendNameField(container, idx, label, saved) {
   inp.id   = 'co-attendee-' + idx;
   inp.placeholder = 'Full name';
   inp.maxLength = 200;
-  inp.value = saved[idx] || '';
+  inp.value = savedNames[idx] || '';
   fw.appendChild(lbl);
   fw.appendChild(inp);
+
+  var foodWrap = document.createElement('div');
+  foodWrap.className = 'radio-group';
+  foodWrap.style.marginTop = '.5rem';
+  var savedChoice = savedFood[idx] || 'nonvegetarian';
+  ['nonvegetarian', 'vegetarian'].forEach(function(val) {
+    var optLbl = document.createElement('label');
+    optLbl.className = 'radio-opt';
+    var radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'food-' + idx;
+    radio.value = val;
+    if (val === savedChoice) radio.checked = true;
+    radio.onchange = updateSidebar;
+    var span = document.createElement('span');
+    span.className = 'radio-opt-text';
+    span.textContent = val === 'vegetarian' ? 'Vegetarian' : 'Non-Vegetarian';
+    optLbl.appendChild(radio);
+    optLbl.appendChild(span);
+    foodWrap.appendChild(optLbl);
+  });
+  fw.appendChild(foodWrap);
+
   wrap.appendChild(fw);
   container.appendChild(wrap);
 }
@@ -658,6 +687,7 @@ function showSuccess(orderId) {
   document.getElementById('osSidebar').style.display = 'none';
   document.getElementById('successState').style.display = 'block';
   document.getElementById('ssOrderId').textContent = orderId;
+  document.getElementById('ssDaysLabel').textContent = daysLabel;
   document.getElementById('donateSection').style.display = 'block';
   checkDonateReady();
   window.scrollTo({top: 0, behavior: 'smooth'});
@@ -691,7 +721,7 @@ sdkScript.onload = function() {
           kids6to12:      kids6to12Val,
           children:       childrenVal,
           attendeeNames:  getAttendeeNames(),
-          food:           getFood(),
+          foodPrefs:      getFoodPrefs(),
           days:           cartDays,
           isStudent:      isStudent,
           emailUpdates:   document.getElementById('co-email-updates').checked,

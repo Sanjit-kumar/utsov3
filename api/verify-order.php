@@ -41,6 +41,15 @@ function openDB($path) {
     return $db;
 }
 
+// food_pref is stored as a JSON array (one entry per attendee) but legacy
+// rows may still hold a plain string; normalize to a comma-joined string.
+function foodPrefFlat($raw) {
+    if ($raw === null || $raw === '') return '';
+    $arr = json_decode($raw, true);
+    if (!is_array($arr)) { $arr = array($raw); }
+    return implode(',', $arr);
+}
+
 // Look up a specific PayPal order ID
 if ($orderId) {
     $row = null;
@@ -63,7 +72,7 @@ if ($orderId) {
                     'amount'     => (float)$r['total_amount'],
                     'qty'        => (int)$r['qty'],
                     'days'       => isset($r['days_selection']) ? $r['days_selection'] : '',
-                    'food'       => isset($r['food_pref']) ? $r['food_pref'] : '',
+                    'food'       => isset($r['food_pref']) ? foodPrefFlat($r['food_pref']) : '',
                     'is_student' => !empty($r['is_student']),
                     'captureId'  => isset($r['paypal_capture_id']) ? $r['paypal_capture_id'] : '',
                     'date'       => $r['date'],

@@ -261,7 +261,7 @@ if ($auth) {
         try { $vols  = $cdb->query("SELECT id,date,name,email,phone,city,state,zip,address1,address2,message,memberrequest,ipaddress FROM tb_volunteers ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
     } catch(\Exception $e){}
 
-    // ─── Twilio SMS reporting (superadmin only - exposes account balance/spend) ───────
+    // ─── Twilio SMS reporting (all logged-in admins) ───────────────────────────────
     // Counts/cost come from bucketing the live Messages list, NOT Twilio's Usage Records
     // API - confirmed live 2026-09-17 that Usage Records lags hours behind actual sends
     // (reports $0/0 count for messages already showing status=delivered). See
@@ -274,7 +274,7 @@ if ($auth) {
         'allTime'   => array('count' => 0, 'cost' => 0.0, 'pending' => 0),
     );
     $twilioStats = $twilioStatsDefault;
-    $twilioReady = adm_is_super() && function_exists('\UtsovAPI\twilioGetBalance');
+    $twilioReady = function_exists('\UtsovAPI\twilioGetBalance');
     if ($twilioReady) {
         try {
             $twilioBalance = \UtsovAPI\twilioGetBalance();
@@ -815,8 +815,8 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     <button class="tb"    id="tab-vols"  onclick="tab('vols',this)">Volunteers (<?php echo count($vols); ?>)</button>
     <?php if (adm_is_super()): ?>
     <button class="tb"    id="tab-admins" onclick="tab('admins',this)">Manage Admins</button>
-    <button class="tb"    id="tab-twilio" onclick="tab('twilio',this)">Twilio / SMS</button>
     <?php endif; ?>
+    <button class="tb"    id="tab-twilio" onclick="tab('twilio',this)">Twilio / SMS</button>
   </div>
 
   <!-- REGISTRATIONS -->
@@ -990,10 +990,11 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     </table></div>
     <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Only super admins can reset passwords. A randomised password will be emailed to the user automatically. There is no self-service password reset — users must contact super admin.</p>
   </div>
+  <?php endif; ?>
 
   <!-- TWILIO / SMS -->
   <div class="tp" id="tp-twilio">
-    <div class="tt"><div class="ttl"><span class="tt-title">Twilio SMS Usage &amp; Billing</span><span class="tt-cnt">Super Admin only &bull; live from Twilio's API</span></div></div>
+    <div class="tt"><div class="ttl"><span class="tt-title">Twilio SMS Usage &amp; Billing</span><span class="tt-cnt">Live from Twilio's API</span></div></div>
     <?php if (!$twilioReady): ?>
       <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:.75rem 1rem;color:#dc2626;font-size:.82rem;">&#9888; Twilio reporting isn't configured on this server (api/twilio-config.php / api/twilio-stats.php missing or unreadable).</div>
     <?php elseif (!$twilioBalance && !$twilioStats['ok']): ?>
@@ -1055,7 +1056,6 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     </table></div>
     <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Pulled live from Twilio's Balance/Messages APIs on every page load - not stored locally. Sent counts/status/cost are bucketed from the real-time Messages list (confirmed accurate against the Console); only the Account Balance figure has been observed to disagree with the Console - see <a href="https://console.twilio.com/us1/billing/manage-billing/billing-overview" target="_blank" rel="noopener">console.twilio.com</a> for the authoritative balance. Only counts messages actually attempted via this Twilio account (see the SMS opt-in checkbox at checkout).</p>
   </div>
-  <?php endif; ?>
 
 </div><!-- /tables -->
 

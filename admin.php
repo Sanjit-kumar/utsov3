@@ -987,12 +987,20 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     <?php elseif (!$twilioBalance && !$twilioStats['ok']): ?>
       <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:.75rem 1rem;color:#dc2626;font-size:.82rem;">&#9888; Couldn't reach the Twilio API right now (network issue or bad credentials). Numbers below may be blank — try refreshing the page.</div>
     <?php endif; ?>
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:.6rem 1rem;color:#92400e;font-size:.74rem;margin-bottom:1rem;">
+      &#9888; Twilio's own Balance/Usage REST API has been observed (2026-09-17) to disagree
+      significantly with the live Twilio Console for this account - the "Account Balance" card
+      below comes straight from Twilio's API and may not match what you see when you log into
+      <a href="https://console.twilio.com/us1/billing/manage-billing/billing-overview" target="_blank" rel="noopener" style="color:#92400e;text-decoration:underline;">console.twilio.com</a> directly.
+      Message counts/status come from the real-time Messages list instead and have checked out
+      accurately against the Console.
+    </div>
     <div class="kpi" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 1.5rem">
       <div class="kc blu">
         <div class="kc-ico">💳</div>
-        <div class="kc-lbl">Account Balance</div>
+        <div class="kc-lbl">Account Balance <span style="font-weight:400;font-size:.65rem;opacity:.75">(via API, may lag)</span></div>
         <div class="kc-val"><?php echo $twilioBalance ? '$'.number_format($twilioBalance['balance'],2) : '—'; ?></div>
-        <div class="kc-sub"><?php echo $twilioBalance ? esc($twilioBalance['currency']).' remaining' : 'Unavailable'; ?></div>
+        <div class="kc-sub"><?php echo $twilioBalance ? esc($twilioBalance['currency']).' per Twilio API &mdash; verify on Console' : 'Unavailable'; ?></div>
       </div>
       <div class="kc grn">
         <div class="kc-ico">📤</div>
@@ -1033,7 +1041,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
       <?php endforeach; endif; ?>
       </tbody>
     </table></div>
-    <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Pulled live from Twilio's Balance/Usage/Messages APIs on every page load - not stored locally. Only counts messages actually attempted via this Twilio account (see the SMS opt-in checkbox at checkout).</p>
+    <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Pulled live from Twilio's Balance/Messages APIs on every page load - not stored locally. Sent counts/status/cost are bucketed from the real-time Messages list (confirmed accurate against the Console); only the Account Balance figure has been observed to disagree with the Console - see <a href="https://console.twilio.com/us1/billing/manage-billing/billing-overview" target="_blank" rel="noopener">console.twilio.com</a> for the authoritative balance. Only counts messages actually attempted via this Twilio account (see the SMS opt-in checkbox at checkout).</p>
   </div>
   <?php endif; ?>
 

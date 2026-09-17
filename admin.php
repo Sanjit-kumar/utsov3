@@ -7,6 +7,11 @@ session_start();
 $REG_DB = dirname(__FILE__) . '/api/db/registration.db';
 $CAP_DB = dirname(__FILE__) . '/api/db/capture.db';
 
+// Twilio reporting helpers (Balance/Usage/Messages API wrappers) - best-effort, never
+// fatal if the files are missing or Twilio config isn't set up.
+if (file_exists(dirname(__FILE__).'/api/twilio-config.php')) require(dirname(__FILE__).'/api/twilio-config.php');
+if (file_exists(dirname(__FILE__).'/api/twilio-stats.php'))  require(dirname(__FILE__).'/api/twilio-stats.php');
+
 // ─── Admin DB helpers ─────────────────────────────────────────────────────────
 function adm_db() {
     static $db = null;
@@ -243,6 +248,27 @@ if ($auth) {
         try { $conts = $cdb->query("SELECT id,date,name,email,phone,topic,message,ipaddress FROM tb_contacts ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
         try { $vols  = $cdb->query("SELECT id,date,name,email,phone,city,state,zip,address1,address2,message,memberrequest,ipaddress FROM tb_volunteers ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
     } catch(\Exception $e){}
+
+    // ─── Twilio SMS reporting (superadmin only - exposes account balance/spend) ───────
+    // Counts/cost come from bucketing the live Messages list, NOT Twilio's Usage Records
+    // API - confirmed live 2026-09-17 that Usage Records lags hours behind actual sends
+    // (reports $0/0 count for messages already showing status=delivered). See
+    // api/twilio-stats.php's twilioGetMessageStats() doc comment for details.
+    $twilioBalance = null;
+    $twilioStatsDefault = array(
+        'ok' => false, 'messages' => array(),
+        'today'     => array('count' => 0, 'cost' => 0.0, 'pending' => 0),
+        'thisMonth' => array('count' => 0, 'cost' => 0.0, 'pending' => 0),
+        'allTime'   => array('count' => 0, 'cost' => 0.0, 'pending' => 0),
+    );
+    $twilioStats = $twilioStatsDefault;
+    $twilioReady = adm_is_super() && function_exists('\UtsovAPI\twilioGetBalance');
+    if ($twilioReady) {
+        try {
+            $twilioBalance = \UtsovAPI\twilioGetBalance();
+            $twilioStats   = \UtsovAPI\twilioGetMessageStats(1000);
+        } catch(\Exception $e){}
+    }
 
     // Distinct status values actually present, for the CSV export filter dropdowns - derived
     // from the data itself (not a hardcoded list) so a newly-appearing status (e.g. 'refunded')
@@ -777,6 +803,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     <button class="tb"    id="tab-vols"  onclick="tab('vols',this)">Volunteers (<?php echo count($vols); ?>)</button>
     <?php if (adm_is_super()): ?>
     <button class="tb"    id="tab-admins" onclick="tab('admins',this)">Manage Admins</button>
+    <button class="tb"    id="tab-twilio" onclick="tab('twilio',this)">Twilio / SMS</button>
     <?php endif; ?>
   </div>
 
@@ -950,6 +977,63 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
       </tbody>
     </table></div>
     <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Only super admins can reset passwords. A randomised password will be emailed to the user automatically. There is no self-service password reset — users must contact super admin.</p>
+  </div>
+
+  <!-- TWILIO / SMS -->
+  <div class="tp" id="tp-twilio">
+    <div class="tt"><div class="ttl"><span class="tt-title">Twilio SMS Usage &amp; Billing</span><span class="tt-cnt">Super Admin only &bull; live from Twilio's API</span></div></div>
+    <?php if (!$twilioReady): ?>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:.75rem 1rem;color:#dc2626;font-size:.82rem;">&#9888; Twilio reporting isn't configured on this server (api/twilio-config.php / api/twilio-stats.php missing or unreadable).</div>
+    <?php elseif (!$twilioBalance && !$twilioStats['ok']): ?>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:.75rem 1rem;color:#dc2626;font-size:.82rem;">&#9888; Couldn't reach the Twilio API right now (network issue or bad credentials). Numbers below may be blank — try refreshing the page.</div>
+    <?php endif; ?>
+    <div class="kpi" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 1.5rem">
+      <div class="kc blu">
+        <div class="kc-ico">💳</div>
+        <div class="kc-lbl">Account Balance</div>
+        <div class="kc-val"><?php echo $twilioBalance ? '$'.number_format($twilioBalance['balance'],2) : '—'; ?></div>
+        <div class="kc-sub"><?php echo $twilioBalance ? esc($twilioBalance['currency']).' remaining' : 'Unavailable'; ?></div>
+      </div>
+      <div class="kc grn">
+        <div class="kc-ico">📤</div>
+        <div class="kc-lbl">Sent Today</div>
+        <div class="kc-val"><?php echo $twilioStats['ok'] ? $twilioStats['today']['count'] : '—'; ?></div>
+        <div class="kc-sub"><?php echo $twilioStats['ok'] ? '$'.number_format($twilioStats['today']['cost'],4).($twilioStats['today']['pending'] ? ' + '.$twilioStats['today']['pending'].' pending' : '') : 'Unavailable'; ?></div>
+      </div>
+      <div class="kc gold">
+        <div class="kc-ico">📅</div>
+        <div class="kc-lbl">Sent This Month</div>
+        <div class="kc-val"><?php echo $twilioStats['ok'] ? $twilioStats['thisMonth']['count'] : '—'; ?></div>
+        <div class="kc-sub"><?php echo $twilioStats['ok'] ? '$'.number_format($twilioStats['thisMonth']['cost'],2).($twilioStats['thisMonth']['pending'] ? ' + '.$twilioStats['thisMonth']['pending'].' pending' : '') : 'Unavailable'; ?></div>
+      </div>
+      <div class="kc pur">
+        <div class="kc-ico">📈</div>
+        <div class="kc-lbl">All-Time Total</div>
+        <div class="kc-val"><?php echo $twilioStats['ok'] ? $twilioStats['allTime']['count'] : '—'; ?></div>
+        <div class="kc-sub"><?php echo $twilioStats['ok'] ? '$'.number_format($twilioStats['allTime']['cost'],2).' total'.($twilioStats['allTime']['pending'] ? ' + '.$twilioStats['allTime']['pending'].' pending' : '').(count($twilioStats['messages'])>=1000?' (last 1000)':'') : 'Unavailable'; ?></div>
+      </div>
+    </div>
+    <div class="tw"><table id="tr-twilio">
+      <thead><tr><th>Date</th><th>To</th><th>Status</th><th>Price</th><th>Error</th><th>Message</th></tr></thead>
+      <tbody>
+      <?php if (!$twilioStats['messages']): ?><tr class="empty"><td colspan="6">No recent messages found (or Twilio API unavailable).</td></tr>
+      <?php else: foreach (array_slice($twilioStats['messages'],0,25) as $m): ?>
+      <tr>
+        <td class="nw"><?php echo isset($m['date_sent']) && $m['date_sent'] ? esc(date('M j, Y g:ia', strtotime($m['date_sent']))) : (isset($m['date_created']) ? esc(date('M j, Y g:ia', strtotime($m['date_created']))) : '—'); ?></td>
+        <td class="mono"><?php echo esc(isset($m['to']) ? $m['to'] : ''); ?></td>
+        <td class="nw"><?php
+          $mst = isset($m['status']) ? $m['status'] : '';
+          $ok  = in_array($mst, array('delivered','sent'));
+          echo '<span class="badge '.($ok?'bdg-paid':'bdg-other').'">'.esc(strtoupper($mst)).'</span>';
+        ?></td>
+        <td class="nw"><?php echo isset($m['price']) && $m['price'] !== null ? '$'.number_format(abs((float)$m['price']),4) : 'Pending'; ?></td>
+        <td style="color:#dc2626;font-size:.72rem;"><?php echo !empty($m['error_message']) ? esc($m['error_message']) : ''; ?></td>
+        <td><?php echo esc(isset($m['body']) ? mb_substr($m['body'],0,80) : ''); ?></td>
+      </tr>
+      <?php endforeach; endif; ?>
+      </tbody>
+    </table></div>
+    <p style="margin-top:.9rem;font-size:.72rem;color:var(--muted2);">Pulled live from Twilio's Balance/Usage/Messages APIs on every page load - not stored locally. Only counts messages actually attempted via this Twilio account (see the SMS opt-in checkbox at checkout).</p>
   </div>
   <?php endif; ?>
 

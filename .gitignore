@@ -93,3 +93,6 @@ api/email-images/*
 # Live SQLite databases and local backup snapshots — private customer/payment data, never commit
 api/db/*.db
 db-backups/
+
+# Credentials vault — only the encrypted .enc file is committed, never the plaintext source
+vault/CREDENTIALS.md

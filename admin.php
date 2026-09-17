@@ -213,6 +213,17 @@ function badge($s){
     if ($s==='pending_review')  return '<span class="badge bdg-pend">REVIEW</span>';
     return '<span class="badge bdg-other">'.esc(strtoupper($s)).'</span>';
 }
+// A row's paypal_order_id is only set when it actually went through the PayPal checkout
+// flow - a manually-entered registration (Zelle/Venmo/cash, added directly by an admin for
+// a payment collected outside PayPal) has payment_method set instead, with no PayPal IDs.
+// Nothing to show for the normal PayPal path - the PayPal Order/Capture ID columns already
+// cover that case, this badge exists only to flag the exception.
+function paymentMethodBadge($r){
+    $m = isset($r['payment_method']) ? trim((string)$r['payment_method']) : '';
+    if ($m === '' || $m === 'paypal') return '';
+    $ref = !empty($r['payment_reference']) ? ' title="Ref: '.esc($r['payment_reference']).'"' : '';
+    return ' <span class="badge bdg-other" style="background:#ede9fe;color:#5b21b6;border-color:#c4b5fd;"'.$ref.'>'.esc(strtoupper($m)).'</span>';
+}
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
 $regs=$dons=$conts=$vols=array();
@@ -238,7 +249,8 @@ if ($auth) {
         $regs = $rdb->query(
             "SELECT id,date,updated_date,name,email,phone,city,qty,adults,kids_6to12,children,
                     total_amount,days_selection,food_pref,is_student,heard_from,status,
-                    paypal_order_id,paypal_capture_id,ipaddress FROM tb_registrations ORDER BY id DESC"
+                    paypal_order_id,paypal_capture_id,ipaddress,payment_method,payment_reference
+             FROM tb_registrations ORDER BY id DESC"
         )->fetchAll(PDO::FETCH_ASSOC);
     } catch(\Exception $e){}
     try {
@@ -827,11 +839,11 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
       </tr></thead>
       <tbody>
       <?php if (!$regs): ?><tr class="empty"><td colspan="<?php echo adm_is_super()?21:20; ?>">No registrations yet.</td></tr>
-      <?php else: foreach ($regs as $r): ?>
+      <?php else: $regSeq = 1; foreach ($regs as $r): ?>
       <tr<?php echo $r['status']==='paid' ? ' class="row-paid"' : ''; ?>>
-        <td class="nw"><?php echo esc($r['id']); ?></td>
+        <td class="nw"><?php echo $regSeq++; ?></td>
         <td class="nw"><?php echo fmtDate($r['date']); ?></td>
-        <td><?php echo esc($r['name']); ?></td>
+        <td><?php echo esc($r['name']); ?><?php echo paymentMethodBadge($r); ?></td>
         <td><?php echo esc($r['email']); ?></td>
         <td class="nw"><?php echo esc($r['phone']); ?></td>
         <td><?php echo esc($r['city']); ?></td>

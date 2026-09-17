@@ -43,6 +43,15 @@ function addVol($post) {
 
         $email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : '';
 
+        // Silently drop completely blank submissions (observed repeated bot traffic hitting
+        // this endpoint directly with an empty payload - real users always have at least a
+        // name typed via the form). No DB row, no emails. Return the same success shape so
+        // nothing downstream (frontend JS) sees anything different.
+        if (!$name && !$email) {
+            echo json_encode(['err' => '', 'msg' => 'SUCCESS']);
+            return;
+        }
+
         $db->exec("CREATE TABLE IF NOT EXISTS tb_volunteers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT, name TEXT, address1 TEXT, address2 TEXT,
@@ -120,7 +129,7 @@ function addVol($post) {
             . ($message ? "<tr><td style='padding:4px 16px 4px 0;vertical-align:top'><b>Message:</b></td><td>{$vSafeMsg}</td></tr>" : '')
             . "</table>"
             . "</body></html>";
-        mail('utsov@utsov.org', sanitizeHeader($subject), $body, $mailHeaders);
+        notifyAdmins(sanitizeHeader($subject), $body, $mailHeaders);
 
         $return['msg'] = 'SUCCESS';
     } catch(PDOException $e) {

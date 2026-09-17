@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Submit Payment Receipt — UTSOV 2026</title>
+<style>
+  :root {
+    --red-dark: #5C0000;
+    --red: #8B1A1A;
+    --saffron: #E07830;
+    --gold: #C9A84C;
+    --cream: #FFFDF8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #0A0000;
+    color: var(--cream);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px 60px;
+  }
+  .wrap { width: 100%; max-width: 480px; }
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    color: var(--gold);
+    margin: 8px 0 4px;
+  }
+  .sub {
+    text-align: center;
+    color: #cbb;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: #150505;
+    border: 1px solid #3a1414;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .btn-row { display: flex; gap: 12px; }
+  .btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 12px;
+    border-radius: 12px;
+    border: 1.5px dashed var(--gold);
+    background: rgba(201,168,76,0.06);
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+  .btn:active { background: rgba(201,168,76,0.15); }
+  .btn .icon { font-size: 28px; }
+  input[type=file] { display: none; }
+  .preview-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    max-height: 320px;
+    object-fit: contain;
+    background: #000;
+  }
+  .status-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(201,168,76,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .field-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #2a1010;
+    font-size: 14px;
+  }
+  .field-row:last-child { border-bottom: none; }
+  .field-row .lbl { color: #b89; }
+  .field-row .val { color: var(--cream); font-weight: 600; text-align: right; }
+  label.email-label {
+    display: block;
+    font-size: 13px;
+    color: var(--gold);
+    margin: 16px 0 6px;
+  }
+  input[type=email], input[type=text] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #3a1414;
+    background: #0d0303;
+    color: var(--cream);
+    font-size: 15px;
+  }
+  .primary-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .link-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    background: none;
+    color: #a88;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .msg-err {
+    background: rgba(139,26,26,0.25);
+    border: 1px solid var(--red);
+    color: #ffb3b3;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .msg-ok {
+    text-align: center;
+    padding: 20px 10px;
+  }
+  .msg-ok .big-icon { font-size: 42px; margin-bottom: 8px; }
+  .msg-ok h2 { color: var(--gold); font-size: 18px; margin: 6px 0; }
+  .msg-ok p { color: #cbb; font-size: 14px; line-height: 1.5; }
+  .hidden { display: none !important; }
+  .form-hint {
+    color: #a88;
+    font-size: 12.5px;
+    margin: 0 0 14px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-field label {
+    display: block;
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+  select, .form-field input[type=text] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #3a1414;
+    background: #0d0303;
+    color: var(--cream);
+    font-size: 14px;
+  }
+  .student-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    color: var(--cream);
+  }
+  .student-row input { width: auto; }
+  .divider {
+    border: none;
+    border-top: 1px solid #2a1010;
+    margin: 4px 0 18px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Submit Your Payment Receipt</h1>
+  <p class="sub">Paid via Zelle, Venmo, or another app? Upload or photograph your confirmation and we'll register you automatically.</p>
+
+  <div class="card" id="step-upload">
+    <p class="form-hint">Optional — fill in if you know the breakdown, so we can prepare the right ticket packet. Leave anything blank if you're not sure; we'll follow up.</p>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="f-adults">Adults</label>
+        <select id="f-adults">
+          <option value="">Not specified</option>
+          <script>for (var i = 0; i <= 10; i++) document.write('<option value="' + i + '">' + i + '</option>');</script>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="f-kids612">Kids (6&ndash;12)</label>
+        <select id="f-kids612">
+          <option value="">Not specified</option>
+          <script>for (var i = 0; i <= 10; i++) document.write('<option value="' + i + '">' + i + '</option>');</script>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="f-kidsu6">Children (under 6)</label>
+        <select id="f-kidsu6">
+          <option value="">Not specified</option>
+          <script>for (var i = 0; i <= 10; i++) document.write('<option value="' + i + '">' + i + '</option>');</script>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="f-days">Days Attending</label>
+        <select id="f-days">
+          <option value="">Not specified</option>
+          <option value="both">Both Days</option>
+          <option value="saturday">Saturday only</option>
+          <option value="sunday">Sunday only</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label for="f-food">Food Preference</label>
+        <select id="f-food">
+          <option value="">Not specified</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="nonvegetarian">Non-Vegetarian</option>
+          <option value="nodinner">No Dinner</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label for="f-city">City</label>
+        <input type="text" id="f-city" placeholder="Optional">
+      </div>
+    </div>
+    <div class="student-row">
+      <input type="checkbox" id="f-student">
+      <label for="f-student" style="margin:0;color:var(--cream);font-size:14px">This is a student registration</label>
+    </div>
+    <hr class="divider">
+
+    <div class="btn-row">
+      <label class="btn" for="file-upload">
+        <span class="icon">📤</span>
+        Upload Receipt
+      </label>
+      <label class="btn" for="file-camera">
+        <span class="icon">📷</span>
+        Take Photo
+      </label>
+    </div>
+    <input type="file" id="file-upload" accept="image/*">
+    <input type="file" id="file-camera" accept="image/*" capture="environment">
+  </div>
+
+  <div class="card hidden" id="step-review">
+    <img class="preview-img" id="preview-img" alt="Receipt preview">
+    <div id="analyzing" class="status-line">
+      <div class="spinner"></div> Reading your receipt&hellip;
+    </div>
+    <div id="review-body" class="hidden">
+      <div class="field-row"><span class="lbl">Amount</span><span class="val" id="v-amount">&mdash;</span></div>
+      <div class="field-row"><span class="lbl">From</span><span class="val" id="v-name">&mdash;</span></div>
+      <div class="field-row"><span class="lbl">App</span><span class="val" id="v-app">&mdash;</span></div>
+      <div class="field-row"><span class="lbl">Date</span><span class="val" id="v-date">&mdash;</span></div>
+      <div class="field-row" id="row-ref"><span class="lbl">Reference</span><span class="val" id="v-ref">&mdash;</span></div>
+
+      <div id="email-block" class="hidden">
+        <label class="email-label" for="email-input">We couldn't find an email on your receipt &mdash; please add one so we can send your confirmation:</label>
+        <input type="email" id="email-input" placeholder="you@example.com">
+      </div>
+
+      <button class="primary-btn" id="btn-submit">Confirm &amp; Submit</button>
+      <button class="link-btn" id="btn-restart">This isn't right &mdash; start over</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="step-error">
+    <div class="msg-err" id="error-text"></div>
+    <button class="primary-btn" id="btn-retry">Try Again</button>
+  </div>
+
+  <div class="card hidden" id="step-duplicate">
+    <div class="msg-ok">
+      <div class="big-icon">👀</div>
+      <h2>Looks like you're already registered</h2>
+      <p id="dup-details"></p>
+      <p>If this isn't you, please contact us at <a href="mailto:utsov@utsov.org" style="color:var(--gold)">utsov@utsov.org</a>.</p>
+    </div>
+    <button class="link-btn" id="btn-dup-restart">Submit a different receipt</button>
+  </div>
+
+  <div class="card hidden" id="step-success">
+    <div class="msg-ok">
+      <div class="big-icon">✅</div>
+      <h2>Thank you!</h2>
+      <p>Your payment has been recorded and is pending a quick review. You'll receive a confirmation email once it's verified.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var API = 'api/verify-payment.php';
+  var extracted = null;
+  var screenshotPath = null;
+
+  var elUpload   = document.getElementById('step-upload');
+  var elReview   = document.getElementById('step-review');
+  var elError    = document.getElementById('step-error');
+  var elDup      = document.getElementById('step-duplicate');
+  var elSuccess  = document.getElementById('step-success');
+  var elAnalyzing = document.getElementById('analyzing');
+  var elReviewBody = document.getElementById('review-body');
+  var elEmailBlock = document.getElementById('email-block');
+
+  function showOnly(el) {
+    [elUpload, elReview, elError, elDup, elSuccess].forEach(function (e) {
+      e.classList.toggle('hidden', e !== el);
+    });
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('preview-img').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    showOnly(elReview);
+    elAnalyzing.classList.remove('hidden');
+    elReviewBody.classList.add('hidden');
+
+    var fd = new FormData();
+    fd.append('action', 'extract');
+    fd.append('receipt', file);
+
+    fetch(API, { method: 'POST', body: fd })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        elAnalyzing.classList.add('hidden');
+        if (data.err) {
+          showError(data.err);
+          return;
+        }
+        extracted = data.extracted;
+        screenshotPath = data.screenshotPath;
+        populateReview();
+      })
+      .catch(function () {
+        elAnalyzing.classList.add('hidden');
+        showError('Network error while reading your receipt. Please try again.');
+      });
+  }
+
+  function populateReview() {
+    document.getElementById('v-amount').textContent = extracted.amount ? ('$' + Number(extracted.amount).toFixed(2)) : '—';
+    document.getElementById('v-name').textContent = extracted.sender_name || '—';
+    document.getElementById('v-app').textContent = (extracted.payment_app || 'other').replace(/^\w/, function(c){return c.toUpperCase();});
+    document.getElementById('v-date').textContent = extracted.date || '—';
+
+    var refRow = document.getElementById('row-ref');
+    if (extracted.reference) {
+      document.getElementById('v-ref').textContent = extracted.reference;
+      refRow.classList.remove('hidden');
+    } else {
+      refRow.classList.add('hidden');
+    }
+
+    var foundEmail = extracted.email_in_memo || '';
+    if (foundEmail) {
+      elEmailBlock.classList.add('hidden');
+    } else {
+      elEmailBlock.classList.remove('hidden');
+    }
+    document.getElementById('email-input').value = foundEmail;
+
+    // If the uploader didn't specify an adult count up front but the AI found a headcount
+    // mentioned in the memo, use it as a fallback for the total.
+    if (!document.getElementById('f-adults').value && extracted.guest_count_in_memo) {
+      document.getElementById('f-adults').value = extracted.guest_count_in_memo;
+    }
+
+    elReviewBody.classList.remove('hidden');
+  }
+
+  function showError(msg) {
+    document.getElementById('error-text').textContent = msg;
+    showOnly(elError);
+  }
+
+  function submitRegistration() {
+    var email = (extracted.email_in_memo || document.getElementById('email-input').value || '').trim();
+    if (!email || email.indexOf('@') === -1) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    var btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    var fd = new FormData();
+    fd.append('action', 'submit');
+    fd.append('name', extracted.sender_name || '');
+    fd.append('email', email);
+    fd.append('amount', extracted.amount);
+    fd.append('reference', extracted.reference || '');
+    fd.append('app', extracted.payment_app || 'other');
+    fd.append('screenshotPath', screenshotPath || '');
+    // All optional - blank means "not specified", server applies its own defaults.
+    fd.append('adults', document.getElementById('f-adults').value);
+    fd.append('kids612', document.getElementById('f-kids612').value);
+    fd.append('kidsu6', document.getElementById('f-kidsu6').value);
+    fd.append('days', document.getElementById('f-days').value);
+    fd.append('food', document.getElementById('f-food').value);
+    fd.append('city', document.getElementById('f-city').value.trim());
+    fd.append('isStudent', document.getElementById('f-student').checked ? '1' : '0');
+
+    fetch(API, { method: 'POST', body: fd })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        btn.disabled = false;
+        btn.textContent = 'Confirm & Submit';
+        if (data.err) { showError(data.err); return; }
+        if (data.duplicate) {
+          var d = data.duplicate;
+          document.getElementById('dup-details').textContent =
+            'We found a registration for ' + d.name + ' (' + d.email + ') on ' + d.date +
+            ' — ' + d.qty + ' pass(es), status: ' + d.status + '.';
+          showOnly(elDup);
+          return;
+        }
+        showOnly(elSuccess);
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Confirm & Submit';
+        showError('Network error while submitting. Please try again.');
+      });
+  }
+
+  function reset() {
+    extracted = null;
+    screenshotPath = null;
+    document.getElementById('file-upload').value = '';
+    document.getElementById('file-camera').value = '';
+    showOnly(elUpload);
+  }
+
+  document.getElementById('file-upload').addEventListener('change', function (e) { handleFile(e.target.files[0]); });
+  document.getElementById('file-camera').addEventListener('change', function (e) { handleFile(e.target.files[0]); });
+  document.getElementById('btn-submit').addEventListener('click', submitRegistration);
+  document.getElementById('btn-restart').addEventListener('click', reset);
+  document.getElementById('btn-retry').addEventListener('click', reset);
+  document.getElementById('btn-dup-restart').addEventListener('click', reset);
+})();
+</script>
+</body>
+</html>

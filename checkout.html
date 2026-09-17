@@ -220,7 +220,7 @@ footer a:hover{color:var(--gold-lt)}
           <div class="field-wrap">
             <label for="co-phone">Phone<span class="req">*</span></label>
             <input type="tel" id="co-phone" placeholder="+1 (555) 000-0000" autocomplete="tel" maxlength="50">
-            <span class="field-err" id="err-phone">Please enter your phone number.</span>
+            <span class="field-err" id="err-phone">Please enter a valid phone number (at least 10 digits).</span>
           </div>
         </div>
         <div class="form-row full">
@@ -283,7 +283,7 @@ footer a:hover{color:var(--gold-lt)}
             <div class="field-wrap">
               <label>Attendee 1 &mdash; Primary Registrant<span class="req">*</span></label>
               <span class="field-note">Your name is already captured in the &ldquo;Full Name&rdquo; field above.</span>
-              <div class="radio-group" style="margin-top:.5rem">
+              <div class="radio-group" id="attendee1FoodGroup" style="margin-top:.5rem">
                 <label class="radio-opt">
                   <input type="radio" name="food-1" value="nonvegetarian" checked onchange="updateSidebar()">
                   <span class="radio-opt-text">Non-Vegetarian</span>
@@ -293,6 +293,7 @@ footer a:hover{color:var(--gold-lt)}
                   <span class="radio-opt-text">Vegetarian</span>
                 </label>
               </div>
+              <p id="attendee1ConcertNote" class="field-note" style="display:none;color:var(--gold-lt);margin-top:.5rem">Concert Only pass &mdash; dinner not included.</p>
             </div>
           </div>
           <div id="attendeeNameFields"></div>
@@ -308,6 +309,13 @@ footer a:hover{color:var(--gold-lt)}
             <div class="check-opt-text">
               <span class="check-opt-label">Email updates</span>
               <span class="check-opt-hint">Schedule, artist announcements &amp; event-day reminders.</span>
+            </div>
+          </label>
+          <label class="check-opt">
+            <input type="checkbox" id="co-sms-updates">
+            <div class="check-opt-text">
+              <span class="check-opt-label">Text me my registration confirmation</span>
+              <span class="check-opt-hint">Yes, I would like to receive text messages from UTSOV Inc. about my registration confirmation, event reminders, and event info (schedule, venue, food menu, etc.). I understand I will receive up to 6 messages per event. Message and data rates may apply. Reply HELP for help or STOP to cancel anytime. Consent is not required to make a purchase. <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> | <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
             </div>
           </label>
         </div>
@@ -341,6 +349,9 @@ footer a:hover{color:var(--gold-lt)}
       <div class="os-row" id="osPatronRow" style="display:none"><span>Patron Pass (12+)</span><strong id="osPatronCount">0</strong></div>
       <div class="os-row" id="osStudentPassRow" style="display:none"><span>Student Pass</span><strong id="osStudentCount">0</strong></div>
       <div class="os-row" id="osKidsPassRow" style="display:none"><span>Kids Pass (6&ndash;12)</span><strong id="osKidsPassCount">0</strong></div>
+      <div class="os-row" id="osConcertPatronRow" style="display:none"><span>Patron (Concert Only)</span><strong id="osConcertPatronCount">0</strong></div>
+      <div class="os-row" id="osConcertStudentRow" style="display:none"><span>Student (Concert Only)</span><strong id="osConcertStudentCount">0</strong></div>
+      <div class="os-row" id="osConcertKidsRow" style="display:none"><span>Kids (Concert Only)</span><strong id="osConcertKidsCount">0</strong></div>
       <div class="os-row"><span>Days</span><strong id="osDays">Both Days</strong></div>
       <div class="os-row" id="osChildrenRow" style="display:none"><span>Children (U6, free)</span><strong id="osChildren">0</strong></div>
       <div class="os-row"><span>Meal Choice</span><strong id="osFood">Non-Vegetarian</strong></div>
@@ -444,31 +455,61 @@ if (qty > 20) qty = 20;
 var patronQtyCart  = parseInt(sessionStorage.getItem('utsov_cart_patron_qty'),  10) || 0;
 var studentQtyCart = parseInt(sessionStorage.getItem('utsov_cart_student_qty'), 10) || 0;
 var kidsQtyCart    = parseInt(sessionStorage.getItem('utsov_cart_kids_qty'),    10) || 0;
-var patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_patron_price'))  || 135;
-var studentPrice   = parseFloat(sessionStorage.getItem('utsov_cart_student_price')) || 105;
+var patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_patron_price'))  || 150;
+var studentPrice   = parseFloat(sessionStorage.getItem('utsov_cart_student_price')) || 115;
 var kidsUnitPrice  = parseFloat(sessionStorage.getItem('utsov_cart_kids_unit_price')) || 85;
-// Fallback: if no per-type data (old cached sessionStorage), use adults total as patron
+
+// Concert-Only per-type breakdown (fixed from cart — not adjustable via steppers here)
+var concertPatronQtyCart  = parseInt(sessionStorage.getItem('utsov_cart_concert_patron_qty'),  10) || 0;
+var concertStudentQtyCart = parseInt(sessionStorage.getItem('utsov_cart_concert_student_qty'), 10) || 0;
+var concertKidsQtyCart    = parseInt(sessionStorage.getItem('utsov_cart_concert_kids_qty'),    10) || 0;
+var concertPatronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_concert_patron_price'))  || 130;
+var concertStudentPrice   = parseFloat(sessionStorage.getItem('utsov_cart_concert_student_price')) || 105;
+var concertKidsPrice      = parseFloat(sessionStorage.getItem('utsov_cart_concert_kids_price'))    || 75;
+var concertTotalQtyCart    = concertPatronQtyCart + concertStudentQtyCart + concertKidsQtyCart;
+var concertTotalAmountCart = concertPatronQtyCart * concertPatronPrice + concertStudentQtyCart * concertStudentPrice + concertKidsQtyCart * concertKidsPrice;
+
+// Fallback: if no per-type data (old cached sessionStorage) and no concert-only items either, use adults total as patron
 var adultQtyCart   = patronQtyCart + studentQtyCart;
-if (adultQtyCart === 0) {
+if (adultQtyCart === 0 && concertTotalQtyCart === 0) {
   adultQtyCart   = parseInt(sessionStorage.getItem('utsov_cart_adults_qty'), 10) || qty;
   patronQtyCart  = adultQtyCart;
   patronPrice    = parseFloat(sessionStorage.getItem('utsov_cart_adults_unit_price')) || (total / Math.max(adultQtyCart, 1));
 }
 
-// Stepper state
-var adultsVal    = Math.max(1, adultQtyCart);
+// Stepper state — NOTE: do not force a minimum of 1 here. A cart made up entirely of
+// Concert-Only passes has zero "full package" adults; forcing a floor of 1 would silently
+// add a phantom full-price adult to the order. Only fall back to 1 if literally nothing
+// came from the cart (e.g. a direct nav to this page with no cart state at all).
+var adultsVal    = adultQtyCart;
 var kids6to12Val = kidsQtyCart;
 var childrenVal  = 0;
+if (adultsVal === 0 && kids6to12Val === 0 && concertTotalQtyCart === 0) {
+  adultsVal = 1;
+}
+
+// If the buyer's own "Attendee 1" slot has no full-package adult to represent (pure
+// Concert-Only purchase), it represents the first Concert-Only patron/student instead —
+// so that person isn't billed as both a full adult AND a concert-only attendee.
+// Recomputed live (not a fixed const) since the buyer can add full-package adults via
+// the stepper after starting from a Concert-Only-only cart.
+function attendee1IsConcertOnly() { return (adultsVal === 0 && concertTotalQtyCart > 0); }
+function refreshAttendee1Mode() {
+  var isCO = attendee1IsConcertOnly();
+  document.getElementById('attendee1FoodGroup').style.display   = isCO ? 'none'  : 'flex';
+  document.getElementById('attendee1ConcertNote').style.display = isCO ? 'block' : 'none';
+}
 
 // Populate initial sidebar
 document.getElementById('osDays').textContent        = daysLabel;
 document.getElementById('co-adults').value           = adultsVal;
 document.getElementById('val-adults').textContent    = adultsVal;
-document.getElementById('btn-adults-minus').disabled = adultsVal <= 1;
+document.getElementById('btn-adults-minus').disabled = adultsVal <= 0;
 document.getElementById('co-kids612').value           = kids6to12Val;
 document.getElementById('val-kids612').textContent    = kids6to12Val;
 document.getElementById('btn-kids612-minus').disabled = kids6to12Val <= 0;
-if (studentQtyCart > 0) document.getElementById('osStudentRow').style.display = 'flex';
+if (studentQtyCart > 0 || concertStudentQtyCart > 0) document.getElementById('osStudentRow').style.display = 'flex';
+refreshAttendee1Mode();
 
 updateAttendeeNames();
 recalcTotal();
@@ -476,10 +517,11 @@ updateSidebar();
 
 // ── Steppers ───────────────────────────────────────────────────────────────────
 function stepAdults(d) {
-  adultsVal = Math.max(1, Math.min(20, adultsVal + d));
+  adultsVal = Math.max(0, Math.min(20, adultsVal + d));
   document.getElementById('co-adults').value           = adultsVal;
   document.getElementById('val-adults').textContent    = adultsVal;
-  document.getElementById('btn-adults-minus').disabled = adultsVal <= 1;
+  document.getElementById('btn-adults-minus').disabled = adultsVal <= 0;
+  refreshAttendee1Mode();
   updateAttendeeNames();
   recalcTotal();
   updateSidebar();
@@ -505,8 +547,8 @@ function recalcTotal() {
   // patron fills adults beyond student count; student count is fixed from cart
   var patronCount  = Math.max(0, adultsVal - studentQtyCart);
   var studentCount = Math.min(studentQtyCart, adultsVal);
-  total = Math.round((patronCount * patronPrice + studentCount * studentPrice + kids6to12Val * kidsUnitPrice) * 100) / 100;
-  qty   = adultsVal + kids6to12Val;
+  total = Math.round((patronCount * patronPrice + studentCount * studentPrice + kids6to12Val * kidsUnitPrice + concertTotalAmountCart) * 100) / 100;
+  qty   = adultsVal + kids6to12Val + concertTotalQtyCart;
   document.getElementById('osTotal').textContent = '$' + total.toFixed(2);
   document.getElementById('osPatronCount').textContent    = patronCount;
   document.getElementById('osPatronRow').style.display    = patronCount  > 0 ? 'flex' : 'none';
@@ -514,18 +556,41 @@ function recalcTotal() {
   document.getElementById('osStudentPassRow').style.display = studentCount > 0 ? 'flex' : 'none';
   document.getElementById('osKidsPassCount').textContent  = kids6to12Val;
   document.getElementById('osKidsPassRow').style.display  = kids6to12Val > 0 ? 'flex' : 'none';
+  document.getElementById('osConcertPatronCount').textContent    = concertPatronQtyCart;
+  document.getElementById('osConcertPatronRow').style.display    = concertPatronQtyCart  > 0 ? 'flex' : 'none';
+  document.getElementById('osConcertStudentCount').textContent   = concertStudentQtyCart;
+  document.getElementById('osConcertStudentRow').style.display   = concertStudentQtyCart > 0 ? 'flex' : 'none';
+  document.getElementById('osConcertKidsCount').textContent      = concertKidsQtyCart;
+  document.getElementById('osConcertKidsRow').style.display      = concertKidsQtyCart    > 0 ? 'flex' : 'none';
+}
+// Concert-Only extra-attendee slots to render/read beyond Attendee 1 — shared by
+// updateAttendeeNames(), getAttendeeNames() and getFoodPrefs() so their index math
+// (and thus which DOM field id represents which person) always stays in sync.
+function concertOnlyRemainder() {
+  var remPatron  = concertPatronQtyCart;
+  var remStudent = concertStudentQtyCart;
+  if (attendee1IsConcertOnly()) {
+    if (remPatron > 0) remPatron -= 1;
+    else if (remStudent > 0) remStudent -= 1;
+  }
+  return { patron: remPatron, student: remStudent, kids: concertKidsQtyCart };
 }
 function getAttendeeFood(idx) {
   var el = document.querySelector('input[name="food-' + idx + '"]:checked');
   return el ? el.value : 'nonvegetarian';
 }
 function getFoodPrefs() {
-  var prefs = [getAttendeeFood(1)];
+  var prefs = [attendee1IsConcertOnly() ? 'nodinner' : getAttendeeFood(1)];
   for (var i = 2; i <= adultsVal; i++) {
     prefs.push(getAttendeeFood(i));
   }
   for (var k = 1; k <= kids6to12Val; k++) {
     prefs.push(getAttendeeFood(adultsVal + k));
+  }
+  var rem = concertOnlyRemainder();
+  var extraConcertCount = rem.patron + rem.student + rem.kids;
+  for (var c = 0; c < extraConcertCount; c++) {
+    prefs.push('nodinner');
   }
   return prefs;
 }
@@ -553,7 +618,9 @@ function updateAttendeeNames() {
     if (exF) savedFood[j] = exF.value;
   }
   container.innerHTML = '';
-  var totalBeyondPrimary = (adultsVal - 1) + kids6to12Val;
+  var rem = concertOnlyRemainder();
+  var extraConcertCount = rem.patron + rem.student + rem.kids;
+  var totalBeyondPrimary = Math.max(0, adultsVal - 1) + kids6to12Val + extraConcertCount;
   if (totalBeyondPrimary <= 0) {
     var hint = document.createElement('p');
     hint.className = 'field-note';
@@ -570,9 +637,20 @@ function updateAttendeeNames() {
   for (var k = 1; k <= kids6to12Val; k++) {
     appendAttendeeField(container, adultsVal + k, 'Child (6–12) ' + k, savedNames, savedFood);
   }
+  // Concert-Only extras — no dinner meal-choice, fixed 'nodinner'
+  var base = adultsVal + kids6to12Val;
+  for (var cp = 1; cp <= rem.patron; cp++) {
+    appendAttendeeField(container, ++base, 'Concert-Only Adult ' + cp, savedNames, savedFood, true);
+  }
+  for (var cs = 1; cs <= rem.student; cs++) {
+    appendAttendeeField(container, ++base, 'Concert-Only Student ' + cs, savedNames, savedFood, true);
+  }
+  for (var ck = 1; ck <= rem.kids; ck++) {
+    appendAttendeeField(container, ++base, 'Concert-Only Kid ' + ck, savedNames, savedFood, true);
+  }
 }
 
-function appendAttendeeField(container, idx, label, savedNames, savedFood) {
+function appendAttendeeField(container, idx, label, savedNames, savedFood, noMeal) {
   var wrap = document.createElement('div');
   wrap.className = 'form-row full';
   wrap.style.marginTop = '.65rem';
@@ -590,27 +668,36 @@ function appendAttendeeField(container, idx, label, savedNames, savedFood) {
   fw.appendChild(lbl);
   fw.appendChild(inp);
 
-  var foodWrap = document.createElement('div');
-  foodWrap.className = 'radio-group';
-  foodWrap.style.marginTop = '.5rem';
-  var savedChoice = savedFood[idx] || 'nonvegetarian';
-  ['nonvegetarian', 'vegetarian'].forEach(function(val) {
-    var optLbl = document.createElement('label');
-    optLbl.className = 'radio-opt';
-    var radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = 'food-' + idx;
-    radio.value = val;
-    if (val === savedChoice) radio.checked = true;
-    radio.onchange = updateSidebar;
-    var span = document.createElement('span');
-    span.className = 'radio-opt-text';
-    span.textContent = val === 'vegetarian' ? 'Vegetarian' : 'Non-Vegetarian';
-    optLbl.appendChild(radio);
-    optLbl.appendChild(span);
-    foodWrap.appendChild(optLbl);
-  });
-  fw.appendChild(foodWrap);
+  if (noMeal) {
+    var note = document.createElement('p');
+    note.className = 'field-note';
+    note.style.marginTop = '.5rem';
+    note.style.color = 'var(--gold-lt)';
+    note.textContent = 'Concert Only pass — dinner not included.';
+    fw.appendChild(note);
+  } else {
+    var foodWrap = document.createElement('div');
+    foodWrap.className = 'radio-group';
+    foodWrap.style.marginTop = '.5rem';
+    var savedChoice = savedFood[idx] || 'nonvegetarian';
+    ['nonvegetarian', 'vegetarian'].forEach(function(val) {
+      var optLbl = document.createElement('label');
+      optLbl.className = 'radio-opt';
+      var radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'food-' + idx;
+      radio.value = val;
+      if (val === savedChoice) radio.checked = true;
+      radio.onchange = updateSidebar;
+      var span = document.createElement('span');
+      span.className = 'radio-opt-text';
+      span.textContent = val === 'vegetarian' ? 'Vegetarian' : 'Non-Vegetarian';
+      optLbl.appendChild(radio);
+      optLbl.appendChild(span);
+      foodWrap.appendChild(optLbl);
+    });
+    fw.appendChild(foodWrap);
+  }
 
   wrap.appendChild(fw);
   container.appendChild(wrap);
@@ -625,6 +712,13 @@ function getAttendeeNames() {
   for (var k = 1; k <= kids6to12Val; k++) {
     var el = document.getElementById('co-attendee-' + (adultsVal + k));
     names.push(el ? el.value.trim() : '');
+  }
+  var rem = concertOnlyRemainder();
+  var base = adultsVal + kids6to12Val;
+  var extraConcertCount = rem.patron + rem.student + rem.kids;
+  for (var c = 1; c <= extraConcertCount; c++) {
+    var el2 = document.getElementById('co-attendee-' + (base + c));
+    names.push(el2 ? el2.value.trim() : '');
   }
   return names;
 }
@@ -652,16 +746,24 @@ function validateForm() {
     if (!valid) ok = false;
   }
   check('co-name',  'err-name',  function(v){ return v.length > 0; });
-  check('co-phone', 'err-phone', function(v){ return v.length > 0; });
+  check('co-phone', 'err-phone', isValidPhone);
   check('co-email', 'err-email', function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); });
   return ok;
+}
+
+// At least 10 digits (US/Canada minimum) and no more than 15 (E.164 max, allows
+// international numbers) — catches truncated entries like a dropped digit, which
+// previously passed through with no validation at all.
+function isValidPhone(v) {
+  var digits = (v || '').replace(/\D+/g, '');
+  return digits.length >= 10 && digits.length <= 15;
 }
 
 function checkFormReady() {
   var name  = document.getElementById('co-name').value.trim();
   var phone = document.getElementById('co-phone').value.trim();
   var email = document.getElementById('co-email').value.trim();
-  var ready = name.length > 0 && phone.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  var ready = name.length > 0 && isValidPhone(phone) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   document.getElementById('paypal-button-container').classList.toggle('disabled', !ready);
   document.getElementById('ppDisabledMsg').classList.toggle('show', !ready);
 }
@@ -682,6 +784,9 @@ function showSuccess(orderId) {
   ['utsov_cart_qty','utsov_cart_amount','utsov_cart_days','utsov_cart_days_label','utsov_cart_is_student',
    'utsov_cart_patron_qty','utsov_cart_patron_price','utsov_cart_student_qty','utsov_cart_student_price',
    'utsov_cart_adults_qty','utsov_cart_adults_unit_price','utsov_cart_kids_qty','utsov_cart_kids_unit_price',
+   'utsov_cart_concert_patron_qty','utsov_cart_concert_patron_price',
+   'utsov_cart_concert_student_qty','utsov_cart_concert_student_price',
+   'utsov_cart_concert_kids_qty','utsov_cart_concert_kids_price',
    'utsov_pending_order_id'].forEach(function(k){ sessionStorage.removeItem(k); });
   document.getElementById('formCol').style.display   = 'none';
   document.getElementById('osSidebar').style.display = 'none';
@@ -717,14 +822,17 @@ sdkScript.onload = function() {
           email:          document.getElementById('co-email').value.trim(),
           phone:          document.getElementById('co-phone').value.trim(),
           city:           document.getElementById('co-city').value.trim(),
-          adults:         adultsVal,
-          kids6to12:      kids6to12Val,
+          adults:         adultsVal + concertPatronQtyCart + concertStudentQtyCart,
+          kids6to12:      kids6to12Val + concertKidsQtyCart,
           children:       childrenVal,
           attendeeNames:  getAttendeeNames(),
           foodPrefs:      getFoodPrefs(),
           days:           cartDays,
-          isStudent:      isStudent,
+          isStudent:      isStudent || concertStudentQtyCart > 0,
+          passType:       (concertTotalQtyCart > 0 && (adultsVal + kids6to12Val) > 0) ? 'mixed'
+                           : (concertTotalQtyCart > 0 ? 'concert_only' : 'full'),
           emailUpdates:   document.getElementById('co-email-updates').checked,
+          smsUpdates:     document.getElementById('co-sms-updates').checked,
           heard:          document.getElementById('co-heard').value
         })
       })

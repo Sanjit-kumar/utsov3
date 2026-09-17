@@ -4,6 +4,8 @@ use PDO;
 require(dirname(__FILE__).'/utils.php');
 require(dirname(__FILE__).'/checkout-config.php');
 require(dirname(__FILE__).'/email-builder.php');
+require(dirname(__FILE__).'/twilio-config.php');
+require(dirname(__FILE__).'/sms-sender.php');
 date_default_timezone_set('America/New_York');
 
 header('Content-Type: application/json');
@@ -118,9 +120,11 @@ function openDB() {
         attendee_names    TEXT,
         food_pref         TEXT,
         days_selection    TEXT,
+        pass_type         TEXT DEFAULT 'full',
         is_student        INTEGER DEFAULT 0,
         email_updates     INTEGER DEFAULT 1,
         whatsapp_updates  INTEGER DEFAULT 0,
+        sms_updates       INTEGER DEFAULT 0,
         heard_from        TEXT,
         paypal_order_id   TEXT UNIQUE,
         paypal_capture_id TEXT,
@@ -140,7 +144,9 @@ function openDB() {
         'is_student'       => "ALTER TABLE tb_registrations ADD COLUMN is_student INTEGER DEFAULT 0",
         'email_updates'    => "ALTER TABLE tb_registrations ADD COLUMN email_updates INTEGER DEFAULT 1",
         'whatsapp_updates' => "ALTER TABLE tb_registrations ADD COLUMN whatsapp_updates INTEGER DEFAULT 0",
+        'sms_updates'      => "ALTER TABLE tb_registrations ADD COLUMN sms_updates INTEGER DEFAULT 0",
         'heard_from'       => "ALTER TABLE tb_registrations ADD COLUMN heard_from TEXT",
+        'pass_type'        => "ALTER TABLE tb_registrations ADD COLUMN pass_type TEXT DEFAULT 'full'",
     ];
     foreach ($newCols as $col => $sql) {
         if (!in_array($col, $cols)) $db->exec($sql);
@@ -174,6 +180,16 @@ function createOrder($post) {
     if (!$name)  { $return['err'] = 'Name is required.';          echo json_encode($return); return; }
     if (!$email) { $return['err'] = 'A valid email is required.'; echo json_encode($return); return; }
 
+    // Phone must contain at least 10 digits (US/Canada minimum) and no more than 15
+    // (E.164 max, allows international numbers) — catches truncated/incomplete entries
+    // like a dropped digit, which previously passed through with zero validation and
+    // silently broke SMS delivery for that registrant.
+    $phoneDigits = preg_replace('/\D+/', '', $phone);
+    if (strlen($phoneDigits) < 10 || strlen($phoneDigits) > 15) {
+        $return['err'] = 'Please enter a valid phone number (at least 10 digits).';
+        echo json_encode($return); return;
+    }
+
     // Additional registration fields
     $adults    = max(1, min(20, (int)(isset($post->adults)    ? $post->adults    : 1)));
     $kids6to12 = max(0, min(20, (int)(isset($post->kids6to12) ? $post->kids6to12 : 0)));
@@ -183,8 +199,11 @@ function createOrder($post) {
     $daysSelection = (isset($post->days) && in_array($post->days, $allowedDays)) ? $post->days : 'both';
 
     $isStudent     = !empty($post->isStudent) ? 1 : 0;
+    $allowedPassTypes = ['full', 'concert_only', 'mixed'];
+    $passType      = (isset($post->passType) && in_array($post->passType, $allowedPassTypes)) ? $post->passType : 'full';
     $emailUpdates  = !empty($post->emailUpdates) ? 1 : 0;
     $whatsappUpd   = !empty($post->whatsapp) ? 1 : 0;
+    $smsUpdates    = !empty($post->smsUpdates) ? 1 : 0;
     $heardFrom     = mb_substr(isset($post->heard) ? (string)$post->heard : '', 0, 100);
 
     // Attendee names: array from client, sanitize each entry
@@ -244,13 +263,13 @@ function createOrder($post) {
         $stmt = $db->prepare(
             "INSERT INTO tb_registrations
                 (date, name, email, phone, city, qty, unit_price, total_amount,
-                 adults, kids_6to12, children, attendee_names, food_pref, days_selection, is_student,
-                 email_updates, whatsapp_updates, heard_from,
+                 adults, kids_6to12, children, attendee_names, food_pref, days_selection, pass_type, is_student,
+                 email_updates, whatsapp_updates, sms_updates, heard_from,
                  paypal_order_id, status, ipaddress)
              VALUES
                 (:date, :name, :email, :phone, :city, :qty, :unit_price, :total,
-                 :adults, :kids6to12, :children, :attendee_names, :food_pref, :days, :is_student,
-                 :email_updates, :whatsapp, :heard,
+                 :adults, :kids6to12, :children, :attendee_names, :food_pref, :days, :pass_type, :is_student,
+                 :email_updates, :whatsapp, :sms_updates, :heard,
                  :ppid, 'created', :ip)"
         );
         $stmt->execute([
@@ -268,9 +287,11 @@ function createOrder($post) {
             ':attendee_names' => $attendeeNamesJson,
             ':food_pref'      => $foodPrefsJson,
             ':days'           => $daysSelection,
+            ':pass_type'      => $passType,
             ':is_student'     => $isStudent,
             ':email_updates'  => $emailUpdates,
             ':whatsapp'       => $whatsappUpd,
+            ':sms_updates'    => $smsUpdates,
             ':heard'          => $heardFrom,
             ':ppid'           => $ppOrder->id,
             ':ip'             => $ip,
@@ -369,15 +390,19 @@ function captureOrder($post) {
             return isset($foodMap[$f]) ? $foodMap[$f] : 'Non-Vegetarian';
         }, $foodArr);
         $vegCount = count(array_filter($foodArr, function($f){ return $f === 'Vegetarian'; }));
-        $nonVegCount = count($foodArr) - $vegCount;
+        $noDinnerCount = count(array_filter($foodArr, function($f){ return $f === 'No Dinner'; }));
+        $nonVegCount = count($foodArr) - $vegCount - $noDinnerCount;
         $foodSummaryParts = [];
         if ($nonVegCount > 0) $foodSummaryParts[] = "{$nonVegCount} Non-Veg";
         if ($vegCount > 0) $foodSummaryParts[] = "{$vegCount} Veg";
+        if ($noDinnerCount > 0) $foodSummaryParts[] = "{$noDinnerCount} No Dinner (Concert Only)";
         $foodDisp = $foodSummaryParts ? implode(', ', $foodSummaryParts) : 'Non-Vegetarian';
 
         $adultsDisp = isset($row['adults'])   ? (int)$row['adults']   : $qty;
         $childDisp  = isset($row['children']) ? (int)$row['children'] : 0;
         $studentNote = !empty($row['is_student']) ? "<tr><td style='padding:4px 12px 4px 0'><strong>Pass Type:</strong></td><td>Student (bring valid student ID)</td></tr>" : '';
+        $passTypeMap  = ['full' => 'Full Package (Pujo + Bhog + Concert + Authentic Bengali Dinner)', 'concert_only' => 'Concert Only', 'mixed' => 'Mixed (Full Package + Concert Only)'];
+        $passTypeDisp = isset($row['pass_type']) && isset($passTypeMap[$row['pass_type']]) ? $passTypeMap[$row['pass_type']] : $passTypeMap['full'];
 
         // Format attendee names list
         $namesArr  = json_decode($row['attendee_names'], true);
@@ -412,6 +437,9 @@ function captureOrder($post) {
             array('Adults',          imgText($guestLine),                         false, false, false),
             array('Meal Preference', imgText($foodDisp),                          true,  false, false),
         );
+        if (!empty($row['pass_type']) && $row['pass_type'] !== 'full') {
+            $tRows[] = array('Pass Type', $passTypeDisp, false, false, false);
+        }
         if (!empty($row['is_student'])) {
             $tRows[] = array('Pass Type', 'Student (bring student ID)', false, false, false);
         }
@@ -446,12 +474,20 @@ function captureOrder($post) {
               . "<tr><td style='padding:4px 16px 4px 0'><b>Days:</b></td><td>{$daysDisp}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Adults:</b></td><td>{$guestLine}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Meal:</b></td><td>{$foodDisp}</td></tr>"
+              . (!empty($row['pass_type']) && $row['pass_type'] !== 'full' ? "<tr><td style='padding:4px 16px 4px 0'><b>Pass Type:</b></td><td>{$passTypeDisp}</td></tr>" : '')
               . "<tr><td style='padding:4px 16px 4px 0'><b>Total:</b></td><td>\${$total}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Order ID:</b></td><td>{$safeOrder}</td></tr>"
               . "</table>"
               . "<p style='color:#8B1A1A'>-- The UTSOV Team</p></body></html>";
         }
         mail($email, sanitizeHeader($buyerSubject), $buyerBody, $mailHeaders);
+
+        // SMS confirmation — only if the buyer opted in ("Text me my registration confirmation")
+        if (!empty($row['sms_updates'])) {
+            $smsDays = html_entity_decode($daysDisp, ENT_QUOTES, 'UTF-8');
+            $smsBody = "UTSOV 2026: Your {$qty} {$passWord} confirmed! {$smsDays}. Total \${$total}. Order {$orderId}. Reply STOP to opt out.";
+            sendTwilioSMS($row['phone'], $smsBody);
+        }
 
         // Admin notification
         $adminSubject = "New UTSOV 2026 Registration - " . sanitizeHeader($name);
@@ -479,6 +515,7 @@ function captureOrder($post) {
             . "<tr><td style='padding:4px 16px 4px 0'><b>Kids (6-12):</b></td><td>{$kids6to12}</td></tr>"
             . "<tr><td style='padding:4px 16px 4px 0'><b>Children (U6):</b></td><td>{$childDisp}</td></tr>"
             . "<tr><td style='padding:4px 16px 4px 0'><b>Meal:</b></td><td>{$foodDisp}</td></tr>"
+            . "<tr><td style='padding:4px 16px 4px 0'><b>Pass Type:</b></td><td>{$passTypeDisp}</td></tr>"
             . ($namesDisp ? "<tr><td style='padding:4px 16px 4px 0'><b>Attendees:</b></td><td>{$namesDisp}</td></tr>" : '')
             . ($mealBreakdownDisp ? "<tr><td style='padding:4px 16px 4px 0;vertical-align:top'><b>Meal per Attendee:</b></td><td>{$mealBreakdownDisp}</td></tr>" : '')
             . (!empty($row['is_student']) ? "<tr><td style='padding:4px 16px 4px 0'><b>Student Pass:</b></td><td>Yes</td></tr>" : '')

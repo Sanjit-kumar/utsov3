@@ -273,7 +273,7 @@ function captureDonation($post) {
             . "<tr><td style='padding:4px 16px 4px 0'><b>IP:</b></td><td>{$dSafeIp}</td></tr>"
             . "</table>"
             . "</body></html>";
-        mail('utsov@utsov.org', sanitizeHeader($adminSubject), $adminBody, $mailHeaders);
+        notifyAdmins(sanitizeHeader($adminSubject), $adminBody, $mailHeaders);
 
         $return['msg'] = 'SUCCESS';
 

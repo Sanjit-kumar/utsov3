@@ -85,17 +85,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if (isset($_GET['export']) && adm_logged_in()) {
     $allowed = array('registrations','donations','contacts','volunteers');
     $target  = in_array($_GET['export'], $allowed) ? $_GET['export'] : '';
+    // Only registrations/donations have a status column - contacts/volunteers silently ignore
+    // a status filter rather than erroring, since there's nothing meaningful to filter by there.
+    $statusFilterable = array('registrations','donations');
+    $statusFilter = (in_array($target, $statusFilterable) && isset($_GET['status']) && $_GET['status'] !== '')
+        ? $_GET['status'] : null;
     if ($target) {
         header('Content-Type: text/csv; charset=UTF-8');
-        header('Content-Disposition: attachment; filename="utsov_'.$target.'_'.date('Ymd_His').'.csv"');
+        $fnameSuffix = $statusFilter ? '_'.preg_replace('/[^a-z0-9_]/i','',$statusFilter) : '';
+        header('Content-Disposition: attachment; filename="utsov_'.$target.$fnameSuffix.'_'.date('Ymd_His').'.csv"');
         $out = fopen('php://output', 'w');
         fwrite($out, "\xEF\xBB\xBF");
         try {
             $db  = $target==='registrations' ? new PDO("sqlite:".$GLOBALS['REG_DB']) : new PDO("sqlite:".$GLOBALS['CAP_DB']);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $tbl = $target==='registrations' ? 'tb_registrations' : 'tb_'.$target;
-            $rows = $db->query("SELECT * FROM $tbl ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
-            if ($rows) { fputcsv($out, array_keys($rows[0])); foreach ($rows as $r) fputcsv($out, $r); }
+            if ($statusFilter !== null) {
+                $stmt = $db->prepare("SELECT * FROM $tbl WHERE status = :status ORDER BY id DESC");
+                $stmt->bindValue(':status', $statusFilter, PDO::PARAM_STR);
+                $stmt->execute();
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $rows = $db->query("SELECT * FROM $tbl ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+            }
+            if ($rows) {
+                // Prepend a clean sequential row number (1..N of THIS export) as the first
+                // column - the raw 'id' column further along is the true, permanent database
+                // key, but it's an auto-increment shared across every status, so a filtered
+                // export (e.g. "paid" only) shows a sparse, non-consecutive set of ids that
+                // reads as confusing/broken. This gives readable numbering without losing
+                // the real id for anyone who needs to cross-reference back to the admin table.
+                $seq = 1;
+                $numbered = array();
+                foreach ($rows as $r) { $numbered[] = array_merge(array('#' => $seq++), $r); }
+                fputcsv($out, array_keys($numbered[0]));
+                foreach ($numbered as $r) fputcsv($out, $r);
+            }
         } catch(\Exception $e) { fputcsv($out, array('Error: '.$e->getMessage())); }
         fclose($out); exit;
     }
@@ -218,6 +243,14 @@ if ($auth) {
         try { $conts = $cdb->query("SELECT id,date,name,email,phone,topic,message,ipaddress FROM tb_contacts ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
         try { $vols  = $cdb->query("SELECT id,date,name,email,phone,city,state,zip,address1,address2,message,memberrequest,ipaddress FROM tb_volunteers ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
     } catch(\Exception $e){}
+
+    // Distinct status values actually present, for the CSV export filter dropdowns - derived
+    // from the data itself (not a hardcoded list) so a newly-appearing status (e.g. 'refunded')
+    // shows up as a filterable option automatically, with no code change needed.
+    $regStatusOptions = array_values(array_unique(array_filter(array_column($regs, 'status'))));
+    sort($regStatusOptions);
+    $donStatusOptions = array_values(array_unique(array_filter(array_column($dons, 'status'))));
+    sort($donStatusOptions);
 
     foreach ($regs as $r) {
         $yr = getYear($r['date']);
@@ -436,6 +469,8 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
 .tt-r{display:flex;align-items:center;gap:.5rem}
 .srch{background:#f9fafb;border:1px solid var(--bdr);border-radius:7px;padding:.38rem .8rem;color:var(--text);font-size:.8rem;outline:none;width:190px;transition:border-color .2s;font-family:var(--f)}
 .srch:focus{border-color:var(--red);background:#fff}
+.status-filter-sel{background:#f9fafb;border:1px solid var(--bdr);border-radius:7px;padding:.36rem .6rem;color:var(--text);font-size:.75rem;outline:none;font-family:var(--f);cursor:pointer}
+.status-filter-sel:focus{border-color:var(--red);background:#fff}
 .csv-btn{background:var(--green);color:#fff;border:none;border-radius:7px;padding:.38rem .9rem;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:.04em;text-decoration:none;white-space:nowrap;font-family:var(--f)}
 .csv-btn:hover{opacity:.85}
 .del-btn{background:var(--red-lt);color:var(--red);border:1px solid var(--red-mid);border-radius:6px;padding:.3rem .5rem;font-size:.8rem;cursor:pointer;line-height:1}
@@ -749,7 +784,15 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
   <div class="tp on" id="tp-regs">
     <div class="tt">
       <div class="ttl"><span class="tt-title">Ticket Registrations</span><span class="tt-cnt"><?php echo count($regs); ?> records &bull; $<?php echo number_format($totRev,2); ?> total &bull; <?php echo $totPasses; ?> passes</span></div>
-      <div class="tt-r"><input class="srch" type="text" placeholder="&#128269; Search..." oninput="filt('tr-regs',this.value)"><a class="csv-btn" href="admin.php?export=registrations">&#11015; CSV</a></div>
+      <div class="tt-r"><input class="srch" type="text" placeholder="&#128269; Search..." oninput="filt('tr-regs',this.value)">
+        <select class="status-filter-sel" id="regStatusSel" onchange="updExport('regStatusSel','regCsvBtn','registrations')" title="Filter CSV export by status">
+          <option value="">All statuses</option>
+          <?php foreach ($regStatusOptions as $s): ?>
+          <option value="<?php echo esc($s); ?>"><?php echo esc(strtoupper($s)); ?></option>
+          <?php endforeach; ?>
+        </select>
+        <a class="csv-btn" id="regCsvBtn" href="admin.php?export=registrations">&#11015; CSV</a>
+      </div>
     </div>
     <div class="tw"><table id="tr-regs">
       <thead><tr>
@@ -776,7 +819,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
         <td><?php echo esc($r['heard_from']); ?></td>
         <td class="nw">
           <?php echo badge($r['status']); ?>
-          <?php if ($r['status'] !== 'paid'): ?>
+          <?php if ($r['status'] !== 'paid' && $r['status'] !== 'refunded'): ?>
           <form method="post" style="display:inline" onsubmit="return confirm('Mark registration #<?php echo esc($r['id']); ?> (<?php echo esc($r['name']); ?>) as paid?');">
             <input type="hidden" name="action" value="mark_paid">
             <input type="hidden" name="reg_id" value="<?php echo esc($r['id']); ?>">
@@ -807,7 +850,15 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
   <div class="tp" id="tp-dons">
     <div class="tt">
       <div class="ttl"><span class="tt-title">Donations</span><span class="tt-cnt"><?php echo count($dons); ?> records &bull; $<?php echo number_format($totDon,2); ?> total &bull; <?php echo $paidDons; ?> confirmed</span></div>
-      <div class="tt-r"><input class="srch" type="text" placeholder="&#128269; Search..." oninput="filt('tr-dons',this.value)"><a class="csv-btn" href="admin.php?export=donations">&#11015; CSV</a></div>
+      <div class="tt-r"><input class="srch" type="text" placeholder="&#128269; Search..." oninput="filt('tr-dons',this.value)">
+        <select class="status-filter-sel" id="donStatusSel" onchange="updExport('donStatusSel','donCsvBtn','donations')" title="Filter CSV export by status">
+          <option value="">All statuses</option>
+          <?php foreach ($donStatusOptions as $s): ?>
+          <option value="<?php echo esc($s); ?>"><?php echo esc(strtoupper($s)); ?></option>
+          <?php endforeach; ?>
+        </select>
+        <a class="csv-btn" id="donCsvBtn" href="admin.php?export=donations">&#11015; CSV</a>
+      </div>
     </div>
     <div class="tw"><table id="tr-dons">
       <thead><tr><th onclick="srt('tr-dons',0)">#</th><th onclick="srt('tr-dons',1)">Date</th><th onclick="srt('tr-dons',2)">Name</th><th onclick="srt('tr-dons',3)">Email</th><th onclick="srt('tr-dons',4)">Amount</th><th onclick="srt('tr-dons',5)">Status</th><th onclick="srt('tr-dons',6)">PayPal Order</th><th onclick="srt('tr-dons',7)">Capture ID</th><th onclick="srt('tr-dons',8)">Updated</th><th onclick="srt('tr-dons',9)">IP</th></tr></thead>
@@ -930,6 +981,13 @@ function filt(id,q){
   q=q.toLowerCase();
   var rows=document.getElementById(id).tBodies[0].rows;
   for(var i=0;i<rows.length;i++) rows[i].style.display=(q===''||rows[i].textContent.toLowerCase().indexOf(q)!==-1)?'':'none';
+}
+// ─── CSV export status filter ─────────────────────────────────────────────
+// Keeps the CSV link's href in sync with the status dropdown - "All statuses" exports
+// everything (no status param), any specific choice exports only matching rows.
+function updExport(selId,linkId,target){
+  var v=document.getElementById(selId).value;
+  document.getElementById(linkId).href='admin.php?export='+target+(v?'&status='+encodeURIComponent(v):'');
 }
 // ─── Table sort ────────────────────────────────────────────────────────────
 function srt(id,col){

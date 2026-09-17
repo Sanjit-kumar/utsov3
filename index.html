@@ -6,7 +6,7 @@
 <title>UTSOV — Durga Puja 2026 | New Jersey | East Brunswick NJ | Bengali Festival</title>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="New Jersey's biggest Durga Puja 2026 — Oct 17–18 at East Brunswick, NJ. Live concerts, Pushpanjali, Sindoor Khela, Bengali food & Mela Bazaar. Tickets from $50.">
+<meta name="description" content="New Jersey's biggest Durga Puja 2026 — Oct 17–18 at East Brunswick, NJ. Live concerts, Pushpanjali, Sindoor Khela, Bengali food & Mela Bazaar. Tickets from $45.">
 <meta name="keywords" content="Durga Puja New Jersey, Durga Puja near me, Bengali festival NJ, UTSOV, Durga Puja 2026, Durga Puja East Brunswick, Navratri New Jersey, Indian festival NJ, Bengali cultural event New Jersey, Maa Durga NJ, Sindoor Khela NJ, Pushpanjali NJ, Dhunuchi Naach, Durga Puja tri-state, Durga Puja tickets NJ">
 <meta name="author" content="UTSOV Inc.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -629,6 +629,10 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 /* Logo images: fill circle, mix-blend-mode removes white backgrounds (e.g. ICICI) */
 .sph-logo-pill img{width:88%;height:88%;object-fit:contain;mix-blend-mode:multiply;opacity:.92;display:block;position:relative;z-index:2}
 .sph-orbit-lg .sph-logo-pill img{mix-blend-mode:normal;opacity:1;width:100%;height:100%}
+/* NY Life gold-row pill now shows Samragnee's business-card photo, not a plain logo -
+   the default .sph-logo-pill img multiply blend (for killing white logo backgrounds) would
+   muddy a real photo, so this instance opts out, same pattern as .sph-orbit-lg above. */
+.sph-gold-nyl .sph-logo-pill img{mix-blend-mode:normal;opacity:1}
 /* PC Chandra video animation — WebM transparent, MP4 fallback uses multiply blend */
 .sph-pcc-vid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;object-fit:cover;pointer-events:none;z-index:1;mix-blend-mode:multiply}
 
@@ -799,7 +803,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 <!-- ANNOUNCE BAR — desktop only, fixed below nav -->
 <div class="announce-bar">
   <span class="ab-dot" aria-hidden="true"></span>
-  <a href="cart.html" class="ab-link">🎟 &nbsp; Early Bird Registration Is Now Open!</a>
+  <a href="cart.html" class="ab-link">🎟 &nbsp; UTSOV 2026 Passes Are Now On Sale!</a>
   <span class="ab-dot" aria-hidden="true"></span>
 </div>
 
@@ -835,8 +839,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
       <div class="mob-eb-ticker">
         <div class="mob-eb-track">
-          <a href="cart.html">🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</a>
-          <a href="cart.html" aria-hidden="true" tabindex="-1">🎟 Early Bird Registration Is Now Open — Get Your Passes Today!</a>
+          <a href="cart.html">🎟 UTSOV 2026 Passes Are Now On Sale — Get Yours Today!</a>
+          <a href="cart.html" aria-hidden="true" tabindex="-1">🎟 UTSOV 2026 Passes Are Now On Sale — Get Yours Today!</a>
         </div>
       </div>
 
@@ -863,13 +867,13 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
       <!-- Gold sponsor cards — desktop only, inline with CTA row -->
       <div class="sph-gold-row">
-        <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="sph-gold-item">
+        <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="sph-gold-item sph-gold-nyl">
           <div class="sph-orbit sph-orbit-sm">
             <div class="sph-ring sph-r1"></div>
             <div class="sph-ring sph-r2"></div>
             <div class="sph-lc"><div class="sph-logo-pill">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png"
-                   alt="New York Life" style="display:block"
+              <img src="images/ny_life_2017.png"
+                   alt="Samragnee Majumdar - New York Life Insurance" style="display:block"
                    onerror="this.outerHTML='<span style=&quot;font-size:.44rem;font-weight:700;color:#003087;line-height:1.2&quot;>NY LIFE</span>'">
             </div></div>
           </div>
@@ -997,7 +1001,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
           <g class="rgb-rings"></g>
         </svg>
         <div class="sph-nyl-card">
-          <img src="images/ny_life_business_card.jpg" alt="Samragnee Majumdar - New York Life Insurance">
+          <img src="images/ny_life_2017.png" alt="Samragnee Majumdar - New York Life Insurance">
         </div>
       </div>
     </div>
@@ -1068,11 +1072,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="msc-item">
         <img src="https://www.sonajewelers.com/wp-content/uploads/2022/03/cropped-SONa-Logo.png" alt="Sona Jewelers">
       </a>
-      <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="msc-item">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png" alt="New York Life">
-      </a>
       <a href="https://www.newyorklife.com/agent/smajumdar" target="_blank" rel="noopener" class="msc-item msc-item-photo">
-        <img src="images/ny_life_business_card.jpg" alt="Samragnee Majumdar - New York Life Insurance">
+        <img src="images/ny_life_2017.png" alt="Samragnee Majumdar - New York Life Insurance">
       </a>
     </div>
   </div>
@@ -1111,7 +1112,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
           <div class="sb-lbl">Sacred Days of Celebration</div>
         </div>
         <div class="stat-big rv d4">
-          <div class="sb-num">10+</div>
+          <div class="sb-num">15+</div>
           <div class="sb-lbl">Years UTSOV in New Jersey</div>
         </div>
       </div>
@@ -1382,8 +1383,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <!-- New York Life -->
       <a href="https://www.newyorklife.com/communities/south-asian" target="_blank" rel="noopener" class="sp-card">
         <div class="sp-card-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_New_York_Life.svg/500px-Logo_New_York_Life.svg.png"
-               alt="New York Life Insurance"
+          <img src="images/ny_life_2017.png"
+               alt="Samragnee Majumdar - New York Life Insurance"
                style="max-height:68px;max-width:150px;object-fit:contain"
                onerror="this.outerHTML='<div style=&quot;font-size:.85rem;font-weight:700;color:#003087;text-align:center;line-height:1.3&quot;>NEW YORK<br>LIFE</div>'">
         </div>
@@ -1700,7 +1701,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       "name": "How much are Durga Puja tickets in New Jersey?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "UTSOV 2026 tickets start at $50 for a Kids single-day pass. Patron (12+) passes start at $80 for a single day or $140 for both days, with Student pricing also available. Children under 6 attend free. Visit utsov.org/cart.html to register."
+        "text": "UTSOV 2026 tickets start at $45 for a Kids Concert-Only single-day pass. Patron (12+) full passes start at $85 for a single day or $150 for both days, with Concert-Only, Student, and Kids pricing also available. Children under 6 attend free. Visit utsov.org/cart.html to register."
       }
     },
     {

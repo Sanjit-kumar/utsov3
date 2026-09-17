@@ -107,7 +107,7 @@ function addContact($post) {
             . ($message ? "<tr><td style='padding:4px 16px 4px 0;vertical-align:top'><b>Message:</b></td><td>{$cSafeMsg}</td></tr>" : '')
             . "</table>"
             . "</body></html>";
-        mail('utsov@utsov.org', sanitizeHeader($subject), $body, $mailHeaders);
+        notifyAdmins(sanitizeHeader($subject), $body, $mailHeaders);
 
         $return['msg'] = 'SUCCESS';
     } catch(PDOException $e) {

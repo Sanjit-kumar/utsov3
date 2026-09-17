@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>UTSOV 2026 — Door Check-In</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#6B0E0E;--red:#9E2424;--cream:#FFFDF8;--ivory:#FFF0E5;
+  --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#B8860B;--amber-bg:#FFF6E0;
+  --on-cream:#1A0000;
+}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem}
+.login-card{background:#fff;border:2px solid var(--red-dark);border-radius:16px;padding:2rem;max-width:360px;width:100%}
+.login-card h1{font-size:1.3rem;color:var(--red-dark);margin-bottom:1.2rem;text-align:center}
+.login-card label{display:block;font-size:.8rem;font-weight:600;margin:.8rem 0 .3rem}
+.login-card input{width:100%;padding:.7rem;border:1.5px solid #ccc;border-radius:8px;font-size:1rem}
+.login-card button{width:100%;margin-top:1.3rem;padding:.8rem;background:var(--red-dark);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700}
+.login-err{color:var(--red);font-size:.85rem;margin-top:.6rem;display:none}
+.login-err.show{display:block}
+
+/* MAIN SCANNER SCREEN */
+#mainScreen{display:none;flex-direction:column;min-height:100vh}
+header{background:var(--red-dark);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+header .title{font-weight:700;font-size:1rem}
+header .stats{font-size:.8rem;opacity:.95;text-align:right}
+header .logout{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.3rem .7rem;border-radius:6px;font-size:.75rem}
+
+.station-bar{background:var(--ivory);padding:.6rem 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid #eadbd0}
+.station-bar label{font-size:.8rem;font-weight:600}
+.station-bar input{padding:.4rem .6rem;border:1px solid #ccc;border-radius:6px;font-size:.85rem;flex:1;min-width:140px}
+
+main{flex:1;display:flex;flex-direction:column;padding:1rem;gap:1rem;max-width:520px;margin:0 auto;width:100%}
+
+.camera-wrap{position:relative;background:#000;border-radius:14px;overflow:hidden;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.camera-wrap video{width:100%;height:100%;object-fit:cover}
+.camera-wrap .scan-box{position:absolute;top:15%;left:15%;right:15%;bottom:15%;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);pointer-events:none}
+.camera-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:1rem;font-size:.9rem;background:rgba(0,0,0,.6)}
+
+.manual-toggle{text-align:center;font-size:.85rem;color:var(--red-dark);text-decoration:underline;background:none;border:none}
+.manual-row{display:none;gap:.5rem}
+.manual-row.show{display:flex}
+.manual-row input{flex:1;padding:.6rem;border:1.5px solid #ccc;border-radius:8px;font-size:1rem}
+.manual-row button{padding:.6rem 1rem;background:var(--red-dark);color:#fff;border:none;border-radius:8px;font-weight:700}
+
+.result-card{display:none;background:#fff;border:2px solid #ddd;border-radius:14px;padding:1.2rem}
+.result-card.show{display:block}
+.result-card.paid{border-color:var(--green);background:var(--green-bg)}
+.result-card.problem{border-color:var(--red);background:#FFF0F0}
+.result-card.warning{border-color:var(--amber);background:var(--amber-bg)}
+.result-badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.25rem .6rem;border-radius:999px;margin-bottom:.6rem}
+.result-badge.paid{background:var(--green);color:#fff}
+.result-badge.problem{background:var(--red);color:#fff}
+.result-badge.warning{background:var(--amber);color:#fff}
+.result-name{font-size:1.2rem;font-weight:700;margin-bottom:.4rem}
+.result-row{font-size:.9rem;margin:.25rem 0;display:flex;justify-content:space-between;gap:.5rem}
+.result-row b{font-weight:600}
+.result-attendees{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(0,0,0,.1);font-size:.85rem}
+.result-attendees div{margin:.15rem 0}
+.result-actions{display:flex;gap:.6rem;margin-top:1rem}
+.result-actions button{flex:1;padding:.8rem;border:none;border-radius:8px;font-weight:700;font-size:.95rem}
+.btn-confirm{background:var(--green);color:#fff}
+.btn-confirm:disabled{background:#aaa;cursor:not-allowed}
+.btn-cancel{background:#eee;color:#333}
+
+.error-banner{display:none;background:#FFF0F0;border:2px solid var(--red);color:var(--red-dark);padding:.8rem;border-radius:10px;font-size:.9rem;text-align:center}
+.error-banner.show{display:block}
+
+.success-flash{display:none;background:var(--green-bg);border:2px solid var(--green);color:var(--green);padding:.9rem;border-radius:10px;text-align:center;font-weight:700}
+.success-flash.show{display:block}
+
+.recent-list{background:#fff;border:1px solid #eee;border-radius:12px;padding:.9rem}
+.recent-list h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:.5rem}
+.recent-row{display:flex;justify-content:space-between;font-size:.85rem;padding:.35rem 0;border-bottom:1px solid #f2f2f2}
+.recent-row:last-child{border-bottom:none}
+.recent-empty{font-size:.85rem;color:#999;text-align:center;padding:.5rem}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <h1>UTSOV 2026 Door Check-In</h1>
+    <label for="loginUser">Username</label>
+    <input type="text" id="loginUser" autocomplete="username">
+    <label for="loginPass">Password</label>
+    <input type="password" id="loginPass" autocomplete="current-password">
+    <div class="login-err" id="loginErr">Invalid username or password.</div>
+    <button onclick="doLogin()">Unlock Scanner</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="mainScreen">
+  <header>
+    <div class="title">🎟 UTSOV Door Check-In</div>
+    <div class="stats" id="statsLine">Loading…</div>
+    <button class="logout" onclick="doLogout()">Log out</button>
+  </header>
+
+  <div class="station-bar">
+    <label for="stationName">Gate / Volunteer:</label>
+    <input type="text" id="stationName" placeholder="e.g. Front Gate - Ranjan" maxlength="100">
+  </div>
+
+  <main>
+    <div class="camera-wrap" id="cameraWrap">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="scan-box" id="scanBox"></div>
+      <div class="camera-msg" id="cameraMsg" style="display:none"></div>
+    </div>
+    <canvas id="canvas" style="display:none"></canvas>
+
+    <button class="manual-toggle" onclick="toggleManual()">Can't scan? Enter registration ID manually</button>
+    <div class="manual-row" id="manualRow">
+      <input type="number" id="manualIdInput" placeholder="Registration ID (from name/email)" min="1">
+      <button onclick="manualLookup()">Look Up</button>
+    </div>
+
+    <div class="error-banner" id="errorBanner"></div>
+    <div class="success-flash" id="successFlash"></div>
+
+    <div class="result-card" id="resultCard">
+      <span class="result-badge" id="resultBadge"></span>
+      <div class="result-name" id="resultName"></div>
+      <div class="result-row"><span>Days</span><b id="resultDays"></b></div>
+      <div class="result-row"><span>Pass Type</span><b id="resultPassType"></b></div>
+      <div class="result-row"><span>Party Size</span><b id="resultQty"></b></div>
+      <div class="result-row"><span>Total Paid</span><b id="resultTotal"></b></div>
+      <div class="result-attendees" id="resultAttendees"></div>
+      <div class="result-actions">
+        <button class="btn-cancel" onclick="cancelResult()">Cancel</button>
+        <button class="btn-confirm" id="confirmBtn" onclick="confirmCheckin()">✓ Confirm Check-In</button>
+      </div>
+    </div>
+
+    <div class="recent-list">
+      <h3>Recently Checked In</h3>
+      <div id="recentRows"><div class="recent-empty">No check-ins yet.</div></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/jsQR.js"></script>
+<script>
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function getCreds() {
+  var u = sessionStorage.getItem('checkin_user');
+  var p = sessionStorage.getItem('checkin_pass');
+  return u && p ? { username: u, password: p } : null;
+}
+
+function doLogin() {
+  var u = document.getElementById('loginUser').value.trim();
+  var p = document.getElementById('loginPass').value;
+  if (!u || !p) return;
+  sessionStorage.setItem('checkin_user', u);
+  sessionStorage.setItem('checkin_pass', p);
+  // Verify against the server via a harmless 'list' call before committing to the scanner screen.
+  apiCall('list', {}).then(function(d) {
+    if (d.err) {
+      document.getElementById('loginErr').classList.add('show');
+      sessionStorage.removeItem('checkin_user');
+      sessionStorage.removeItem('checkin_pass');
+    } else {
+      document.getElementById('loginErr').classList.remove('show');
+      enterMainScreen();
+    }
+  });
+}
+
+function doLogout() {
+  sessionStorage.removeItem('checkin_user');
+  sessionStorage.removeItem('checkin_pass');
+  stopScanning();
+  document.getElementById('mainScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+// ── API helper ────────────────────────────────────────────────────────────────
+function apiCall(action, extra) {
+  var creds = getCreds();
+  var body = Object.assign({ action: action, username: creds ? creds.username : '', password: creds ? creds.password : '' }, extra || {});
+  return fetch('api/checkin.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function(r) { return r.json(); }).catch(function() {
+    return { err: 'Network error — check connection and try again.' };
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(function() {
+  var creds = getCreds();
+  if (creds) { enterMainScreen(); }
+
+  var savedStation = sessionStorage.getItem('checkin_station');
+  if (savedStation) document.getElementById('stationName').value = savedStation;
+  document.getElementById('stationName').addEventListener('input', function() {
+    sessionStorage.setItem('checkin_station', this.value);
+  });
+})();
+
+function enterMainScreen() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainScreen').style.display = 'flex';
+  refreshStats();
+  setInterval(refreshStats, 7000);
+  startCamera();
+}
+
+// ── Stats / recent list polling ─────────────────────────────────────────────────
+function refreshStats() {
+  apiCall('list', {}).then(function(d) {
+    if (d.err) return;
+    document.getElementById('statsLine').textContent =
+      d.checkedInRegistrations + ' / ' + d.totalPaidRegistrations + ' registrations checked in · ' + d.checkedInHeadcount + ' people';
+    var rows = document.getElementById('recentRows');
+    if (!d.recent || d.recent.length === 0) {
+      rows.innerHTML = '<div class="recent-empty">No check-ins yet.</div>';
+      return;
+    }
+    rows.innerHTML = d.recent.map(function(r) {
+      var t = r.checked_in_at ? r.checked_in_at.split(' ')[1] : '';
+      return '<div class="recent-row"><span>' + escapeHtml(r.name) + ' (x' + r.qty + ')</span><span>' + t + '</span></div>';
+    }).join('');
+  });
+}
+
+function escapeHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+// ── Camera + scanning loop ───────────────────────────────────────────────────
+var videoEl, canvasEl, canvasCtx, scanning = false, stream = null;
+var lastScannedToken = null, resultShowing = false;
+
+function startCamera() {
+  videoEl = document.getElementById('video');
+  canvasEl = document.getElementById('canvas');
+  canvasCtx = canvasEl.getContext('2d', { willReadFrequently: true });
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showCameraMessage('Camera not available on this browser. Use manual entry below instead.');
+    document.getElementById('manualRow').classList.add('show');
+    return;
+  }
+
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } } })
+    .then(function(s) {
+      stream = s;
+      videoEl.srcObject = s;
+      videoEl.onloadedmetadata = function() {
+        videoEl.play();
+        scanning = true;
+        requestAnimationFrame(scanLoop);
+      };
+    })
+    .catch(function(err) {
+      showCameraMessage('Camera access denied or unavailable (' + err.name + '). Use manual entry below instead.');
+      document.getElementById('manualRow').classList.add('show');
+    });
+}
+
+function stopScanning() {
+  scanning = false;
+  if (stream) { stream.getTracks().forEach(function(t) { t.stop(); }); stream = null; }
+}
+
+function showCameraMessage(msg) {
+  var el = document.getElementById('cameraMsg');
+  el.textContent = msg;
+  el.style.display = 'flex';
+  document.getElementById('scanBox').style.display = 'none';
+}
+
+function scanLoop() {
+  if (!scanning) return;
+  if (!resultShowing && videoEl.readyState === videoEl.HAVE_ENOUGH_DATA && videoEl.videoWidth > 0) {
+    canvasEl.width = videoEl.videoWidth;
+    canvasEl.height = videoEl.videoHeight;
+    canvasCtx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+    var imageData = canvasCtx.getImageData(0, 0, canvasEl.width, canvasEl.height);
+    var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+    if (code && code.data && code.data !== lastScannedToken) {
+      lastScannedToken = code.data;
+      handleScanned(code.data);
+    }
+  }
+  requestAnimationFrame(scanLoop);
+}
+
+// ── Manual entry fallback ────────────────────────────────────────────────────
+function toggleManual() {
+  document.getElementById('manualRow').classList.toggle('show');
+}
+function manualLookup() {
+  var id = document.getElementById('manualIdInput').value;
+  if (!id) return;
+  lastScannedToken = null; // manual entry doesn't interact with the scan-dedup guard
+  doLookup({ manualId: parseInt(id, 10) });
+}
+
+// ── Lookup + confirm flow ────────────────────────────────────────────────────
+var currentLookupParams = null;
+
+function handleScanned(token) {
+  doLookup({ token: token });
+}
+
+function doLookup(params) {
+  currentLookupParams = params;
+  hideError();
+  apiCall('lookup', params).then(function(d) {
+    if (d.err) {
+      showError(d.err);
+      return;
+    }
+    showResult(d.registration);
+  });
+}
+
+function showResult(reg) {
+  resultShowing = true;
+  var card = document.getElementById('resultCard');
+  var badge = document.getElementById('resultBadge');
+  var confirmBtn = document.getElementById('confirmBtn');
+
+  document.getElementById('resultName').textContent = reg.name;
+  document.getElementById('resultDays').textContent = reg.days;
+  document.getElementById('resultPassType').textContent = reg.passType;
+  document.getElementById('resultQty').textContent = reg.qty + (reg.qty === 1 ? ' person' : ' people');
+  document.getElementById('resultTotal').textContent = '$' + reg.total;
+  document.getElementById('resultAttendees').innerHTML = reg.attendees.map(function(a) {
+    return '<div>' + escapeHtml(a.name) + ' — ' + escapeHtml(a.food) + '</div>';
+  }).join('');
+
+  card.classList.remove('paid', 'problem', 'warning');
+  badge.classList.remove('paid', 'problem', 'warning');
+
+  if (reg.checkedIn) {
+    card.classList.add('warning');
+    badge.classList.add('warning');
+    badge.textContent = 'ALREADY CHECKED IN · ' + (reg.checkedInAt ? reg.checkedInAt.split(' ')[1] : '');
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Already Checked In';
+  } else if (!reg.isPaid) {
+    card.classList.add('problem');
+    badge.classList.add('problem');
+    badge.textContent = 'NOT PAID — DO NOT ADMIT';
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Cannot Check In (Unpaid)';
+  } else {
+    card.classList.add('paid');
+    badge.classList.add('paid');
+    badge.textContent = '✓ PAID & VERIFIED';
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = '✓ Confirm Check-In & Give Wristband';
+  }
+
+  card.classList.add('show');
+}
+
+function cancelResult() {
+  resultShowing = false;
+  lastScannedToken = null;
+  document.getElementById('resultCard').classList.remove('show');
+  hideError();
+}
+
+function confirmCheckin() {
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+  var params = Object.assign({ station: station }, currentLookupParams);
+  apiCall('confirm', params).then(function(d) {
+    if (d.err) { showError(d.err); return; }
+    resultShowing = false;
+    document.getElementById('resultCard').classList.remove('show');
+    showSuccess('✓ Checked in: ' + d.registration.name + ' — tie ' + d.registration.qty + ' wristband(s)');
+    refreshStats();
+    setTimeout(function() {
+      lastScannedToken = null; // allow re-scanning the next person
+      hideSuccess();
+    }, 2500);
+  });
+}
+
+function showError(msg) {
+  var el = document.getElementById('errorBanner');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function() { resultShowing = false; lastScannedToken = null; }, 2500);
+}
+function hideError() {
+  document.getElementById('errorBanner').classList.remove('show');
+}
+function showSuccess(msg) {
+  var el = document.getElementById('successFlash');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideSuccess() {
+  document.getElementById('successFlash').classList.remove('show');
+}
+</script>
+</body>
+</html>

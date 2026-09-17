@@ -70,4 +70,26 @@ node_modules/
 
 # Files with live/plaintext credentials — never commit
 api/checkout-config.php
+api/receipt-config.php
+api/twilio-config.php
+api/checkin-config.php
+api/mail-config.php
 admin-setup.php
+
+# Uploaded payment receipt screenshots — private, never commit
+api/uploads/receipts/*
+!api/uploads/receipts/.htaccess
+
+# Runtime debug/error logs — not source, regenerated on the server
+api/gemini_debug.log
+api/groq_debug.log
+api/fatal_debug.log
+api/error_log
+
+# Per-order confirmation images generated at send time — not source, contains customer PII in filenames
+api/email-images/*
+!api/email-images/imgtest.png
+
+# Live SQLite databases and local backup snapshots — private customer/payment data, never commit
+api/db/*.db
+db-backups/

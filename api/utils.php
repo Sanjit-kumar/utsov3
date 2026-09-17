@@ -48,4 +48,34 @@ function get_client_ip() {
 function logMessage($message) {
     // error_log("[".date("H:i:s l jS F Y")."]: ".$message."\n", 3, "/var/tmp/utsovapi.log");
 }
+
+/**
+ * Sends an admin notification email to every admin currently in tb_admin_users
+ * (Manage Admins tab in admin.php) - stays in sync automatically as admins are
+ * added/removed there, instead of a hardcoded address duplicated across files.
+ * Falls back to utsov@utsov.org if the admin DB can't be read, so a DB hiccup
+ * never silently drops a notification.
+ */
+function notifyAdmins($subject, $body, $mailHeaders) {
+    // utsov@utsov.org is the shared/monitored inbox - always included, not just a fallback.
+    $recipients = ['utsov@utsov.org'];
+    try {
+        $adminDbPath = dirname(__FILE__) . '/db/admin.db';
+        if (file_exists($adminDbPath)) {
+            $db = new \PDO('sqlite:' . $adminDbPath);
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $rows = $db->query("SELECT email FROM tb_admin_users")->fetchAll(\PDO::FETCH_COLUMN, 0);
+            foreach ($rows as $email) {
+                $email = trim((string)$email);
+                if ($email !== '') $recipients[] = $email;
+            }
+        }
+    } catch (\Exception $e) {
+        // admin DB unreadable - utsov@utsov.org above still gets notified regardless
+    }
+
+    foreach (array_unique(array_map('strtolower', $recipients)) as $to) {
+        mail($to, $subject, $body, $mailHeaders);
+    }
+}
 ?>

@@ -379,7 +379,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <div class="ft-brand">
         <div class="ft-brand-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span class=ft-brand-logo-fb>UTSOV</span>'"></div>
         <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
-        <div class="ft-socials"><a href="https://www.facebook.com/utsovusa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
+        <div class="ft-socials"><a href="https://www.facebook.com/utsov.usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
       <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
       <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="cart.html">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
@@ -399,20 +399,28 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   "@type": "MusicEvent",
   "name": "UTSOV Durga Puja 2026 — Live Cultural Concerts New Jersey",
   "description": "World-class live cultural concerts at UTSOV Durga Puja 2026 in New Jersey. Featuring Bengali folk, Baul music, Bollywood, and Rabindrasangeet performances over two evenings.",
-  "startDate": "2026-10-17T17:30:00-04:00",
+  "startDate": "2026-10-17T18:00:00-04:00",
   "endDate": "2026-10-18T22:00:00-04:00",
   "eventStatus": "https://schema.org/EventScheduled",
+  "image": ["https://utsov.org/images/durga-puja-2026-event.jpg"],
   "location": {
     "@type": "Place",
     "name": "Jo Ann Magistro Performing Arts Center",
-    "address": {"@type":"PostalAddress","addressLocality":"East Brunswick","addressRegion":"NJ","postalCode":"08816","addressCountry":"US"}
+    "address": {"@type":"PostalAddress","streetAddress":"200 Rues Lane","addressLocality":"East Brunswick","addressRegion":"NJ","postalCode":"08816","addressCountry":"US"}
   },
   "performer": [
     {"@type":"Person","name":"Iman Chakraborty","description":"National Award-winning vocalist, Rabindra Sangeet and Bengali folk"},
     {"@type":"PerformingGroup","name":"Sourendro–Soumyojit","description":"Bengal's celebrated musical duo, Bengali classics and Rabindra Sangeet"}
   ],
   "organizer": {"@type":"Organization","name":"Utsov Inc.","url":"https://utsov.org"},
-  "offers": {"@type":"Offer","price":"45","priceCurrency":"USD","url":"https://utsov.org/cart.html","availability":"https://schema.org/InStock"}
+  "offers": [
+    {"@type":"Offer","name":"Patron Pass — Both Days","price":"150","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Patron Pass — Single Day","price":"85","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Student Pass — Both Days","price":"115","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Student Pass — Single Day","price":"65","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Kids Pass — Both Days","price":"85","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"},
+    {"@type":"Offer","name":"Kids Pass — Single Day","price":"50","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://utsov.org/cart.html"}
+  ]
 }
 </script>
 <script type="application/ld+json">

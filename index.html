@@ -641,12 +641,13 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 /* ── HORIZONTAL ROW LAYOUT: circle-left | dotline | info-text-right ── */
 /* PC Chandra: top row with dotline+text, centered over the 2-col grid below */
 .sph-star{display:flex;flex-direction:row;align-items:center;gap:0;margin-bottom:.5rem}
-/* PC Chandra new poster creative, with the site-wide animated rangoli video as a halo behind it.
-   Sized/centered to match .sph-nyl-spot's width below so both stack in vertical alignment. */
-.sph-star-poster{display:flex;justify-content:center;width:320px}
-.sph-pc-orbit{position:relative;width:320px;height:320px;display:flex;align-items:center;justify-content:center}
-.sph-pc-vid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:440px;height:440px;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%;z-index:1}
-.sph-pc-poster-img{position:relative;z-index:2;width:320px;height:320px;object-fit:cover;border-radius:14px;border:1.5px solid rgba(201,168,76,.5);box-shadow:0 0 22px rgba(201,168,76,.55),0 0 50px rgba(201,168,76,.28),0 14px 40px rgba(0,0,0,.5);display:block}
+/* PC Chandra new poster creative (2x1 landscape), with the site-wide animated rangoli video
+   as a halo behind it. Sized/centered to match .sph-nyl-spot's width below so both stack
+   in vertical alignment. */
+.sph-star-poster{display:flex;justify-content:center;width:420px}
+.sph-pc-orbit{position:relative;width:420px;height:210px;display:flex;align-items:center;justify-content:center}
+.sph-pc-vid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;height:420px;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%;z-index:1}
+.sph-pc-poster-img{position:relative;z-index:2;width:420px;height:210px;object-fit:cover;border-radius:14px;border:1.5px solid rgba(201,168,76,.5);box-shadow:0 0 22px rgba(201,168,76,.55),0 0 50px rgba(201,168,76,.28),0 14px 40px rgba(0,0,0,.5);display:block}
 /* Gold items: column layout — circle on top, label below */
 .sph-gold-item{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-decoration:none;cursor:pointer}
 .sph-gold-item .sph-orbit-sm{margin-left:0}
@@ -664,7 +665,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
 /* Samragnee Majumdar / New York Life - drawn rangoli animation behind her business card,
    sits below PC Chandra (not overlapping the star sponsor's own ring/video). */
-.sph-nyl-spot{display:flex;justify-content:center;width:320px}
+.sph-nyl-spot{display:flex;justify-content:center;width:420px}
 .sph-nyl-stage{position:relative;width:230px;height:230px}
 .sph-nyl-stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .sph-nyl-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:180px;border-radius:9px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.25);border:1.5px solid rgba(201,168,76,.5);opacity:0;animation:rgbLogoFade 1s ease-out forwards;animation-delay:9.3s;z-index:3}
@@ -965,7 +966,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
           <source src="images/pcchandraanimation.webm" type="video/webm">
           <source src="images/pcchandraanimation.mp4" type="video/mp4">
         </video>
-        <img src="images/pc_chandra_poster_square.jpg"
+        <img src="images/pc_chandra_poster_landscape.jpg"
              alt="PC Chandra Jewellers - Festive Wishes - A jewel of jewels, Since 1939"
              class="sph-pc-poster-img">
       </div>

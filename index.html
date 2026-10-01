@@ -524,6 +524,8 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
   /* PC Chandra title sponsor strip */
   .mob-sponsor-band{display:flex;align-items:center;justify-content:center;gap:.8rem;padding:.9rem 1.25rem;background:linear-gradient(135deg,#2A0000,#5C0000);border-bottom:3px solid rgba(201,168,76,.35)}
+  .mob-sponsor-band-poster{padding:0;display:block}
+  .msb-poster-img{width:100%;height:auto;display:block}
   .msb-label{font-family:var(--f-label);font-size:.46rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
   .msb-logo-wrap{background:rgba(255,253,248,.97);border-radius:var(--r-sm);padding:.5rem .9rem;display:flex;align-items:center;justify-content:center}
   .msb-logo{max-height:46px;max-width:140px;object-fit:contain;display:block}
@@ -639,6 +641,12 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 /* ── HORIZONTAL ROW LAYOUT: circle-left | dotline | info-text-right ── */
 /* PC Chandra: top row with dotline+text, centered over the 2-col grid below */
 .sph-star{display:flex;flex-direction:row;align-items:center;gap:0;margin-bottom:.5rem}
+/* PC Chandra new poster creative, with the site-wide animated rangoli video as a halo behind it.
+   Sized/centered to match .sph-nyl-spot's width below so both stack in vertical alignment. */
+.sph-star-poster{display:flex;justify-content:center;width:320px}
+.sph-pc-orbit{position:relative;width:320px;height:320px;display:flex;align-items:center;justify-content:center}
+.sph-pc-vid{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:440px;height:440px;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%;z-index:1}
+.sph-pc-poster-img{position:relative;z-index:2;width:320px;height:320px;object-fit:cover;border-radius:14px;border:1.5px solid rgba(201,168,76,.5);box-shadow:0 0 22px rgba(201,168,76,.55),0 0 50px rgba(201,168,76,.28),0 14px 40px rgba(0,0,0,.5);display:block}
 /* Gold items: column layout — circle on top, label below */
 .sph-gold-item{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-decoration:none;cursor:pointer}
 .sph-gold-item .sph-orbit-sm{margin-left:0}
@@ -656,10 +664,10 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
 /* Samragnee Majumdar / New York Life - drawn rangoli animation behind her business card,
    sits below PC Chandra (not overlapping the star sponsor's own ring/video). */
-.sph-nyl-spot{display:flex;justify-content:center;width:210px}
-.sph-nyl-stage{position:relative;width:190px;height:190px}
+.sph-nyl-spot{display:flex;justify-content:center;width:320px}
+.sph-nyl-stage{position:relative;width:230px;height:230px}
 .sph-nyl-stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.sph-nyl-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:148px;border-radius:9px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.25);border:1.5px solid rgba(201,168,76,.5);opacity:0;animation:rgbLogoFade 1s ease-out forwards;animation-delay:9.3s;z-index:3}
+.sph-nyl-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:180px;border-radius:9px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.25);border:1.5px solid rgba(201,168,76,.5);opacity:0;animation:rgbLogoFade 1s ease-out forwards;animation-delay:9.3s;z-index:3}
 .sph-nyl-card img{display:block;width:100%;height:auto}
 
 .rgb-center-dot{fill:#E07830;opacity:0;animation:rgbDotFade .5s ease-in forwards;animation-delay:.1s}
@@ -900,17 +908,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             </div></div>
           </div>
         </a>
-        <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="sph-gold-item">
-          <div class="sph-orbit sph-orbit-sm">
-            <div class="sph-ring sph-r1"></div>
-            <div class="sph-ring sph-r2"></div>
-            <div class="sph-lc"><div class="sph-logo-pill">
-              <img src="images/logo_icici.png"
-                   alt="ICICI Bank" style="display:block"
-                   onerror="this.outerHTML='<span style=&quot;font-size:.48rem;font-weight:700;color:#B02A1D&quot;>ICICI</span>'">
-            </div></div>
-          </div>
-        </a>
         <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="sph-gold-item">
           <div class="sph-orbit sph-orbit-sm">
             <div class="sph-ring sph-r1"></div>
@@ -960,28 +957,17 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
        Vertical stack, right-anchored to hero edge -->
   <div class="sph-overlay">
 
-    <!-- PC Chandra: Star Sponsor — circle LEFT, text RIGHT -->
-    <div class="sph-star">
-      <div class="sph-orbit sph-orbit-lg">
-        <!-- WebM: transparent bg (Chrome/Firefox/Edge); MP4 fallback uses mix-blend:multiply for Safari -->
-        <video class="sph-pcc-vid" autoplay muted loop playsinline>
+    <!-- PC Chandra: Title Sponsor — new Festive Wishes poster, with the same animated
+         rangoli video used on every other page as a glowing halo behind it. -->
+    <div class="sph-star sph-star-poster">
+      <div class="sph-pc-orbit">
+        <video class="sph-pc-vid" autoplay muted loop playsinline>
           <source src="images/pcchandraanimation.webm" type="video/webm">
           <source src="images/pcchandraanimation.mp4" type="video/mp4">
         </video>
-        <div class="sph-lc">
-          <div class="sph-logo-pill">
-            <img src="images/pc_chandra_logo_white.jpg"
-                 alt="PC Chandra Jewellers - Since 1939 - A jewel of jewels"
-                 style="display:block"
-                 onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:.95rem;color:#8B1A1A;letter-spacing:.06em&quot;>PC CHANDRA</span>'">
-          </div>
-        </div>
-      </div>
-      <div class="sph-dotline"></div>
-      <div class="sph-item-info sph-star-info">
-        <div class="sph-star-badge">★ &nbsp; Star Sponsor &nbsp; ★</div>
-        <p class="sph-poem">সোনার আলোয় মায়ের পূজা সাজে,<br>পিসি চন্দ্রের শুভ আশীর্বাদে।</p>
-        <p class="sph-tagline-main">Where gold meets God — since 1939</p>
+        <img src="images/pc_chandra_poster_square.jpg"
+             alt="PC Chandra Jewellers - Festive Wishes - A jewel of jewels, Since 1939"
+             class="sph-pc-poster-img">
       </div>
     </div>
 
@@ -1046,15 +1032,11 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     </div>
   </div>
 
-  <!-- PC Chandra Title Sponsor strip -->
-  <div class="mob-sponsor-band">
-    <div class="msb-label">Title Sponsor</div>
-    <div class="msb-logo-wrap">
-      <img src="https://cdn.shopify.com/s/files/1/0697/8945/0462/files/New_163.714px59_3.webp?v=1737715600"
-           alt="PC Chandra Jewellers" class="msb-logo"
-           onerror="this.parentNode.innerHTML='<span style=\'font-family:Bebas+Neue,sans-serif;font-size:.9rem;color:#8B1A1A;letter-spacing:.06em\'>PC CHANDRA</span>'">
-    </div>
-    <div class="msb-tagline">সোনার গয়না · Since 1939</div>
+  <!-- PC Chandra Title Sponsor strip — new Festive Wishes wide banner creative -->
+  <div class="mob-sponsor-band mob-sponsor-band-poster">
+    <img src="images/pc_chandra_banner_wide.jpg"
+         alt="PC Chandra Jewellers - Festive Wishes - A jewel of jewels, Since 1939"
+         class="msb-poster-img">
   </div>
 
   <!-- All Sponsors carousel (mobile) - 2 visible at a time, auto-advances -->
@@ -1065,9 +1047,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       </a>
       <a href="https://www.tanishq.com" target="_blank" rel="noopener" class="msc-item">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Tanishq_Logo.svg/250px-Tanishq_Logo.svg.png" alt="Tanishq">
-      </a>
-      <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="msc-item">
-        <img src="images/logo_icici.png" alt="ICICI Bank">
       </a>
       <a href="https://www.sonajewelers.com" target="_blank" rel="noopener" class="msc-item">
         <img src="https://www.sonajewelers.com/wp-content/uploads/2022/03/cropped-SONa-Logo.png" alt="Sona Jewelers">
@@ -1353,7 +1332,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
     <!-- ── STAR SPONSOR: PC Chandra ── -->
     <div class="sp-star-wrap rv">
-      <div class="sp-star-crown">Star Sponsor</div>
+      <div class="sp-star-crown">Title Sponsor</div>
 
       <div class="sp-logo-orb">
         <div class="sp-logo-box">
@@ -1421,21 +1400,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <div class="sp-card-body">
           <div class="sp-card-name">Tanishq</div>
           <div class="sp-card-line">India's most cherished fine jewelry — a Titan legacy</div>
-          <div class="sp-gold-badge">Gold Sponsor</div>
-        </div>
-      </a>
-
-      <!-- ICICI Bank -->
-      <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="sp-card">
-        <div class="sp-card-logo">
-          <img src="images/logo_icici.png"
-               alt="ICICI Bank"
-               style="max-width:150px;max-height:100px;object-fit:contain"
-               onerror="this.outerHTML='<div style=&quot;font-size:1.1rem;font-weight:700;color:#B02A1D&quot;>ICICI BANK</div>'">
-        </div>
-        <div class="sp-card-body">
-          <div class="sp-card-name">ICICI Bank</div>
-          <div class="sp-card-line">Your trusted bridge between India and America</div>
           <div class="sp-gold-badge">Gold Sponsor</div>
         </div>
       </a>

@@ -28,7 +28,8 @@ a{color:inherit;text-decoration:none}
 /* HEADER */
 header{background:var(--red-dark);padding:1rem 2rem;border-bottom:2px solid rgba(201,168,76,.4)}
 .hdr-in{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.hdr-logo{font-family:var(--f-display);font-size:1.8rem;color:var(--gold-lt);letter-spacing:.06em}
+.hdr-logo{display:block}
+.hdr-logo img{height:40px;width:auto;display:block}
 .hdr-back{font-family:var(--f-label);font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,253,248,.55);display:flex;align-items:center;gap:.4rem;transition:color .2s}
 .hdr-back:hover{color:var(--gold-lt)}
 .progress-bar{background:rgba(201,168,76,.12);border-bottom:1px solid rgba(201,168,76,.2);padding:.5rem 2rem}
@@ -180,14 +181,25 @@ footer a:hover{color:var(--gold-lt)}
 .ds-note{font-family:var(--f-label);font-size:.62rem;color:rgba(255,253,248,.35);letter-spacing:.06em;margin-top:.6rem}
 @media(max-width:680px){.donate-section{padding:1.5rem}}
 </style>
+<style>
+/* PC Chandra: Title Sponsor — video (own red rangoli animation, no extra ring overlay) with
+   logo on top. This page has a cream/light background, so colors stay as original (red). */
+.pcg-strip{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1rem;flex-wrap:wrap}
+.pcg-orbit{position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pcg-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%}
+.pcg-logo{position:relative;z-index:2;width:60%;height:auto;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(0,0,0,.35))}
+.pcg-text{display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.pcg-label{font-family:var(--f-label,sans-serif);font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold,#C9A84C)}
+</style>
 </head>
 <body>
 <header>
   <div class="hdr-in">
-    <a href="index.html" class="hdr-logo">UTSOV</a>
+    <a href="index.html" class="hdr-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:#E8C97A;letter-spacing:.06em&quot;>UTSOV</span>'"></a>
     <a href="cart.html" class="hdr-back">&#8592; Back to Cart</a>
   </div>
 </header>
+
 <div class="progress-bar">
   <div class="progress-in">
     <div class="prog-step done"><div class="prog-dot">&#10003;</div><span>Select</span></div>
@@ -199,6 +211,21 @@ footer a:hover{color:var(--gold-lt)}
 </div>
 
 <main>
+
+  <!-- PC Chandra: Title Sponsor — same animated rangoli + video as homepage -->
+  <div class="pcg-strip">
+    <div class="pcg-orbit">
+      <video class="pcg-vid" autoplay muted loop playsinline>
+        <source src="images/pcchandraanimation.webm" type="video/webm">
+        <source src="images/pcchandraanimation.mp4" type="video/mp4">
+      </video>
+      <img class="pcg-logo" src="images/pc_logo_ultra_clean.png" alt="PC Chandra Jewellers">
+    </div>
+    <div class="pcg-text">
+      <span class="pcg-label">Title Sponsor</span>
+    </div>
+  </div>
+
   <div class="co-in" id="coGrid">
 
     <!-- Left column: form + PayPal -->

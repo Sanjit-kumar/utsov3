@@ -118,6 +118,10 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .pcs-sub{font-family:var(--f-label);font-size:.58rem;color:rgba(255,253,248,.45);margin-top:.4rem;letter-spacing:.1em}
 .pcs-divider{width:40px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-lt),transparent);margin:.75rem auto}
 .pcs-bn{font-family:var(--f-bn);font-size:.9rem;color:rgba(232,201,122,.7)}
+.pcs-poster-img{width:180px;height:180px;object-fit:cover;border-radius:var(--r-md);margin-top:.75rem;border:1.5px solid rgba(255,253,248,.3);box-shadow:0 8px 24px rgba(0,0,0,.3);display:block}
+.pcs-badge-wide{min-width:420px}
+.pcs-poster-img-wide{width:380px;height:190px}
+@media(max-width:720px){.pcs-badge-wide{min-width:0;width:100%}.pcs-poster-img-wide{width:100%;height:auto;aspect-ratio:2/1}}
 .pcs-content h3{font-family:var(--f-display);font-size:2.5rem;color:var(--red-dark);margin-bottom:.75rem;letter-spacing:.01em}
 .pcs-content .pcs-quote{font-style:italic;font-size:1.05rem;color:var(--red-dark);border-left:3px solid var(--saffron);padding-left:1.25rem;margin-bottom:1.25rem;line-height:1.75}
 .pcs-content p{color:var(--on-cream-mid);line-height:1.85;margin-bottom:1.25rem;font-size:1rem}
@@ -230,14 +234,12 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 <section class="section-cream">
   <div class="s-in">
     <div class="pc-spotlight rv">
-      <div class="pcs-badge">
+      <div class="pcs-badge pcs-badge-wide">
         <div class="pcs-tier">Title Sponsor</div>
-        <div style="background:rgba(255,253,248,.96);border-radius:var(--r-md);padding:.75rem 1rem;margin:.6rem 0">
-          <img src="images/PC%20Chandra/PCBIG.jpeg" alt="PC Chandra Jewellers" style="max-width:200px;max-height:98px;object-fit:contain;display:block;margin:0 auto">
-        </div>
-        <div class="pcs-divider"></div>
-        <div class="pcs-sub">Jewellers · Since 1939</div>
-        <div class="pcs-bn">সোনার গয়না</div>
+        <!-- New Festive Wishes poster creative (2x1 landscape, replaces the old small logo + text) -->
+        <img src="images/pc_chandra_poster_landscape.jpg"
+             alt="PC Chandra Jewellers - Festive Wishes - A jewel of jewels, Since 1939"
+             class="pcs-poster-img pcs-poster-img-wide">
       </div>
       <div class="pcs-content">
         <h3>Proudly Presented by PC Chandra Jewellers</h3>
@@ -291,18 +293,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
             <h4 class="gs-name">Tanishq USA</h4>
             <p class="gs-desc">India's most beloved jewelry brand — a Titan Company — brings generations of unmatched craftsmanship to South Asian families across America. From festive 22K gold to exquisite diamond bridal collections, Tanishq jewelry is not merely worn — it is cherished, gifted, and remembered. We are proud to welcome them as a Gold Sponsor of UTSOV 2026.</p>
             <a href="https://www.tanishq.com" target="_blank" rel="noopener" class="gs-link">Visit Website →</a>
-          </div>
-        </div>
-
-        <!-- ICICI Bank -->
-        <div class="gs-card rv">
-          <div class="gs-logo-wrap" style="background:#fff">
-            <img src="images/logo_icici.png" alt="ICICI Bank" style="max-height:60px;max-width:180px;object-fit:contain" onerror="this.outerHTML='<div class=gs-logo-text style=color:#B02A1D;font-size:1.5rem>ICICI BANK</div>'">
-          </div>
-          <div class="gs-body">
-            <h4 class="gs-name">ICICI Bank</h4>
-            <p class="gs-desc">The trusted financial bridge for millions of NRIs and Indian-Americans, ICICI Bank makes staying connected to India effortless. From NRI savings accounts and home loans to instant Money2India transfers — serving over 1.5 million customers for 20+ years. When you think of seamless India–USA banking, you think ICICI.</p>
-            <a href="https://www.icicibankusa.com" target="_blank" rel="noopener" class="gs-link">Visit Website →</a>
           </div>
         </div>
 

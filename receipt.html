@@ -196,8 +196,33 @@
     margin: 4px 0 18px;
   }
 </style>
+<style>
+/* PC Chandra: Title Sponsor — video (own red rangoli animation, no extra ring overlay) with
+   logo on top. This page has a light background, so colors stay as original (red). */
+.pcg-strip{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1rem;flex-wrap:wrap}
+.pcg-orbit{position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pcg-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%}
+.pcg-logo{position:relative;z-index:2;width:60%;height:auto;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(0,0,0,.35))}
+.pcg-text{display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.pcg-label{font-family:sans-serif;font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C}
+</style>
 </head>
 <body>
+
+<!-- PC Chandra: Site-wide Title Sponsor strip -->
+<div class="pcg-strip">
+  <div class="pcg-orbit">
+    <video class="pcg-vid" autoplay muted loop playsinline>
+      <source src="images/pcchandraanimation.webm" type="video/webm">
+      <source src="images/pcchandraanimation.mp4" type="video/mp4">
+    </video>
+    <img class="pcg-logo" src="images/pc_logo_ultra_clean.png" alt="PC Chandra Jewellers">
+  </div>
+  <div class="pcg-text">
+    <span class="pcg-label">Title Sponsor</span>
+  </div>
+</div>
+
 <div class="wrap">
   <h1>Submit Your Payment Receipt</h1>
   <p class="sub">Paid via Zelle, Venmo, or another app? Upload or photograph your confirmation and we'll register you automatically.</p>

@@ -25,7 +25,8 @@ a{color:inherit;text-decoration:none}
 /* HEADER */
 header{background:var(--red-dark);padding:1rem 2rem;border-bottom:2px solid rgba(201,168,76,.4)}
 .hdr-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.hdr-logo{font-family:var(--f-display);font-size:1.8rem;color:var(--gold-lt);letter-spacing:.06em}
+.hdr-logo{display:block}
+.hdr-logo img{height:40px;width:auto;display:block}
 .hdr-nav{display:flex;gap:1.5rem;align-items:center}
 .hdr-nav a{font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,253,248,.45);transition:color .2s}
 .hdr-nav a:hover{color:var(--gold-lt)}
@@ -36,7 +37,7 @@ main{flex:1;padding:2.5rem 2rem}
 .page-in{max-width:1100px;margin:0 auto}
 
 /* PAGE HEADER */
-.page-hdr{text-align:center;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--bdr-red)}
+.page-hdr{position:relative;text-align:center;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--bdr-red);min-height:240px;display:flex;flex-direction:column;justify-content:center}
 .page-hdr h1{font-family:var(--f-display);font-size:clamp(3rem,6vw,5rem);color:var(--red-dark);letter-spacing:.01em;line-height:.95;margin-bottom:.4rem}
 .page-hdr p{font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);font-size:1rem}
 
@@ -120,11 +121,23 @@ footer a:hover{color:var(--gold-lt)}
 @media(max-width:860px){.passes-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.passes-grid{grid-template-columns:1fr}.day-select-group{flex-direction:column}.day-opt{max-width:100%}}
 </style>
+<style>
+/* PC Chandra: Title Sponsor — video (own red rangoli animation, no extra ring overlay) with
+   logo on top. This page has a cream/light background, so colors stay as original (red).
+   Floated to the right of the heading, matching the treatment on every other page. */
+.pcg-strip{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.6rem}
+@media(max-width:1080px){.pcg-strip{display:none}}
+.pcg-orbit{position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pcg-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;mix-blend-mode:multiply;border-radius:50%}
+.pcg-logo{position:relative;z-index:2;width:60%;height:auto;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(0,0,0,.35))}
+.pcg-text{display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.pcg-label{font-family:var(--f-label,sans-serif);font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold,#C9A84C)}
+</style>
 </head>
 <body>
 <header>
   <div class="hdr-in">
-    <a href="index.html" class="hdr-logo">UTSOV</a>
+    <a href="index.html" class="hdr-logo"><img src="images/logo_utsov.png" alt="UTSOV" onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:#E8C97A;letter-spacing:.06em&quot;>UTSOV</span>'"></a>
     <div class="hdr-nav">
       <a href="events.html">Events</a>
       <a href="contact.html">Contact</a>
@@ -139,6 +152,20 @@ footer a:hover{color:var(--gold-lt)}
     <div class="page-hdr">
       <h1>Get Your Passes</h1>
       <p>UTSOV Durga Puja 2026 &middot; Oct 17–18 &middot; East Brunswick, NJ</p>
+
+      <!-- PC Chandra: Title Sponsor — same animated rangoli + video as homepage, floated beside the heading -->
+      <div class="pcg-strip">
+        <div class="pcg-orbit">
+          <video class="pcg-vid" autoplay muted loop playsinline>
+            <source src="images/pcchandraanimation.webm" type="video/webm">
+            <source src="images/pcchandraanimation.mp4" type="video/mp4">
+          </video>
+          <img class="pcg-logo" src="images/pc_logo_ultra_clean.png" alt="PC Chandra Jewellers">
+        </div>
+        <div class="pcg-text">
+          <span class="pcg-label">Title Sponsor</span>
+        </div>
+      </div>
     </div>
 
     <!-- DAY SELECTION -->

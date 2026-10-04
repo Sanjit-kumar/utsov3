@@ -291,6 +291,7 @@ function renderOpenRowDetail(id) {
     }
     detailCache[id] = d.registration;
     if (openRowId === id) detailEl.innerHTML = renderDetailHtml(d.registration); // still open? (user may have closed it while this was in flight)
+  });
 }
 
 function renderDetailHtml(reg) {

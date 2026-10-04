@@ -2,7 +2,7 @@
 namespace UtsovAPI;
 use PDO;
 require(dirname(__FILE__).'/utils.php');
-require(dirname(__FILE__).'/checkin-config.php');
+require(dirname(__FILE__).'/checkin-config.php'); // CHECKIN_SIGNING_SECRET, used by checkin-lib.php for QR verification
 require(dirname(__FILE__).'/checkin-lib.php');
 require(dirname(__FILE__).'/twilio-config.php');
 require(dirname(__FILE__).'/sms-sender.php');
@@ -12,14 +12,6 @@ header('Content-Type: application/json');
 
 $_post = json_decode(file_get_contents("php://input"));
 if (!$_post) { echo json_encode(['err' => 'Invalid request']); exit; }
-
-// Every action requires the shared volunteer username/password.
-$username = isset($_post->username) ? (string)$_post->username : '';
-$password = isset($_post->password) ? (string)$_post->password : '';
-if (!hash_equals(CHECKIN_USERNAME, $username) || !hash_equals(CHECKIN_PASSWORD, $password)) {
-    echo json_encode(['err' => 'Invalid username or password']);
-    exit;
-}
 
 function openCheckinDB() {
     $db = new PDO("sqlite:" . getDBPath("register"));

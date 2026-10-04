@@ -16,16 +16,6 @@ body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--
 button{font-family:inherit;cursor:pointer}
 input{font-family:inherit}
 
-/* LOGIN */
-#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem}
-.login-card{background:#fff;border:2px solid var(--red-dark);border-radius:16px;padding:2rem;max-width:360px;width:100%}
-.login-card h1{font-size:1.3rem;color:var(--red-dark);margin-bottom:1.2rem;text-align:center}
-.login-card label{display:block;font-size:.8rem;font-weight:600;margin:.8rem 0 .3rem}
-.login-card input{width:100%;padding:.7rem;border:1.5px solid #ccc;border-radius:8px;font-size:1rem}
-.login-card button{width:100%;margin-top:1.3rem;padding:.8rem;background:var(--red-dark);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700}
-.login-err{color:var(--red);font-size:.85rem;margin-top:.6rem;display:none}
-.login-err.show{display:block}
-
 /* MAIN SCANNER SCREEN */
 #mainScreen{display:none;flex-direction:column;min-height:100vh}
 header{background:var(--red-dark);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
@@ -85,25 +75,11 @@ main{flex:1;display:flex;flex-direction:column;padding:1rem;gap:1rem;max-width:5
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-card">
-    <h1>UTSOV 2026 Door Check-In</h1>
-    <label for="loginUser">Username</label>
-    <input type="text" id="loginUser" autocomplete="username">
-    <label for="loginPass">Password</label>
-    <input type="password" id="loginPass" autocomplete="current-password">
-    <div class="login-err" id="loginErr">Invalid username or password.</div>
-    <button onclick="doLogin()">Unlock Scanner</button>
-  </div>
-</div>
-
 <!-- MAIN -->
-<div id="mainScreen">
+<div id="mainScreen" style="display:flex">
   <header>
     <div class="title">🎟 UTSOV Door Check-In</div>
     <div class="stats" id="statsLine">Loading…</div>
-    <button class="logout" onclick="doLogout()">Log out</button>
   </header>
 
   <div class="station-bar">
@@ -151,44 +127,9 @@ main{flex:1;display:flex;flex-direction:column;padding:1rem;gap:1rem;max-width:5
 
 <script src="js/jsQR.js"></script>
 <script>
-// ── Auth ──────────────────────────────────────────────────────────────────────
-function getCreds() {
-  var u = sessionStorage.getItem('checkin_user');
-  var p = sessionStorage.getItem('checkin_pass');
-  return u && p ? { username: u, password: p } : null;
-}
-
-function doLogin() {
-  var u = document.getElementById('loginUser').value.trim();
-  var p = document.getElementById('loginPass').value;
-  if (!u || !p) return;
-  sessionStorage.setItem('checkin_user', u);
-  sessionStorage.setItem('checkin_pass', p);
-  // Verify against the server via a harmless 'list' call before committing to the scanner screen.
-  apiCall('list', {}).then(function(d) {
-    if (d.err) {
-      document.getElementById('loginErr').classList.add('show');
-      sessionStorage.removeItem('checkin_user');
-      sessionStorage.removeItem('checkin_pass');
-    } else {
-      document.getElementById('loginErr').classList.remove('show');
-      enterMainScreen();
-    }
-  });
-}
-
-function doLogout() {
-  sessionStorage.removeItem('checkin_user');
-  sessionStorage.removeItem('checkin_pass');
-  stopScanning();
-  document.getElementById('mainScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-}
-
 // ── API helper ────────────────────────────────────────────────────────────────
 function apiCall(action, extra) {
-  var creds = getCreds();
-  var body = Object.assign({ action: action, username: creds ? creds.username : '', password: creds ? creds.password : '' }, extra || {});
+  var body = Object.assign({ action: action }, extra || {});
   return fetch('api/checkin.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -200,23 +141,16 @@ function apiCall(action, extra) {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 (function() {
-  var creds = getCreds();
-  if (creds) { enterMainScreen(); }
-
   var savedStation = sessionStorage.getItem('checkin_station');
   if (savedStation) document.getElementById('stationName').value = savedStation;
   document.getElementById('stationName').addEventListener('input', function() {
     sessionStorage.setItem('checkin_station', this.value);
   });
-})();
 
-function enterMainScreen() {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('mainScreen').style.display = 'flex';
   refreshStats();
   setInterval(refreshStats, 7000);
   startCamera();
-}
+})();
 
 // ── Stats / recent list polling ─────────────────────────────────────────────────
 function refreshStats() {

@@ -203,7 +203,28 @@ function refreshStats() {
   });
 }
 
+// Cache of the last-known full registration object per id, keyed by id. Kept in sync with
+// any unsaved checkbox edits the volunteer has made in the currently-open row, so a
+// background poll (loadRoster every 30s) can rebuild the list without silently discarding
+// ticks nobody has hit "Save Check-In" on yet.
+var detailCache = {};
+
+function captureOpenRowEdits() {
+  if (openRowId === null || !detailCache[openRowId]) return;
+  var container = document.getElementById('checks-' + openRowId);
+  if (!container) return;
+  var boxes = container.querySelectorAll('input[type=checkbox]');
+  boxes.forEach(function(b) {
+    var idx = parseInt(b.dataset.idx, 10);
+    if (detailCache[openRowId].attendees[idx]) {
+      detailCache[openRowId].attendees[idx].checkedIn = b.checked;
+    }
+  });
+}
+
 function renderRoster() {
+  captureOpenRowEdits(); // preserve any unsaved ticks before the DOM gets rebuilt below
+
   var q = document.getElementById('searchInput').value.trim().toLowerCase();
   var dayFiltered = roster.filter(rosterMatchesDay);
   var filtered = q ? dayFiltered.filter(function(r) { return r.name.toLowerCase().indexOf(q) !== -1; }) : dayFiltered;
@@ -234,7 +255,7 @@ function renderRoster() {
   });
 
   if (openRowId !== null && filtered.some(function(r) { return r.id === openRowId; })) {
-    loadRowDetail(openRowId);
+    renderOpenRowDetail(openRowId);
   }
 }
 
@@ -247,22 +268,29 @@ function toggleRow(id) {
     return;
   }
   openRowId = id;
+  delete detailCache[id]; // explicit (re)open always fetches fresh server truth
   renderRoster();
   var el = document.querySelector('.row[data-id="' + id + '"]');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function loadRowDetail(id) {
+// Renders the open row's detail panel from cache when available (preserves in-progress
+// checkbox edits across background re-renders); fetches fresh from the server otherwise.
+function renderOpenRowDetail(id) {
   var detailEl = document.getElementById('detail-' + id);
   if (!detailEl) return;
+  if (detailCache[id]) {
+    detailEl.innerHTML = renderDetailHtml(detailCache[id]);
+    return;
+  }
   detailEl.innerHTML = '<div class="loading">Loading ticket details…</div>';
   apiCall('lookup', { manualId: id }).then(function(d) {
     if (d.err) {
       detailEl.innerHTML = '<div class="loading">' + escapeHtml(d.err) + '</div>';
       return;
     }
-    detailEl.innerHTML = renderDetailHtml(d.registration);
-  });
+    detailCache[id] = d.registration;
+    if (openRowId === id) detailEl.innerHTML = renderDetailHtml(d.registration); // still open? (user may have closed it while this was in flight)
 }
 
 function renderDetailHtml(reg) {
@@ -312,6 +340,7 @@ function saveCheckin(id) {
   var station = document.getElementById('stationName').value.trim() || 'Front Gate';
   apiCall('confirm', { manualId: id, station: station, present: present }).then(function(d) {
     if (d.err) { showError(d.err); return; }
+    detailCache[id] = d.registration; // post-save server truth, not what the user merely clicked
     var i = roster.findIndex(function(r) { return r.id === id; });
     if (i !== -1) { roster[i].checkedInCount = d.registration.checkedInCount; roster[i].checkInStatus = d.registration.checkInStatus; }
     var inCount = d.registration.checkedInCount;
@@ -328,10 +357,12 @@ function manualLookup() {
   var id = parseInt(idVal, 10);
   document.getElementById('manualIdInput').value = '';
   openRowId = id;
+  delete detailCache[id]; // always want fresh server truth on an explicit open
   if (!roster.some(function(r) { return r.id === id; })) {
     apiCall('lookup', { manualId: id }).then(function(d) {
       if (d.err) { showError(d.err); return; }
       var reg = d.registration;
+      detailCache[id] = reg;
       roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
       renderRoster();
     });
@@ -423,6 +454,7 @@ function handleScanned(token) {
       return;
     }
     var reg = d.registration;
+    detailCache[reg.id] = reg;
     if (!roster.some(function(r) { return r.id === reg.id; })) {
       roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
     }

@@ -10,120 +10,121 @@
 :root{
   --red-dark:#6B0E0E;--red:#9E2424;--cream:#FFFDF8;--ivory:#FFF0E5;
   --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#B8860B;--amber-bg:#FFF6E0;
-  --on-cream:#1A0000;
+  --on-cream:#1A0000;--line:#eadbd0;
 }
 body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
 button{font-family:inherit;cursor:pointer}
 input{font-family:inherit}
 
-/* MAIN SCANNER SCREEN */
-#mainScreen{display:none;flex-direction:column;min-height:100vh}
-header{background:var(--red-dark);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+header{background:var(--red-dark);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;position:sticky;top:0;z-index:20}
 header .title{font-weight:700;font-size:1rem}
 header .stats{font-size:.8rem;opacity:.95;text-align:right}
-header .logout{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.3rem .7rem;border-radius:6px;font-size:.75rem}
 
-.station-bar{background:var(--ivory);padding:.6rem 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid #eadbd0}
+.station-bar{background:var(--ivory);padding:.6rem 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
 .station-bar label{font-size:.8rem;font-weight:600}
 .station-bar input{padding:.4rem .6rem;border:1px solid #ccc;border-radius:6px;font-size:.85rem;flex:1;min-width:140px}
 
-main{flex:1;display:flex;flex-direction:column;padding:1rem;gap:1rem;max-width:520px;margin:0 auto;width:100%}
+.toolbar{display:flex;gap:.6rem;padding:.8rem 1rem;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:52px;z-index:19;flex-wrap:wrap}
+#searchInput{flex:1;min-width:160px;padding:.7rem .9rem;border:1.5px solid #ccc;border-radius:10px;font-size:1rem}
+#searchInput:focus{outline:2px solid var(--red-dark);border-color:var(--red-dark)}
+#qrToggleBtn{padding:.7rem 1rem;background:var(--red-dark);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;white-space:nowrap}
+#qrToggleBtn.active{background:var(--amber)}
 
-.camera-wrap{position:relative;background:#000;border-radius:14px;overflow:hidden;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
+
+/* Camera panel — shown only while scanning */
+#cameraPanel{display:none;padding-top:1rem}
+#cameraPanel.show{display:block}
+.camera-wrap{position:relative;background:#000;border-radius:14px;overflow:hidden;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;max-width:380px;margin:0 auto}
 .camera-wrap video{width:100%;height:100%;object-fit:cover}
 .camera-wrap .scan-box{position:absolute;top:15%;left:15%;right:15%;bottom:15%;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.35);pointer-events:none}
 .camera-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:1rem;font-size:.9rem;background:rgba(0,0,0,.6)}
+.camera-close{display:block;margin:.6rem auto 0;padding:.5rem 1.1rem;background:#eee;border:none;border-radius:8px;font-size:.85rem;font-weight:600}
 
-.manual-toggle{text-align:center;font-size:.85rem;color:var(--red-dark);text-decoration:underline;background:none;border:none}
-.manual-row{display:none;gap:.5rem}
-.manual-row.show{display:flex}
-.manual-row input{flex:1;padding:.6rem;border:1.5px solid #ccc;border-radius:8px;font-size:1rem}
-.manual-row button{padding:.6rem 1rem;background:var(--red-dark);color:#fff;border:none;border-radius:8px;font-weight:700}
+.manual-row{display:flex;gap:.5rem;padding:.7rem 0 0}
+.manual-row input{flex:1;padding:.6rem;border:1.5px solid #ccc;border-radius:8px;font-size:.95rem}
+.manual-row button{padding:.6rem 1rem;background:#eee;color:#333;border:none;border-radius:8px;font-weight:700;font-size:.85rem}
 
-.result-card{display:none;background:#fff;border:2px solid #ddd;border-radius:14px;padding:1.2rem}
-.result-card.show{display:block}
-.result-card.paid{border-color:var(--green);background:var(--green-bg)}
-.result-card.problem{border-color:var(--red);background:#FFF0F0}
-.result-card.warning{border-color:var(--amber);background:var(--amber-bg)}
-.result-badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.25rem .6rem;border-radius:999px;margin-bottom:.6rem}
-.result-badge.paid{background:var(--green);color:#fff}
-.result-badge.problem{background:var(--red);color:#fff}
-.result-badge.warning{background:var(--amber);color:#fff}
-.result-name{font-size:1.2rem;font-weight:700;margin-bottom:.4rem}
-.result-row{font-size:.9rem;margin:.25rem 0;display:flex;justify-content:space-between;gap:.5rem}
+.error-banner{display:none;background:#FFF0F0;border:2px solid var(--red);color:var(--red-dark);padding:.8rem;border-radius:10px;font-size:.9rem;text-align:center;margin-top:.8rem}
+.error-banner.show{display:block}
+.success-flash{display:none;background:var(--green-bg);border:2px solid var(--green);color:var(--green);padding:.9rem;border-radius:10px;text-align:center;font-weight:700;margin-top:.8rem}
+.success-flash.show{display:block}
+
+.list-count{font-size:.78rem;color:#888;padding:.8rem 0 .4rem}
+
+/* Roster rows */
+.roster{display:flex;flex-direction:column;gap:.5rem;padding-bottom:1rem}
+.row{background:#fff;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.row.checked{border-color:var(--green)}
+.row-head{display:flex;align-items:center;gap:.6rem;padding:.75rem .9rem;cursor:pointer}
+.row-name{flex:1;font-weight:700;font-size:.95rem}
+.row-meta{font-size:.78rem;color:#888;white-space:nowrap}
+.row-badge{font-size:.66rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:.25rem .55rem;border-radius:999px;white-space:nowrap}
+.row-badge.pending{background:#eee;color:#777}
+.row-badge.done{background:var(--green);color:#fff}
+.row-chevron{color:#bbb;font-size:.8rem;transition:transform .15s}
+.row.open .row-chevron{transform:rotate(90deg)}
+
+.row-detail{display:none;padding:0 .9rem .9rem;border-top:1px solid var(--line)}
+.row.open .row-detail{display:block}
+.row-detail .loading{padding:.8rem 0;font-size:.85rem;color:#999;text-align:center}
+.detail-card{padding-top:.7rem}
+.result-row{font-size:.9rem;margin:.3rem 0;display:flex;justify-content:space-between;gap:.5rem}
 .result-row b{font-weight:600}
-.result-attendees{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(0,0,0,.1);font-size:.85rem}
+.result-attendees{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(0,0,0,.08);font-size:.85rem}
 .result-attendees div{margin:.15rem 0}
-.result-actions{display:flex;gap:.6rem;margin-top:1rem}
-.result-actions button{flex:1;padding:.8rem;border:none;border-radius:8px;font-weight:700;font-size:.95rem}
+.detail-status{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:.3rem .6rem;border-radius:8px;display:inline-block;margin-bottom:.5rem}
+.detail-status.paid{background:var(--green-bg);color:var(--green)}
+.detail-status.warning{background:var(--amber-bg);color:var(--amber)}
+.detail-actions{display:flex;gap:.6rem;margin-top:.9rem}
+.detail-actions button{flex:1;padding:.75rem;border:none;border-radius:8px;font-weight:700;font-size:.92rem}
 .btn-confirm{background:var(--green);color:#fff}
 .btn-confirm:disabled{background:#aaa;cursor:not-allowed}
 .btn-cancel{background:#eee;color:#333}
 
-.error-banner{display:none;background:#FFF0F0;border:2px solid var(--red);color:var(--red-dark);padding:.8rem;border-radius:10px;font-size:.9rem;text-align:center}
-.error-banner.show{display:block}
-
-.success-flash{display:none;background:var(--green-bg);border:2px solid var(--green);color:var(--green);padding:.9rem;border-radius:10px;text-align:center;font-weight:700}
-.success-flash.show{display:block}
-
-.recent-list{background:#fff;border:1px solid #eee;border-radius:12px;padding:.9rem}
-.recent-list h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:.5rem}
-.recent-row{display:flex;justify-content:space-between;font-size:.85rem;padding:.35rem 0;border-bottom:1px solid #f2f2f2}
-.recent-row:last-child{border-bottom:none}
-.recent-empty{font-size:.85rem;color:#999;text-align:center;padding:.5rem}
+.empty-state{text-align:center;color:#999;padding:2rem 0;font-size:.9rem}
 </style>
 </head>
 <body>
 
-<!-- MAIN -->
-<div id="mainScreen" style="display:flex">
-  <header>
-    <div class="title">🎟 UTSOV Door Check-In</div>
-    <div class="stats" id="statsLine">Loading…</div>
-  </header>
+<header>
+  <div class="title">🎟 UTSOV Door Check-In</div>
+  <div class="stats" id="statsLine">Loading…</div>
+</header>
 
-  <div class="station-bar">
-    <label for="stationName">Gate / Volunteer:</label>
-    <input type="text" id="stationName" placeholder="e.g. Front Gate - Ranjan" maxlength="100">
-  </div>
+<div class="station-bar">
+  <label for="stationName">Gate / Volunteer:</label>
+  <input type="text" id="stationName" placeholder="e.g. Front Gate - Ranjan" maxlength="100">
+</div>
 
-  <main>
+<div class="toolbar">
+  <input type="text" id="searchInput" placeholder="🔍 Search by name…" autocomplete="off">
+  <button id="qrToggleBtn" type="button" onclick="toggleCamera()">📷 Scan QR</button>
+</div>
+
+<main>
+  <div id="cameraPanel">
     <div class="camera-wrap" id="cameraWrap">
       <video id="video" autoplay playsinline muted></video>
       <div class="scan-box" id="scanBox"></div>
       <div class="camera-msg" id="cameraMsg" style="display:none"></div>
     </div>
     <canvas id="canvas" style="display:none"></canvas>
+    <button class="camera-close" onclick="toggleCamera()">✕ Close Scanner</button>
 
-    <button class="manual-toggle" onclick="toggleManual()">Can't scan? Enter registration ID manually</button>
-    <div class="manual-row" id="manualRow">
-      <input type="number" id="manualIdInput" placeholder="Registration ID (from name/email)" min="1">
+    <div class="manual-row">
+      <input type="number" id="manualIdInput" placeholder="Can't scan? Enter registration ID" min="1">
       <button onclick="manualLookup()">Look Up</button>
     </div>
+  </div>
 
-    <div class="error-banner" id="errorBanner"></div>
-    <div class="success-flash" id="successFlash"></div>
+  <div class="error-banner" id="errorBanner"></div>
+  <div class="success-flash" id="successFlash"></div>
 
-    <div class="result-card" id="resultCard">
-      <span class="result-badge" id="resultBadge"></span>
-      <div class="result-name" id="resultName"></div>
-      <div class="result-row"><span>Days</span><b id="resultDays"></b></div>
-      <div class="result-row"><span>Pass Type</span><b id="resultPassType"></b></div>
-      <div class="result-row"><span>Party Size</span><b id="resultQty"></b></div>
-      <div class="result-row"><span>Total Paid</span><b id="resultTotal"></b></div>
-      <div class="result-attendees" id="resultAttendees"></div>
-      <div class="result-actions">
-        <button class="btn-cancel" onclick="cancelResult()">Cancel</button>
-        <button class="btn-confirm" id="confirmBtn" onclick="confirmCheckin()">✓ Confirm Check-In</button>
-      </div>
-    </div>
-
-    <div class="recent-list">
-      <h3>Recently Checked In</h3>
-      <div id="recentRows"><div class="recent-empty">No check-ins yet.</div></div>
-    </div>
-  </main>
-</div>
+  <div class="list-count" id="listCount"></div>
+  <div class="roster" id="rosterList"></div>
+  <div class="empty-state" id="emptyState" hidden>No matching registrations.</div>
+</main>
 
 <script src="js/jsQR.js"></script>
 <script>
@@ -139,46 +140,175 @@ function apiCall(action, extra) {
   });
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-(function() {
-  var savedStation = sessionStorage.getItem('checkin_station');
-  if (savedStation) document.getElementById('stationName').value = savedStation;
-  document.getElementById('stationName').addEventListener('input', function() {
-    sessionStorage.setItem('checkin_station', this.value);
-  });
-
-  refreshStats();
-  setInterval(refreshStats, 7000);
-  startCamera();
-})();
-
-// ── Stats / recent list polling ─────────────────────────────────────────────────
-function refreshStats() {
-  apiCall('list', {}).then(function(d) {
-    if (d.err) return;
-    document.getElementById('statsLine').textContent =
-      d.checkedInRegistrations + ' / ' + d.totalPaidRegistrations + ' registrations checked in · ' + d.checkedInHeadcount + ' people';
-    var rows = document.getElementById('recentRows');
-    if (!d.recent || d.recent.length === 0) {
-      rows.innerHTML = '<div class="recent-empty">No check-ins yet.</div>';
-      return;
-    }
-    rows.innerHTML = d.recent.map(function(r) {
-      var t = r.checked_in_at ? r.checked_in_at.split(' ')[1] : '';
-      return '<div class="recent-row"><span>' + escapeHtml(r.name) + ' (x' + r.qty + ')</span><span>' + t + '</span></div>';
-    }).join('');
-  });
-}
-
 function escapeHtml(s) {
   var d = document.createElement('div');
   d.textContent = s || '';
   return d.innerHTML;
 }
 
-// ── Camera + scanning loop ───────────────────────────────────────────────────
-var videoEl, canvasEl, canvasCtx, scanning = false, stream = null;
-var lastScannedToken = null, resultShowing = false;
+// ── Roster state ──────────────────────────────────────────────────────────────
+var roster = [];        // full list from server: {id, name, qty, days, checkedIn}
+var openRowId = null;   // currently expanded registration id
+
+function loadRoster() {
+  return apiCall('roster', {}).then(function(d) {
+    if (d.err) return;
+    roster = d.roster || [];
+    renderRoster();
+  });
+}
+
+function refreshStats() {
+  apiCall('list', {}).then(function(d) {
+    if (d.err) return;
+    document.getElementById('statsLine').textContent =
+      d.checkedInRegistrations + ' / ' + d.totalPaidRegistrations + ' checked in · ' + d.checkedInHeadcount + ' people';
+  });
+}
+
+function renderRoster() {
+  var q = document.getElementById('searchInput').value.trim().toLowerCase();
+  var filtered = q ? roster.filter(function(r) { return r.name.toLowerCase().indexOf(q) !== -1; }) : roster;
+
+  var listEl = document.getElementById('rosterList');
+  var emptyEl = document.getElementById('emptyState');
+  var countEl = document.getElementById('listCount');
+
+  countEl.textContent = q ? (filtered.length + ' match' + (filtered.length === 1 ? '' : 'es')) : (filtered.length + ' registrations');
+  emptyEl.hidden = filtered.length > 0;
+  listEl.innerHTML = '';
+
+  filtered.forEach(function(r) {
+    var row = document.createElement('div');
+    row.className = 'row' + (r.checkedIn ? ' checked' : '') + (openRowId === r.id ? ' open' : '');
+    row.dataset.id = r.id;
+    row.innerHTML =
+      '<div class="row-head" onclick="toggleRow(' + r.id + ')">' +
+        '<span class="row-chevron">▶</span>' +
+        '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
+        '<span class="row-meta">' + r.qty + 'p · ' + escapeHtml(r.days) + '</span>' +
+        '<span class="row-badge ' + (r.checkedIn ? 'done' : 'pending') + '">' + (r.checkedIn ? '✓ Checked In' : 'Not In') + '</span>' +
+      '</div>' +
+      '<div class="row-detail" id="detail-' + r.id + '"></div>';
+    listEl.appendChild(row);
+  });
+
+  if (openRowId !== null && filtered.some(function(r) { return r.id === openRowId; })) {
+    loadRowDetail(openRowId);
+  }
+}
+
+document.getElementById('searchInput').addEventListener('input', renderRoster);
+
+function toggleRow(id) {
+  if (openRowId === id) {
+    openRowId = null;
+    renderRoster();
+    return;
+  }
+  openRowId = id;
+  renderRoster();
+  var el = document.querySelector('.row[data-id="' + id + '"]');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function loadRowDetail(id) {
+  var detailEl = document.getElementById('detail-' + id);
+  if (!detailEl) return;
+  detailEl.innerHTML = '<div class="loading">Loading ticket details…</div>';
+  apiCall('lookup', { manualId: id }).then(function(d) {
+    if (d.err) {
+      detailEl.innerHTML = '<div class="loading">' + escapeHtml(d.err) + '</div>';
+      return;
+    }
+    detailEl.innerHTML = renderDetailHtml(d.registration);
+  });
+}
+
+function renderDetailHtml(reg) {
+  var statusHtml, actionsHtml;
+  if (reg.checkedIn) {
+    statusHtml = '<span class="detail-status warning">Already checked in · ' + (reg.checkedInAt ? escapeHtml(reg.checkedInAt.split(' ')[1]) : '') + '</span>';
+    actionsHtml = '';
+  } else if (!reg.isPaid) {
+    statusHtml = '<span class="detail-status warning">Not paid — do not admit</span>';
+    actionsHtml = '';
+  } else {
+    statusHtml = '<span class="detail-status paid">✓ Paid &amp; Verified</span>';
+    actionsHtml =
+      '<div class="detail-actions">' +
+        '<button class="btn-cancel" onclick="toggleRow(' + reg.id + ')">Close</button>' +
+        '<button class="btn-confirm" onclick="confirmCheckin(' + reg.id + ')">✓ Confirm Check-In &amp; Give Wristband</button>' +
+      '</div>';
+  }
+
+  var attendeesHtml = (reg.attendees || []).map(function(a) {
+    return '<div>' + escapeHtml(a.name) + ' — ' + escapeHtml(a.food) + '</div>';
+  }).join('');
+
+  return (
+    '<div class="detail-card">' +
+      statusHtml +
+      '<div class="result-row"><span>Days</span><b>' + escapeHtml(reg.days) + '</b></div>' +
+      '<div class="result-row"><span>Pass Type</span><b>' + escapeHtml(reg.passType) + '</b></div>' +
+      '<div class="result-row"><span>Party Size</span><b>' + reg.qty + (reg.qty === 1 ? ' person' : ' people') + '</b></div>' +
+      '<div class="result-row"><span>Total Paid</span><b>$' + reg.total + '</b></div>' +
+      '<div class="result-attendees">' + attendeesHtml + '</div>' +
+      actionsHtml +
+    '</div>'
+  );
+}
+
+function confirmCheckin(id) {
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+  apiCall('confirm', { manualId: id, station: station }).then(function(d) {
+    if (d.err) { showError(d.err); return; }
+    var i = roster.findIndex(function(r) { return r.id === id; });
+    if (i !== -1) roster[i].checkedIn = true;
+    showSuccess('✓ Checked in: ' + d.registration.name + ' — tie ' + d.registration.qty + ' wristband(s)');
+    refreshStats();
+    renderRoster();
+  });
+}
+
+// ── Manual ID fallback (inside camera panel) ─────────────────────────────────
+function manualLookup() {
+  var idVal = document.getElementById('manualIdInput').value;
+  if (!idVal) return;
+  var id = parseInt(idVal, 10);
+  document.getElementById('manualIdInput').value = '';
+  openRowId = id;
+  if (!roster.some(function(r) { return r.id === id; })) {
+    // Not in current roster snapshot (e.g. just paid) — still try a live lookup via detail panel
+    apiCall('lookup', { manualId: id }).then(function(d) {
+      if (d.err) { showError(d.err); return; }
+      roster.unshift({ id: d.registration.id, name: d.registration.name, qty: d.registration.qty, days: d.registration.days, checkedIn: d.registration.checkedIn });
+      renderRoster();
+    });
+    return;
+  }
+  document.getElementById('searchInput').value = '';
+  renderRoster();
+}
+
+// ── QR camera (on-demand) ────────────────────────────────────────────────────
+var videoEl, canvasEl, canvasCtx, scanning = false, stream = null, lastScannedToken = null;
+
+function toggleCamera() {
+  var panel = document.getElementById('cameraPanel');
+  var btn = document.getElementById('qrToggleBtn');
+  if (panel.classList.contains('show')) {
+    panel.classList.remove('show');
+    btn.classList.remove('active');
+    btn.textContent = '📷 Scan QR';
+    stopScanning();
+  } else {
+    panel.classList.add('show');
+    btn.classList.add('active');
+    btn.textContent = '✕ Stop Scan';
+    startCamera();
+  }
+}
 
 function startCamera() {
   videoEl = document.getElementById('video');
@@ -187,7 +317,6 @@ function startCamera() {
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     showCameraMessage('Camera not available on this browser. Use manual entry below instead.');
-    document.getElementById('manualRow').classList.add('show');
     return;
   }
 
@@ -203,13 +332,14 @@ function startCamera() {
     })
     .catch(function(err) {
       showCameraMessage('Camera access denied or unavailable (' + err.name + '). Use manual entry below instead.');
-      document.getElementById('manualRow').classList.add('show');
     });
 }
 
 function stopScanning() {
   scanning = false;
   if (stream) { stream.getTracks().forEach(function(t) { t.stop(); }); stream = null; }
+  document.getElementById('cameraMsg').style.display = 'none';
+  document.getElementById('scanBox').style.display = 'block';
 }
 
 function showCameraMessage(msg) {
@@ -221,7 +351,7 @@ function showCameraMessage(msg) {
 
 function scanLoop() {
   if (!scanning) return;
-  if (!resultShowing && videoEl.readyState === videoEl.HAVE_ENOUGH_DATA && videoEl.videoWidth > 0) {
+  if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA && videoEl.videoWidth > 0) {
     canvasEl.width = videoEl.videoWidth;
     canvasEl.height = videoEl.videoHeight;
     canvasCtx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
@@ -235,97 +365,22 @@ function scanLoop() {
   requestAnimationFrame(scanLoop);
 }
 
-// ── Manual entry fallback ────────────────────────────────────────────────────
-function toggleManual() {
-  document.getElementById('manualRow').classList.toggle('show');
-}
-function manualLookup() {
-  var id = document.getElementById('manualIdInput').value;
-  if (!id) return;
-  lastScannedToken = null; // manual entry doesn't interact with the scan-dedup guard
-  doLookup({ manualId: parseInt(id, 10) });
-}
-
-// ── Lookup + confirm flow ────────────────────────────────────────────────────
-var currentLookupParams = null;
-
 function handleScanned(token) {
-  doLookup({ token: token });
-}
-
-function doLookup(params) {
-  currentLookupParams = params;
-  hideError();
-  apiCall('lookup', params).then(function(d) {
+  apiCall('lookup', { token: token }).then(function(d) {
     if (d.err) {
       showError(d.err);
+      setTimeout(function() { lastScannedToken = null; }, 2000);
       return;
     }
-    showResult(d.registration);
-  });
-}
-
-function showResult(reg) {
-  resultShowing = true;
-  var card = document.getElementById('resultCard');
-  var badge = document.getElementById('resultBadge');
-  var confirmBtn = document.getElementById('confirmBtn');
-
-  document.getElementById('resultName').textContent = reg.name;
-  document.getElementById('resultDays').textContent = reg.days;
-  document.getElementById('resultPassType').textContent = reg.passType;
-  document.getElementById('resultQty').textContent = reg.qty + (reg.qty === 1 ? ' person' : ' people');
-  document.getElementById('resultTotal').textContent = '$' + reg.total;
-  document.getElementById('resultAttendees').innerHTML = reg.attendees.map(function(a) {
-    return '<div>' + escapeHtml(a.name) + ' — ' + escapeHtml(a.food) + '</div>';
-  }).join('');
-
-  card.classList.remove('paid', 'problem', 'warning');
-  badge.classList.remove('paid', 'problem', 'warning');
-
-  if (reg.checkedIn) {
-    card.classList.add('warning');
-    badge.classList.add('warning');
-    badge.textContent = 'ALREADY CHECKED IN · ' + (reg.checkedInAt ? reg.checkedInAt.split(' ')[1] : '');
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = 'Already Checked In';
-  } else if (!reg.isPaid) {
-    card.classList.add('problem');
-    badge.classList.add('problem');
-    badge.textContent = 'NOT PAID — DO NOT ADMIT';
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = 'Cannot Check In (Unpaid)';
-  } else {
-    card.classList.add('paid');
-    badge.classList.add('paid');
-    badge.textContent = '✓ PAID & VERIFIED';
-    confirmBtn.disabled = false;
-    confirmBtn.textContent = '✓ Confirm Check-In & Give Wristband';
-  }
-
-  card.classList.add('show');
-}
-
-function cancelResult() {
-  resultShowing = false;
-  lastScannedToken = null;
-  document.getElementById('resultCard').classList.remove('show');
-  hideError();
-}
-
-function confirmCheckin() {
-  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
-  var params = Object.assign({ station: station }, currentLookupParams);
-  apiCall('confirm', params).then(function(d) {
-    if (d.err) { showError(d.err); return; }
-    resultShowing = false;
-    document.getElementById('resultCard').classList.remove('show');
-    showSuccess('✓ Checked in: ' + d.registration.name + ' — tie ' + d.registration.qty + ' wristband(s)');
-    refreshStats();
-    setTimeout(function() {
-      lastScannedToken = null; // allow re-scanning the next person
-      hideSuccess();
-    }, 2500);
+    var reg = d.registration;
+    if (!roster.some(function(r) { return r.id === reg.id; })) {
+      roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedIn: reg.checkedIn });
+    }
+    toggleCamera(); // close scanner
+    document.getElementById('searchInput').value = '';
+    openRowId = reg.id;
+    renderRoster();
+    setTimeout(function() { lastScannedToken = null; }, 2000);
   });
 }
 
@@ -333,19 +388,28 @@ function showError(msg) {
   var el = document.getElementById('errorBanner');
   el.textContent = msg;
   el.classList.add('show');
-  setTimeout(function() { resultShowing = false; lastScannedToken = null; }, 2500);
-}
-function hideError() {
-  document.getElementById('errorBanner').classList.remove('show');
+  setTimeout(function() { el.classList.remove('show'); }, 3000);
 }
 function showSuccess(msg) {
   var el = document.getElementById('successFlash');
   el.textContent = msg;
   el.classList.add('show');
+  setTimeout(function() { el.classList.remove('show'); }, 3000);
 }
-function hideSuccess() {
-  document.getElementById('successFlash').classList.remove('show');
-}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(function() {
+  var savedStation = sessionStorage.getItem('checkin_station');
+  if (savedStation) document.getElementById('stationName').value = savedStation;
+  document.getElementById('stationName').addEventListener('input', function() {
+    sessionStorage.setItem('checkin_station', this.value);
+  });
+
+  refreshStats();
+  loadRoster();
+  setInterval(refreshStats, 15000);
+  setInterval(loadRoster, 30000);
+})();
 </script>
 </body>
 </html>

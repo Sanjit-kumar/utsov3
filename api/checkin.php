@@ -175,6 +175,29 @@ switch ($action) {
         break;
     }
 
+    // Full roster for the browsable/searchable list — every paid registration, lightweight
+    // fields only (full details are fetched fresh via 'lookup' when a row is opened, so this
+    // list can't go stale and cause a wrong check-in decision).
+    case 'roster': {
+        $stmt = $db->query(
+            "SELECT id, name, qty, days_selection, checked_in_at FROM tb_registrations
+             WHERE status='paid' ORDER BY name COLLATE NOCASE ASC"
+        );
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $daysMap = ['both' => 'Both Days', 'saturday' => 'Saturday', 'sunday' => 'Sunday'];
+        $roster = array_map(function($r) use ($daysMap) {
+            return [
+                'id'        => (int)$r['id'],
+                'name'      => $r['name'],
+                'qty'       => (int)$r['qty'],
+                'days'      => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
+                'checkedIn' => !empty($r['checked_in_at']),
+            ];
+        }, $rows);
+        echo json_encode(['ok' => true, 'roster' => $roster]);
+        break;
+    }
+
     default:
         echo json_encode(['err' => 'Unknown action']);
 }

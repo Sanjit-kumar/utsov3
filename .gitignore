@@ -73,6 +73,7 @@ api/checkout-config.php
 api/receipt-config.php
 api/twilio-config.php
 api/checkin-config.php
+api/team-page-config.php
 api/mail-config.php
 admin-setup.php
 

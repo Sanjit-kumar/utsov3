@@ -15,21 +15,6 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label);padding:0}
 
-/* ===== Login screen ===== */
-#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(139,26,26,.08) 0%,transparent 60%)}
-.login-card{background:#fff;border:2px solid var(--red-dark);border-radius:16px;padding:2.2rem 2rem;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(92,0,0,.15)}
-.login-card h1{font-family:var(--f-display);font-size:1.8rem;color:var(--red-dark);letter-spacing:.04em;margin:0 0 .3rem;text-align:center}
-.login-card p.sub{font-family:var(--f-serif);font-style:italic;color:var(--ink-soft);text-align:center;margin:0 0 1.4rem;font-size:.92rem}
-.login-card label{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:.9rem 0 .3rem;color:var(--ink-soft)}
-.login-card input{width:100%;padding:.75rem .9rem;border:1.5px solid var(--border);border-radius:9px;font-size:1rem;font-family:var(--f-label)}
-.login-card input:focus{outline:2px solid var(--gold);border-color:var(--gold)}
-.login-card button{width:100%;margin-top:1.4rem;padding:.85rem;background:var(--red-dark);color:#fff;border:none;border-radius:9px;font-size:.95rem;font-weight:700;letter-spacing:.04em;cursor:pointer;font-family:var(--f-label)}
-.login-card button:hover{background:var(--red)}
-.login-err{color:var(--red);font-size:.82rem;margin-top:.7rem;display:none;text-align:center}
-.login-err.show{display:block}
-[hidden]{display:none!important}
-
-/* ===== Main app ===== */
 header.app-hdr{background:linear-gradient(135deg,var(--red-dark),var(--red));padding:1.5rem 1.25rem;text-align:center;border-bottom:4px solid var(--gold)}
 header.app-hdr h1{font-family:var(--f-display);color:#fff;font-size:clamp(1.6rem,5vw,2.3rem);letter-spacing:.04em;margin:0}
 header.app-hdr p{font-family:var(--f-serif);font-style:italic;color:var(--gold-lt);margin:.3rem 0 0;font-size:.95rem}
@@ -76,61 +61,47 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
 </head>
 <body>
 
-<div id="loginScreen">
-  <div class="login-card">
-    <h1>UTSOV 2026</h1>
-    <p class="sub">Team Assignments — Internal Use Only</p>
-    <label for="loginUser">Username</label>
-    <input type="text" id="loginUser" autocomplete="username">
-    <label for="loginPass">Password</label>
-    <input type="password" id="loginPass" autocomplete="current-password">
-    <button id="loginBtn" type="button">View Team Assignments</button>
-    <div class="login-err" id="loginErr">Invalid username or password.</div>
+<header class="app-hdr">
+  <h1>Team Assignments</h1>
+  <p>UTSOV Durga Puja 2026 &middot; October 17&ndash;18</p>
+</header>
+
+<div class="wrap">
+  <div class="find-box">
+    <label for="findInput">Find Yourself — search your name</label>
+    <input type="text" id="findInput" placeholder="Type your name…" autocomplete="off">
+    <div id="findResults"></div>
   </div>
-</div>
 
-<div id="app" hidden>
-  <header class="app-hdr">
-    <h1>Team Assignments</h1>
-    <p>UTSOV Durga Puja 2026 &middot; October 17&ndash;18</p>
-  </header>
+  <div class="picker">
+    <label for="teamSelect">Or browse by team</label>
+    <select id="teamSelect"></select>
+  </div>
 
-  <div class="wrap">
-    <div class="find-box">
-      <label for="findInput">Find Yourself — search your name</label>
-      <input type="text" id="findInput" placeholder="Type your name…" autocomplete="off">
-      <div id="findResults"></div>
-    </div>
-
-    <div class="picker">
-      <label for="teamSelect">Or browse by team</label>
-      <select id="teamSelect"></select>
-    </div>
-
-    <div id="teamDisplay">
-      <h2 class="team-title" id="teamTitle"></h2>
-      <p class="team-resp" id="teamResp" hidden></p>
-      <p class="team-contact" id="teamContact" hidden></p>
-      <div class="days-grid">
-        <div class="day-col">
-          <div class="day-head"><span>Saturday</span><span class="day-date">Oct 17</span></div>
-          <ul class="member-list" id="satList"></ul>
-        </div>
-        <div class="day-col">
-          <div class="day-head"><span>Sunday</span><span class="day-date">Oct 18</span></div>
-          <ul class="member-list" id="sunList"></ul>
-        </div>
+  <div id="teamDisplay">
+    <h2 class="team-title" id="teamTitle"></h2>
+    <p class="team-resp" id="teamResp" hidden></p>
+    <p class="team-contact" id="teamContact" hidden></p>
+    <div class="days-grid">
+      <div class="day-col">
+        <div class="day-head"><span>Saturday</span><span class="day-date">Oct 17</span></div>
+        <ul class="member-list" id="satList"></ul>
       </div>
-      <p class="same-note" id="sameNote" hidden>Same team serves both days.</p>
+      <div class="day-col">
+        <div class="day-head"><span>Sunday</span><span class="day-date">Oct 18</span></div>
+        <ul class="member-list" id="sunList"></ul>
+      </div>
     </div>
+    <p class="same-note" id="sameNote" hidden>Same team serves both days.</p>
   </div>
-
-  <footer>UTSOV Inc. &middot; Internal page, not linked from the public site &middot; Updated 2026-10-04</footer>
 </div>
 
+<footer>UTSOV Inc. &middot; Internal page, not linked from the public site &middot; Updated 2026-10-04</footer>
+
+<script src="team-assignments-data.js"></script>
 <script>
 (function(){
-  var DATA = null;
+  var DATA = TEAM_DATA;
 
   function esc(s){
     return (s || '').replace(/[&<>"']/g, function(c){
@@ -230,40 +201,8 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
     });
   }
 
-  function init(data){
-    DATA = data;
-    buildPicker();
-    buildFind();
-  }
-
-  document.getElementById('loginBtn').addEventListener('click', function(){
-    var u = document.getElementById('loginUser').value.trim();
-    var p = document.getElementById('loginPass').value;
-    var btn = document.getElementById('loginBtn');
-    btn.disabled = true; btn.textContent = 'Checking…';
-    fetch('api/team-assignments-data.php', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({username: u, password: p})
-    }).then(function(r){ return r.json(); }).then(function(res){
-      btn.disabled = false; btn.textContent = 'View Team Assignments';
-      if (res.ok){
-        document.getElementById('loginScreen').hidden = true;
-        document.getElementById('app').hidden = false;
-        init(res.data);
-      } else {
-        document.getElementById('loginErr').classList.add('show');
-      }
-    }).catch(function(){
-      btn.disabled = false; btn.textContent = 'View Team Assignments';
-      document.getElementById('loginErr').textContent = 'Something went wrong. Please try again.';
-      document.getElementById('loginErr').classList.add('show');
-    });
-  });
-
-  document.getElementById('loginPass').addEventListener('keydown', function(e){
-    if (e.key === 'Enter') document.getElementById('loginBtn').click();
-  });
+  buildPicker();
+  buildFind();
 })();
 </script>
 </body>

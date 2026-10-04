@@ -8,78 +8,126 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital@0;1&family=Josefin+Sans:wght@400;600;700&display=swap">
 <style>
 :root{
-  --red-dark:#5C0000; --red:#8B1A1A; --gold:#C9A84C; --gold-lt:#E8C97A;
+  --red-dark:#5C0000; --red:#8B1A1A; --gold:#C9A84C; --gold-lt:#E8C97A; --marigold:#FF9933;
   --cream:#FFFDF8; --ink:#2A1000; --ink-soft:#6B5A4A; --border:#E8D9C0;
+  --good:#1A6B2E; --good-soft:#E6F3E9;
   --f-display:'Bebas Neue',sans-serif; --f-serif:'EB Garamond',serif; --f-label:'Josefin Sans',sans-serif;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label);padding:0}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label)}
+a{color:inherit}
 
-header.app-hdr{background:linear-gradient(135deg,var(--red-dark),var(--red));padding:1.5rem 1.25rem;text-align:center;border-bottom:4px solid var(--gold)}
-header.app-hdr h1{font-family:var(--f-display);color:#fff;font-size:clamp(1.6rem,5vw,2.3rem);letter-spacing:.04em;margin:0}
-header.app-hdr p{font-family:var(--f-serif);font-style:italic;color:var(--gold-lt);margin:.3rem 0 0;font-size:.95rem}
+/* ═══ HERO ═══ */
+.hero{position:relative;background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(130,15,15,.72) 0%,transparent 65%),radial-gradient(ellipse 80% 50% at 50% 110%,rgba(25,0,0,.75) 0%,transparent 55%),#2C0808;padding:3.2rem 1.25rem 2.6rem;overflow:hidden;text-align:center}
+.hero-ring{position:absolute;top:50%;left:50%;width:520px;height:520px;transform:translate(-50%,-50%);background:url('images/rangoli-spike-ring.svg') center/contain no-repeat;opacity:.16;animation:ringSpin 90s linear infinite;pointer-events:none}
+@keyframes ringSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero-petals{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-petal{position:absolute;animation:petalFall linear infinite;border-radius:50% 0 50% 50%}
+@keyframes petalFall{0%{transform:translateY(-60px) rotate(0deg);opacity:0}8%{opacity:.7}92%{opacity:.4}100%{transform:translateY(110vh) rotate(500deg);opacity:0}}
+.hero-in{position:relative;z-index:2}
+.hero-eyebrow{font-family:var(--f-label);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.6rem}
+.hero h1{font-family:var(--f-display);color:#fff;font-size:clamp(2rem,7vw,3.2rem);letter-spacing:.04em;margin:0;text-shadow:0 4px 20px rgba(0,0,0,.4)}
+.hero p.sub{font-family:var(--f-serif);font-style:italic;color:var(--gold-lt);margin:.4rem 0 0;font-size:1rem}
 
-.wrap{max-width:900px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+/* ═══ PROGRESS BAR ═══ */
+.progress-wrap{max-width:560px;margin:1.6rem auto 0;position:relative;z-index:2}
+.progress-label{display:flex;justify-content:space-between;font-size:.74rem;color:var(--gold-lt);margin-bottom:.4rem;letter-spacing:.03em}
+.progress-label b{color:#fff;font-weight:700}
+.progress-track{background:rgba(255,255,255,.14);border-radius:999px;height:10px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--marigold),var(--gold-lt));border-radius:999px;transition:width .6s cubic-bezier(.16,1,.3,1);width:0%}
 
-.find-box{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.2rem 1.3rem;margin-bottom:1.5rem;box-shadow:0 4px 18px rgba(92,0,0,.06)}
-.find-box label{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
-.find-box input{width:100%;padding:.75rem .9rem;border:1.5px solid var(--border);border-radius:9px;font-size:1rem;font-family:var(--f-label)}
+/* ═══ MAIN ═══ */
+.wrap{max-width:1040px;margin:0 auto;padding:2rem 1.25rem 3rem}
+
+.find-box{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.3rem 1.4rem;margin-bottom:1.8rem;box-shadow:0 8px 28px rgba(92,0,0,.07)}
+.find-box label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.55rem}
+.find-box input{width:100%;padding:.8rem .95rem;border:1.5px solid var(--border);border-radius:10px;font-size:1.02rem;font-family:var(--f-label)}
 .find-box input:focus{outline:2px solid var(--gold);border-color:var(--gold)}
 #findResults{margin-top:.8rem;display:flex;flex-direction:column;gap:.5rem}
-.find-hit{background:var(--cream);border:1px solid var(--border);border-radius:9px;padding:.6rem .8rem;font-size:.88rem;cursor:pointer}
-.find-hit:hover{border-color:var(--gold)}
+.find-hit{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:.65rem .9rem;font-size:.9rem;cursor:pointer;transition:transform .15s,border-color .15s}
+.find-hit:hover{border-color:var(--gold);transform:translateX(3px)}
 .find-hit b{color:var(--red-dark)}
 .find-empty{color:var(--ink-soft);font-size:.85rem;font-style:italic}
 
-.picker{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.2rem 1.3rem;margin-bottom:1.5rem;box-shadow:0 4px 18px rgba(92,0,0,.06)}
-.picker label{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
-#teamSelect{width:100%;padding:.8rem .9rem;border:1.5px solid var(--border);border-radius:9px;font-size:1rem;font-family:var(--f-label);background:#fff;color:var(--ink)}
-#teamSelect:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.section-label{font-family:var(--f-display);font-size:1.3rem;color:var(--red-dark);letter-spacing:.03em;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
-#teamDisplay{display:none}
-#teamDisplay.show{display:block}
-.team-title{font-family:var(--f-display);font-size:1.7rem;color:var(--red-dark);letter-spacing:.03em;margin:0 0 .2rem;text-wrap:balance}
-.team-resp{font-family:var(--f-serif);font-style:italic;color:var(--ink-soft);margin:0 0 .3rem;font-size:.95rem}
-.team-contact{font-size:.8rem;color:var(--ink-soft);margin-bottom:1.1rem}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;margin-bottom:2rem}
+.team-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;cursor:pointer;text-align:left;box-shadow:0 4px 16px rgba(92,0,0,.05);transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s;position:relative;overflow:hidden}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(92,0,0,.14)}
+.team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent,var(--red))}
+.team-card.active{border-color:var(--accent,var(--red));box-shadow:0 12px 28px rgba(92,0,0,.18)}
+.tc-name{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.02em;color:var(--ink);margin-bottom:.25rem;line-height:1.1}
+.tc-resp{font-family:var(--f-serif);font-style:italic;color:var(--ink-soft);font-size:.82rem;min-height:1.1em;margin-bottom:.6rem}
+.tc-foot{display:flex;justify-content:space-between;align-items:center;font-size:.76rem}
+.tc-count{color:var(--ink-soft)}
+.tc-confirmed{font-weight:700;color:var(--good)}
+
+/* ═══ DETAIL VIEW ═══ */
+#teamDisplay{display:none;background:#fff;border:2px solid var(--border);border-radius:18px;padding:1.6rem 1.5rem;box-shadow:0 10px 32px rgba(92,0,0,.1)}
+#teamDisplay.show{display:block;animation:slideIn .35s cubic-bezier(.16,1,.3,1)}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.td-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.3rem;flex-wrap:wrap}
+.team-title{font-family:var(--f-display);font-size:1.9rem;color:var(--red-dark);letter-spacing:.03em;margin:0;text-wrap:balance}
+.td-close{background:none;border:1.5px solid var(--border);border-radius:999px;width:32px;height:32px;cursor:pointer;color:var(--ink-soft);font-size:1rem;flex-shrink:0}
+.td-close:hover{border-color:var(--red);color:var(--red)}
+.team-resp{font-family:var(--f-serif);font-style:italic;color:var(--ink-soft);margin:.2rem 0 .3rem;font-size:.95rem}
+.team-contact{font-size:.8rem;color:var(--ink-soft);margin-bottom:1.2rem}
 .team-contact b{color:var(--red)}
 
 .days-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 @media(max-width:620px){.days-grid{grid-template-columns:1fr}}
-.day-col{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(92,0,0,.06)}
-.day-head{background:var(--red-dark);color:#fff;padding:.7rem 1rem;font-family:var(--f-display);font-size:1.1rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between}
-.day-head .day-date{font-family:var(--f-label);font-size:.68rem;color:var(--gold-lt);font-weight:600}
-.member-list{list-style:none;margin:0;padding:.4rem 0}
-.member-list li{padding:.6rem 1rem;border-bottom:1px solid var(--border);font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem}
-.member-list li:last-child{border-bottom:none}
-.member-list li .mname{font-weight:600}
-.member-list li a{color:var(--red);text-decoration:none;font-size:.82rem;white-space:nowrap}
-.member-list li a:hover{text-decoration:underline}
-.same-note{text-align:center;font-size:.75rem;color:var(--ink-soft);font-style:italic;padding:.5rem 1rem 0}
+.day-col{background:var(--cream);border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.day-head{background:var(--red-dark);color:#fff;padding:.7rem 1rem;font-family:var(--f-display);font-size:1.05rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between}
+.day-head .day-date{font-family:var(--f-label);font-size:.65rem;color:var(--gold-lt);font-weight:600}
+.member-list{list-style:none;margin:0;padding:.3rem}
+.member-row{display:flex;align-items:center;gap:.65rem;padding:.55rem .5rem;border-radius:9px}
+.member-row:hover{background:#fff}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--f-label);font-weight:700;font-size:.72rem;color:#fff;flex-shrink:0}
+.member-info{flex:1;min-width:0}
+.mname{font-weight:600;font-size:.88rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mphone{font-size:.74rem;color:var(--ink-soft);text-decoration:none}
+.mphone:hover{color:var(--red)}
+.confirm-btn{flex-shrink:0;font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.02em;border-radius:999px;padding:.35rem .7rem;border:1.5px solid var(--gold);background:#fff;color:var(--red-dark);cursor:pointer;white-space:nowrap}
+.confirm-btn:hover{background:var(--gold-lt)}
+.confirm-btn:disabled{cursor:default}
+.confirm-btn.confirmed{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.same-note{text-align:center;font-size:.76rem;color:var(--ink-soft);font-style:italic;padding:.7rem 0 0}
 
-footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
+footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
 </style>
 </head>
 <body>
 
-<header class="app-hdr">
-  <h1>Team Assignments</h1>
-  <p>UTSOV Durga Puja 2026 &middot; October 17&ndash;18</p>
-</header>
+<div class="hero">
+  <div class="hero-ring"></div>
+  <div class="hero-petals" id="heroPetals"></div>
+  <div class="hero-in">
+    <div class="hero-eyebrow">✦ UTSOV Durga Puja 2026 ✦</div>
+    <h1>Team Assignments</h1>
+    <p class="sub">October 17–18 · Jo Ann Magistro PAC, East Brunswick NJ</p>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Role confirmations</span><b id="progressText">0 of 0</b></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+</div>
 
 <div class="wrap">
   <div class="find-box">
-    <label for="findInput">Find Yourself — search your name</label>
+    <label for="findInput">🔍 Find Yourself — search your name</label>
     <input type="text" id="findInput" placeholder="Type your name…" autocomplete="off">
     <div id="findResults"></div>
   </div>
 
-  <div class="picker">
-    <label for="teamSelect">Or browse by team</label>
-    <select id="teamSelect"></select>
-  </div>
+  <h2 class="section-label">All Teams</h2>
+  <div class="card-grid" id="cardGrid"></div>
 
   <div id="teamDisplay">
-    <h2 class="team-title" id="teamTitle"></h2>
+    <div class="td-head">
+      <h2 class="team-title" id="teamTitle"></h2>
+      <button class="td-close" id="closeBtn" type="button" aria-label="Close">✕</button>
+    </div>
     <p class="team-resp" id="teamResp" hidden></p>
     <p class="team-contact" id="teamContact" hidden></p>
     <div class="days-grid">
@@ -96,12 +144,16 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
   </div>
 </div>
 
-<footer>UTSOV Inc. &middot; Internal page, not linked from the public site &middot; Updated 2026-10-04</footer>
+<footer>UTSOV Inc. &middot; Internal page, not linked from the public site &middot; Tap "Confirm My Role" to let the organizers know you're in</footer>
 
 <script src="team-assignments-data.js"></script>
 <script>
 (function(){
   var DATA = TEAM_DATA;
+  var CONFIRMED = {}; // key: team+'||'+name -> true
+  var ACCENTS = ['#8B1A1A','#C9A84C','#1A6B6B','#7A3B8F','#B06A1A','#2E6B3E','#A0334D','#4A5C8F'];
+
+  function accentFor(idx){ return ACCENTS[idx % ACCENTS.length]; }
 
   function esc(s){
     return (s || '').replace(/[&<>"']/g, function(c){
@@ -114,7 +166,74 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
     return digits ? 'tel:' + digits : '';
   }
 
-  function renderMemberList(ul, members){
+  function initials(name){
+    var parts = name.trim().split(/\s+/);
+    var s = parts[0] ? parts[0][0] : '';
+    if (parts.length > 1) s += parts[parts.length - 1][0];
+    return s.toUpperCase();
+  }
+
+  function avatarColor(name){
+    var h = 0;
+    for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    var hue = h % 360;
+    return 'hsl(' + hue + ',48%,42%)';
+  }
+
+  function ckey(team, name){ return team + '||' + name; }
+
+  function totalCounts(){
+    var seen = {}, total = 0, confirmed = 0;
+    DATA.order.forEach(function(t){
+      DATA.teams[t].sat.forEach(function(m){
+        var k = ckey(t, m.name);
+        if (seen[k]) return;
+        seen[k] = true;
+        total++;
+        if (CONFIRMED[k]) confirmed++;
+      });
+    });
+    return {total: total, confirmed: confirmed};
+  }
+
+  function updateProgress(){
+    var c = totalCounts();
+    document.getElementById('progressText').textContent = c.confirmed + ' of ' + c.total;
+    document.getElementById('progressFill').style.width = (c.total ? (c.confirmed / c.total * 100) : 0) + '%';
+  }
+
+  function teamConfirmedCount(team){
+    var members = DATA.teams[team].sat;
+    var n = 0;
+    members.forEach(function(m){ if (CONFIRMED[ckey(team, m.name)]) n++; });
+    return n;
+  }
+
+  function doConfirm(team, name, btn){
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    fetch('api/team-confirm.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'confirm', team: team, name: name})
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if (res.ok){
+        CONFIRMED[ckey(team, name)] = true;
+        btn.textContent = '✓ Confirmed';
+        btn.classList.add('confirmed');
+        updateProgress();
+        renderCardGrid();
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Confirm My Role';
+      }
+    }).catch(function(){
+      btn.disabled = false;
+      btn.textContent = 'Confirm My Role';
+    });
+  }
+
+  function renderMemberList(ul, team, members){
     ul.innerHTML = '';
     if (!members || !members.length){
       var li = document.createElement('li');
@@ -124,8 +243,26 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
     }
     members.forEach(function(m){
       var li = document.createElement('li');
-      var phoneHtml = m.phone ? '<a href="' + telHref(m.phone) + '">' + esc(m.phone) + '</a>' : '';
-      li.innerHTML = '<span class="mname">' + esc(m.name) + '</span>' + phoneHtml;
+      li.className = 'member-row';
+      var key = ckey(team, m.name);
+      var isConfirmed = !!CONFIRMED[key];
+      var avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.style.background = avatarColor(m.name);
+      avatar.textContent = initials(m.name);
+      var info = document.createElement('div');
+      info.className = 'member-info';
+      info.innerHTML = '<span class="mname">' + esc(m.name) + '</span>' +
+        (m.phone ? '<a class="mphone" href="' + telHref(m.phone) + '">' + esc(m.phone) + '</a>' : '');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'confirm-btn' + (isConfirmed ? ' confirmed' : '');
+      btn.textContent = isConfirmed ? '✓ Confirmed' : 'Confirm My Role';
+      btn.disabled = isConfirmed;
+      btn.addEventListener('click', function(){ doConfirm(team, m.name, btn); });
+      li.appendChild(avatar);
+      li.appendChild(info);
+      li.appendChild(btn);
       ul.appendChild(li);
     });
   }
@@ -146,24 +283,36 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
     if (t.responsibility){ respEl.textContent = t.responsibility; respEl.hidden = false; } else { respEl.hidden = true; }
     var contactEl = document.getElementById('teamContact');
     if (t.contact){ contactEl.innerHTML = '<b>Contact:</b> ' + esc(t.contact); contactEl.hidden = false; } else { contactEl.hidden = true; }
-    renderMemberList(document.getElementById('satList'), t.sat);
-    renderMemberList(document.getElementById('sunList'), t.sun);
+    renderMemberList(document.getElementById('satList'), teamName, t.sat);
+    renderMemberList(document.getElementById('sunList'), teamName, t.sun);
     document.getElementById('sameNote').hidden = !sameRoster(t.sat, t.sun);
     document.getElementById('teamDisplay').classList.add('show');
-    document.getElementById('teamSelect').value = teamName;
+    document.querySelectorAll('.team-card').forEach(function(c){
+      c.classList.toggle('active', c.dataset.team === teamName);
+    });
     document.getElementById('teamDisplay').scrollIntoView({behavior:'smooth', block:'start'});
   }
 
-  function buildPicker(){
-    var sel = document.getElementById('teamSelect');
-    sel.innerHTML = '<option value="">Select a team…</option>';
-    DATA.order.forEach(function(t){
-      var o = document.createElement('option');
-      o.value = t; o.textContent = t.trim() + ' (' + DATA.teams[t].sat.length + ')';
-      sel.appendChild(o);
-    });
-    sel.addEventListener('change', function(){
-      if (sel.value) showTeam(sel.value);
+  function renderCardGrid(){
+    var grid = document.getElementById('cardGrid');
+    var activeTeam = null;
+    document.querySelectorAll('.team-card.active').forEach(function(c){ activeTeam = c.dataset.team; });
+    grid.innerHTML = '';
+    DATA.order.forEach(function(t, idx){
+      var total = DATA.teams[t].sat.length;
+      var confirmed = teamConfirmedCount(t);
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'team-card' + (t === activeTeam ? ' active' : '');
+      card.dataset.team = t;
+      card.style.setProperty('--accent', accentFor(idx));
+      card.innerHTML =
+        '<div class="tc-name">' + esc(t.trim()) + '</div>' +
+        '<div class="tc-resp">' + esc(DATA.teams[t].responsibility || ' ') + '</div>' +
+        '<div class="tc-foot"><span class="tc-count">' + total + ' members</span>' +
+        '<span class="tc-confirmed">' + confirmed + '/' + total + ' confirmed</span></div>';
+      card.addEventListener('click', function(){ showTeam(t); });
+      grid.appendChild(card);
     });
   }
 
@@ -187,7 +336,7 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
       if (!hits.length){
         var d = document.createElement('div');
         d.className = 'find-empty';
-        d.textContent = 'No match. Try a different spelling, or browse by team below.';
+        d.textContent = 'No match. Try a different spelling, or browse the teams below.';
         results.appendChild(d);
         return;
       }
@@ -201,8 +350,44 @@ footer{text-align:center;padding:1.5rem;font-size:.72rem;color:var(--ink-soft)}
     });
   }
 
-  buildPicker();
+  function buildPetals(){
+    var wrap = document.getElementById('heroPetals');
+    var colors = ['#FF9933','#C9A84C','#E8C97A','#FF6B00'];
+    for (var i = 0; i < 22; i++){
+      var p = document.createElement('div');
+      p.className = 'hero-petal';
+      var c = colors[Math.floor(Math.random() * colors.length)];
+      var sz = Math.random() * 12 + 7;
+      p.style.cssText = 'left:' + (Math.random() * 105) + '%;width:' + sz + 'px;height:' + (sz * 1.5) + 'px;background:' + c +
+        ';animation-duration:' + (Math.random() * 12 + 8).toFixed(1) + 's;animation-delay:-' + (Math.random() * 15).toFixed(1) + 's;opacity:' + (Math.random() * .35 + .2).toFixed(2);
+      wrap.appendChild(p);
+    }
+  }
+
+  document.getElementById('closeBtn').addEventListener('click', function(){
+    document.getElementById('teamDisplay').classList.remove('show');
+    document.querySelectorAll('.team-card.active').forEach(function(c){ c.classList.remove('active'); });
+  });
+
+  function loadConfirmations(cb){
+    fetch('api/team-confirm.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'list'})
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if (res.ok && res.confirmations){
+        res.confirmations.forEach(function(c){ CONFIRMED[ckey(c.team, c.name)] = true; });
+      }
+      cb();
+    }).catch(function(){ cb(); });
+  }
+
+  buildPetals();
   buildFind();
+  loadConfirmations(function(){
+    renderCardGrid();
+    updateProgress();
+  });
 })();
 </script>
 </body>

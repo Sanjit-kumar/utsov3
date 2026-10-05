@@ -75,11 +75,16 @@ a{color:inherit}
 .team-contact{font-size:.8rem;color:var(--ink-soft);margin-bottom:1.2rem}
 .team-contact b{color:var(--red)}
 
-.days-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:620px){.days-grid{grid-template-columns:1fr}}
-.day-col{background:var(--cream);border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
-.day-head{background:var(--red-dark);color:#fff;padding:.7rem 1rem;font-family:var(--f-display);font-size:1.05rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between}
-.day-head .day-date{font-family:var(--f-label);font-size:.65rem;color:var(--gold-lt);font-weight:600}
+.member-panel{background:var(--cream);border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.member-panel-head{background:var(--red-dark);color:#fff;padding:.7rem 1rem;font-family:var(--f-display);font-size:1.05rem;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between;gap:.7rem}
+.add-toggle-btn{font-family:var(--f-label);font-size:.68rem;font-weight:700;letter-spacing:.02em;border-radius:999px;padding:.4rem .8rem;border:1.5px solid var(--gold-lt);background:transparent;color:#fff;cursor:pointer;white-space:nowrap}
+.add-toggle-btn:hover{background:rgba(255,255,255,.15)}
+.add-member-form{display:flex;gap:.5rem;flex-wrap:wrap;padding:.8rem 1rem;background:#fff8ec;border-bottom:1.5px solid var(--border)}
+.add-member-form input{flex:1;min-width:140px;padding:.55rem .7rem;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;font-family:var(--f-label)}
+.add-member-form input:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.add-member-form button{font-family:var(--f-label);font-size:.76rem;font-weight:700;border-radius:8px;padding:.55rem 1rem;cursor:pointer;border:1.5px solid var(--gold);background:var(--gold-lt);color:var(--red-dark)}
+.add-member-form .am-cancel{border-color:var(--border);background:#fff;color:var(--ink-soft)}
+.add-member-form .am-err{flex:0 0 100%;color:var(--red);font-size:.78rem}
 .member-list{list-style:none;margin:0;padding:.3rem}
 .member-row{display:flex;align-items:center;gap:.65rem;padding:.55rem .5rem;border-radius:9px}
 .member-row:hover{background:#fff}
@@ -92,7 +97,8 @@ a{color:inherit}
 .confirm-btn:hover{background:var(--gold-lt)}
 .confirm-btn:disabled{cursor:default}
 .confirm-btn.confirmed{background:var(--good-soft);border-color:var(--good);color:var(--good)}
-.same-note{text-align:center;font-size:.76rem;color:var(--ink-soft);font-style:italic;padding:.7rem 0 0}
+.delete-btn{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink-soft);cursor:pointer;font-size:.72rem;display:flex;align-items:center;justify-content:center}
+.delete-btn:hover{border-color:var(--red);color:var(--red);background:var(--good-soft)}
 
 footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
 </style>
@@ -130,27 +136,32 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
     </div>
     <p class="team-resp" id="teamResp" hidden></p>
     <p class="team-contact" id="teamContact" hidden></p>
-    <div class="days-grid">
-      <div class="day-col">
-        <div class="day-head"><span>Saturday</span><span class="day-date">Oct 17</span></div>
-        <ul class="member-list" id="satList"></ul>
+    <div class="member-panel">
+      <div class="member-panel-head">
+        <span>Team Members</span>
+        <button class="add-toggle-btn" id="addToggleBtn" type="button">+ Add Member</button>
       </div>
-      <div class="day-col">
-        <div class="day-head"><span>Sunday</span><span class="day-date">Oct 18</span></div>
-        <ul class="member-list" id="sunList"></ul>
-      </div>
+      <form class="add-member-form" id="addMemberForm" hidden>
+        <input type="text" id="addNameInput" placeholder="Full name" autocomplete="off">
+        <input type="tel" id="addPhoneInput" placeholder="Phone (optional)" autocomplete="off">
+        <button type="submit" id="addSubmitBtn">Add</button>
+        <button type="button" class="am-cancel" id="addCancelBtn">Cancel</button>
+        <div class="am-err" id="addErr" hidden></div>
+      </form>
+      <ul class="member-list" id="memberList"></ul>
     </div>
-    <p class="same-note" id="sameNote" hidden>Same team serves both days.</p>
   </div>
 </div>
 
 <footer>UTSOV Inc. &middot; Internal page, not linked from the public site &middot; Tap "Confirm My Role" to let the organizers know you're in</footer>
 
-<script src="team-assignments-data.js"></script>
+<script>
+var DATA = {order: [], teams: {}};
+</script>
 <script>
 (function(){
-  var DATA = TEAM_DATA;
   var CONFIRMED = {}; // key: team+'||'+name -> true
+  var currentTeam = null;
   var ACCENTS = ['#8B1A1A','#C9A84C','#1A6B6B','#7A3B8F','#B06A1A','#2E6B3E','#A0334D','#4A5C8F'];
 
   function accentFor(idx){ return ACCENTS[idx % ACCENTS.length]; }
@@ -185,7 +196,7 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
   function totalCounts(){
     var seen = {}, total = 0, confirmed = 0;
     DATA.order.forEach(function(t){
-      DATA.teams[t].sat.forEach(function(m){
+      DATA.teams[t].members.forEach(function(m){
         var k = ckey(t, m.name);
         if (seen[k]) return;
         seen[k] = true;
@@ -203,7 +214,7 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
   }
 
   function teamConfirmedCount(team){
-    var members = DATA.teams[team].sat;
+    var members = DATA.teams[team].members;
     var n = 0;
     members.forEach(function(m){ if (CONFIRMED[ckey(team, m.name)]) n++; });
     return n;
@@ -260,32 +271,77 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
       btn.textContent = isConfirmed ? '✓ Confirmed' : 'Confirm My Role';
       btn.disabled = isConfirmed;
       btn.addEventListener('click', function(){ doConfirm(team, m.name, btn); });
+      var delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'delete-btn';
+      delBtn.title = 'Remove ' + m.name;
+      delBtn.setAttribute('aria-label', 'Remove ' + m.name);
+      delBtn.textContent = '✕';
+      delBtn.addEventListener('click', function(){ doDelete(team, m.id, m.name); });
       li.appendChild(avatar);
       li.appendChild(info);
       li.appendChild(btn);
+      li.appendChild(delBtn);
       ul.appendChild(li);
     });
   }
 
-  function sameRoster(a, b){
-    if (!a || !b || a.length !== b.length) return false;
-    for (var i = 0; i < a.length; i++){
-      if (a[i].name !== b[i].name || a[i].phone !== b[i].phone) return false;
-    }
-    return true;
+  function doDelete(team, id, name){
+    if (!window.confirm('Remove ' + name + ' from this team?')) return;
+    fetch('api/team-roster.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'delete', id: id})
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if (!res.ok){ alert(res.err || 'Could not remove member.'); return; }
+      var members = DATA.teams[team].members;
+      for (var i = 0; i < members.length; i++){
+        if (members[i].id === id){ members.splice(i, 1); break; }
+      }
+      renderMemberList(document.getElementById('memberList'), team, members);
+      renderCardGrid();
+      updateProgress();
+    }).catch(function(){ alert('Network error — please try again.'); });
+  }
+
+  function doAdd(team, name, phone){
+    var errEl = document.getElementById('addErr');
+    errEl.hidden = true;
+    fetch('api/team-roster.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'add', team: team, name: name, phone: phone})
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if (!res.ok){
+        errEl.textContent = res.err || 'Could not add member.';
+        errEl.hidden = false;
+        return;
+      }
+      DATA.teams[team].members.push({id: res.id, name: name, phone: phone});
+      DATA.teams[team].members.sort(function(a, b){ return a.name.toLowerCase().localeCompare(b.name.toLowerCase()); });
+      renderMemberList(document.getElementById('memberList'), team, DATA.teams[team].members);
+      renderCardGrid();
+      updateProgress();
+      document.getElementById('addNameInput').value = '';
+      document.getElementById('addPhoneInput').value = '';
+      document.getElementById('addMemberForm').hidden = true;
+    }).catch(function(){
+      errEl.textContent = 'Network error — please try again.';
+      errEl.hidden = false;
+    });
   }
 
   function showTeam(teamName){
     var t = DATA.teams[teamName];
     if (!t) return;
+    currentTeam = teamName;
+    document.getElementById('addMemberForm').hidden = true;
     document.getElementById('teamTitle').textContent = teamName.trim();
     var respEl = document.getElementById('teamResp');
     if (t.responsibility){ respEl.textContent = t.responsibility; respEl.hidden = false; } else { respEl.hidden = true; }
     var contactEl = document.getElementById('teamContact');
     if (t.contact){ contactEl.innerHTML = '<b>Contact:</b> ' + esc(t.contact); contactEl.hidden = false; } else { contactEl.hidden = true; }
-    renderMemberList(document.getElementById('satList'), teamName, t.sat);
-    renderMemberList(document.getElementById('sunList'), teamName, t.sun);
-    document.getElementById('sameNote').hidden = !sameRoster(t.sat, t.sun);
+    renderMemberList(document.getElementById('memberList'), teamName, t.members);
     document.getElementById('teamDisplay').classList.add('show');
     document.querySelectorAll('.team-card').forEach(function(c){
       c.classList.toggle('active', c.dataset.team === teamName);
@@ -299,7 +355,7 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
     document.querySelectorAll('.team-card.active').forEach(function(c){ activeTeam = c.dataset.team; });
     grid.innerHTML = '';
     DATA.order.forEach(function(t, idx){
-      var total = DATA.teams[t].sat.length;
+      var total = DATA.teams[t].members.length;
       var confirmed = teamConfirmedCount(t);
       var card = document.createElement('button');
       card.type = 'button';
@@ -326,7 +382,7 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
       var hits = [];
       DATA.order.forEach(function(t){
         var seen = {};
-        DATA.teams[t].sat.forEach(function(m){
+        DATA.teams[t].members.forEach(function(m){
           if (m.name.toLowerCase().indexOf(q) !== -1 && !seen[m.name]){
             seen[m.name] = true;
             hits.push({team: t, name: m.name});
@@ -369,6 +425,32 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
     document.querySelectorAll('.team-card.active').forEach(function(c){ c.classList.remove('active'); });
   });
 
+  document.getElementById('addToggleBtn').addEventListener('click', function(){
+    var form = document.getElementById('addMemberForm');
+    form.hidden = !form.hidden;
+    document.getElementById('addErr').hidden = true;
+    if (!form.hidden) document.getElementById('addNameInput').focus();
+  });
+
+  document.getElementById('addCancelBtn').addEventListener('click', function(){
+    document.getElementById('addMemberForm').hidden = true;
+    document.getElementById('addErr').hidden = true;
+  });
+
+  document.getElementById('addMemberForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('addNameInput').value.trim();
+    var phone = document.getElementById('addPhoneInput').value.trim();
+    var errEl = document.getElementById('addErr');
+    if (!name){
+      errEl.textContent = 'Please enter a name.';
+      errEl.hidden = false;
+      return;
+    }
+    if (!currentTeam) return;
+    doAdd(currentTeam, name, phone);
+  });
+
   function loadConfirmations(cb){
     fetch('api/team-confirm.php', {
       method: 'POST',
@@ -382,11 +464,27 @@ footer{text-align:center;padding:1.8rem;font-size:.72rem;color:var(--ink-soft)}
     }).catch(function(){ cb(); });
   }
 
+  function loadRoster(cb){
+    fetch('api/team-roster.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'list'})
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if (res.ok){
+        DATA.order = res.order;
+        DATA.teams = res.teams;
+      }
+      cb();
+    }).catch(function(){ cb(); });
+  }
+
   buildPetals();
   buildFind();
-  loadConfirmations(function(){
-    renderCardGrid();
-    updateProgress();
+  loadRoster(function(){
+    loadConfirmations(function(){
+      renderCardGrid();
+      updateProgress();
+    });
   });
 })();
 </script>

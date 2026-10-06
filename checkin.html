@@ -101,6 +101,8 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .row-badge.none{background:#eee;color:#777}
 .row-badge.partial{background:var(--amber-bg);color:var(--amber)}
 .row-badge.full{background:var(--green);color:#fff}
+.gift-badge{font-size:.85rem;flex-shrink:0}
+.gift-badge.pending{opacity:.25;filter:grayscale(1)}
 
 .row-detail{display:none;padding:0 .9rem .9rem;border-top:1px solid var(--line)}
 .row.open .row-detail{display:block}
@@ -130,6 +132,15 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .btn-confirm{background:var(--green);color:#fff}
 .btn-confirm:disabled{background:#aaa;cursor:not-allowed}
 .btn-cancel{background:#eee;color:#333}
+
+/* Gift section — deliberately styled distinct from the per-day check-in list above it, since
+   it's a different kind of state: one shared flag for the whole registration, any day. */
+.gift-section{margin-top:1rem;padding-top:.9rem;border-top:2px dashed var(--line)}
+.gift-head{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#999;margin-bottom:.1rem}
+.gift-sub{font-size:.72rem;color:#aaa;margin-bottom:.6rem}
+.gift-btn{width:100%;padding:.85rem;border-radius:10px;border:2px solid #ddd;background:#fafafa;color:#555;font-weight:700;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.gift-btn.given{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.gift-meta{font-size:.74rem;color:#999;text-align:center;margin-top:.45rem}
 
 .empty-state{text-align:center;color:#999;padding:2rem 0;font-size:.9rem}
 </style>
@@ -359,6 +370,7 @@ function renderRoster() {
           '<div class="row-line1">' +
             '<span class="day-pill ' + dayClass(r.days) + '">' + dayPillText(r.days) + '</span>' +
             '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
+            '<span class="gift-badge' + (r.giftGiven ? '' : ' pending') + '" title="' + (r.giftGiven ? 'Gift given' : 'Gift not given yet') + '">🎁</span>' +
             '<span class="row-badge ' + rs.checkInStatus + '">' + badgeText + '</span>' +
           '</div>' +
           '<div class="row-line2">' +
@@ -454,8 +466,43 @@ function renderDetailHtml(reg) {
         '<button class="btn-cancel" onclick="toggleRow(' + reg.id + ')">Close</button>' +
         '<button class="btn-confirm" onclick="saveCheckin(' + reg.id + ')">✓ Save Check-In</button>' +
       '</div>' +
+      giftSectionHtml(reg) +
     '</div>'
   );
+}
+
+// 15th-anniversary gift — ONE per registration, shared across both days on purpose (opposite
+// of the per-day check-in above it): give it Saturday and it shows already-given on Sunday too.
+function giftSectionHtml(reg) {
+  var meta = '';
+  if (reg.giftGiven && reg.giftGivenAt) {
+    var d = reg.giftGivenDay === 'sunday' ? 'Sun' : 'Sat';
+    meta = '<div class="gift-meta">Given ' + d + ' by ' + escapeHtml(reg.giftGivenBy || 'volunteer') + '</div>';
+  }
+  return (
+    '<div class="gift-section">' +
+      '<div class="gift-head">🎁 15th Anniversary Gift</div>' +
+      '<div class="gift-sub">One per registration — shared across Saturday &amp; Sunday</div>' +
+      '<button type="button" class="gift-btn' + (reg.giftGiven ? ' given' : '') + '" onclick="toggleGift(' + reg.id + ', ' + (!reg.giftGiven) + ')">' +
+        (reg.giftGiven ? '✓ Gift Given — tap to undo' : 'Mark Gift Given') +
+      '</button>' +
+      meta +
+    '</div>'
+  );
+}
+
+function toggleGift(id, given) {
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+  apiCall('giftConfirm', { manualId: id, day: currentDay, station: station, given: given }).then(function(d) {
+    if (d.err) { showError(d.err); return; }
+    var key = cacheKey(id, currentDay);
+    if (detailCache[key]) detailCache[key].giftGiven = d.registration.giftGiven;
+    if (detailCache[key]) { detailCache[key].giftGivenAt = d.registration.giftGivenAt; detailCache[key].giftGivenBy = d.registration.giftGivenBy; detailCache[key].giftGivenDay = d.registration.giftGivenDay; }
+    var i = roster.findIndex(function(r) { return r.id === id; });
+    if (i !== -1) roster[i].giftGiven = d.registration.giftGiven;
+    showSuccess(d.registration.giftGiven ? '🎁 Gift marked given for ' + d.registration.name : '🎁 Gift mark undone for ' + d.registration.name);
+    renderRoster();
+  });
 }
 
 function saveCheckin(id) {
@@ -492,7 +539,7 @@ function manualLookup() {
       if (d.err) { showError(d.err); return; }
       var reg = d.registration;
       detailCache[cacheKey(id, currentDay)] = reg;
-      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days,
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven,
                    sat: { checkedInCount: 0, checkInStatus: 'none' },
                    sun: { checkedInCount: 0, checkInStatus: 'none' } };
       stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };
@@ -591,7 +638,7 @@ function handleScanned(token) {
     var reg = d.registration;
     detailCache[cacheKey(reg.id, currentDay)] = reg;
     if (!roster.some(function(r) { return r.id === reg.id; })) {
-      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days,
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven,
                    sat: { checkedInCount: 0, checkInStatus: 'none' },
                    sun: { checkedInCount: 0, checkInStatus: 'none' } };
       stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };

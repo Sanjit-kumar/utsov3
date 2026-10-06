@@ -29,6 +29,11 @@ function openCheckinDB() {
     $toAdd = [
         'checked_in_attendees_sat' => 'TEXT', 'checked_in_at_sat' => 'TEXT', 'checked_in_by_sat' => 'TEXT',
         'checked_in_attendees_sun' => 'TEXT', 'checked_in_at_sun' => 'TEXT', 'checked_in_by_sun' => 'TEXT',
+        // Anniversary gift — deliberately the OPPOSITE of check-in: ONE shared flag per
+        // registration, not per day and not per attendee ("1 gift to 1 registration"). A
+        // Both-Days person who collects it Saturday must show as already-given on Sunday too,
+        // so a second volunteer at a different table/day doesn't hand out a duplicate.
+        'gift_given' => 'INTEGER', 'gift_given_at' => 'TEXT', 'gift_given_by' => 'TEXT', 'gift_given_day' => 'TEXT',
     ];
     foreach ($toAdd as $col => $type) {
         if (!in_array($col, $cols)) {
@@ -118,6 +123,11 @@ function registrationPayload($row, $day) {
         'checkedIn'       => ($status === 'full'),
         'checkedInAt'     => isset($row[$cols['at']]) ? $row[$cols['at']] : null,
         'checkedInBy'     => isset($row[$cols['by']]) ? $row[$cols['by']] : null,
+        // Shared across both days on purpose — see the column comment in openCheckinDB().
+        'giftGiven'       => !empty($row['gift_given']),
+        'giftGivenAt'     => isset($row['gift_given_at']) ? $row['gift_given_at'] : null,
+        'giftGivenBy'     => isset($row['gift_given_by']) ? $row['gift_given_by'] : null,
+        'giftGivenDay'    => isset($row['gift_given_day']) ? $row['gift_given_day'] : null,
     ];
 }
 
@@ -241,6 +251,37 @@ switch ($action) {
         break;
     }
 
+    // Toggle the anniversary-gift flag. Unlike check-in, this is ONE shared flag per
+    // registration regardless of day — `given: true` marks it given (blocking a second
+    // hand-out on the other day), `given: false` undoes an accidental mark. `day` here is
+    // only for the record (which day's table actually gave it out), not for scoping state.
+    case 'giftConfirm': {
+        $day = resolveDay($_post); // optional, for the record only
+        $station = mb_substr(isset($_post->station) ? (string)$_post->station : 'Front Gate', 0, 100);
+        $given = !empty($_post->given);
+        $id = resolveCheckinId($_post);
+        if ($id === null) { echo json_encode(['err' => 'Invalid or forged QR code']); exit; }
+
+        $sel = $db->prepare("SELECT * FROM tb_registrations WHERE id = :id");
+        $sel->execute([':id' => $id]);
+        $row = $sel->fetch(PDO::FETCH_ASSOC);
+        if (!$row) { echo json_encode(['err' => 'Registration not found']); exit; }
+
+        if ($given) {
+            $now = date('Y-m-d H:i:s');
+            $upd = $db->prepare("UPDATE tb_registrations SET gift_given=1, gift_given_at=:now, gift_given_by=:station, gift_given_day=:day WHERE id=:id");
+            $upd->execute([':now' => $now, ':station' => $station, ':day' => $day, ':id' => $id]);
+            $row['gift_given'] = 1; $row['gift_given_at'] = $now; $row['gift_given_by'] = $station; $row['gift_given_day'] = $day;
+        } else {
+            $upd = $db->prepare("UPDATE tb_registrations SET gift_given=0, gift_given_at=NULL, gift_given_by=NULL, gift_given_day=NULL WHERE id=:id");
+            $upd->execute([':id' => $id]);
+            $row['gift_given'] = 0; $row['gift_given_at'] = null; $row['gift_given_by'] = null; $row['gift_given_day'] = null;
+        }
+
+        echo json_encode(['ok' => true, 'registration' => registrationPayload($row, $day ?: 'saturday')]);
+        break;
+    }
+
     // Live stats. Optional `day` ('saturday'|'sunday') scopes to that day; omitted = overall
     // (a person counts as "in" overall if they checked in on either day they're eligible for).
     case 'list': {
@@ -285,7 +326,7 @@ switch ($action) {
     // whichever day's tab is active without a second round trip on every tab switch.
     case 'roster': {
         $stmt = $db->query(
-            "SELECT id, name, qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun
+            "SELECT id, name, qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun, gift_given
              FROM tb_registrations WHERE status='paid' ORDER BY name COLLATE NOCASE ASC"
         );
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -298,12 +339,13 @@ switch ($action) {
             $sunIn = count(array_filter($sunPresent));
             $mk = function($in, $qty) { return $in === 0 ? 'none' : ($in >= $qty ? 'full' : 'partial'); };
             return [
-                'id'    => (int)$r['id'],
-                'name'  => $r['name'],
-                'qty'   => $qty,
-                'days'  => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
-                'sat'   => ['checkedInCount' => $satIn, 'checkInStatus' => $mk($satIn, $qty)],
-                'sun'   => ['checkedInCount' => $sunIn, 'checkInStatus' => $mk($sunIn, $qty)],
+                'id'        => (int)$r['id'],
+                'name'      => $r['name'],
+                'qty'       => $qty,
+                'days'      => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
+                'sat'       => ['checkedInCount' => $satIn, 'checkInStatus' => $mk($satIn, $qty)],
+                'sun'       => ['checkedInCount' => $sunIn, 'checkInStatus' => $mk($sunIn, $qty)],
+                'giftGiven' => !empty($r['gift_given']),
             ];
         }, $rows);
         echo json_encode(['ok' => true, 'roster' => $roster]);

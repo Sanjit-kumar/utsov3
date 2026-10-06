@@ -9,12 +9,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --red-dark:#6B0E0E;--red:#9E2424;--cream:#FFFDF8;--ivory:#FFF0E5;
-  --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#B8860B;--amber-bg:#FFF6E0;
+  --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#6D4C2F;--amber-bg:#EFE4D8;
   --on-cream:#1A0000;--line:#eadbd0;
-  /* Day-type colors — a separate visual channel from check-in status (green/amber/gray above),
-     so "which day" and "how checked-in" never fight for the same color. Kept bold/saturated
-     (not pastel) so they read at a glance from across a table. */
-  --sat:#1565C0;--sun:#E65100;--both:#7B1FA2;
+  /* Day-type colors — a separate visual channel from check-in status (green=full, brown=partial,
+     gray=none above), so "which day" and "how checked-in" never fight for the same color. */
+  --sat:#0D1F6B;--sun:#A3134F;--both:#C25B00;
 }
 body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
 button{font-family:inherit;cursor:pointer}

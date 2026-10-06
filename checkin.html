@@ -12,8 +12,9 @@
   --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#B8860B;--amber-bg:#FFF6E0;
   --on-cream:#1A0000;--line:#eadbd0;
   /* Day-type colors — a separate visual channel from check-in status (green/amber/gray above),
-     so "which day" and "how checked-in" never fight for the same color. */
-  --sat:#1D6FA5;--sat-bg:#E3F1F9;--sun:#B23A6B;--sun-bg:#FBE8EF;--both:#6B3FA0;--both-bg:#EFE7F7;
+     so "which day" and "how checked-in" never fight for the same color. Kept bold/saturated
+     (not pastel) so they read at a glance from across a table. */
+  --sat:#1565C0;--sun:#E65100;--both:#7B1FA2;
 }
 body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
 button{font-family:inherit;cursor:pointer}
@@ -87,10 +88,10 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .row-name{flex:1;min-width:0;font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row-line2{display:flex;align-items:center;gap:.55rem;font-size:.78rem;color:#888;flex-wrap:wrap}
 
-.day-pill{font-size:.63rem;font-weight:800;letter-spacing:.04em;padding:.24rem .5rem;border-radius:999px;white-space:nowrap;flex-shrink:0}
-.day-pill.sat{background:var(--sat-bg);color:var(--sat)}
-.day-pill.sun{background:var(--sun-bg);color:var(--sun)}
-.day-pill.both{background:var(--both-bg);color:var(--both)}
+.day-pill{font-size:.63rem;font-weight:800;letter-spacing:.04em;padding:.26rem .55rem;border-radius:999px;white-space:nowrap;flex-shrink:0;color:#fff}
+.day-pill.sat{background:var(--sat)}
+.day-pill.sun{background:var(--sun)}
+.day-pill.both{background:var(--both)}
 
 .dot-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
 .dot{width:9px;height:9px;border-radius:50%;background:#e2e2e2;flex-shrink:0}
@@ -234,8 +235,21 @@ function rosterMatchesDay(r) {
 }
 
 // ── Day-color + partial-fill visual helpers ──────────────────────────────────
-function dayClass(days) { return days === 'Both Days' ? 'both' : days === 'Saturday' ? 'sat' : 'sun'; }
-function dayPillText(days) { return days === 'Both Days' ? 'BOTH' : days === 'Saturday' ? 'SAT' : 'SUN'; }
+// 'days' comes in two formats depending on which API action supplied it — the roster list
+// uses bare "Saturday"/"Sunday"/"Both Days", but lookup/confirm return the fuller
+// "Saturday, Oct 17" / "Both Days (Oct 17 & 18)" (nicer for the detail view's "Days" row).
+// Match by substring, not exact equality, so both forms resolve to the same color.
+function dayClass(days) {
+  if (!days) return 'both';
+  if (days.indexOf('Both') !== -1) return 'both';
+  if (days.indexOf('Saturday') !== -1) return 'sat';
+  if (days.indexOf('Sunday') !== -1) return 'sun';
+  return 'both';
+}
+function dayPillText(days) {
+  var c = dayClass(days);
+  return c === 'both' ? 'BOTH' : c === 'sat' ? 'SAT' : 'SUN';
+}
 
 // Small filled/hollow dot row so "2 of 5 checked in" reads at a glance without doing math.
 function dotsHtml(checkedIn, qty) {

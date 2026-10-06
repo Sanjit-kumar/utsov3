@@ -106,6 +106,7 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .row.open .row-detail{display:block}
 .row-detail .loading{padding:.8rem 0;font-size:.85rem;color:#999;text-align:center}
 .detail-card{padding-top:.7rem}
+.checkin-day-note{font-size:.72rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
 .detail-head{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
 .detail-card>.dot-row{margin:0 0 .6rem;gap:4px}
 .detail-card>.dot-row .dot{width:11px;height:11px}
@@ -217,16 +218,19 @@ function escapeHtml(s) {
 }
 
 // ── Day tab state ─────────────────────────────────────────────────────────────
-// A "Both Days" registration appears on BOTH tabs — check-in state is shared across both
-// (there's one list of attendees, not separate Saturday/Sunday rosters per person), so if
-// someone's marked present on Saturday they'll still show as present when you flip to Sunday.
+// A "Both Days" registration appears on BOTH tabs, but Saturday and Sunday check-in are
+// tracked completely independently server-side — marking someone present on Saturday has
+// zero effect on their Sunday status. Needed for accurate per-day headcounts (catering,
+// gifts, etc.) since a Both-Days pass holder might only actually show up on one of the days.
 var currentDay = 'saturday';
 
 function selectDay(day) {
   currentDay = day;
+  openRowId = null; // close any open detail panel — it belongs to the day we're leaving
   document.getElementById('tabSaturday').classList.toggle('active', day === 'saturday');
   document.getElementById('tabSunday').classList.toggle('active', day === 'sunday');
   renderRoster();
+  refreshStats();
 }
 
 function rosterMatchesDay(r) {
@@ -250,6 +254,10 @@ function dayPillText(days) {
   return c === 'both' ? 'BOTH' : c === 'sat' ? 'SAT' : 'SUN';
 }
 
+// Cache/roster keys for the day currently selected.
+function dayKey(day) { return day === 'sunday' ? 'sun' : 'sat'; }
+function cacheKey(id, day) { return id + '|' + day; }
+
 // Small filled/hollow dot row so "2 of 5 checked in" reads at a glance without doing math.
 function dotsHtml(checkedIn, qty) {
   var MAX = 8;
@@ -261,11 +269,13 @@ function dotsHtml(checkedIn, qty) {
   return '<span class="dot-row">' + html + '</span>';
 }
 
-// Per-day running totals, computed client-side from the already-loaded roster — no extra API call.
+// Per-day running totals, computed client-side from the already-loaded roster — no extra API
+// call. Each row carries independent .sat and .sun counts, so this reads the right one.
 function computeDayStats(dayLabel) {
+  var key = dayLabel === 'Saturday' ? 'sat' : 'sun';
   var total = 0, checked = 0;
   roster.forEach(function(r) {
-    if (r.days === 'Both Days' || r.days === dayLabel) { total += r.qty; checked += r.checkedInCount; }
+    if (r.days === 'Both Days' || r.days === dayLabel) { total += r.qty; checked += r[key].checkedInCount; }
   });
   return { total: total, checked: checked };
 }
@@ -290,11 +300,12 @@ function loadRoster() {
 }
 
 function refreshStats() {
-  apiCall('list', {}).then(function(d) {
+  apiCall('list', { day: currentDay }).then(function(d) {
     if (d.err) return;
+    var dayName = currentDay === 'saturday' ? 'Saturday' : 'Sunday';
     document.getElementById('statsLine').textContent =
       d.fullyCheckedIn + ' fully in · ' + d.partiallyCheckedIn + ' partial · ' +
-      d.checkedInHeadcount + ' / ' + d.totalHeadcount + ' people';
+      d.checkedInHeadcount + ' / ' + d.totalHeadcount + ' people — ' + dayName;
   });
 }
 
@@ -305,14 +316,16 @@ function refreshStats() {
 var detailCache = {};
 
 function captureOpenRowEdits() {
-  if (openRowId === null || !detailCache[openRowId]) return;
+  if (openRowId === null) return;
+  var key = cacheKey(openRowId, currentDay);
+  if (!detailCache[key]) return;
   var container = document.getElementById('checks-' + openRowId);
   if (!container) return;
   var boxes = container.querySelectorAll('input[type=checkbox]');
   boxes.forEach(function(b) {
     var idx = parseInt(b.dataset.idx, 10);
-    if (detailCache[openRowId].attendees[idx]) {
-      detailCache[openRowId].attendees[idx].checkedIn = b.checked;
+    if (detailCache[key].attendees[idx]) {
+      detailCache[key].attendees[idx].checkedIn = b.checked;
     }
   });
 }
@@ -334,10 +347,11 @@ function renderRoster() {
   listEl.innerHTML = '';
 
   filtered.forEach(function(r) {
+    var rs = r[dayKey(currentDay)]; // this day's independent {checkedInCount, checkInStatus}
     var row = document.createElement('div');
-    row.className = 'row status-' + r.checkInStatus + ' day-' + dayClass(r.days) + (openRowId === r.id ? ' open' : '');
+    row.className = 'row status-' + rs.checkInStatus + ' day-' + dayClass(r.days) + (openRowId === r.id ? ' open' : '');
     row.dataset.id = r.id;
-    var badgeText = r.checkInStatus === 'full' ? '✓ All In' : r.checkInStatus === 'partial' ? (r.checkedInCount + '/' + r.qty + ' In') : 'Not In';
+    var badgeText = rs.checkInStatus === 'full' ? '✓ All In' : rs.checkInStatus === 'partial' ? (rs.checkedInCount + '/' + r.qty + ' In') : 'Not In';
     row.innerHTML =
       '<div class="row-head" onclick="toggleRow(' + r.id + ')">' +
         '<span class="row-chevron">▶</span>' +
@@ -345,11 +359,11 @@ function renderRoster() {
           '<div class="row-line1">' +
             '<span class="day-pill ' + dayClass(r.days) + '">' + dayPillText(r.days) + '</span>' +
             '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
-            '<span class="row-badge ' + r.checkInStatus + '">' + badgeText + '</span>' +
+            '<span class="row-badge ' + rs.checkInStatus + '">' + badgeText + '</span>' +
           '</div>' +
           '<div class="row-line2">' +
-            dotsHtml(r.checkedInCount, r.qty) +
-            '<span>' + r.checkedInCount + ' of ' + r.qty + ' people</span>' +
+            dotsHtml(rs.checkedInCount, r.qty) +
+            '<span>' + rs.checkedInCount + ' of ' + r.qty + ' people — ' + (currentDay === 'saturday' ? 'Sat' : 'Sun') + '</span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -371,7 +385,7 @@ function toggleRow(id) {
     return;
   }
   openRowId = id;
-  delete detailCache[id]; // explicit (re)open always fetches fresh server truth
+  delete detailCache[cacheKey(id, currentDay)]; // explicit (re)open always fetches fresh server truth
   renderRoster();
   var el = document.querySelector('.row[data-id="' + id + '"]');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -379,20 +393,23 @@ function toggleRow(id) {
 
 // Renders the open row's detail panel from cache when available (preserves in-progress
 // checkbox edits across background re-renders); fetches fresh from the server otherwise.
+// Always scoped to currentDay — tab switches close any open row (see selectDay), so the
+// cache can never be read under the wrong day.
 function renderOpenRowDetail(id) {
   var detailEl = document.getElementById('detail-' + id);
   if (!detailEl) return;
-  if (detailCache[id]) {
-    detailEl.innerHTML = renderDetailHtml(detailCache[id]);
+  var key = cacheKey(id, currentDay);
+  if (detailCache[key]) {
+    detailEl.innerHTML = renderDetailHtml(detailCache[key]);
     return;
   }
   detailEl.innerHTML = '<div class="loading">Loading ticket details…</div>';
-  apiCall('lookup', { manualId: id }).then(function(d) {
+  apiCall('lookup', { manualId: id, day: currentDay }).then(function(d) {
     if (d.err) {
       detailEl.innerHTML = '<div class="loading">' + escapeHtml(d.err) + '</div>';
       return;
     }
-    detailCache[id] = d.registration;
+    detailCache[key] = d.registration;
     if (openRowId === id) detailEl.innerHTML = renderDetailHtml(d.registration); // still open? (user may have closed it while this was in flight)
   });
 }
@@ -420,14 +437,16 @@ function renderDetailHtml(reg) {
     );
   }).join('');
 
+  var checkinDayLabel = reg.checkinDay === 'sunday' ? 'Sunday, Oct 18' : 'Saturday, Oct 17';
   return (
     '<div class="detail-card">' +
+      '<div class="checkin-day-note">Checking in for ' + checkinDayLabel + '</div>' +
       '<div class="detail-head">' +
         '<span class="day-pill ' + dayClass(reg.days) + '">' + dayPillText(reg.days) + '</span>' +
         '<span class="detail-status ' + reg.checkInStatus + '">' + statusLabel + '</span>' +
       '</div>' +
       dotsHtml(reg.checkedInCount, reg.qty) +
-      '<div class="result-row"><span>Days</span><b>' + escapeHtml(reg.days) + '</b></div>' +
+      '<div class="result-row"><span>Days Purchased</span><b>' + escapeHtml(reg.days) + '</b></div>' +
       '<div class="result-row"><span>Pass Type</span><b>' + escapeHtml(reg.passType) + '</b></div>' +
       '<div class="result-row"><span>Total Paid</span><b>$' + reg.total + '</b></div>' +
       '<div class="attendee-check-list" id="checks-' + reg.id + '">' + checkRows + '</div>' +
@@ -446,13 +465,14 @@ function saveCheckin(id) {
   boxes.forEach(function(b) { present[parseInt(b.dataset.idx, 10)] = b.checked; });
 
   var station = document.getElementById('stationName').value.trim() || 'Front Gate';
-  apiCall('confirm', { manualId: id, station: station, present: present }).then(function(d) {
+  apiCall('confirm', { manualId: id, station: station, present: present, day: currentDay }).then(function(d) {
     if (d.err) { showError(d.err); return; }
-    detailCache[id] = d.registration; // post-save server truth, not what the user merely clicked
+    detailCache[cacheKey(id, currentDay)] = d.registration; // post-save server truth, not what the user merely clicked
     var i = roster.findIndex(function(r) { return r.id === id; });
-    if (i !== -1) { roster[i].checkedInCount = d.registration.checkedInCount; roster[i].checkInStatus = d.registration.checkInStatus; }
+    if (i !== -1) { roster[i][dayKey(currentDay)] = { checkedInCount: d.registration.checkedInCount, checkInStatus: d.registration.checkInStatus }; }
     var inCount = d.registration.checkedInCount;
-    showSuccess('✓ Saved: ' + d.registration.name + ' — ' + inCount + ' of ' + d.registration.qty + ' checked in');
+    var dayName = currentDay === 'saturday' ? 'Saturday' : 'Sunday';
+    showSuccess('✓ Saved (' + dayName + '): ' + d.registration.name + ' — ' + inCount + ' of ' + d.registration.qty + ' checked in');
     refreshStats();
     updateDayTabStats();
     renderRoster();
@@ -466,15 +486,20 @@ function manualLookup() {
   var id = parseInt(idVal, 10);
   document.getElementById('manualIdInput').value = '';
   openRowId = id;
-  delete detailCache[id]; // always want fresh server truth on an explicit open
+  delete detailCache[cacheKey(id, currentDay)]; // always want fresh server truth on an explicit open
   if (!roster.some(function(r) { return r.id === id; })) {
-    apiCall('lookup', { manualId: id }).then(function(d) {
+    apiCall('lookup', { manualId: id, day: currentDay }).then(function(d) {
       if (d.err) { showError(d.err); return; }
       var reg = d.registration;
-      detailCache[id] = reg;
-      roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
+      detailCache[cacheKey(id, currentDay)] = reg;
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days,
+                   sat: { checkedInCount: 0, checkInStatus: 'none' },
+                   sun: { checkedInCount: 0, checkInStatus: 'none' } };
+      stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };
+      roster.unshift(stub);
       updateDayTabStats();
       renderRoster();
+      loadRoster(); // true up the other day's count from the server in the background
     });
     return;
   }
@@ -557,17 +582,22 @@ function scanLoop() {
 }
 
 function handleScanned(token) {
-  apiCall('lookup', { token: token }).then(function(d) {
+  apiCall('lookup', { token: token, day: currentDay }).then(function(d) {
     if (d.err) {
       showError(d.err);
       setTimeout(function() { lastScannedToken = null; }, 2000);
       return;
     }
     var reg = d.registration;
-    detailCache[reg.id] = reg;
+    detailCache[cacheKey(reg.id, currentDay)] = reg;
     if (!roster.some(function(r) { return r.id === reg.id; })) {
-      roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days,
+                   sat: { checkedInCount: 0, checkInStatus: 'none' },
+                   sun: { checkedInCount: 0, checkInStatus: 'none' } };
+      stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };
+      roster.unshift(stub);
       updateDayTabStats();
+      loadRoster(); // true up the other day's count from the server in the background
     }
     toggleCamera(); // close scanner
     document.getElementById('searchInput').value = '';
@@ -601,9 +631,8 @@ function showSuccess(msg) {
   // Default to whichever event day it actually is; Saturday otherwise.
   var today = new Date();
   var initialDay = (today.getMonth() === 9 && today.getDate() === 18) ? 'sunday' : 'saturday';
-  selectDay(initialDay);
+  selectDay(initialDay); // also triggers the first refreshStats()
 
-  refreshStats();
   loadRoster();
   setInterval(refreshStats, 15000);
   setInterval(loadRoster, 30000);

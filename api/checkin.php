@@ -18,28 +18,30 @@ function openCheckinDB() {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $db->exec("PRAGMA busy_timeout=5000");
     // Self-migrating, like checkout.php's openDB() — only ADDs columns, never touches rows.
+    // Saturday and Sunday check-in are tracked in FULLY SEPARATE columns — a "Both Days" pass
+    // holder checking in Saturday must NOT show as checked-in when someone opens them on the
+    // Sunday tab the next day; each day needs its own independent headcount (catering, gifts,
+    // etc. all depend on knowing who actually walked in on which day). The older shared
+    // checked_in_attendees/checked_in_at/checked_in_by columns are left in place but unused —
+    // there was no real event data in them (checked before this change shipped), so nothing
+    // is migrated or lost.
     $cols = $db->query("PRAGMA table_info(tb_registrations)")->fetchAll(PDO::FETCH_COLUMN, 1);
-    if (!in_array('checked_in_at', $cols)) {
-        $db->exec("ALTER TABLE tb_registrations ADD COLUMN checked_in_at TEXT");
-    }
-    if (!in_array('checked_in_by', $cols)) {
-        $db->exec("ALTER TABLE tb_registrations ADD COLUMN checked_in_by TEXT");
-    }
-    // Per-attendee check-in: JSON array of booleans, one per pass on the registration (index
-    // matches attendee_names/food_pref). Lets a party check in across multiple arrivals instead
-    // of all-or-nothing. checked_in_at/checked_in_by above now mean "last check-in action here",
-    // not "fully checked in" — use the computed checkInStatus field for that.
-    if (!in_array('checked_in_attendees', $cols)) {
-        $db->exec("ALTER TABLE tb_registrations ADD COLUMN checked_in_attendees TEXT");
+    $toAdd = [
+        'checked_in_attendees_sat' => 'TEXT', 'checked_in_at_sat' => 'TEXT', 'checked_in_by_sat' => 'TEXT',
+        'checked_in_attendees_sun' => 'TEXT', 'checked_in_at_sun' => 'TEXT', 'checked_in_by_sun' => 'TEXT',
+    ];
+    foreach ($toAdd as $col => $type) {
+        if (!in_array($col, $cols)) {
+            $db->exec("ALTER TABLE tb_registrations ADD COLUMN {$col} {$type}");
+        }
     }
     return $db;
 }
 
-// Parses checked_in_attendees into a boolean array of exactly $qty entries (missing/short/
-// corrupt data defaults every slot to not-checked-in, never to checked-in).
-function parsePresentArray($row) {
-    $qty = (int)$row['qty'];
-    $arr = json_decode(isset($row['checked_in_attendees']) ? $row['checked_in_attendees'] : '', true);
+// Parses a raw checked_in_attendees_* JSON string into a boolean array of exactly $qty entries
+// (missing/short/corrupt data defaults every slot to not-checked-in, never to checked-in).
+function parsePresentJson($json, $qty) {
+    $arr = json_decode($json !== null ? $json : '', true);
     if (!is_array($arr)) $arr = [];
     $out = [];
     for ($i = 0; $i < $qty; $i++) {
@@ -48,13 +50,30 @@ function parsePresentArray($row) {
     return $out;
 }
 
-function attendeeSummary($row) {
+// Per-day column pair for a given 'saturday'|'sunday' day string.
+function dayCols($day) {
+    return $day === 'sunday'
+        ? ['present' => 'checked_in_attendees_sun', 'at' => 'checked_in_at_sun', 'by' => 'checked_in_by_sun']
+        : ['present' => 'checked_in_attendees_sat', 'at' => 'checked_in_at_sat', 'by' => 'checked_in_by_sat'];
+}
+
+function parsePresentArray($row, $day) {
+    $col = dayCols($day)['present'];
+    return parsePresentJson(isset($row[$col]) ? $row[$col] : null, (int)$row['qty']);
+}
+
+// Does this registration's purchased days include $day ('saturday'|'sunday')? "both" always does.
+function dayApplies($daysSelection, $day) {
+    return $daysSelection === 'both' || $daysSelection === $day;
+}
+
+function attendeeSummary($row, $day) {
     $foodMap = ['vegetarian' => 'Vegetarian', 'nonvegetarian' => 'Non-Vegetarian', 'nodinner' => 'No Dinner'];
     $names = json_decode($row['attendee_names'], true);
     if (!is_array($names)) $names = [$row['name']];
     $foodArr = json_decode($row['food_pref'], true);
     if (!is_array($foodArr)) $foodArr = [$row['food_pref']];
-    $present = parsePresentArray($row);
+    $present = parsePresentArray($row, $day);
 
     $attendees = [];
     foreach ($names as $i => $n) {
@@ -69,13 +88,15 @@ function attendeeSummary($row) {
     return $attendees;
 }
 
-function registrationPayload($row) {
+// $day = 'saturday' | 'sunday' — which day's independent check-in state this payload reflects.
+function registrationPayload($row, $day) {
     $daysMap = ['both' => 'Both Days (Oct 17 & 18)', 'saturday' => 'Saturday, Oct 17', 'sunday' => 'Sunday, Oct 18'];
     $passTypeMap = ['full' => 'Full Package', 'concert_only' => 'Concert Only', 'mixed' => 'Mixed (Full + Concert Only)'];
-    $present = parsePresentArray($row);
+    $present = parsePresentArray($row, $day);
     $qty = (int)$row['qty'];
     $checkedInCount = count(array_filter($present));
     $status = $checkedInCount === 0 ? 'none' : ($checkedInCount >= $qty ? 'full' : 'partial');
+    $cols = dayCols($day);
     return [
         'id'              => (int)$row['id'],
         'name'            => $row['name'],
@@ -86,16 +107,17 @@ function registrationPayload($row) {
         'kids6to12'       => (int)(isset($row['kids_6to12']) ? $row['kids_6to12'] : 0),
         'children'        => (int)(isset($row['children']) ? $row['children'] : 0),
         'days'            => isset($daysMap[$row['days_selection']]) ? $daysMap[$row['days_selection']] : 'Both Days',
+        'checkinDay'      => $day, // which day THIS payload's check-in state belongs to
         'passType'        => isset($passTypeMap[$row['pass_type']]) ? $passTypeMap[$row['pass_type']] : 'Full Package',
         'total'           => number_format((float)$row['total_amount'], 2),
         'status'          => $row['status'],
         'isPaid'          => ($row['status'] === 'paid'),
-        'attendees'       => attendeeSummary($row),
+        'attendees'       => attendeeSummary($row, $day),
         'checkedInCount'  => $checkedInCount,
-        'checkInStatus'   => $status,          // 'none' | 'partial' | 'full'
-        'checkedIn'       => ($status === 'full'), // kept for older clients: true only when everyone's in
-        'checkedInAt'     => $row['checked_in_at'],
-        'checkedInBy'     => $row['checked_in_by'],
+        'checkInStatus'   => $status,          // 'none' | 'partial' | 'full' — for THIS day only
+        'checkedIn'       => ($status === 'full'),
+        'checkedInAt'     => isset($row[$cols['at']]) ? $row[$cols['at']] : null,
+        'checkedInBy'     => isset($row[$cols['by']]) ? $row[$cols['by']] : null,
     ];
 }
 
@@ -114,6 +136,13 @@ function resolveCheckinId($post) {
     return null;
 }
 
+function resolveDay($post) {
+    $day = isset($post->day) ? (string)$post->day : '';
+    return ($day === 'saturday' || $day === 'sunday') ? $day : null;
+}
+
+function dayLabel($d) { return $d === 'sunday' ? 'Sunday' : 'Saturday'; }
+
 $action = isset($_post->action) ? (string)$_post->action : '';
 $db = openCheckinDB();
 
@@ -121,7 +150,12 @@ switch ($action) {
 
     // Scan a QR (or manually-entered order id) and return full details WITHOUT marking
     // check-in yet — lets the volunteer review payment/pass details before confirming.
+    // Always scoped to a specific day (the tab the volunteer currently has open) so a
+    // "Both Days" person's Saturday and Sunday check-in states never bleed into each other.
     case 'lookup': {
+        $day = resolveDay($_post);
+        if ($day === null) { echo json_encode(['err' => 'Missing or invalid day']); exit; }
+
         $id = resolveCheckinId($_post);
         if ($id === null) { echo json_encode(['err' => 'Invalid or forged QR code']); exit; }
 
@@ -130,16 +164,25 @@ switch ($action) {
         $row = $sel->fetch(PDO::FETCH_ASSOC);
         if (!$row) { echo json_encode(['err' => 'Registration not found']); exit; }
 
-        echo json_encode(['ok' => true, 'registration' => registrationPayload($row)]);
+        if (!dayApplies($row['days_selection'], $day)) {
+            echo json_encode(['err' => $row['name'] . "'s pass does not include " . dayLabel($day) . '.']);
+            exit;
+        }
+
+        echo json_encode(['ok' => true, 'registration' => registrationPayload($row, $day)]);
         break;
     }
 
-    // Save per-attendee check-in state. `present` is a boolean array (one entry per pass on
-    // the registration, same order as attendee_names) reflecting who the volunteer has
-    // ticked as physically here *as of this submit* — it fully replaces the stored state, so
-    // un-ticking someone is a valid correction, not just additive. Supports partial arrivals:
-    // calling this again later with more boxes checked just adds those people.
+    // Save per-attendee check-in state for ONE day only. `present` is a boolean array (one
+    // entry per pass on the registration, same order as attendee_names) reflecting who the
+    // volunteer has ticked as physically here *as of this submit*, for the day given in
+    // `day` — it fully replaces that day's stored state, so un-ticking someone is a valid
+    // correction. Saturday and Sunday are completely independent: checking someone in on
+    // Saturday has zero effect on their Sunday status, and vice versa.
     case 'confirm': {
+        $day = resolveDay($_post);
+        if ($day === null) { echo json_encode(['err' => 'Missing or invalid day']); exit; }
+
         $station = mb_substr(isset($_post->station) ? (string)$_post->station : 'Front Gate', 0, 100);
         $id = resolveCheckinId($_post);
         if ($id === null) { echo json_encode(['err' => 'Invalid or forged QR code']); exit; }
@@ -150,12 +193,17 @@ switch ($action) {
         if (!$row) { echo json_encode(['err' => 'Registration not found']); exit; }
 
         if ($row['status'] !== 'paid') {
-            echo json_encode(['err' => 'Not marked as paid — do not check in', 'registration' => registrationPayload($row)]);
+            echo json_encode(['err' => 'Not marked as paid — do not check in', 'registration' => registrationPayload($row, $day)]);
+            break;
+        }
+
+        if (!dayApplies($row['days_selection'], $day)) {
+            echo json_encode(['err' => $row['name'] . "'s pass does not include " . dayLabel($day) . '.']);
             break;
         }
 
         $qty = (int)$row['qty'];
-        $before = parsePresentArray($row);
+        $before = parsePresentArray($row, $day);
         $wasAnyIn = in_array(true, $before, true);
 
         // Build the new present[] from the submitted array; default to "unchanged" if the
@@ -171,55 +219,54 @@ switch ($action) {
         }
 
         $now = date('Y-m-d H:i:s');
-        $upd = $db->prepare("UPDATE tb_registrations SET checked_in_attendees = :present, checked_in_at = :now, checked_in_by = :station WHERE id = :id");
+        $cols = dayCols($day);
+        $sql = "UPDATE tb_registrations SET {$cols['present']} = :present, {$cols['at']} = :now, {$cols['by']} = :station WHERE id = :id";
+        $upd = $db->prepare($sql);
         $upd->execute([':present' => json_encode($present), ':now' => $now, ':station' => $station, ':id' => $id]);
 
-        $row['checked_in_attendees'] = json_encode($present);
-        $row['checked_in_at'] = $now;
-        $row['checked_in_by'] = $station;
+        $row[$cols['present']] = json_encode($present);
+        $row[$cols['at']] = $now;
+        $row[$cols['by']] = $station;
 
-        // Send the "you're checked in" SMS only once — on the transition from nobody-in to
-        // somebody-in — never again on later partial updates for the same registration.
+        // Send the "you're checked in" SMS only once per day — on the transition from
+        // nobody-in-TODAY to somebody-in-TODAY. A Both-Days person who comes both days gets
+        // two separate welcome texts, one per day, which is correct (two separate visits).
         $isAnyInNow = in_array(true, $present, true);
         if (!$wasAnyIn && $isAnyInNow && !empty($row['sms_updates'])) {
-            $smsBody = "UTSOV 2026: You're checked in! Welcome, {$row['name']} (party of {$qty}). Enjoy the celebration! Reply STOP to opt out.";
+            $smsBody = "UTSOV 2026: You're checked in for " . dayLabel($day) . "! Welcome, {$row['name']} (party of {$qty}). Enjoy the celebration! Reply STOP to opt out.";
             sendTwilioSMS($row['phone'], $smsBody);
         }
 
-        echo json_encode(['ok' => true, 'registration' => registrationPayload($row)]);
+        echo json_encode(['ok' => true, 'registration' => registrationPayload($row, $day)]);
         break;
     }
 
-    // Live stats for the header. Polled periodically.
+    // Live stats. Optional `day` ('saturday'|'sunday') scopes to that day; omitted = overall
+    // (a person counts as "in" overall if they checked in on either day they're eligible for).
     case 'list': {
-        $stmt = $db->query("SELECT qty, checked_in_attendees FROM tb_registrations WHERE status='paid'");
+        $day = resolveDay($_post);
+        $stmt = $db->query("SELECT qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun FROM tb_registrations WHERE status='paid'");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $totalPaid = count($rows);
         $fullyIn = 0; $partiallyIn = 0; $headcountIn = 0; $totalHeadcount = 0;
         foreach ($rows as $r) {
-            $present = parsePresentArray($r);
             $qty = (int)$r['qty'];
+            if ($day !== null) {
+                if (!dayApplies($r['days_selection'], $day)) continue;
+                $present = parsePresentArray($r, $day);
+            } else {
+                $sat = parsePresentArray($r, 'saturday');
+                $sun = parsePresentArray($r, 'sunday');
+                $present = [];
+                for ($i = 0; $i < $qty; $i++) $present[] = $sat[$i] || $sun[$i];
+            }
             $inCount = count(array_filter($present));
             $totalHeadcount += $qty;
             $headcountIn += $inCount;
             if ($inCount >= $qty && $qty > 0) $fullyIn++;
             elseif ($inCount > 0) $partiallyIn++;
         }
-
-        $recentStmt = $db->query(
-            "SELECT id, name, qty, checked_in_attendees, checked_in_at, checked_in_by FROM tb_registrations
-             WHERE status='paid' AND checked_in_at IS NOT NULL
-             ORDER BY checked_in_at DESC LIMIT 25"
-        );
-        $recent = array_map(function($r) {
-            $present = parsePresentArray($r);
-            return [
-                'id' => $r['id'], 'name' => $r['name'], 'qty' => $r['qty'],
-                'checkedInCount' => count(array_filter($present)),
-                'checked_in_at' => $r['checked_in_at'], 'checked_in_by' => $r['checked_in_by'],
-            ];
-        }, $recentStmt->fetchAll(PDO::FETCH_ASSOC));
 
         echo json_encode([
             'ok' => true,
@@ -228,33 +275,35 @@ switch ($action) {
             'partiallyCheckedIn'     => $partiallyIn,
             'checkedInHeadcount'     => $headcountIn,
             'totalHeadcount'         => $totalHeadcount,
-            'recent'                 => $recent,
         ]);
         break;
     }
 
     // Full roster for the browsable/searchable list — every paid registration, lightweight
-    // fields only (full details are fetched fresh via 'lookup' when a row is opened, so this
-    // list can't go stale and cause a wrong check-in decision).
+    // fields only (full per-attendee details are fetched fresh via 'lookup' when a row is
+    // opened). Returns BOTH days' independent counts per row so the frontend can show
+    // whichever day's tab is active without a second round trip on every tab switch.
     case 'roster': {
         $stmt = $db->query(
-            "SELECT id, name, qty, days_selection, checked_in_attendees FROM tb_registrations
-             WHERE status='paid' ORDER BY name COLLATE NOCASE ASC"
+            "SELECT id, name, qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun
+             FROM tb_registrations WHERE status='paid' ORDER BY name COLLATE NOCASE ASC"
         );
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $daysMap = ['both' => 'Both Days', 'saturday' => 'Saturday', 'sunday' => 'Sunday'];
         $roster = array_map(function($r) use ($daysMap) {
-            $present = parsePresentArray($r);
             $qty = (int)$r['qty'];
-            $inCount = count(array_filter($present));
-            $status = $inCount === 0 ? 'none' : ($inCount >= $qty ? 'full' : 'partial');
+            $satPresent = parsePresentArray($r, 'saturday');
+            $sunPresent = parsePresentArray($r, 'sunday');
+            $satIn = count(array_filter($satPresent));
+            $sunIn = count(array_filter($sunPresent));
+            $mk = function($in, $qty) { return $in === 0 ? 'none' : ($in >= $qty ? 'full' : 'partial'); };
             return [
-                'id'             => (int)$r['id'],
-                'name'           => $r['name'],
-                'qty'            => $qty,
-                'days'           => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
-                'checkedInCount' => $inCount,
-                'checkInStatus'  => $status,
+                'id'    => (int)$r['id'],
+                'name'  => $r['name'],
+                'qty'   => $qty,
+                'days'  => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
+                'sat'   => ['checkedInCount' => $satIn, 'checkInStatus' => $mk($satIn, $qty)],
+                'sun'   => ['checkedInCount' => $sunIn, 'checkInStatus' => $mk($sunIn, $qty)],
             ];
         }, $rows);
         echo json_encode(['ok' => true, 'roster' => $roster]);

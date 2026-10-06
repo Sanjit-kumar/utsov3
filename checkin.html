@@ -11,6 +11,9 @@
   --red-dark:#6B0E0E;--red:#9E2424;--cream:#FFFDF8;--ivory:#FFF0E5;
   --green:#1F8A3B;--green-bg:#E7F6EC;--amber:#B8860B;--amber-bg:#FFF6E0;
   --on-cream:#1A0000;--line:#eadbd0;
+  /* Day-type colors — a separate visual channel from check-in status (green/amber/gray above),
+     so "which day" and "how checked-in" never fight for the same color. */
+  --sat:#1D6FA5;--sat-bg:#E3F1F9;--sun:#B23A6B;--sun-bg:#FBE8EF;--both:#6B3FA0;--both-bg:#EFE7F7;
 }
 body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--on-cream);min-height:100vh;display:flex;flex-direction:column}
 button{font-family:inherit;cursor:pointer}
@@ -21,8 +24,17 @@ header .title{font-weight:700;font-size:1rem}
 header .stats{font-size:.76rem;opacity:.95;text-align:right;line-height:1.3}
 
 .day-tabs{display:flex;background:var(--red-dark);padding:0 1rem .6rem;gap:.4rem;position:sticky;top:48px;z-index:20}
-.day-tab{flex:1;padding:.55rem;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:rgba(255,255,255,.85);border-radius:8px;font-weight:700;font-size:.85rem}
+.day-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.5rem;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:rgba(255,255,255,.85);border-radius:8px}
+.day-tab .tab-main{font-weight:700;font-size:.85rem}
+.day-tab .tab-sub{font-weight:600;font-size:.68rem;opacity:.85}
 .day-tab.active{background:#fff;color:var(--red-dark);border-color:#fff}
+.day-tab.active .tab-sub{opacity:.7}
+
+/* Color-key strip — explains the day-pill colors to whoever sits down at this page fresh */
+.legend{display:flex;flex-wrap:wrap;gap:.5rem 1rem;padding:.55rem 1rem;background:#fff;border-bottom:1px solid var(--line);font-size:.72rem;color:#666;align-items:center}
+.legend b{color:#444;font-weight:700}
+.legend .lg-item{display:flex;align-items:center;gap:.3rem;white-space:nowrap}
+.legend .lg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 
 .station-bar{background:var(--ivory);padding:.6rem 1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
 .station-bar label{font-size:.8rem;font-weight:600}
@@ -58,26 +70,48 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 
 /* Roster rows */
 .roster{display:flex;flex-direction:column;gap:.5rem;padding-bottom:1rem}
-.row{background:#fff;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.row{background:#fff;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .row.status-full{border-color:var(--green)}
 .row.status-partial{border-color:var(--amber)}
-.row-head{display:flex;align-items:center;gap:.6rem;padding:.75rem .9rem;cursor:pointer}
-.row-name{flex:1;font-weight:700;font-size:.95rem}
-.row-meta{font-size:.78rem;color:#888;white-space:nowrap}
-.row-badge{font-size:.66rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:.25rem .55rem;border-radius:999px;white-space:nowrap}
+/* Left stripe = which day(s); card border above = check-in progress. Two independent signals,
+   so these rules must come after .status-full/.status-partial to win on just the left edge. */
+.row.day-sat{border-left:5px solid var(--sat)}
+.row.day-sun{border-left:5px solid var(--sun)}
+.row.day-both{border-left:5px solid var(--both)}
+
+.row-head{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem .9rem;cursor:pointer}
+.row-chevron{color:#bbb;font-size:.8rem;transition:transform .15s;margin-top:.25rem}
+.row.open .row-chevron{transform:rotate(90deg)}
+.row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:.35rem}
+.row-line1{display:flex;align-items:center;gap:.5rem}
+.row-name{flex:1;min-width:0;font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-line2{display:flex;align-items:center;gap:.55rem;font-size:.78rem;color:#888;flex-wrap:wrap}
+
+.day-pill{font-size:.63rem;font-weight:800;letter-spacing:.04em;padding:.24rem .5rem;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.day-pill.sat{background:var(--sat-bg);color:var(--sat)}
+.day-pill.sun{background:var(--sun-bg);color:var(--sun)}
+.day-pill.both{background:var(--both-bg);color:var(--both)}
+
+.dot-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
+.dot{width:9px;height:9px;border-radius:50%;background:#e2e2e2;flex-shrink:0}
+.dot.filled{background:var(--green)}
+.dot-more{font-size:.68rem;color:#999}
+
+.row-badge{font-size:.66rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:.3rem .6rem;border-radius:999px;white-space:nowrap;flex-shrink:0}
 .row-badge.none{background:#eee;color:#777}
 .row-badge.partial{background:var(--amber-bg);color:var(--amber)}
 .row-badge.full{background:var(--green);color:#fff}
-.row-chevron{color:#bbb;font-size:.8rem;transition:transform .15s}
-.row.open .row-chevron{transform:rotate(90deg)}
 
 .row-detail{display:none;padding:0 .9rem .9rem;border-top:1px solid var(--line)}
 .row.open .row-detail{display:block}
 .row-detail .loading{padding:.8rem 0;font-size:.85rem;color:#999;text-align:center}
 .detail-card{padding-top:.7rem}
+.detail-head{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
+.detail-card>.dot-row{margin:0 0 .6rem;gap:4px}
+.detail-card>.dot-row .dot{width:11px;height:11px}
 .result-row{font-size:.9rem;margin:.3rem 0;display:flex;justify-content:space-between;gap:.5rem}
 .result-row b{font-weight:600}
-.detail-status{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:.3rem .6rem;border-radius:8px;display:inline-block;margin-bottom:.5rem}
+.detail-status{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:.3rem .6rem;border-radius:8px;display:inline-flex;align-items:center;gap:.4rem}
 .detail-status.full{background:var(--green-bg);color:var(--green)}
 .detail-status.partial{background:var(--amber-bg);color:var(--amber)}
 .detail-status.none{background:#eee;color:#777}
@@ -107,13 +141,30 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 </header>
 
 <div class="day-tabs">
-  <button class="day-tab" id="tabSaturday" onclick="selectDay('saturday')">Saturday, Oct 17</button>
-  <button class="day-tab" id="tabSunday" onclick="selectDay('sunday')">Sunday, Oct 18</button>
+  <button class="day-tab" id="tabSaturday" onclick="selectDay('saturday')">
+    <span class="tab-main">Saturday, Oct 17</span>
+    <span class="tab-sub" id="tabSatStats">…</span>
+  </button>
+  <button class="day-tab" id="tabSunday" onclick="selectDay('sunday')">
+    <span class="tab-main">Sunday, Oct 18</span>
+    <span class="tab-sub" id="tabSunStats">…</span>
+  </button>
 </div>
 
 <div class="station-bar">
   <label for="stationName">Gate / Volunteer:</label>
   <input type="text" id="stationName" placeholder="e.g. Front Gate - Ranjan" maxlength="100">
+</div>
+
+<div class="legend">
+  <b>Day:</b>
+  <span class="lg-item"><span class="lg-dot" style="background:var(--sat)"></span>Saturday only</span>
+  <span class="lg-item"><span class="lg-dot" style="background:var(--sun)"></span>Sunday only</span>
+  <span class="lg-item"><span class="lg-dot" style="background:var(--both)"></span>Both Days</span>
+  <b style="margin-left:.4rem">In:</b>
+  <span class="lg-item"><span class="lg-dot" style="background:var(--green)"></span>All checked in</span>
+  <span class="lg-item"><span class="lg-dot" style="background:var(--amber)"></span>Partial</span>
+  <span class="lg-item"><span class="lg-dot" style="background:#ccc"></span>Not yet</span>
 </div>
 
 <div class="toolbar">
@@ -182,6 +233,36 @@ function rosterMatchesDay(r) {
   return r.days === 'Both Days' || r.days === (currentDay === 'saturday' ? 'Saturday' : 'Sunday');
 }
 
+// ── Day-color + partial-fill visual helpers ──────────────────────────────────
+function dayClass(days) { return days === 'Both Days' ? 'both' : days === 'Saturday' ? 'sat' : 'sun'; }
+function dayPillText(days) { return days === 'Both Days' ? 'BOTH' : days === 'Saturday' ? 'SAT' : 'SUN'; }
+
+// Small filled/hollow dot row so "2 of 5 checked in" reads at a glance without doing math.
+function dotsHtml(checkedIn, qty) {
+  var MAX = 8;
+  var show = Math.min(qty, MAX);
+  var filled = Math.min(checkedIn, show);
+  var html = '';
+  for (var i = 0; i < show; i++) html += '<span class="dot' + (i < filled ? ' filled' : '') + '"></span>';
+  if (qty > MAX) html += '<span class="dot-more">+' + (qty - MAX) + '</span>';
+  return '<span class="dot-row">' + html + '</span>';
+}
+
+// Per-day running totals, computed client-side from the already-loaded roster — no extra API call.
+function computeDayStats(dayLabel) {
+  var total = 0, checked = 0;
+  roster.forEach(function(r) {
+    if (r.days === 'Both Days' || r.days === dayLabel) { total += r.qty; checked += r.checkedInCount; }
+  });
+  return { total: total, checked: checked };
+}
+
+function updateDayTabStats() {
+  var sat = computeDayStats('Saturday'), sun = computeDayStats('Sunday');
+  document.getElementById('tabSatStats').textContent = sat.checked + ' / ' + sat.total + ' in';
+  document.getElementById('tabSunStats').textContent = sun.checked + ' / ' + sun.total + ' in';
+}
+
 // ── Roster state ──────────────────────────────────────────────────────────────
 var roster = [];        // full list from server: {id, name, qty, days, checkedInCount, checkInStatus}
 var openRowId = null;   // currently expanded registration id
@@ -190,6 +271,7 @@ function loadRoster() {
   return apiCall('roster', {}).then(function(d) {
     if (d.err) return;
     roster = d.roster || [];
+    updateDayTabStats();
     renderRoster();
   });
 }
@@ -240,15 +322,23 @@ function renderRoster() {
 
   filtered.forEach(function(r) {
     var row = document.createElement('div');
-    row.className = 'row status-' + r.checkInStatus + (openRowId === r.id ? ' open' : '');
+    row.className = 'row status-' + r.checkInStatus + ' day-' + dayClass(r.days) + (openRowId === r.id ? ' open' : '');
     row.dataset.id = r.id;
     var badgeText = r.checkInStatus === 'full' ? '✓ All In' : r.checkInStatus === 'partial' ? (r.checkedInCount + '/' + r.qty + ' In') : 'Not In';
     row.innerHTML =
       '<div class="row-head" onclick="toggleRow(' + r.id + ')">' +
         '<span class="row-chevron">▶</span>' +
-        '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
-        '<span class="row-meta">' + r.qty + 'p · ' + escapeHtml(r.days) + '</span>' +
-        '<span class="row-badge ' + r.checkInStatus + '">' + badgeText + '</span>' +
+        '<div class="row-main">' +
+          '<div class="row-line1">' +
+            '<span class="day-pill ' + dayClass(r.days) + '">' + dayPillText(r.days) + '</span>' +
+            '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
+            '<span class="row-badge ' + r.checkInStatus + '">' + badgeText + '</span>' +
+          '</div>' +
+          '<div class="row-line2">' +
+            dotsHtml(r.checkedInCount, r.qty) +
+            '<span>' + r.checkedInCount + ' of ' + r.qty + ' people</span>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="row-detail" id="detail-' + r.id + '"></div>';
     listEl.appendChild(row);
@@ -319,7 +409,11 @@ function renderDetailHtml(reg) {
 
   return (
     '<div class="detail-card">' +
-      '<span class="detail-status ' + reg.checkInStatus + '">' + statusLabel + '</span>' +
+      '<div class="detail-head">' +
+        '<span class="day-pill ' + dayClass(reg.days) + '">' + dayPillText(reg.days) + '</span>' +
+        '<span class="detail-status ' + reg.checkInStatus + '">' + statusLabel + '</span>' +
+      '</div>' +
+      dotsHtml(reg.checkedInCount, reg.qty) +
       '<div class="result-row"><span>Days</span><b>' + escapeHtml(reg.days) + '</b></div>' +
       '<div class="result-row"><span>Pass Type</span><b>' + escapeHtml(reg.passType) + '</b></div>' +
       '<div class="result-row"><span>Total Paid</span><b>$' + reg.total + '</b></div>' +
@@ -347,6 +441,7 @@ function saveCheckin(id) {
     var inCount = d.registration.checkedInCount;
     showSuccess('✓ Saved: ' + d.registration.name + ' — ' + inCount + ' of ' + d.registration.qty + ' checked in');
     refreshStats();
+    updateDayTabStats();
     renderRoster();
   });
 }
@@ -365,6 +460,7 @@ function manualLookup() {
       var reg = d.registration;
       detailCache[id] = reg;
       roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
+      updateDayTabStats();
       renderRoster();
     });
     return;
@@ -458,6 +554,7 @@ function handleScanned(token) {
     detailCache[reg.id] = reg;
     if (!roster.some(function(r) { return r.id === reg.id; })) {
       roster.unshift({ id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus });
+      updateDayTabStats();
     }
     toggleCamera(); // close scanner
     document.getElementById('searchInput').value = '';

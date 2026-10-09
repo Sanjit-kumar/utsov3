@@ -28,18 +28,14 @@ body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label
 
 .count-line{font-size:.78rem;color:var(--ink-soft);margin:0 0 .8rem .2rem}
 
-.member-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.9rem}
-.member-row{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.3rem 1rem 1.1rem;box-shadow:0 4px 16px rgba(92,0,0,.06);position:relative;transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s}
-.member-row:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(92,0,0,.13)}
-.avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--f-label);font-weight:700;font-size:1.05rem;color:#fff;flex-shrink:0;background:var(--red)}
-.m-info{width:100%;min-width:0}
-.m-name{font-weight:700;font-size:.95rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.member-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(92,0,0,.06)}
+.member-row{display:flex;align-items:center;gap:.9rem;padding:.8rem 1.2rem;border-bottom:1px solid var(--border);transition:background .15s}
+.member-row:last-child{border-bottom:none}
+.member-row:hover{background:#FFF8F0}
+.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--f-label);font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;background:var(--red)}
+.m-info{min-width:0;text-align:left}
+.m-name{font-weight:700;font-size:.92rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .m-name.unnamed{color:var(--ink-soft);font-style:italic;font-weight:400}
-.m-phone{font-size:.82rem;color:var(--ink-soft);display:block;margin-top:.2rem}
-.m-phone a{color:inherit;text-decoration:none}
-.m-phone a:hover{color:var(--red)}
-.admin-badge{position:absolute;top:.6rem;right:.6rem;font-size:.58rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.22rem .5rem;border-radius:999px;background:var(--gold-lt);color:var(--red-dark);white-space:nowrap}
-
 .empty-state{text-align:center;color:var(--ink-soft);padding:2rem 0;font-style:italic}
 
 footer{text-align:center;font-size:.72rem;color:var(--ink-soft);padding:0 1.25rem 2rem}
@@ -68,72 +64,49 @@ footer{text-align:center;font-size:.72rem;color:var(--ink-soft);padding:0 1.25re
 var MEMBERS = [
   {"name":"Abhishek Anand","phone":"(646) 581-7491","admin":"no"},
   {"name":"Ajay Rathi","phone":"+919582944433","admin":"no"},
-  {"name":"Amit","phone":"(203) 885-9839","admin":"no"},
   {"name":"Anirban Bhattacharya","phone":"(848) 248-9099","admin":"no"},
   {"name":"Annesha Bhattacharya","phone":"+919158992176","admin":"no"},
-  {"name":"Anu","phone":"(201) 673-7461","admin":"no"},
   {"name":"Arnab Bhattacharya","phone":"(848) 248-9154","admin":"no"},
-  {"name":"Barnalee","phone":"(224) 436-6375","admin":"no"},
   {"name":"Bijaya Nanda","phone":"(201) 736-8219","admin":"no"},
   {"name":"Biswajit Kumar","phone":"(862) 702-6875","admin":"no"},
-  {"name":"Debleena","phone":"(551) 226-0819","admin":"no"},
-  {"name":"Destiny 🤩","phone":"(732) 763-0283","admin":"no"},
   {"name":"Dhiman Biswas","phone":"(609) 665-8639","admin":"no"},
-  {"name":"DM","phone":"(631) 532-9296","admin":"no"},
   {"name":"Eshika Mitra","phone":"(848) 203-8097","admin":"no"},
   {"name":"Goutam De","phone":"(516) 519-1434","admin":"admin"},
   {"name":"Himaghnya Bhattacharya","phone":"+919850971714","admin":"no"},
   {"name":"Joydeep Chakraborty","phone":"(732) 543-4928","admin":"admin"},
   {"name":"Kashinath Roy","phone":"(917) 301-4123","admin":"no"},
   {"name":"krishna Sen","phone":"(732) 648-7461","admin":"no"},
-  {"name":"Kuntol","phone":"(973) 597-8315","admin":"no"},
-  {"name":"Madhu","phone":"(646) 335-5194","admin":"no"},
   {"name":"Mahua Bhoumik","phone":"(732) 207-2673","admin":"no"},
   {"name":"Malancha Chakraborty","phone":"(904) 945-7223","admin":"no"},
   {"name":"Malati Roy","phone":"(732) 910-7147","admin":"no"},
-  {"name":"Meera","phone":"(862) 777-4183","admin":"no"},
   {"name":"Mithila Das Roy","phone":"(856) 313-7944","admin":"no"},
-  {"name":"Moinak","phone":"(732) 853-2013","admin":"no"},
-  {"name":"Moumita","phone":"(732) 589-8691","admin":"no"},
   {"name":"Moumita Das","phone":"(859) 420-3074","admin":"no"},
   {"name":"Mousumi Datta","phone":"(201) 705-6222","admin":"no"},
   {"name":"Mousumi Mandal","phone":"(516) 302-3954","admin":"no"},
   {"name":"Nabina Roy","phone":"(947) 376-0301","admin":"no"},
-  {"name":"Neil","phone":"(813) 464-1374","admin":"no"},
   {"name":"Nihar Paul","phone":"(508) 736-3063","admin":"no"},
-  {"name":"Nisha","phone":"(732) 421-0014","admin":"no"},
   {"name":"Nobendu Roy","phone":"(201) 294-7496","admin":"no"},
   {"name":"Pallavi Roy","phone":"(805) 405-0447","admin":"no"},
   {"name":"Pradip Nair","phone":"(717) 371-3632","admin":"admin"},
   {"name":"Pratik Datta","phone":"(732) 429-7671","admin":"no"},
   {"name":"Raju Debnath","phone":"(848) 468-2449","admin":"no"},
   {"name":"Rakesh Sarkar","phone":"(516) 508-1669","admin":"no"},
-  {"name":"Ripa","phone":"(732) 351-6910","admin":"no"},
   {"name":"RISHIRAJ CHAKRABORTY","phone":"(732) 668-3435","admin":"no"},
   {"name":"Sagarika Sengupta","phone":"(732) 309-4786","admin":"no"},
   {"name":"Sanjeeban Chatterjee","phone":"(718) 208-6151","admin":"no"},
   {"name":"Sanjit Das","phone":"(502) 296-7866","admin":"no"},
-  {"name":"Sanjukta/ Sarbo","phone":"(718) 309-1804","admin":"no"},
   {"name":"Santanu Malakar","phone":"(848) 252-9825","admin":"no"},
   {"name":"Satish Sunkara","phone":"(551) 227-1499","admin":"no"},
-  {"name":"Saurav","phone":"(551) 482-7115","admin":"no"},
   {"name":"Seema Balan","phone":"(717) 371-2323","admin":"no"},
-  {"name":"Sharmistha","phone":"(201) 421-6247","admin":"no"},
   {"name":"Shilpi Sarkar","phone":"(732) 318-1280","admin":"no"},
   {"name":"Soumen Das","phone":"(859) 420-3072","admin":"no"},
   {"name":"Souvik Roy","phone":"(201) 693-8199","admin":"admin"},
   {"name":"Subrata Maitra","phone":"(646) 872-3639","admin":"admin"},
   {"name":"Suman Poddar","phone":"(947) 209-2700","admin":"no"},
-  {"name":"Sumon","phone":"(732) 429-6630","admin":"no"},
-  {"name":"Swati","phone":"(813) 766-1144","admin":"no"},
   {"name":"Tomali Chakravarty","phone":"(401) 363-5440","admin":"no"},
   {"name":"Tuhin Dasgupta","phone":"(732) 801-6591","admin":"no"},
-  {"name":"Tuhina","phone":"(848) 239-8721","admin":"no"},
   {"name":"Uttam Das","phone":"(609) 968-7260","admin":"no"},
-  {"name":"V","phone":"(732) 543-4931","admin":"no"},
-  {"name":"যাচ্ছেতাই","phone":"(201) 787-6861","admin":"superadmin"},
-  {"name":"","phone":"(908) 208-8708","admin":"no"},
-  {"name":"","phone":"(404) 704-4630","admin":"no"}
+  {"name":"Vasundhara Chakraborty","phone":"(732) 543-4931","admin":"no"}
 ];
 
 function escapeHtml(s) {
@@ -157,14 +130,10 @@ function avatarColor(name) {
   return palette[hash % palette.length];
 }
 
-function telHref(phone) {
-  return 'tel:' + phone.replace(/[^\d+]/g, '');
-}
-
 function render() {
   var q = document.getElementById('searchInput').value.trim().toLowerCase();
   var filtered = q
-    ? MEMBERS.filter(function(m) { return m.name.toLowerCase().indexOf(q) !== -1 || m.phone.indexOf(q) !== -1; })
+    ? MEMBERS.filter(function(m) { return m.name.toLowerCase().indexOf(q) !== -1; })
     : MEMBERS;
 
   var listEl = document.getElementById('memberList');
@@ -183,9 +152,7 @@ function render() {
       '<div class="avatar" style="background:' + avatarColor(m.name || m.phone) + '">' + initials(m.name) + '</div>' +
       '<div class="m-info">' +
         '<span class="m-name' + (m.name ? '' : ' unnamed') + '">' + escapeHtml(displayName) + '</span>' +
-        '<span class="m-phone"><a href="' + telHref(m.phone) + '">' + escapeHtml(m.phone) + '</a></span>' +
-      '</div>' +
-      (m.admin !== 'no' ? '<span class="admin-badge">' + escapeHtml(m.admin) + '</span>' : '');
+      '</div>';
     listEl.appendChild(li);
   });
 }

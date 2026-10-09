@@ -72,6 +72,16 @@ function dayApplies($daysSelection, $day) {
     return $daysSelection === 'both' || $daysSelection === $day;
 }
 
+// Zelle/Sulekha are explicitly tagged via payment_method; PayPal/website checkouts leave
+// payment_method blank and are identified instead by having a paypal_order_id — every paid
+// row has exactly one of these two signals (verified against live data before building this).
+function paymentSource($row) {
+    $pm = isset($row['payment_method']) ? $row['payment_method'] : null;
+    if ($pm === 'zelle') return 'Zelle';
+    if ($pm === 'sulekha') return 'Sulekha';
+    return 'PayPal';
+}
+
 function attendeeSummary($row, $day) {
     $foodMap = ['vegetarian' => 'Vegetarian', 'nonvegetarian' => 'Non-Vegetarian', 'nodinner' => 'No Dinner'];
     $names = json_decode($row['attendee_names'], true);
@@ -114,6 +124,7 @@ function registrationPayload($row, $day) {
         'days'            => isset($daysMap[$row['days_selection']]) ? $daysMap[$row['days_selection']] : 'Both Days',
         'checkinDay'      => $day, // which day THIS payload's check-in state belongs to
         'passType'        => isset($passTypeMap[$row['pass_type']]) ? $passTypeMap[$row['pass_type']] : 'Full Package',
+        'paymentSource'   => paymentSource($row),
         'total'           => number_format((float)$row['total_amount'], 2),
         'status'          => $row['status'],
         'isPaid'          => ($row['status'] === 'paid'),
@@ -326,7 +337,7 @@ switch ($action) {
     // whichever day's tab is active without a second round trip on every tab switch.
     case 'roster': {
         $stmt = $db->query(
-            "SELECT id, name, qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun, gift_given
+            "SELECT id, name, qty, days_selection, checked_in_attendees_sat, checked_in_attendees_sun, gift_given, payment_method
              FROM tb_registrations WHERE status='paid' ORDER BY name COLLATE NOCASE ASC"
         );
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -339,13 +350,14 @@ switch ($action) {
             $sunIn = count(array_filter($sunPresent));
             $mk = function($in, $qty) { return $in === 0 ? 'none' : ($in >= $qty ? 'full' : 'partial'); };
             return [
-                'id'        => (int)$r['id'],
-                'name'      => $r['name'],
-                'qty'       => $qty,
-                'days'      => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
-                'sat'       => ['checkedInCount' => $satIn, 'checkInStatus' => $mk($satIn, $qty)],
-                'sun'       => ['checkedInCount' => $sunIn, 'checkInStatus' => $mk($sunIn, $qty)],
-                'giftGiven' => !empty($r['gift_given']),
+                'id'            => (int)$r['id'],
+                'name'          => $r['name'],
+                'qty'           => $qty,
+                'days'          => isset($daysMap[$r['days_selection']]) ? $daysMap[$r['days_selection']] : 'Both Days',
+                'sat'           => ['checkedInCount' => $satIn, 'checkInStatus' => $mk($satIn, $qty)],
+                'sun'           => ['checkedInCount' => $sunIn, 'checkInStatus' => $mk($sunIn, $qty)],
+                'giftGiven'     => !empty($r['gift_given']),
+                'paymentSource' => paymentSource($r),
             ];
         }, $rows);
         echo json_encode(['ok' => true, 'roster' => $roster]);

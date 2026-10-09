@@ -92,6 +92,13 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .day-pill.sun{background:var(--sun)}
 .day-pill.both{background:var(--both)}
 
+/* Payment source — how this registration was paid for (PayPal/website, Zelle, Sulekha), so
+   whoever's at the door can sanity-check a manual Zelle/Sulekha entry if something looks off. */
+.pay-badge{font-size:.6rem;font-weight:700;letter-spacing:.03em;padding:.2rem .5rem;border-radius:999px;white-space:nowrap;flex-shrink:0;border:1.5px solid}
+.pay-badge.paypal{color:#0E7C86;border-color:#0E7C86;background:#E3F3F4}
+.pay-badge.zelle{color:#6D1ED4;border-color:#6D1ED4;background:#F1E7FB}
+.pay-badge.sulekha{color:#475569;border-color:#475569;background:#EAEDF1}
+
 .dot-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
 .dot{width:9px;height:9px;border-radius:50%;background:#e2e2e2;flex-shrink:0}
 .dot.filled{background:var(--green)}
@@ -269,6 +276,11 @@ function dayPillText(days) {
 function dayKey(day) { return day === 'sunday' ? 'sun' : 'sat'; }
 function cacheKey(id, day) { return id + '|' + day; }
 
+function payBadgeHtml(source) {
+  var cls = source === 'Zelle' ? 'zelle' : source === 'Sulekha' ? 'sulekha' : 'paypal';
+  return '<span class="pay-badge ' + cls + '">' + escapeHtml(source) + '</span>';
+}
+
 // Small filled/hollow dot row so "2 of 5 checked in" reads at a glance without doing math.
 function dotsHtml(checkedIn, qty) {
   var MAX = 8;
@@ -376,6 +388,7 @@ function renderRoster() {
           '<div class="row-line2">' +
             dotsHtml(rs.checkedInCount, r.qty) +
             '<span>' + rs.checkedInCount + ' of ' + r.qty + ' people — ' + (currentDay === 'saturday' ? 'Sat' : 'Sun') + '</span>' +
+            payBadgeHtml(r.paymentSource) +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -456,9 +469,11 @@ function renderDetailHtml(reg) {
       '<div class="detail-head">' +
         '<span class="day-pill ' + dayClass(reg.days) + '">' + dayPillText(reg.days) + '</span>' +
         '<span class="detail-status ' + reg.checkInStatus + '">' + statusLabel + '</span>' +
+        payBadgeHtml(reg.paymentSource) +
       '</div>' +
       dotsHtml(reg.checkedInCount, reg.qty) +
       '<div class="result-row"><span>Days Purchased</span><b>' + escapeHtml(reg.days) + '</b></div>' +
+      '<div class="result-row"><span>Paid Via</span><b>' + escapeHtml(reg.paymentSource) + '</b></div>' +
       '<div class="result-row"><span>Pass Type</span><b>' + escapeHtml(reg.passType) + '</b></div>' +
       '<div class="result-row"><span>Total Paid</span><b>$' + reg.total + '</b></div>' +
       '<div class="attendee-check-list" id="checks-' + reg.id + '">' + checkRows + '</div>' +
@@ -539,7 +554,7 @@ function manualLookup() {
       if (d.err) { showError(d.err); return; }
       var reg = d.registration;
       detailCache[cacheKey(id, currentDay)] = reg;
-      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven,
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven, paymentSource: reg.paymentSource,
                    sat: { checkedInCount: 0, checkInStatus: 'none' },
                    sun: { checkedInCount: 0, checkInStatus: 'none' } };
       stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };
@@ -638,7 +653,7 @@ function handleScanned(token) {
     var reg = d.registration;
     detailCache[cacheKey(reg.id, currentDay)] = reg;
     if (!roster.some(function(r) { return r.id === reg.id; })) {
-      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven,
+      var stub = { id: reg.id, name: reg.name, qty: reg.qty, days: reg.days, giftGiven: reg.giftGiven, paymentSource: reg.paymentSource,
                    sat: { checkedInCount: 0, checkInStatus: 'none' },
                    sun: { checkedInCount: 0, checkInStatus: 'none' } };
       stub[dayKey(currentDay)] = { checkedInCount: reg.checkedInCount, checkInStatus: reg.checkInStatus };

@@ -231,6 +231,20 @@ function createOrder($post) {
         $return['err'] = 'Invalid payment amount. Please return to cart.';
         echo json_encode($return); return;
     }
+
+    // Reject amounts below the cheapest legitimate price for this composition —
+    // defense-in-depth against a stale/cleared cart session on the client handing
+    // us a fabricated total (this previously let 3 real orders underpay by $325
+    // combined, via a client-side fallback that has since been fixed, but the
+    // client should never be the only thing enforcing price).
+    $cheapestAdultByDay = ['both' => 105, 'saturday' => 70, 'sunday' => 60]; // Student Concert-Only, the lowest adult tier
+    $cheapestKidByDay   = ['both' => 75,  'saturday' => 45, 'sunday' => 45]; // Kids Concert-Only, the lowest kids tier
+    $priceFloor = ($adults * $cheapestAdultByDay[$daysSelection]) + ($kids6to12 * $cheapestKidByDay[$daysSelection]);
+    if ($amount < $priceFloor - 0.01) {
+        $return['err'] = 'Invalid payment amount for the selected passes. Please return to cart and try again.';
+        echo json_encode($return); return;
+    }
+
     $total = round($amount, 2);
     $ip    = get_client_ip();
     $date  = date("Y-m-d H:i:s");

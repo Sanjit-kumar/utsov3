@@ -469,8 +469,19 @@ footer a:hover{color:var(--gold-lt)}
 
 <script>
 // ── Read cart state from sessionStorage ────────────────────────────────────────
+// If the cart's amount never made it into this tab's sessionStorage (stale
+// bookmark, reopened/new tab, cleared storage), there is no safe price to
+// fall back to — send the visitor back to the cart to rebuild it instead of
+// guessing. (A previous version defaulted to a flat $85/person + "both days",
+// which silently undercharged a handful of real orders.)
+var storedAmount = sessionStorage.getItem('utsov_cart_amount');
+if (storedAmount === null || storedAmount === '' || isNaN(parseFloat(storedAmount))) {
+  window.location.replace('cart.html');
+  throw new Error('Cart session expired — redirecting to cart.html');
+}
+
 var qty       = parseInt(sessionStorage.getItem('utsov_cart_qty'), 10)    || 1;
-var total     = parseFloat(sessionStorage.getItem('utsov_cart_amount'))   || (qty * 85);
+var total     = parseFloat(storedAmount);
 var cartDays  = sessionStorage.getItem('utsov_cart_days')       || 'both';
 var daysLabel = sessionStorage.getItem('utsov_cart_days_label') || 'Both Days (Oct 17–18)';
 var isStudent = sessionStorage.getItem('utsov_cart_is_student') === '1';

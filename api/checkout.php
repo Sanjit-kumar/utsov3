@@ -191,9 +191,18 @@ function createOrder($post) {
     }
 
     // Additional registration fields
-    $adults    = max(1, min(20, (int)(isset($post->adults)    ? $post->adults    : 1)));
+    $rawAdults = (int)(isset($post->adults) ? $post->adults : 0);
+    $adults    = max(1, min(20, $rawAdults));
     $kids6to12 = max(0, min(20, (int)(isset($post->kids6to12) ? $post->kids6to12 : 0)));
     $children  = max(0, min(20, (int)(isset($post->children)  ? $post->children  : 0)));
+
+    // Kids passes require at least one real adult (Patron/Student) pass in the same
+    // order — prevents unaccompanied-kids bookings and adults buying the cheaper
+    // Kids Pass for themselves. Checked against the raw count before the floor above.
+    if ($kids6to12 > 0 && $rawAdults < 1) {
+        $return['err'] = 'Kids passes require at least one adult pass in the same order. Please return to cart and add an adult pass.';
+        echo json_encode($return); return;
+    }
 
     $allowedDays = ['both', 'saturday', 'sunday'];
     $daysSelection = (isset($post->days) && in_array($post->days, $allowedDays)) ? $post->days : 'both';

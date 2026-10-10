@@ -94,6 +94,10 @@ main{flex:1;padding:2.5rem 2rem}
 .cart-total-val{font-family:var(--f-display);font-size:3rem;color:var(--gold);letter-spacing:.02em;line-height:1}
 .btn-checkout{background:linear-gradient(135deg,var(--saffron),var(--marigold));color:#2A0000;font-family:var(--f-label);font-size:.82rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-full);padding:1rem 2rem;cursor:pointer;width:100%;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(224,120,48,.5);display:block;text-align:center;text-decoration:none}
 .btn-checkout:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(224,120,48,.65)}
+.btn-checkout.blocked{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.btn-checkout.blocked:hover{transform:none;box-shadow:none}
+.cart-kids-warning{display:none;background:rgba(224,48,48,.12);border:1.5px solid rgba(224,48,48,.4);border-radius:12px;padding:.7rem .9rem;margin-bottom:.8rem;font-family:var(--f-label);font-size:.74rem;line-height:1.55;color:#FFD8D8}
+.cart-kids-warning:not([hidden]){display:block}
 .cart-secure{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.85rem;font-family:var(--f-label);font-size:.58rem;color:rgba(255,253,248,.22);letter-spacing:.06em}
 .cart-clear{text-align:center;margin-top:.85rem;font-family:var(--f-label);font-size:.6rem;color:rgba(255,253,248,.28);letter-spacing:.06em;cursor:pointer;transition:color .2s}
 .cart-clear:hover{color:rgba(255,100,100,.6)}
@@ -382,7 +386,8 @@ footer a:hover{color:var(--gold-lt)}
         <span class="cart-total-label">Total</span>
         <span class="cart-total-val" id="cartTotal">$0.00</span>
       </div>
-      <a href="checkout.html" class="btn-checkout" id="checkoutBtn">Proceed to Checkout &#8594;</a>
+      <div class="cart-kids-warning" id="cartKidsWarning" hidden>&#9888;&#65039; Kids passes need at least one adult (Patron or Student) pass in the same order. Please add an adult pass, or contact UTSOV directly if the adult is registered separately.</div>
+      <a href="checkout.html" class="btn-checkout" id="checkoutBtn" onclick="return onCheckoutClick(event)">Proceed to Checkout &#8594;</a>
       <div class="cart-secure">&#128274; Secure checkout powered by PayPal &middot; No PayPal account needed</div>
       <div class="cart-clear" onclick="clearCart()">&#10005; Clear cart</div>
     </div>
@@ -411,6 +416,16 @@ var DAY_TAG    = { both:'both days', saturday:'Saturday only', sunday:'Sunday on
 var selectedDays = 'both';
 var cardQty = { 1:1, 2:1, 4:1, 5:1, 6:1, 7:1 };
 var cart = [];
+var kidsOnlyBlocked = false;
+
+function onCheckoutClick(e) {
+  if (kidsOnlyBlocked) {
+    e.preventDefault();
+    document.getElementById('cartKidsWarning').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return false;
+  }
+  return true;
+}
 
 function getPrice(passId) { return PASSES[passId].prices[selectedDays]; }
 
@@ -568,6 +583,17 @@ function renderCart() {
   sessionStorage.setItem('utsov_cart_concert_kids_price',    cKidsQty > 0 ? (cKidsAmt / cKidsQty).toFixed(2) : getPrice(7).toString());
   document.getElementById('cartCount').textContent = totalPasses + ' pass' + (totalPasses !== 1 ? 'es' : '');
   document.getElementById('cartTotal').textContent = '$' + grandTotal.toFixed(2);
+
+  // Require at least one adult (Patron/Student) pass alongside any kids pass —
+  // prevents unaccompanied-kids bookings and adults buying the cheaper Kids Pass.
+  var totalAdultQty = patronQty + studentQty + cPatronQty + cStudentQty;
+  var totalKidsQty  = kidsQty + cKidsQty;
+  kidsOnlyBlocked = totalKidsQty > 0 && totalAdultQty === 0;
+  var checkoutBtn = document.getElementById('checkoutBtn');
+  var kidsWarning = document.getElementById('cartKidsWarning');
+  checkoutBtn.classList.toggle('blocked', kidsOnlyBlocked);
+  kidsWarning.hidden = !kidsOnlyBlocked;
+
   var rows = document.getElementById('cartRows');
   rows.innerHTML = '';
   cart.forEach(function(item) {

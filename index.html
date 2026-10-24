@@ -169,8 +169,6 @@ nav ul a:hover{color:var(--red);border-bottom-color:var(--red)}
 .hero-main-block{position:relative;z-index:3;display:flex;flex-direction:column;align-items:flex-start;max-width:60%;margin:1.25rem 0 2rem}
 .hero-pre{font-family:var(--f-bn);font-size:clamp(1.1rem,2vw,1.75rem);color:var(--saffron);font-weight:600;margin-bottom:.65rem;display:flex;align-items:center;gap:.65rem;line-height:1.3}
 .hero-pre::before{content:'';width:26px;height:2.5px;background:var(--saffron);border-radius:2px;flex-shrink:0}
-.mob-eb-ticker{display:none}
-@keyframes ebTickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .hero-headline{display:flex;flex-direction:column;gap:0;line-height:.85;margin-bottom:.9rem}
 .hh-line{font-family:var(--f-display);font-size:clamp(7rem,16.5vw,18rem);line-height:.85;letter-spacing:.01em;margin:0;display:block}
 .hh-solid{color:var(--red-dark);text-shadow:0 3px 40px rgba(255,253,248,.5)}
@@ -473,11 +471,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
   .hero-pre{font-size:.88rem;color:rgba(255,253,248,.68);margin-bottom:.35rem}
   .hero-pre::before{display:none}
 
-  /* Early Bird running ticker — mobile only, sits just above DURGA PUJA headline */
-  .mob-eb-ticker{display:block;overflow:hidden;width:100%;margin-bottom:.5rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
-  .mob-eb-track{display:inline-flex;white-space:nowrap;gap:3rem;animation:ebTickerScroll 13s linear infinite}
-  .mob-eb-track a{font-family:var(--f-label);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);text-decoration:none;text-shadow:0 1px 8px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.65);flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem}
-
   /* DURGA / PUJA: cream on dark overlay */
   .hh-solid{color:var(--cream);text-shadow:0 2px 18px rgba(0,0,0,.55)}
   .hh-outline{-webkit-text-stroke-color:rgba(255,253,248,.48);color:transparent}
@@ -770,17 +763,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 .sph-gold-row .sph-lc{animation:goldenPulse 3s ease-in-out infinite}
 
 /* ══════════════════════════════════════════════════════════════
-   ANNOUNCE BAR — fixed strip below nav, desktop only ≥941px
-   ══════════════════════════════════════════════════════════════ */
-.announce-bar{position:fixed;top:65px;left:0;right:0;z-index:495;background:linear-gradient(90deg,var(--gold-lt),var(--gold) 25%,var(--marigold) 50%,var(--gold) 75%,var(--gold-lt));border-bottom:1px solid rgba(26,0,0,.15);display:flex;align-items:center;justify-content:center;gap:1rem;padding:.7rem 2rem;font-family:var(--f-display);font-size:1.3rem;font-weight:400;letter-spacing:.09em;color:var(--black);text-transform:uppercase;box-shadow:0 3px 16px rgba(0,0,0,.22)}
-@media(max-width:940px){.announce-bar{display:none}}
-.ab-dot{width:7px;height:7px;border-radius:50%;background:var(--red-dark);animation:pulseDot 1.8s ease-in-out infinite;display:inline-block;flex-shrink:0;pointer-events:none}
-.ab-link{color:inherit;text-decoration:none;cursor:pointer;transition:opacity .15s ease;animation:flashText 1.6s ease-in-out infinite}
-.ab-link:hover,.ab-link:focus-visible{opacity:.75;text-decoration:underline;animation-play-state:paused}
-@keyframes flashText{0%,100%{opacity:1}50%{opacity:.45}}
-@media(min-width:941px){.hero{padding-top:116px}}
-
-/* ══════════════════════════════════════════════════════════════
    SPONSOR STRIP — horizontal rangoli circle row, desktop ≥941px
    Replaces the old sp-showcase vertical card section
    ══════════════════════════════════════════════════════════════ */
@@ -797,8 +779,9 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <ul id="navMenu">
       <li><a href="artists.html">Artists</a></li>
       <li><a href="events.html">Events</a></li>
-      <li><a href="photos.html">Photos</a></li>
+      <li><a href="photos.html">Photos</a></li><li><a href="magazine.html">Magazine</a></li>
       <li><a href="philanthropy.html">Philanthropy</a></li>
+      <li><a href="members.html">Members</a></li>
       <li><a href="sponsorship.html">Sponsor</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -809,13 +792,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 </header>
-
-<!-- ANNOUNCE BAR — desktop only, fixed below nav -->
-<div class="announce-bar">
-  <span class="ab-dot" aria-hidden="true"></span>
-  <a href="cart.html" class="ab-link">🎟 &nbsp; UTSOV 2026 Passes Are Now On Sale!</a>
-  <span class="ab-dot" aria-hidden="true"></span>
-</div>
 
 <main>
 
@@ -846,13 +822,6 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
     <!-- MAIN TITLE BLOCK -->
     <div class="hero-main-block">
       <div class="hero-pre rv">আসছেন মা — শারদ উৎসব ২০২৬</div>
-
-      <div class="mob-eb-ticker">
-        <div class="mob-eb-track">
-          <a href="cart.html">🎟 UTSOV 2026 Passes Are Now On Sale — Get Yours Today!</a>
-          <a href="cart.html" aria-hidden="true" tabindex="-1">🎟 UTSOV 2026 Passes Are Now On Sale — Get Yours Today!</a>
-        </div>
-      </div>
 
       <h1 class="hero-headline">
         <span class="sr-only">UTSOV Durga Puja 2026</span>
@@ -1480,7 +1449,7 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
         <p>A 501(c)(3) non-profit celebrating Indian culture, community, and philanthropy through the annual Durga Puja celebration in New Jersey.</p>
         <div class="ft-socials"><a href="https://www.facebook.com/utsov.usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Facebook">👥</a><a href="https://twitter.com/utsov_usa" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Twitter">🐦</a><a href="https://www.instagram.com/utsov.usa/" target="_blank" rel="noopener" class="ft-social-btn" aria-label="Instagram">📷</a><a href="https://www.youtube.com/channel/UCkVj-O5cODhQ61K4H0KNx4Q/videos" target="_blank" rel="noopener" class="ft-social-btn" aria-label="YouTube">▶️</a></div>
       </div>
-      <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="photos.html">Photos</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
+      <div class="ft-col"><h5>Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="artists.html">Artists</a></li><li><a href="events.html">Events</a></li><li><a href="photos.html">Photos</a></li><li><a href="magazine.html">Magazine</a></li><li><a href="philanthropy.html">Philanthropy</a></li><li><a href="sponsorship.html">Sponsor</a></li></ul></div>
       <div class="ft-col"><h5>Get Involved</h5><ul><li><a href="cart.html">Get Passes</a></li><li><a href="sponsorship.html">Sponsor</a></li><li><a href="contact.html#volunteer">Volunteer</a></li><li><a href="philanthropy.html#donate">Donate</a></li></ul></div>
     </div>
     <div class="ft-contacts">
@@ -1897,6 +1866,158 @@ document.querySelectorAll('.rv:not(.hero .rv)').forEach(el=>obs.observe(el));
   }, 3000);
 })();
 
+</script>
+
+<!-- ══ Shubho Bijoya greeting — Oct 21, 2026 only. Remove this whole block (through
+     the matching </script> tag below) once the festive season has passed. ══ -->
+<style>
+#bijoyaOverlay{position:fixed;inset:0;z-index:2000;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .6s ease;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%,rgba(255,153,51,.35) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 10% 100%,rgba(224,120,48,.3) 0%,transparent 55%),
+    linear-gradient(160deg,#3D0A0A 0%,#7A1414 45%,#B4521F 85%,#D98A2B 100%);
+  background-size:160% 160%}
+#bijoyaOverlay.show{opacity:1;pointer-events:auto;animation:bijGradientDrift 16s ease-in-out infinite}
+#bijoyaOverlay.hide{opacity:0;pointer-events:none}
+@keyframes bijGradientDrift{0%,100%{background-position:0% 0%}50%{background-position:100% 60%}}
+
+.bij-glow{position:absolute;top:50%;left:50%;width:min(100vw,1100px);height:min(100vw,1100px);transform:translate(-50%,-50%) scale(.8);
+  background:radial-gradient(circle,rgba(255,220,150,.4) 0%,rgba(255,180,90,.18) 35%,transparent 68%);opacity:0;
+  transition:opacity 1.2s ease .2s,transform 1.4s cubic-bezier(.16,1,.3,1) .2s}
+#bijoyaOverlay.show .bij-glow{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.bij-float{position:absolute;top:-10%;font-size:1.6rem;opacity:.85;animation:bijFall linear infinite;pointer-events:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+@keyframes bijFall{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(115vh) rotate(360deg)}}
+
+.bij-content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.25rem}
+.bij-close{position:absolute;top:1.3rem;right:1.3rem;z-index:5;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.12);backdrop-filter:blur(6px);color:#fff;font-size:1.1rem;cursor:pointer;line-height:1}
+.bij-close:hover{background:rgba(255,255,255,.22)}
+
+.bij-om{font-size:clamp(2.2rem,6vw,3.2rem);margin-bottom:.6rem;opacity:0;transform:translateY(14px);transition:opacity .7s ease .3s,transform .7s cubic-bezier(.16,1,.3,1) .3s}
+.bij-bn{font-family:var(--f-bn);font-weight:700;font-size:clamp(3.2rem,11vw,6.5rem);color:#fff;line-height:1.05;text-shadow:0 2px 0 rgba(0,0,0,.08),0 10px 40px rgba(0,0,0,.35);margin-bottom:.4rem;
+  opacity:0;transform:translateY(22px) scale(.92);transition:opacity .8s ease .45s,transform .8s cubic-bezier(.16,1,.3,1) .45s}
+.bij-bn em{font-style:normal;background:linear-gradient(100deg,var(--gold-lt,#E8C97A),#fff 55%,var(--gold-lt,#E8C97A));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bij-en{font-family:var(--f-display);letter-spacing:.14em;text-transform:uppercase;font-size:clamp(1rem,2.4vw,1.3rem);color:#FFE3BC;margin-bottom:1.3rem;
+  opacity:0;transition:opacity .7s ease .65s}
+.bij-msg{font-family:var(--f-label);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.8;color:rgba(255,255,255,.92);max-width:46ch;margin-bottom:1.6rem;text-shadow:0 2px 10px rgba(0,0,0,.25);
+  opacity:0;transition:opacity .7s ease .8s}
+.bij-sign{font-family:var(--f-bn);font-size:clamp(1.1rem,2.2vw,1.4rem);color:var(--gold-lt,#E8C97A);font-weight:600;
+  opacity:0;transition:opacity .7s ease .95s}
+.bij-thanks{font-family:var(--f-label);font-style:italic;font-size:clamp(.82rem,1.4vw,.95rem);line-height:1.75;color:rgba(255,255,255,.82);max-width:44ch;margin:1.1rem 0 0;text-shadow:0 2px 10px rgba(0,0,0,.25);
+  opacity:0;transition:opacity .7s ease 1.05s}
+.bij-thanks b{font-style:normal;font-weight:700;color:var(--gold-lt,#E8C97A)}
+.bij-sponsor{margin-top:1.8rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;opacity:0;transition:opacity .8s ease 1.3s}
+.bij-sponsor-label{font-family:var(--f-label);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.bij-sponsor-logo{border-radius:10px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.4);max-width:min(90vw,380px)}
+.bij-sponsor-logo img{width:100%;display:block}
+#bijoyaOverlay.show .bij-om,
+#bijoyaOverlay.show .bij-bn,
+#bijoyaOverlay.show .bij-en,
+#bijoyaOverlay.show .bij-msg,
+#bijoyaOverlay.show .bij-sign,
+#bijoyaOverlay.show .bij-thanks,
+#bijoyaOverlay.show .bij-sponsor{opacity:1;transform:none}
+#bijoyaConfetti{position:fixed;top:0;left:0;z-index:2001;pointer-events:none}
+</style>
+<canvas id="bijoyaConfetti"></canvas>
+<div id="bijoyaOverlay">
+  <div class="bij-glow" aria-hidden="true"></div>
+  <div class="bij-floats" id="bijoyaFloats"></div>
+  <button class="bij-close" id="bijoyaClose" aria-label="Close">&times;</button>
+  <div class="bij-content">
+    <div class="bij-om">🪔 🌺 🪔</div>
+    <div class="bij-bn">শুভ <em>বিজয়া</em></div>
+    <div class="bij-en">Shubho Bijoya &middot; Vijaya Dashami</div>
+    <p class="bij-msg">Wishing you and your family a joyous Vijaya Dashami. May Maa Durga's blessings, strength, and warmth stay with you and yours all year through.</p>
+    <div class="bij-sign">আসছে বছর আবার হবে 🙏</div>
+    <p class="bij-thanks">Thank you for your unwavering support in making UTSOV's 15th-anniversary celebration such a memorable success. <b>Together, always.</b></p>
+    <div class="bij-sponsor">
+      <span class="bij-sponsor-label">Festive Wishes From Our Title Sponsor</span>
+      <div class="bij-sponsor-logo">
+        <img src="images/pc_chandra_bijoya_logo.jpg"
+             alt="P.C. Chandra Jewellers - A jewel of jewels - Since 1939 - More Than Gold"
+             onerror="this.outerHTML='<span style=&quot;font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:#8B1A1A;letter-spacing:.06em&quot;>PC CHANDRA</span>'">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  // Shows on every page load/refresh (no once-per-session gate) — festive greeting,
+  // meant to be seen each visit during the Bijoya period.
+  var overlay = document.getElementById('bijoyaOverlay');
+  var closeBtn = document.getElementById('bijoyaClose');
+  var canvas = document.getElementById('bijoyaConfetti');
+  var ctx = canvas.getContext('2d');
+  var floatsEl = document.getElementById('bijoyaFloats');
+  var autoTimer;
+
+  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Ambient falling marigolds/diyas/petals, continuous while the overlay is open
+  var FLOAT_ICONS = ['🌺','🪔','🌼','✨'];
+  for (var i = 0; i < 16; i++) {
+    var el = document.createElement('span');
+    el.className = 'bij-float';
+    el.textContent = FLOAT_ICONS[i % FLOAT_ICONS.length];
+    el.style.left = (Math.random() * 96) + '%';
+    el.style.fontSize = (1.1 + Math.random() * 1.4) + 'rem';
+    el.style.animationDuration = (9 + Math.random() * 8) + 's';
+    el.style.animationDelay = '-' + (Math.random() * 14).toFixed(1) + 's';
+    floatsEl.appendChild(el);
+  }
+
+  function burstConfetti(){
+    var colors = ['#9E2424','#E07830','#FF9933','#C9A84C','#E8C97A','#fff'];
+    var pieces = [];
+    for (var i = 0; i < 160; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * canvas.height * 0.4,
+        w: 6 + Math.random() * 7,
+        h: 9 + Math.random() * 11,
+        color: colors[i % colors.length],
+        rot: Math.random() * 360,
+        vRot: (Math.random() - 0.5) * 8,
+        vy: 1.8 + Math.random() * 2.6,
+        vx: (Math.random() - 0.5) * 1.6
+      });
+    }
+    var frames = 0, maxFrames = 260;
+    (function tick(){
+      frames++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(function(p){
+        p.x += p.vx; p.y += p.vy; p.rot += p.vRot;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if (frames < maxFrames) requestAnimationFrame(tick);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    })();
+  }
+
+  function dismiss(){
+    overlay.classList.remove('show');
+    overlay.classList.add('hide');
+    clearTimeout(autoTimer);
+  }
+
+  closeBtn.addEventListener('click', dismiss);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') dismiss(); });
+
+  setTimeout(function(){
+    overlay.classList.add('show');
+    burstConfetti();
+    autoTimer = setTimeout(dismiss, 9000);
+  }, 500);
+})();
 </script>
 
 </body>

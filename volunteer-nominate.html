@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volunteer Recognition — UTSOV 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#8B1A1A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#6B0E0E;--red:#8B1A1A;--gold:#C9A84C;--gold-lt:#E8C97A;
+  --cream:#FFFDF8;--ink:#2A1000;--ink-soft:#6B5A4A;--border:#E8D9C0;
+  --f-display:'Bebas Neue',sans-serif;--f-label:'Josefin Sans',sans-serif;
+}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label)}
+a{color:inherit}
+
+header{background:linear-gradient(135deg,var(--red-dark),var(--red));padding:1.5rem 1.5rem 2.2rem;text-align:center}
+header img{height:46px;margin-bottom:.8rem}
+header h1{font-family:var(--f-display);color:#fff;font-size:clamp(1.7rem,5vw,2.3rem);letter-spacing:.02em}
+header p{color:rgba(255,255,255,.82);font-size:.88rem;margin-top:.4rem;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+.wrap{max-width:700px;margin:-1.2rem auto 3rem;padding:0 1.25rem}
+.card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:1.6rem 1.5rem;box-shadow:0 10px 32px rgba(107,14,14,.1);margin-bottom:1.2rem}
+
+label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.35rem}
+input[type="text"],input[type="email"]{width:100%;padding:.75rem .9rem;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;font-family:var(--f-label);background:#FFFBF4}
+input:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.field{margin-bottom:1rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}}
+
+.vol-row{border:1.5px dashed var(--border);border-radius:14px;padding:1.1rem 1rem 1rem;margin-bottom:1rem;position:relative;background:#FFFCF6}
+.vol-row .vol-num{position:absolute;top:-10px;left:14px;background:var(--gold);color:#fff;font-family:var(--f-display);font-size:.85rem;padding:.1rem .6rem;border-radius:999px}
+.remove-row{position:absolute;top:.6rem;right:.6rem;background:none;border:none;color:var(--ink-soft);font-size:1rem;cursor:pointer;width:28px;height:28px;border-radius:50%;line-height:1}
+.remove-row:hover{background:#FDEDED;color:var(--red)}
+
+.add-row-btn{width:100%;padding:.8rem;border:1.5px dashed var(--gold);background:#FFF9EC;color:var(--red-dark);font-family:var(--f-label);font-weight:700;font-size:.85rem;border-radius:12px;cursor:pointer;transition:background .2s}
+.add-row-btn:hover{background:#FDF0D4}
+
+.submit-btn{width:100%;padding:1rem;border:none;border-radius:12px;background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;font-family:var(--f-display);font-size:1.15rem;letter-spacing:.03em;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 20px rgba(139,26,26,.3);margin-top:.3rem}
+.submit-btn:hover{transform:translateY(-2px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.note{font-size:.78rem;color:var(--ink-soft);line-height:1.6;margin-top:.3rem}
+
+.success-wrap{display:none;text-align:center;padding:2.5rem 1.5rem}
+.success-wrap.show{display:block}
+.success-wrap .emoji{font-size:3rem;margin-bottom:1rem}
+.success-wrap h2{font-family:var(--f-display);color:var(--red-dark);font-size:1.8rem;margin-bottom:.6rem}
+.success-wrap p{color:var(--ink-soft);margin-bottom:1.4rem}
+.again-btn{padding:.75rem 1.6rem;border-radius:999px;border:1.5px solid var(--red);background:#fff;color:var(--red);font-family:var(--f-label);font-weight:700;cursor:pointer}
+
+.error-msg{color:var(--red);font-size:.82rem;font-weight:600;margin-top:.5rem;display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="images/logo_utsov.png" alt="UTSOV" onerror="this.style.display='none'">
+  <h1>Volunteer Recognition — Laxmi Puja 2026</h1>
+  <p>So many non-member volunteers worked incredibly hard to make this year's Durga Puja a success. Help us recognize them — add anyone from your team who deserves an invite to Laxmi Puja (Oct 31) for the Executive Board's review.</p>
+</header>
+
+<div class="wrap">
+
+  <form id="nominateForm">
+    <div class="card">
+      <div class="two-col">
+        <div class="field">
+          <label for="submittedBy">Your Name</label>
+          <input type="text" id="submittedBy" required placeholder="e.g. Subrata Maitra">
+        </div>
+        <div class="field">
+          <label for="submittedByTeam">Your Team / Area</label>
+          <input type="text" id="submittedByTeam" required placeholder="e.g. Food Team, Cultural Program">
+        </div>
+      </div>
+    </div>
+
+    <div id="volunteerRows"></div>
+
+    <button type="button" class="add-row-btn" id="addRowBtn">+ Add Another Volunteer</button>
+
+    <div class="card" style="margin-top:1.2rem">
+      <button type="submit" class="submit-btn" id="submitBtn">Submit for EB Review</button>
+      <div class="error-msg" id="errorMsg"></div>
+      <p class="note">Every name here gets reviewed by the Executive Board — submitting doesn't guarantee an invite, but it ensures they're considered. You can submit more volunteers anytime by reopening this link.</p>
+    </div>
+  </form>
+
+  <div class="success-wrap" id="successWrap">
+    <div class="emoji">🙏</div>
+    <h2>Thank you!</h2>
+    <p id="successDetail">Your volunteers have been submitted for EB review.</p>
+    <button class="again-btn" id="submitAnotherBtn">Submit More Volunteers</button>
+  </div>
+
+</div>
+
+<script>
+let rowCount = 0;
+
+function addVolunteerRow() {
+  rowCount++;
+  const container = document.getElementById('volunteerRows');
+  const row = document.createElement('div');
+  row.className = 'vol-row';
+  row.dataset.rowId = rowCount;
+  row.innerHTML = `
+    <span class="vol-num">#${rowCount}</span>
+    ${rowCount > 1 ? '<button type="button" class="remove-row" aria-label="Remove">&times;</button>' : ''}
+    <div class="two-col">
+      <div class="field">
+        <label>Volunteer Name</label>
+        <input type="text" class="vol-name" required placeholder="Full name">
+      </div>
+      <div class="field">
+        <label>Volunteer Email</label>
+        <input type="email" class="vol-email" required placeholder="email@example.com">
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="field">
+        <label>Volunteer Phone (optional)</label>
+        <input type="text" class="vol-phone" placeholder="(555) 555-5555">
+      </div>
+      <div class="field">
+        <label>What did they help with? (optional)</label>
+        <input type="text" class="vol-note" placeholder="e.g. ran the dinner line">
+      </div>
+    </div>
+  `;
+  container.appendChild(row);
+  const removeBtn = row.querySelector('.remove-row');
+  if (removeBtn) removeBtn.addEventListener('click', () => row.remove());
+}
+
+document.getElementById('addRowBtn').addEventListener('click', addVolunteerRow);
+addVolunteerRow(); // start with one row
+
+document.getElementById('nominateForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const errorEl = document.getElementById('errorMsg');
+  errorEl.style.display = 'none';
+
+  const submittedBy = document.getElementById('submittedBy').value.trim();
+  const submittedByTeam = document.getElementById('submittedByTeam').value.trim();
+
+  const rows = document.querySelectorAll('.vol-row');
+  const volunteers = [];
+  rows.forEach(row => {
+    const name = row.querySelector('.vol-name').value.trim();
+    const email = row.querySelector('.vol-email').value.trim();
+    const phone = row.querySelector('.vol-phone').value.trim();
+    const note = row.querySelector('.vol-note').value.trim();
+    if (name || email) volunteers.push({ name, email, phone, note });
+  });
+
+  if (!submittedBy || !submittedByTeam) {
+    errorEl.textContent = 'Please enter your name and team.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (volunteers.length === 0) {
+    errorEl.textContent = 'Please add at least one volunteer.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  const incomplete = volunteers.some(v => !v.name || !v.email);
+  if (incomplete) {
+    errorEl.textContent = 'Each volunteer needs both a name and an email.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  fetch('api/volunteer-nominate.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'add', submittedBy, submittedByTeam, volunteers })
+  }).then(r => {
+    if (!r.ok) throw new Error('bad status');
+    document.getElementById('successDetail').textContent =
+      `${volunteers.length} volunteer${volunteers.length > 1 ? 's' : ''} submitted for EB review from ${submittedByTeam}.`;
+    document.getElementById('nominateForm').style.display = 'none';
+    document.getElementById('successWrap').classList.add('show');
+  }).catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Submit for EB Review';
+    errorEl.textContent = 'Something went wrong — please try again.';
+    errorEl.style.display = 'block';
+  });
+});
+
+document.getElementById('submitAnotherBtn').addEventListener('click', function() {
+  document.getElementById('nominateForm').reset();
+  document.getElementById('volunteerRows').innerHTML = '';
+  rowCount = 0;
+  addVolunteerRow();
+  document.getElementById('nominateForm').style.display = '';
+  document.getElementById('successWrap').classList.remove('show');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = false;
+  btn.textContent = 'Submit for EB Review';
+});
+</script>
+</body>
+</html>

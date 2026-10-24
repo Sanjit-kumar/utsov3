@@ -61,6 +61,33 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .manual-row input{flex:1;padding:.6rem;border:1.5px solid #ccc;border-radius:8px;font-size:.95rem}
 .manual-row button{padding:.6rem 1rem;background:#eee;color:#333;border:none;border-radius:8px;font-weight:700;font-size:.85rem}
 
+#quickAddToggleBtn{padding:.7rem 1rem;background:var(--green);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;white-space:nowrap}
+#quickAddToggleBtn.active{background:var(--amber)}
+#quickAddPanel{display:none;padding:1rem 0 1.2rem}
+#quickAddPanel.show{display:block}
+.qa-card{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1rem;max-width:480px;margin:0 auto}
+.qa-head{font-weight:700;font-size:.95rem;margin-bottom:.8rem}
+.qa-sub{display:block;font-weight:400;font-size:.72rem;color:#888;margin-top:.15rem}
+.qa-row{margin-bottom:.6rem}
+.qa-row input{width:100%;padding:.65rem .8rem;border:1.5px solid #ccc;border-radius:8px;font-size:.95rem}
+.qa-row-2{display:flex;gap:.5rem}
+.qa-row-2 input{flex:1}
+.qa-label{font-size:.76rem;font-weight:700;color:#777;margin:.7rem 0 .4rem;text-transform:uppercase;letter-spacing:.03em}
+.qa-pillrow{display:flex;gap:.4rem;flex-wrap:wrap}
+.qa-pill{padding:.45rem .9rem;border:1.5px solid #ccc;background:#fff;color:#555;border-radius:999px;font-size:.82rem;font-weight:600}
+.qa-pill.active{background:var(--red-dark);border-color:var(--red-dark);color:#fff}
+.qa-counter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.qa-counter-grid-1{grid-template-columns:1fr}
+.qa-counter{text-align:center}
+.qa-counter span{display:block;font-size:.72rem;color:#777;margin-bottom:.25rem}
+.qa-stepper{display:flex;align-items:stretch;border:1.5px solid #ccc;border-radius:8px;overflow:hidden}
+.qa-stepper button{flex:0 0 32px;background:#f3f3f3;border:none;font-size:1rem;font-weight:700;color:var(--red-dark)}
+.qa-stepper input{flex:1;width:0;border:none;text-align:center;font-size:.95rem;font-weight:700;background:#fff}
+.qa-total{font-size:1.1rem;font-weight:700;margin:1rem 0 .3rem;color:var(--red-dark)}
+.qa-qty{font-size:.76rem;font-weight:400;color:#888}
+.qa-actions{display:flex;gap:.6rem;margin-top:.6rem}
+.qa-actions button{flex:1;padding:.75rem;border:none;border-radius:8px;font-weight:700;font-size:.92rem}
+
 .error-banner{display:none;background:#FFF0F0;border:2px solid var(--red);color:var(--red-dark);padding:.8rem;border-radius:10px;font-size:.9rem;text-align:center;margin-top:.8rem}
 .error-banner.show{display:block}
 .success-flash{display:none;background:var(--green-bg);border:2px solid var(--green);color:var(--green);padding:.9rem;border-radius:10px;text-align:center;font-weight:700;margin-top:.8rem}
@@ -82,6 +109,18 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .row-head{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem .9rem;cursor:pointer}
 .row-chevron{color:#bbb;font-size:.8rem;transition:transform .15s;margin-top:.25rem}
 .row.open .row-chevron{transform:rotate(90deg)}
+
+/* Same-person, multiple-bookings cluster (grouped by name+email match) -- purely a display
+   grouping; each booking inside keeps its own independent check-in state/row exactly as if
+   ungrouped. Collapsed by default so a normal single-booking search looks unchanged. */
+.group-cluster{border:1.5px solid var(--amber);border-radius:12px;margin-bottom:.7rem;overflow:hidden;background:var(--amber-bg)}
+.group-header{display:flex;align-items:flex-start;gap:.6rem;padding:.85rem .9rem;cursor:pointer}
+.group-cluster.open .row-chevron{transform:rotate(90deg)}
+.group-tag{font-size:.64rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:#fff;color:var(--amber);padding:.2rem .5rem;border-radius:999px;white-space:nowrap;flex-shrink:0;border:1px solid var(--amber)}
+.group-body{display:none;padding:0 .6rem .6rem}
+.group-cluster.open .group-body{display:block}
+.group-body .row{margin-bottom:.5rem}
+.group-body .row:last-child{margin-bottom:0}
 .row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:.35rem}
 .row-line1{display:flex;align-items:center;gap:.5rem}
 .row-name{flex:1;min-width:0;font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -98,6 +137,12 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .pay-badge.paypal{color:#0E7C86;border-color:#0E7C86;background:#E3F3F4}
 .pay-badge.zelle{color:#6D1ED4;border-color:#6D1ED4;background:#F1E7FB}
 .pay-badge.sulekha{color:#475569;border-color:#475569;background:#EAEDF1}
+.pay-badge.donor{color:#B8860B;border-color:#B8860B;background:#FDF3DC}
+.pay-badge.check{color:#B3401E;border-color:#B3401E;background:#FCE8E0}
+
+/* Disambiguators for same-name registrations — last-4 phone / referrer name, shown only
+   when present so rows with no data on file look exactly as they did before this was added. */
+.id-tag{font-size:.68rem;color:#777;white-space:nowrap;flex-shrink:0}
 
 .dot-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
 .dot{width:9px;height:9px;border-radius:50%;background:#e2e2e2;flex-shrink:0}
@@ -149,6 +194,25 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 .gift-btn.given{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .gift-meta{font-size:.74rem;color:#999;text-align:center;margin-top:.45rem}
 
+.upgrade-section{margin-top:1rem;padding-top:.9rem;border-top:2px dashed var(--line)}
+.upgrade-head{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#999;margin-bottom:.1rem}
+.upgrade-sub{font-size:.72rem;color:#aaa;margin-bottom:.6rem}
+.upgrade-whole-note{font-size:.82rem;color:#555;margin:.5rem 0}
+.upgrade-fee{font-size:.95rem;font-weight:700;color:var(--red-dark);margin:.6rem 0 0}
+.upgrade-custom-toggle{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#666;margin-top:.6rem;cursor:pointer}
+
+.gatepay-box{text-align:center;padding:.8rem 0}
+.gatepay-amount{font-size:1rem;font-weight:700;color:var(--red-dark);margin-bottom:.7rem}
+.gatepay-qr{width:180px;height:180px;border:1.5px solid var(--line);border-radius:10px;padding:8px;background:#fff}
+.gatepay-link{display:block;margin-top:.7rem;font-size:.88rem;font-weight:700;color:var(--red-dark)}
+.gatepay-waiting{font-size:.76rem;color:#999;margin-top:.8rem}
+.gatepay-backlink{display:block;width:100%;margin-top:.5rem;background:none;border:none;color:#999;text-decoration:underline;font-size:.8rem;padding:.4rem}
+
+#donationToggleBtn{padding:.7rem 1rem;background:#B8860B;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;white-space:nowrap}
+#donationToggleBtn.active{background:var(--amber)}
+#donationPanel{display:none;padding:1rem 0 1.2rem}
+#donationPanel.show{display:block}
+
 .empty-state{text-align:center;color:#999;padding:2rem 0;font-size:.9rem}
 </style>
 </head>
@@ -189,6 +253,8 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
 <div class="toolbar">
   <input type="text" id="searchInput" placeholder="🔍 Search by name…" autocomplete="off">
   <button id="qrToggleBtn" type="button" onclick="toggleCamera()">📷 Scan QR</button>
+  <button id="quickAddToggleBtn" type="button" onclick="toggleQuickAdd()">➕ Quick Add</button>
+  <button id="donationToggleBtn" type="button" onclick="toggleDonation()">💰 Donation</button>
 </div>
 
 <main>
@@ -204,6 +270,100 @@ main{flex:1;max-width:640px;margin:0 auto;width:100%;padding:0 1rem 2rem}
     <div class="manual-row">
       <input type="number" id="manualIdInput" placeholder="Can't scan? Enter registration ID" min="1">
       <button onclick="manualLookup()">Look Up</button>
+    </div>
+  </div>
+
+  <div id="quickAddPanel">
+    <div class="qa-card">
+      <div class="qa-head">➕ Walk-In Quick Add <span class="qa-sub">Pay at the gate — syncs straight into the system</span></div>
+
+      <div class="qa-row">
+        <input type="text" id="qaName" placeholder="Name *" maxlength="200">
+      </div>
+      <div class="qa-row qa-row-2">
+        <input type="email" id="qaEmail" placeholder="Email (optional)">
+        <input type="tel" id="qaPhone" placeholder="Phone (optional)">
+      </div>
+
+      <div class="qa-label">Day</div>
+      <div class="qa-pillrow" id="qaDayRow">
+        <button type="button" class="qa-pill active" data-val="both">Both Days</button>
+        <button type="button" class="qa-pill" data-val="saturday">Saturday</button>
+        <button type="button" class="qa-pill" data-val="sunday">Sunday</button>
+      </div>
+
+      <div class="qa-label">Full Package (Pujo + Bhog + Concert + Dinner)</div>
+      <div class="qa-counter-grid">
+        <div class="qa-counter"><span>Patron</span><div class="qa-stepper" data-field="patronFull"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+        <div class="qa-counter"><span>Student</span><div class="qa-stepper" data-field="studentFull"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+        <div class="qa-counter"><span>Kids 6-12</span><div class="qa-stepper" data-field="kidsFull"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+      </div>
+
+      <div class="qa-label">Concert Only (no meal)</div>
+      <div class="qa-counter-grid">
+        <div class="qa-counter"><span>Patron</span><div class="qa-stepper" data-field="patronConcert"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+        <div class="qa-counter"><span>Student</span><div class="qa-stepper" data-field="studentConcert"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+        <div class="qa-counter"><span>Kids 6-12</span><div class="qa-stepper" data-field="kidsConcert"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+      </div>
+
+      <div class="qa-label">Children Under 6 (free)</div>
+      <div class="qa-counter-grid qa-counter-grid-1">
+        <div class="qa-counter"><span>Free</span><div class="qa-stepper" data-field="childrenFree"><button type="button" data-d="-1">−</button><input type="number" value="0" min="0" max="50" readonly><button type="button" data-d="1">+</button></div></div>
+      </div>
+
+      <div class="qa-label">Meal Preference (Full Package only)</div>
+      <div class="qa-pillrow" id="qaFoodRow">
+        <button type="button" class="qa-pill active" data-val="nonvegetarian">Non-Veg</button>
+        <button type="button" class="qa-pill" data-val="vegetarian">Veg</button>
+      </div>
+
+      <div class="qa-label">Payment Method</div>
+      <div class="qa-pillrow" id="qaPayRow">
+        <button type="button" class="qa-pill active" data-val="cash">Cash</button>
+        <button type="button" class="qa-pill" data-val="card">Card</button>
+        <button type="button" class="qa-pill" data-val="zelle">Zelle</button>
+        <button type="button" class="qa-pill" data-val="check">Check</button>
+      </div>
+
+      <label class="upgrade-custom-toggle"><input type="checkbox" id="qaCustomOn" onchange="qaToggleCustom()"> Use a different agreed amount instead</label>
+      <input type="number" id="qaCustomTotal" placeholder="Custom total $ for this walk-in" min="0" step="0.01" style="display:none;width:100%;padding:.6rem;margin-top:.4rem;border:1.5px solid #ccc;border-radius:8px" oninput="qaUpdateTotal()">
+
+      <div class="qa-total">Total: $<span id="qaTotalDisplay">0.00</span> <span id="qaQtyDisplay" class="qa-qty"></span></div>
+
+      <div class="qa-actions">
+        <button type="button" class="btn-cancel" onclick="toggleQuickAdd()">Cancel</button>
+        <button type="button" class="btn-confirm" id="qaSubmitBtn" onclick="submitQuickAdd()">✓ Add &amp; Mark Paid</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="donationPanel">
+    <div class="qa-card donation-section">
+      <div class="qa-head">💰 Donation <span class="qa-sub">Pujo-only / general donation — not a ticket, no headcount added</span></div>
+
+      <div class="qa-row">
+        <input type="text" id="donName" placeholder="Name *" maxlength="200">
+      </div>
+      <div class="qa-row">
+        <input type="email" id="donEmail" placeholder="Email (optional, recommended for PayPal receipt)">
+      </div>
+      <div class="qa-row">
+        <input type="number" id="donAmount" placeholder="Amount $ *" min="0" step="0.01">
+      </div>
+
+      <div class="qa-label">Payment Method</div>
+      <div class="qa-pillrow" id="donPayRow">
+        <button type="button" class="qa-pill active" data-val="cash" onclick="selectPill(this)">Cash</button>
+        <button type="button" class="qa-pill" data-val="card" onclick="selectPill(this)">Card</button>
+        <button type="button" class="qa-pill" data-val="zelle" onclick="selectPill(this)">Zelle</button>
+        <button type="button" class="qa-pill" data-val="check" onclick="selectPill(this)">Check</button>
+        <button type="button" class="qa-pill" data-val="paypal" onclick="selectPill(this); submitDonation()">PayPal</button>
+      </div>
+
+      <div id="donSubmitArea" class="qa-actions">
+        <button type="button" class="btn-cancel" onclick="toggleDonation()">Cancel</button>
+        <button type="button" class="btn-confirm" id="donSubmitBtn" onclick="submitDonation()">✓ Record Donation</button>
+      </div>
     </div>
   </div>
 
@@ -277,7 +437,7 @@ function dayKey(day) { return day === 'sunday' ? 'sun' : 'sat'; }
 function cacheKey(id, day) { return id + '|' + day; }
 
 function payBadgeHtml(source) {
-  var cls = source === 'Zelle' ? 'zelle' : source === 'Sulekha' ? 'sulekha' : 'paypal';
+  var cls = source === 'Zelle' ? 'zelle' : source === 'Sulekha' ? 'sulekha' : source === 'Patron Donor' ? 'donor' : source === 'Check' ? 'check' : 'paypal';
   return '<span class="pay-badge ' + cls + '">' + escapeHtml(source) + '</span>';
 }
 
@@ -353,6 +513,126 @@ function captureOpenRowEdits() {
   });
 }
 
+// Builds the exact same single-registration row element as always -- used both for a
+// standalone registration and for each member inside an expanded group cluster below.
+function buildRowEl(r) {
+  var rs = r[dayKey(currentDay)]; // this day's independent {checkedInCount, checkInStatus}
+  var row = document.createElement('div');
+  row.className = 'row status-' + rs.checkInStatus + ' day-' + dayClass(r.days) + (openRowId === r.id ? ' open' : '');
+  row.dataset.id = r.id;
+  var badgeText = rs.checkInStatus === 'full' ? '✓ All In' : rs.checkInStatus === 'partial' ? (rs.checkedInCount + '/' + r.qty + ' In') : 'Not In';
+  row.innerHTML =
+    '<div class="row-head" onclick="toggleRow(' + r.id + ')">' +
+      '<span class="row-chevron">▶</span>' +
+      '<div class="row-main">' +
+        '<div class="row-line1">' +
+          '<span class="day-pill ' + dayClass(r.days) + '">' + dayPillText(r.days) + '</span>' +
+          '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
+          '<span class="gift-badge' + (r.giftGiven ? '' : ' pending') + '" title="' + (r.giftGiven ? 'Gift given' : 'Gift not given yet') + '">🎁</span>' +
+          '<span class="row-badge ' + rs.checkInStatus + '">' + badgeText + '</span>' +
+        '</div>' +
+        '<div class="row-line2">' +
+          dotsHtml(rs.checkedInCount, r.qty) +
+          '<span>' + rs.checkedInCount + ' of ' + r.qty + ' people — ' + (currentDay === 'saturday' ? 'Sat' : 'Sun') + '</span>' +
+          payBadgeHtml(r.paymentSource) +
+          (r.phoneLast4 ? '<span class="id-tag" title="Last 4 digits of phone on file">📞 ' + escapeHtml(r.phoneLast4) + '</span>' : '') +
+          (r.referredBy ? '<span class="id-tag" title="Referred by">👤 ' + escapeHtml(r.referredBy) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="row-detail" id="detail-' + r.id + '"></div>';
+  return row;
+}
+
+// ── Same-person, multiple-bookings grouping ─────────────────────────────────────
+// Two registrations are "the same person" only if they share a name AND a non-blank email
+// (falling back to phone-last-4 when email is blank) -- matching on name alone would wrongly
+// cluster unrelated people who just happen to share a name (confirmed to happen in real data:
+// two different "Kaushik Basu"s, two different "Anasuya Shukla"s, etc). Registrations with
+// neither email nor phone on file are never grouped -- not enough signal to be sure.
+var expandedGroups = {}; // groupKey -> bool, persists across re-renders (search, 30s refresh)
+
+function normKey(s) { return (s || '').trim().toLowerCase(); }
+
+function groupKeyFor(r) {
+  var name = normKey(r.name);
+  var email = normKey(r.email);
+  if (email) return name + '|email:' + email;
+  var phone = normKey(r.phoneLast4);
+  if (phone) return name + '|phone:' + phone;
+  return null;
+}
+
+// Returns an ordered list of { type:'single', row } or { type:'group', key, rows } entries,
+// preserving the original (already day-filtered + search-filtered) roster order.
+function buildRosterEntries(rows) {
+  var byKey = {};
+  rows.forEach(function(r) {
+    var key = groupKeyFor(r);
+    if (key) (byKey[key] = byKey[key] || []).push(r);
+  });
+  var emitted = {};
+  var entries = [];
+  rows.forEach(function(r) {
+    var key = groupKeyFor(r);
+    if (!key) { entries.push({ type: 'single', row: r }); return; }
+    if (emitted[key]) return; // already emitted this group when we hit its first member
+    emitted[key] = true;
+    var members = byKey[key];
+    entries.push(members.length > 1 ? { type: 'group', key: key, rows: members } : { type: 'single', row: members[0] });
+  });
+  return entries;
+}
+
+function groupSummary(members) {
+  var qty = 0, checked = 0;
+  members.forEach(function(r) {
+    var rs = r[dayKey(currentDay)];
+    qty += r.qty;
+    checked += rs.checkedInCount;
+  });
+  return { qty: qty, checked: checked, status: checked === 0 ? 'none' : (checked >= qty ? 'full' : 'partial') };
+}
+
+function buildGroupEl(key, members) {
+  var sum = groupSummary(members);
+  var badgeText = sum.status === 'full' ? '✓ All In' : sum.status === 'partial' ? (sum.checked + '/' + sum.qty + ' In') : 'Not In';
+  var open = !!expandedGroups[key];
+
+  var cluster = document.createElement('div');
+  cluster.className = 'group-cluster' + (open ? ' open' : '');
+
+  var header = document.createElement('div');
+  header.className = 'group-header';
+  header.onclick = function() { toggleGroup(key); };
+  header.innerHTML =
+    '<span class="row-chevron">▶</span>' +
+    '<div class="row-main">' +
+      '<div class="row-line1">' +
+        '<span class="group-tag">' + members.length + ' bookings</span>' +
+        '<span class="row-name">' + escapeHtml(members[0].name) + '</span>' +
+        '<span class="row-badge ' + sum.status + '">' + badgeText + '</span>' +
+      '</div>' +
+      '<div class="row-line2">' +
+        dotsHtml(sum.checked, sum.qty) +
+        '<span>' + sum.checked + ' of ' + sum.qty + ' total people — ' + (currentDay === 'saturday' ? 'Sat' : 'Sun') + '</span>' +
+      '</div>' +
+    '</div>';
+  cluster.appendChild(header);
+
+  var body = document.createElement('div');
+  body.className = 'group-body';
+  members.forEach(function(r) { body.appendChild(buildRowEl(r)); });
+  cluster.appendChild(body);
+
+  return cluster;
+}
+
+function toggleGroup(key) {
+  expandedGroups[key] = !expandedGroups[key];
+  renderRoster();
+}
+
 function renderRoster() {
   captureOpenRowEdits(); // preserve any unsaved ticks before the DOM gets rebuilt below
 
@@ -369,31 +649,8 @@ function renderRoster() {
   emptyEl.hidden = filtered.length > 0;
   listEl.innerHTML = '';
 
-  filtered.forEach(function(r) {
-    var rs = r[dayKey(currentDay)]; // this day's independent {checkedInCount, checkInStatus}
-    var row = document.createElement('div');
-    row.className = 'row status-' + rs.checkInStatus + ' day-' + dayClass(r.days) + (openRowId === r.id ? ' open' : '');
-    row.dataset.id = r.id;
-    var badgeText = rs.checkInStatus === 'full' ? '✓ All In' : rs.checkInStatus === 'partial' ? (rs.checkedInCount + '/' + r.qty + ' In') : 'Not In';
-    row.innerHTML =
-      '<div class="row-head" onclick="toggleRow(' + r.id + ')">' +
-        '<span class="row-chevron">▶</span>' +
-        '<div class="row-main">' +
-          '<div class="row-line1">' +
-            '<span class="day-pill ' + dayClass(r.days) + '">' + dayPillText(r.days) + '</span>' +
-            '<span class="row-name">' + escapeHtml(r.name) + '</span>' +
-            '<span class="gift-badge' + (r.giftGiven ? '' : ' pending') + '" title="' + (r.giftGiven ? 'Gift given' : 'Gift not given yet') + '">🎁</span>' +
-            '<span class="row-badge ' + rs.checkInStatus + '">' + badgeText + '</span>' +
-          '</div>' +
-          '<div class="row-line2">' +
-            dotsHtml(rs.checkedInCount, r.qty) +
-            '<span>' + rs.checkedInCount + ' of ' + r.qty + ' people — ' + (currentDay === 'saturday' ? 'Sat' : 'Sun') + '</span>' +
-            payBadgeHtml(r.paymentSource) +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="row-detail" id="detail-' + r.id + '"></div>';
-    listEl.appendChild(row);
+  buildRosterEntries(filtered).forEach(function(entry) {
+    listEl.appendChild(entry.type === 'group' ? buildGroupEl(entry.key, entry.rows) : buildRowEl(entry.row));
   });
 
   if (openRowId !== null && filtered.some(function(r) { return r.id === openRowId; })) {
@@ -476,14 +733,244 @@ function renderDetailHtml(reg) {
       '<div class="result-row"><span>Paid Via</span><b>' + escapeHtml(reg.paymentSource) + '</b></div>' +
       '<div class="result-row"><span>Pass Type</span><b>' + escapeHtml(reg.passType) + '</b></div>' +
       '<div class="result-row"><span>Total Paid</span><b>$' + reg.total + '</b></div>' +
+      (reg.phoneLast4 ? '<div class="result-row"><span>Phone (last 4)</span><b>' + escapeHtml(reg.phoneLast4) + '</b></div>' : '') +
+      (reg.referredBy ? '<div class="result-row"><span>Referred By</span><b>' + escapeHtml(reg.referredBy) + '</b></div>' : '') +
       '<div class="attendee-check-list" id="checks-' + reg.id + '">' + checkRows + '</div>' +
       '<div class="detail-actions">' +
         '<button class="btn-cancel" onclick="toggleRow(' + reg.id + ')">Close</button>' +
         '<button class="btn-confirm" onclick="saveCheckin(' + reg.id + ')">✓ Save Check-In</button>' +
       '</div>' +
       giftSectionHtml(reg) +
+      upgradeSectionHtml(reg) +
     '</div>'
   );
+}
+
+// ── Saturday -> Both Days upgrade ($55/adult, $35/kid-or-student) ──────────────
+// Only offered on a Saturday-only registration. "Whole Party" updates that registration in
+// place; "Select Count" splits it into two rows (remaining Saturday-only + new Both-Days one)
+// so a partial upgrade still keeps accurate per-person records -- same split pattern already
+// used manually for Kumarika Banerjee's group. See api/checkin.php action=upgradeDay.
+// Actual payment collection (including PayPal) happens offline at the desk -- the payment
+// method pill here just records how it was paid, it's never a live charge from this page.
+var upgradeMode = {}; // id -> 'whole' | 'partial', defaults to 'whole'
+var UPGRADE_ADULT_RATE = 55, UPGRADE_KID_RATE = 35;
+
+function upgradeSectionHtml(reg) {
+  if (reg.days !== 'Saturday, Oct 17') return ''; // only a Saturday-only pass can upgrade
+  var mode = upgradeMode[reg.id] || 'whole';
+  var wholeFee = reg.adults * UPGRADE_ADULT_RATE + reg.kids6to12 * UPGRADE_KID_RATE;
+  return (
+    '<div class="upgrade-section">' +
+      '<div class="upgrade-head">⬆ Upgrade to Both Days</div>' +
+      '<div class="upgrade-sub">+$55 per adult, +$35 per kid/student</div>' +
+      '<div class="qa-pillrow">' +
+        '<button type="button" class="qa-pill' + (mode === 'whole' ? ' active' : '') + '" onclick="setUpgradeMode(' + reg.id + ',\'whole\')">Whole Party (' + reg.qty + ')</button>' +
+        '<button type="button" class="qa-pill' + (mode === 'partial' ? ' active' : '') + '" onclick="setUpgradeMode(' + reg.id + ',\'partial\')">Select Count</button>' +
+      '</div>' +
+      (mode === 'whole'
+        ? '<div class="upgrade-whole-note">Upgrading all ' + reg.adults + ' adult(s) + ' + reg.kids6to12 + ' kid(s) — fee: $' + wholeFee + '</div>'
+        : ('<div class="qa-counter-grid" style="grid-template-columns:1fr 1fr">' +
+             '<div class="qa-counter"><span>Adults upgrading (of ' + reg.adults + ')</span>' +
+               '<input type="number" id="upAdults-' + reg.id + '" value="0" min="0" max="' + reg.adults + '" oninput="renderUpgradeFee(' + reg.id + ')" style="width:100%;padding:.5rem;text-align:center;border:1.5px solid #ccc;border-radius:8px">' +
+             '</div>' +
+             '<div class="qa-counter"><span>Kids upgrading (of ' + reg.kids6to12 + ')</span>' +
+               '<input type="number" id="upKids-' + reg.id + '" value="0" min="0" max="' + reg.kids6to12 + '" oninput="renderUpgradeFee(' + reg.id + ')" style="width:100%;padding:.5rem;text-align:center;border:1.5px solid #ccc;border-radius:8px">' +
+             '</div>' +
+           '</div>')
+      ) +
+      '<div class="qa-label">Payment for upgrade</div>' +
+      '<div class="qa-pillrow" id="upgradePayRow-' + reg.id + '">' +
+        '<button type="button" class="qa-pill active" data-val="cash" onclick="selectPill(this)">Cash</button>' +
+        '<button type="button" class="qa-pill" data-val="card" onclick="selectPill(this)">Card</button>' +
+        '<button type="button" class="qa-pill" data-val="zelle" onclick="selectPill(this)">Zelle</button>' +
+        '<button type="button" class="qa-pill" data-val="check" onclick="selectPill(this)">Check</button>' +
+        '<button type="button" class="qa-pill" data-val="paypal" onclick="selectPill(this); submitUpgrade(' + reg.id + ')">PayPal</button>' +
+      '</div>' +
+      '<label class="upgrade-custom-toggle"><input type="checkbox" id="upCustomOn-' + reg.id + '" onchange="toggleUpgradeCustom(' + reg.id + ')"> Use a different agreed amount instead</label>' +
+      '<input type="number" id="upCustomFee-' + reg.id + '" placeholder="Custom total $ for this upgrade" min="0" step="0.01" style="display:none;width:100%;padding:.6rem;margin-top:.4rem;border:1.5px solid #ccc;border-radius:8px" oninput="renderUpgradeFee(' + reg.id + ')">' +
+      '<div class="upgrade-fee" id="upgradeFee-' + reg.id + '">Fee: $' + (mode === 'whole' ? wholeFee.toFixed(2) : '0.00') + '</div>' +
+      '<button type="button" class="btn-confirm" style="width:100%;margin-top:.5rem" onclick="submitUpgrade(' + reg.id + ')">Confirm Upgrade</button>' +
+    '</div>'
+  );
+}
+
+function setUpgradeMode(id, mode) {
+  upgradeMode[id] = mode;
+  renderOpenRowDetail(id); // re-renders from the already-cached registration, just with the new mode's inputs
+}
+
+function toggleUpgradeCustom(id) {
+  var on = (document.getElementById('upCustomOn-' + id) || {}).checked;
+  var input = document.getElementById('upCustomFee-' + id);
+  if (input) input.style.display = on ? 'block' : 'none';
+  renderUpgradeFee(id);
+}
+
+function renderUpgradeFee(id) {
+  var el = document.getElementById('upgradeFee-' + id);
+  if (!el) return;
+
+  var customOn = (document.getElementById('upCustomOn-' + id) || {}).checked;
+  if (customOn) {
+    var custom = parseFloat((document.getElementById('upCustomFee-' + id) || {}).value) || 0;
+    el.textContent = 'Fee: $' + custom.toFixed(2);
+    return;
+  }
+
+  var fee;
+  if ((upgradeMode[id] || 'whole') === 'whole') {
+    var reg = detailCache[cacheKey(id, currentDay)];
+    fee = reg ? (reg.adults * UPGRADE_ADULT_RATE + reg.kids6to12 * UPGRADE_KID_RATE) : 0;
+  } else {
+    var a = parseInt((document.getElementById('upAdults-' + id) || {}).value, 10) || 0;
+    var k = parseInt((document.getElementById('upKids-' + id) || {}).value, 10) || 0;
+    fee = a * UPGRADE_ADULT_RATE + k * UPGRADE_KID_RATE;
+  }
+  el.textContent = 'Fee: $' + fee.toFixed(2);
+}
+
+// Generic pill-group selector for dynamically-rendered (innerHTML-rebuilt) button rows, where
+// a one-time addEventListener wiring pass (like the static Quick Add panel uses) can't work
+// since the DOM nodes themselves get recreated on every render.
+function selectPill(btn) {
+  var row = btn.parentElement;
+  row.querySelectorAll('.qa-pill').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+function submitUpgrade(id) {
+  var mode = upgradeMode[id] || 'whole';
+  var reg = detailCache[cacheKey(id, currentDay)];
+  var upAdults, upKids;
+  if (mode === 'whole') {
+    upAdults = reg.adults; upKids = reg.kids6to12;
+  } else {
+    upAdults = parseInt((document.getElementById('upAdults-' + id) || {}).value, 10) || 0;
+    upKids = parseInt((document.getElementById('upKids-' + id) || {}).value, 10) || 0;
+  }
+  if (upAdults + upKids <= 0) { showError('Select at least one person to upgrade.'); return; }
+
+  var payRow = document.getElementById('upgradePayRow-' + id);
+  var activePay = payRow ? payRow.querySelector('.qa-pill.active') : null;
+  var paymentMethod = activePay ? activePay.dataset.val : 'cash';
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+
+  var customOn = (document.getElementById('upCustomOn-' + id) || {}).checked;
+  var customFee = null;
+  if (customOn) {
+    customFee = parseFloat((document.getElementById('upCustomFee-' + id) || {}).value) || 0;
+    if (customFee <= 0) { showError('Enter a custom amount greater than $0.'); return; }
+  }
+
+  if (paymentMethod === 'paypal') {
+    var linkPayload = { station: station, type: 'upgrade', registrationId: id, upgradeAdults: upAdults, upgradeKids: upKids };
+    if (customFee !== null) linkPayload.customFee = customFee;
+    apiCallTo('api/gate-pay.php', 'createLink', linkPayload).then(function(d) {
+      if (d.err) { showError(d.err); return; }
+      showGatePayPrompt(document.getElementById('upgradeFee-' + id).parentElement, d.token, d.url, d.amount, function() {
+        delete upgradeMode[id];
+        openRowId = null;
+        loadRoster();
+        refreshStats();
+      }, function() {
+        renderOpenRowDetail(id); // "Back" -- rebuild the upgrade form fresh from cached data
+      });
+    });
+    return;
+  }
+
+  var payload = { station: station, id: id, upgradeAdults: upAdults, upgradeKids: upKids, paymentMethod: paymentMethod };
+  if (customFee !== null) payload.customFee = customFee;
+
+  apiCall('upgradeDay', payload).then(function(d) {
+    if (d.err) { showError(d.err); return; }
+    showSuccess('Upgraded to Both Days — fee $' + d.upgradeFee.toFixed(2));
+    delete upgradeMode[id];
+    openRowId = null;
+    loadRoster();
+    refreshStats();
+  });
+}
+
+// ── Shared "pay via PayPal" prompt (used by Upgrade and Donation) ──────────────
+// Replaces the submit area with a QR code + direct link to gate-pay.html, a standalone page
+// that runs the real PayPal Buttons flow against api/gate-pay.php. Works both ways at once:
+// the volunteer can tap the link on their own device, or the payer can scan the QR on theirs.
+function apiCallTo(path, action, extra) {
+  var body = Object.assign({ action: action }, extra || {});
+  return fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+    .then(function(r) { return r.json(); })
+    .catch(function() { return { err: 'Network error — check connection and try again.' }; });
+}
+
+// containerEl's own innerHTML becomes the QR/link/status box; onDone fires once payment is
+// confirmed complete (applies the upgrade / finishes the donation UI); onBack restores
+// containerEl to whatever it looked like before, for "actually, let's pay a different way".
+function showGatePayPrompt(containerEl, token, url, amount, onDone, onBack) {
+  containerEl.innerHTML =
+    '<div class="gatepay-box" data-gatepay-token="' + token + '">' +
+      '<div class="gatepay-amount">Amount: $' + amount.toFixed(2) + '</div>' +
+      '<img class="gatepay-qr" src="api/qrcode-lib.php?d=' + encodeURIComponent(url) + '&w=220&h=220" alt="Scan to pay">' +
+      '<a class="gatepay-link" href="' + url + '" target="_blank" rel="noopener">Open Payment Page ↗</a>' +
+      '<div class="gatepay-waiting">⏳ Waiting for payment — checks automatically every few seconds</div>' +
+      '<button type="button" class="btn-cancel" style="width:100%;margin-top:.5rem" onclick="checkGatePayStatus(\'' + token + '\', this)">↻ Check Now</button>' +
+      '<button type="button" class="gatepay-backlink" onclick="cancelGatePayPrompt(\'' + token + '\')">← Use a different payment method</button>' +
+    '</div>';
+  containerEl._gatepayOnDone = onDone;
+  containerEl._gatepayOnBack = onBack;
+  containerEl._gatepayPollId = setInterval(function() { silentCheckGatePayStatus(token, containerEl); }, 4000);
+}
+
+function stopGatePayPoll(containerEl) {
+  if (containerEl && containerEl._gatepayPollId) {
+    clearInterval(containerEl._gatepayPollId);
+    containerEl._gatepayPollId = null;
+  }
+}
+
+function gatePayCompleted(containerEl) {
+  stopGatePayPoll(containerEl);
+  showSuccess('Payment received!');
+  var onDone = containerEl && containerEl._gatepayOnDone;
+  if (onDone) onDone();
+}
+
+// Background poll -- stays quiet unless payment is actually done, so it doesn't nag the
+// volunteer with "not paid yet" every 4 seconds.
+function silentCheckGatePayStatus(token, containerEl) {
+  apiCallTo('api/gate-pay.php', 'resolve', { token: token }).then(function(d) {
+    if (d.err && d.err.indexOf('already been completed') !== -1) gatePayCompleted(containerEl);
+  });
+}
+
+function cancelGatePayPrompt(token) {
+  var containerEl = document.querySelector('[data-gatepay-token="' + token + '"]');
+  if (!containerEl) return;
+  // The box is INSIDE containerEl (set via data-gatepay-token on the box, but the poll/
+  // callbacks live on the box's parent -- the same element showGatePayPrompt was given).
+  var holder = containerEl.parentElement;
+  stopGatePayPoll(holder);
+  var onBack = holder && holder._gatepayOnBack;
+  if (onBack) onBack();
+}
+
+function checkGatePayStatus(token, btn) {
+  btn.textContent = 'Checking…';
+  var box = btn.closest('[data-gatepay-token]');
+  var containerEl = box ? box.parentElement : null;
+  apiCallTo('api/gate-pay.php', 'resolve', { token: token }).then(function(d) {
+    btn.textContent = '↻ Check Now';
+    // 'resolve' errors with this exact message once a payment is completed -- treated here
+    // as the done-signal, since a completed token intentionally can't be resolved again.
+    if (d.err && d.err.indexOf('already been completed') !== -1) {
+      gatePayCompleted(containerEl);
+    } else if (d.err) {
+      showError('Not paid yet: ' + d.err);
+    } else {
+      showError('Still waiting on payment — not completed yet.');
+    }
+  });
 }
 
 // 15th-anniversary gift — ONE per registration, shared across both days on purpose (opposite
@@ -586,6 +1073,211 @@ function toggleCamera() {
     btn.textContent = '✕ Stop Scan';
     startCamera();
   }
+}
+
+// ── Quick Add (walk-in, pay-at-the-gate registration) ──────────────────────────
+// Mirrors cart.html's PRICE_TABLE purely for the volunteer's live total preview; the
+// server (checkin.php, action=quickAdd) recomputes the authoritative total itself from
+// its own copy of this table and never trusts whatever this preview shows.
+var QA_PRICE = {
+  patronFull:     { both: 150, saturday: 95, sunday: 85 },
+  studentFull:    { both: 115, saturday: 75, sunday: 65 },
+  kidsFull:       { both: 85,  saturday: 50, sunday: 50 },
+  patronConcert:  { both: 130, saturday: 80, sunday: 75 },
+  studentConcert: { both: 105, saturday: 70, sunday: 60 },
+  kidsConcert:    { both: 75,  saturday: 45, sunday: 45 }
+};
+var qaDay = 'both';
+var qaFood = 'nonvegetarian';
+var qaPay = 'cash';
+
+function toggleQuickAdd() {
+  var panel = document.getElementById('quickAddPanel');
+  var btn = document.getElementById('quickAddToggleBtn');
+  if (panel.classList.contains('show')) {
+    panel.classList.remove('show');
+    btn.classList.remove('active');
+  } else {
+    panel.classList.add('show');
+    btn.classList.add('active');
+    if (document.getElementById('cameraPanel').classList.contains('show')) toggleCamera();
+    if (document.getElementById('donationPanel').classList.contains('show')) toggleDonation();
+  }
+}
+
+function qaPillRow(rowId, onSelect) {
+  var row = document.getElementById(rowId);
+  row.querySelectorAll('.qa-pill').forEach(function(p) {
+    p.addEventListener('click', function() {
+      row.querySelectorAll('.qa-pill').forEach(function(x) { x.classList.remove('active'); });
+      p.classList.add('active');
+      onSelect(p.dataset.val);
+    });
+  });
+}
+qaPillRow('qaDayRow', function(v) { qaDay = v; qaUpdateTotal(); });
+qaPillRow('qaFoodRow', function(v) { qaFood = v; });
+qaPillRow('qaPayRow', function(v) { qaPay = v; });
+
+document.querySelectorAll('.qa-stepper').forEach(function(stepper) {
+  var input = stepper.querySelector('input');
+  stepper.querySelectorAll('button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var next = Math.max(0, Math.min(50, (parseInt(input.value, 10) || 0) + parseInt(btn.dataset.d, 10)));
+      input.value = next;
+      qaUpdateTotal();
+    });
+  });
+});
+
+function qaCount(field) {
+  var el = document.querySelector('.qa-stepper[data-field="' + field + '"] input');
+  return el ? (parseInt(el.value, 10) || 0) : 0;
+}
+
+function qaToggleCustom() {
+  var on = document.getElementById('qaCustomOn').checked;
+  document.getElementById('qaCustomTotal').style.display = on ? 'block' : 'none';
+  qaUpdateTotal();
+}
+
+function qaUpdateTotal() {
+  var total = 0, qty = 0;
+  Object.keys(QA_PRICE).forEach(function(field) {
+    var c = qaCount(field);
+    total += c * QA_PRICE[field][qaDay];
+    qty += c;
+  });
+  var freeKids = qaCount('childrenFree');
+  qty += freeKids;
+
+  var customOn = document.getElementById('qaCustomOn').checked;
+  if (customOn) {
+    total = parseFloat(document.getElementById('qaCustomTotal').value) || 0;
+  }
+
+  document.getElementById('qaTotalDisplay').textContent = total.toFixed(2);
+  document.getElementById('qaQtyDisplay').textContent = qty > 0 ? '(' + qty + ' ' + (qty === 1 ? 'pass' : 'passes') + ')' : '';
+}
+
+function qaResetForm() {
+  document.getElementById('qaName').value = '';
+  document.getElementById('qaEmail').value = '';
+  document.getElementById('qaPhone').value = '';
+  document.querySelectorAll('.qa-stepper input').forEach(function(el) { el.value = 0; });
+  document.getElementById('qaCustomOn').checked = false;
+  document.getElementById('qaCustomTotal').value = '';
+  document.getElementById('qaCustomTotal').style.display = 'none';
+  qaUpdateTotal();
+}
+
+function submitQuickAdd() {
+  var name = document.getElementById('qaName').value.trim();
+  if (!name) { showError('Name is required.'); return; }
+
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+  var btn = document.getElementById('qaSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Adding…';
+
+  var payload = {
+    station: station,
+    name: name,
+    email: document.getElementById('qaEmail').value.trim(),
+    phone: document.getElementById('qaPhone').value.trim(),
+    day: qaDay,
+    foodPref: qaFood,
+    paymentMethod: qaPay,
+    viewDay: currentDay
+  };
+  Object.keys(QA_PRICE).forEach(function(field) { payload[field] = qaCount(field); });
+  payload.childrenFree = qaCount('childrenFree');
+
+  if (document.getElementById('qaCustomOn').checked) {
+    var customTotal = parseFloat(document.getElementById('qaCustomTotal').value) || 0;
+    if (customTotal <= 0) { btn.disabled = false; btn.textContent = '✓ Add & Mark Paid'; showError('Enter a custom amount greater than $0.'); return; }
+    payload.customTotal = customTotal;
+  }
+
+  apiCall('quickAdd', payload).then(function(d) {
+    btn.disabled = false;
+    btn.textContent = '✓ Add & Mark Paid';
+    if (d.err) { showError(d.err); return; }
+    showSuccess('Added ' + name + ' — $' + d.total.toFixed(2) + ' (id ' + d.id + ')');
+    qaResetForm();
+    toggleQuickAdd();
+    loadRoster();
+    refreshStats();
+  });
+}
+
+// ── Donation (not a ticket -- no headcount/attendee record, just a payment) ────────────────
+function toggleDonation() {
+  var panel = document.getElementById('donationPanel');
+  var btn = document.getElementById('donationToggleBtn');
+  if (panel.classList.contains('show')) {
+    panel.classList.remove('show');
+    btn.classList.remove('active');
+  } else {
+    panel.classList.add('show');
+    btn.classList.add('active');
+    if (document.getElementById('cameraPanel').classList.contains('show')) toggleCamera();
+    if (document.getElementById('quickAddPanel').classList.contains('show')) toggleQuickAdd();
+  }
+}
+
+function donRestoreSubmitArea() {
+  document.getElementById('donSubmitArea').innerHTML =
+    '<button type="button" class="btn-cancel" onclick="toggleDonation()">Cancel</button>' +
+    '<button type="button" class="btn-confirm" id="donSubmitBtn" onclick="submitDonation()">✓ Record Donation</button>';
+}
+
+function donResetForm() {
+  document.getElementById('donName').value = '';
+  document.getElementById('donEmail').value = '';
+  document.getElementById('donAmount').value = '';
+  document.getElementById('donPayRow').querySelectorAll('.qa-pill').forEach(function(p, i) { p.classList.toggle('active', i === 0); });
+  donRestoreSubmitArea();
+}
+
+function submitDonation() {
+  var name = document.getElementById('donName').value.trim();
+  var email = document.getElementById('donEmail').value.trim();
+  var amount = parseFloat(document.getElementById('donAmount').value) || 0;
+  var payRow = document.getElementById('donPayRow');
+  var activePay = payRow.querySelector('.qa-pill.active');
+  var paymentMethod = activePay ? activePay.dataset.val : 'cash';
+  var station = document.getElementById('stationName').value.trim() || 'Front Gate';
+
+  if (!name) { showError('Name is required.'); return; }
+  if (amount <= 0) { showError('Enter a donation amount greater than $0.'); return; }
+
+  if (paymentMethod === 'paypal') {
+    apiCallTo('api/gate-pay.php', 'createLink', {
+      station: station, type: 'donation', name: name, email: email, amount: amount
+    }).then(function(d) {
+      if (d.err) { showError(d.err); return; }
+      showGatePayPrompt(document.getElementById('donSubmitArea'), d.token, d.url, d.amount, function() {
+        donResetForm();
+        toggleDonation();
+      }, function() {
+        donRestoreSubmitArea(); // "Back" -- keep name/amount, just restore the pay buttons
+      });
+    });
+    return;
+  }
+
+  var btn = document.getElementById('donSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Recording…';
+  apiCallTo('api/gate-pay.php', 'manualDonation', {
+    station: station, name: name, email: email, amount: amount, paymentMethod: paymentMethod
+  }).then(function(d) {
+    if (d.err) { showError(d.err); btn.disabled = false; btn.textContent = '✓ Record Donation'; return; }
+    showSuccess('Donation recorded — $' + amount.toFixed(2) + ' from ' + name);
+    donResetForm();
+    toggleDonation();
+  });
 }
 
 function startCamera() {

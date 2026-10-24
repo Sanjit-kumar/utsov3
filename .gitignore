@@ -96,3 +96,78 @@ db-backups/
 
 # Credentials vault — only the encrypted .enc file is committed, never the plaintext source
 vault/CREDENTIALS.md
+
+# Any SQLite db/backup copy anywhere in the tree (scratch exports, local pulls) — private data
+*.db
+*.sqlite
+*.sqlite3
+"db-backups$(date +%Y-%m-%d_%H%M)_firoza-ghosh/"
+
+# Scripts/docs with hardcoded live credentials — never commit
+db-backup.py
+TWILIO_SETUP.md
+
+# Session cookies captured during local testing
+cookies.txt
+cookies_utsov.txt
+
+# Raw sponsor marketing creative + working-doc exports with real attendee/volunteer PII —
+# not site source, kept locally only
+PC/
+Artist_Food_Team.csv
+Event_Day_Teams.xlsx
+Event_Day_Teams_Combined.csv
+Food_Distribution_Team.csv
+Kitchen_Management_Team.csv
+Pujo_Bhog_Coordinator_Team.csv
+Refills_Logistics_Team.csv
+Transport_Shopping_Team.csv
+utsov_members_group_list.csv
+*.csv
+*.xlsx
+
+# Unrelated scratch project folders that ended up in this working copy
+Anim/
+Ritam_Worksheets/
+backups/
+_tmp_*
+_tmp_*/
+
+# Local scratch/test pages and one-off scripts, never linked from the live site
+test.html
+test-pcchandra.html
+login_body.html
+test_sheets_nav.py
+cleanup_sheet.py
+generate_docs.py
+populate_all_zelle.py
+setup-db-backup-scheduler.bat
+sheet_step2.png
+final_sheet_update.png
+pcchandra_official.png
+6.jpg
+6_updated.jpg
+utsov_durga_puja_2026_flyer.jpg
+utsov_durga_pujo_2026_pro_flyer_render.jpg
+utsov_durga_pujo_2026_pro_flyer_render.png
+utsov_durga_pujo_2026_white_red_flyer.png
+utsov_iman_solo_flyer_render.jpg
+utsov_iman_solo_flyer_render.png
+
+# Image-crop iteration debris from local logo/graphic editing — not final assets
+images/crop_*.jpg
+images/verify_*.jpg
+images/PC Chandra/
+
+# Real phone-number-to-name mapping built from registration data — PII, never commit
+_phone_name_match.json
+
+# One-off test artifact
+api/qr_test.png
+
+# Uploaded expense receipt images — runtime user uploads, not source (same posture as
+# api/uploads/receipts/ above)
+api/uploads/expense-receipts/
+
+# Local Python virtual environment — not source, regenerate with requirements.txt
+.venv/

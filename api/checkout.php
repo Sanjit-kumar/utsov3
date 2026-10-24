@@ -466,13 +466,12 @@ function captureOrder($post) {
         if (!empty($row['is_student'])) {
             $tRows[] = array('Pass Type', 'Student (bring student ID)', false, false, false);
         }
-        $tRows[] = array('Total Paid', "\${$total}", true, true,  false);
         $tRows[] = array('Order ID',   $orderId,     false, false, true);
 
         $imgUrl = buildEmailImage(
             'BOOKING CONFIRMED', false,
             "You're going to UTSOV 2026!",
-            array("Dear {$name},", "Your payment of \${$total} has been received.", "Your {$qty} {$passWord} are confirmed!"),
+            array("Dear {$name},", "Your payment has been received.", "Your {$qty} {$passWord} are confirmed!"),
             'BOOKING DETAILS',
             $tRows,
             array('Full schedule & venue details coming closer to', 'October 17-18, New Jersey. See you there!'),
@@ -484,21 +483,20 @@ function captureOrder($post) {
                 "<html><body style='margin:0;padding:20px 0;background-color:#0d0000;text-align:center;font-family:Arial,sans-serif;'>"
               . "<img src='{$imgUrl}' width='600' alt='UTSOV 2026 Booking Confirmed' style='display:block;margin:0 auto;max-width:100%;border:0;'>"
               . "<p style='color:#888;font-size:11px;margin:8px auto 0;max-width:600px;'>"
-              . "Booking confirmed for {$safeName} | \${$total} | Order: {$safeOrder}"
+              . "Booking confirmed for {$safeName} | Order: {$safeOrder}"
               . "</p></body></html>";
         } else {
             // Fallback plain HTML if GD unavailable on server
             $buyerBody =
                 "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto'>"
               . "<h2 style='color:#8B1A1A'>You're going to UTSOV 2026!</h2>"
-              . "<p>Hi {$safeName},</p><p>Your payment of <b>\${$total}</b> has been received.</p>"
+              . "<p>Hi {$safeName},</p><p>Your payment has been received.</p>"
               . "<table style='border-collapse:collapse;font-size:14px'>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Passes:</b></td><td>UTSOV 2026 x {$qty} {$passWord}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Days:</b></td><td>{$daysDisp}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Adults:</b></td><td>{$guestLine}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Meal:</b></td><td>{$foodDisp}</td></tr>"
               . (!empty($row['pass_type']) && $row['pass_type'] !== 'full' ? "<tr><td style='padding:4px 16px 4px 0'><b>Pass Type:</b></td><td>{$passTypeDisp}</td></tr>" : '')
-              . "<tr><td style='padding:4px 16px 4px 0'><b>Total:</b></td><td>\${$total}</td></tr>"
               . "<tr><td style='padding:4px 16px 4px 0'><b>Order ID:</b></td><td>{$safeOrder}</td></tr>"
               . "</table>"
               . "<p style='color:#8B1A1A'>-- The UTSOV Team</p></body></html>";
@@ -508,7 +506,7 @@ function captureOrder($post) {
         // SMS confirmation — only if the buyer opted in ("Text me my registration confirmation")
         if (!empty($row['sms_updates'])) {
             $smsDays = html_entity_decode($daysDisp, ENT_QUOTES, 'UTF-8');
-            $smsBody = "UTSOV 2026: Your {$qty} {$passWord} confirmed! {$smsDays}. Total \${$total}. Order {$orderId}. Reply STOP to opt out.";
+            $smsBody = "UTSOV 2026: Your {$qty} {$passWord} confirmed! {$smsDays}. Order {$orderId}. Reply STOP to opt out.";
             sendTwilioSMS($row['phone'], $smsBody);
         }
 

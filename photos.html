@@ -65,17 +65,25 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .rv.in{opacity:1;transform:none}
 .rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}.rv.d3{transition-delay:.36s}
 
-/* ── HERO: photo-collage crossfade ── */
-.photo-hero{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#2C0808}
-.ph-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.2s ease-in-out}
-.ph-slide.active{opacity:1}
-.photo-hero::before{content:'';position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 100% 90% at 50% 0%,rgba(20,0,0,.55) 0%,transparent 60%),radial-gradient(ellipse 90% 60% at 50% 110%,rgba(10,0,0,.85) 0%,transparent 55%),rgba(20,0,0,.35)}
-.photo-hero-in{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center;padding:8rem 2rem 4rem}
-.ph-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.14);border:1.5px solid rgba(201,168,76,.5);border-radius:var(--r-full);padding:.4rem 1.2rem;font-family:var(--f-label);font-size:.68rem;font-weight:700;color:#E8C97A;letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.5rem}
-.photo-hero h1{font-family:var(--f-display);font-size:clamp(3.2rem,8vw,6.5rem);color:#fff;line-height:.92;margin-bottom:1rem;letter-spacing:.01em;text-shadow:0 10px 40px rgba(0,0,0,.5)}
-.ph-divider{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;margin:1.1rem auto}
-.photo-hero p.sub{font-family:var(--f-serif);font-style:italic;font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,.75);line-height:1.8;max-width:56ch;margin:0 auto 2rem}
+/* ── HERO: 3D orbiting photo ring + rainbow cursor trail ── */
+.photo-hero{position:relative;min-height:100vh;overflow:hidden;background:#140404;padding:6.5rem 1rem 1.5rem;display:flex;flex-direction:column}
+.trail-canvas{position:absolute;inset:0;z-index:5;pointer-events:none}
+.ring-stage{position:relative;flex:1;display:flex;align-items:center;justify-content:center;perspective:1800px;min-height:420px;z-index:2}
+.photo-ring{position:relative;width:0;height:0;transform-style:preserve-3d;animation:ringSpin 38s linear infinite}
+.photo-ring.paused{animation-play-state:paused}
+@keyframes ringSpin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.ring-tile{position:absolute;top:50%;left:50%;width:150px;height:200px;margin:-100px 0 0 -75px;border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.92);cursor:pointer;transition:filter .3s,box-shadow .3s;backface-visibility:hidden}
+.ring-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.ring-tile:hover{filter:brightness(1.18);box-shadow:0 30px 70px rgba(0,0,0,.65)}
+.ring-year-tag{position:absolute;bottom:.4rem;left:.5rem;background:rgba(0,0,0,.62);color:#fff;font-family:var(--f-label);font-size:.62rem;font-weight:700;padding:.15rem .55rem;border-radius:999px}
+@media(max-width:760px){.ring-tile{width:110px;height:150px;margin:-75px 0 0 -55px}}
+.hero-textbar{position:relative;z-index:3;text-align:center;padding:1.6rem 1rem 1rem}
+.ph-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.14);border:1.5px solid rgba(201,168,76,.5);border-radius:var(--r-full);padding:.4rem 1.2rem;font-family:var(--f-label);font-size:.68rem;font-weight:700;color:#E8C97A;letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem}
+.photo-hero h1{font-family:var(--f-display);font-size:clamp(2.6rem,6.5vw,5rem);color:#fff;line-height:.95;margin-bottom:.7rem;letter-spacing:.01em;text-shadow:0 6px 24px rgba(0,0,0,.4)}
+.ph-divider{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;margin:.8rem auto}
+.photo-hero p.sub{font-family:var(--f-serif);font-style:italic;font-size:clamp(.95rem,1.8vw,1.1rem);color:rgba(255,255,255,.75);line-height:1.7;max-width:56ch;margin:0 auto 1.5rem}
 .ph-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+@media(max-width:760px){.hero-mosaic{grid-template-columns:repeat(4,1fr);grid-auto-rows:85px}.mosaic-cell.big{grid-column:span 2;grid-row:span 2}}
 
 /* ── SECTION UTILS ── */
 .s-in{max-width:1280px;margin:0 auto;padding:5.5rem 2rem}
@@ -86,38 +94,61 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .section-cream{background:var(--cream)}
 .section-ivory{background:var(--ivory)}
 
-/* ── 2026 JOURNEY: timeline ── */
-.journey-timeline{position:relative;max-width:780px;margin:0 auto 3.5rem;padding-left:2.2rem}
-.journey-timeline::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--gold),var(--saffron),var(--red))}
-.tl-item{position:relative;padding-bottom:2.2rem}
-.tl-item:last-child{padding-bottom:0}
-.tl-dot{position:absolute;left:-2.2rem;top:.3rem;width:20px;height:20px;border-radius:50%;background:var(--cream);border:3px solid var(--saffron);display:flex;align-items:center;justify-content:center;font-size:.7rem}
-.tl-dot.done{background:var(--saffron);border-color:var(--saffron)}
-.tl-card{background:#fff;border:1.5px solid var(--bdr-red);border-radius:var(--r-lg);padding:1.3rem 1.6rem;box-shadow:0 6px 20px rgba(139,26,26,.06)}
-.tl-title{font-family:var(--f-label);font-weight:700;font-size:1rem;color:var(--on-cream);margin-bottom:.3rem}
-.tl-desc{font-size:.92rem;color:var(--on-cream-mid);line-height:1.6}
+/* ── 2026 JOURNEY: bold image-led grid with tilt-hover ── */
+.journey-media{max-width:1300px;margin:0 auto 2rem;perspective:1200px}
+.jm-grid{columns:5 240px;column-gap:1.1rem}
+.jm-card{break-inside:avoid;margin-bottom:1.1rem;border-radius:var(--r-lg);overflow:hidden;position:relative;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.14);transform-style:preserve-3d;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;will-change:transform}
+.jm-card:hover{box-shadow:0 20px 44px rgba(107,14,14,.28);z-index:3}
+.jm-card img,.jm-card video{width:100%;display:block;transition:transform .5s}
+.jm-card:hover img,.jm-card:hover video{transform:scale(1.06)}
+.jm-date{position:absolute;top:.6rem;left:.6rem;background:rgba(0,0,0,.6);color:#fff;font-family:var(--f-label);font-size:.62rem;font-weight:700;letter-spacing:.04em;padding:.28rem .6rem;border-radius:var(--r-full);z-index:2}
+@media(max-width:1040px){.jm-grid{columns:4 200px}}
+@media(max-width:760px){.jm-grid{columns:3 160px}}
+@media(max-width:480px){.jm-grid{columns:2 130px}}
 
-.journey-cta{max-width:700px;margin:0 auto 3rem;background:linear-gradient(135deg,var(--blush),var(--ivory));border:1.5px solid var(--bdr-gold);border-radius:var(--r-xl);padding:2.2rem 2rem;text-align:center}
-.journey-cta h3{font-family:var(--f-display);font-size:1.7rem;color:var(--red-dark);margin-bottom:.6rem;letter-spacing:.01em}
-.journey-cta p{font-size:.95rem;color:var(--on-cream-mid);line-height:1.7;margin-bottom:1.2rem}
+.journey-share-line{text-align:center;max-width:620px;margin:0 auto 3rem;font-size:.88rem;color:var(--on-cream-mid);font-family:var(--f-serif);font-style:italic}
+.journey-share-line a{color:var(--red);font-weight:600;text-decoration:underline}
 
-/* ── DESTINATION locked card ── */
-.destination-card{max-width:780px;margin:0 auto;position:relative;border-radius:var(--r-xl);overflow:hidden;background:linear-gradient(145deg,#2C0808 0%,#4A0F0F 55%,#1A0000 100%);padding:3rem 2rem;text-align:center;box-shadow:0 20px 60px rgba(107,14,14,.25)}
-.destination-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(224,120,48,.18) 0%,transparent 65%)}
-.dc-in{position:relative;z-index:1}
-.dc-lock{font-size:2.4rem;margin-bottom:.7rem;display:block}
-.dc-title{font-family:var(--f-display);font-size:clamp(2rem,4vw,2.8rem);color:#fff;margin-bottom:.6rem;letter-spacing:.01em}
-.dc-sub{font-family:var(--f-serif);font-style:italic;color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:1.6rem}
-.dc-countdown{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
-.dc-unit{background:rgba(255,255,255,.08);border:1.5px solid rgba(201,168,76,.35);border-radius:var(--r-md);padding:.8rem 1.3rem;min-width:84px}
-.dc-num{font-family:var(--f-display);font-size:2.1rem;color:#E8C97A;line-height:1}
-.dc-label{font-family:var(--f-label);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.2rem}
+/* ── WALLPAPER: ambient scrolling archive backdrop ── */
+.wallpaper-section{position:relative;min-height:78vh;overflow:hidden;background:#140404;display:flex;align-items:center;justify-content:center}
+.wallpaper-rows{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-evenly;opacity:.85}
+.wp-row{display:flex;gap:.5rem;width:max-content}
+.wp-row img{height:150px;width:auto;border-radius:8px;flex-shrink:0;filter:saturate(.9)}
+.wp-row.dir-left{animation:wpScrollLeft var(--wp-dur,70s) linear infinite}
+.wp-row.dir-right{animation:wpScrollRight var(--wp-dur,70s) linear infinite}
+@keyframes wpScrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes wpScrollRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.wallpaper-overlay{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(20,0,0,.88) 0%,rgba(20,0,0,.72) 55%,rgba(20,0,0,.55) 100%)}
+.wallpaper-content{position:relative;z-index:2;text-align:center;max-width:640px;padding:2rem}
+.wallpaper-content .s-label{color:#E8C97A}
+.wp-title{font-family:var(--f-display);font-size:clamp(2.4rem,5.5vw,4rem);color:#fff;line-height:.95;margin-bottom:.9rem;letter-spacing:.01em;text-shadow:0 6px 24px rgba(0,0,0,.5)}
+.wp-sub{font-family:var(--f-serif);font-style:italic;color:rgba(255,255,255,.75);font-size:1.02rem;line-height:1.8;margin-bottom:1.8rem}
+
+/* ── ARCHIVE EXPLORER MODAL ── */
+.archive-modal{position:fixed;inset:0;z-index:950;background:rgba(10,0,0,.6);display:none;overflow-y:auto;padding:3rem 1rem}
+.archive-modal.open{display:block}
+.archive-modal-in{max-width:1280px;margin:0 auto;background:var(--ivory);border-radius:var(--r-xl);padding:2.5rem 2rem 3rem;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.archive-modal-close{position:absolute;top:1.3rem;right:1.3rem;width:42px;height:42px;border-radius:50%;background:#fff;border:1.5px solid var(--bdr-red);color:var(--red-dark);font-size:1.1rem;cursor:pointer;z-index:2;box-shadow:0 4px 14px rgba(0,0,0,.12)}
 
 /* ── YEAR TABS + GALLERY ── */
 .year-tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.8rem}
 .year-tab{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.03em;padding:.55rem 1.5rem;border-radius:var(--r-full);border:1.5px solid var(--bdr-red);background:#fff;color:var(--on-cream-mid);cursor:pointer;transition:all .22s}
 .year-tab:hover{border-color:var(--red);color:var(--red)}
 .year-tab.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 6px 18px rgba(158,36,36,.3)}
+
+/* ── View toggle + mouse-trail reveal gallery (per year) ── */
+.view-toggle{display:flex;gap:.5rem;justify-content:center;margin-bottom:1.6rem}
+.vt-btn{font-family:var(--f-label);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:var(--r-full);border:1.5px solid var(--bdr-red);background:#fff;color:var(--on-cream-mid);cursor:pointer;transition:all .2s}
+.vt-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.trail-stage{position:relative;min-height:62vh;border-radius:var(--r-lg);overflow:hidden;background:#140404;margin-bottom:1rem;cursor:none}
+.trail-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.4);font-family:var(--f-serif);font-style:italic;font-size:1.05rem;pointer-events:none;padding:1rem;transition:opacity .4s}
+.trail-hint.hidden{opacity:0}
+.trail-tile{position:absolute;width:150px;border-radius:8px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.5);border:3px solid #fff;pointer-events:auto;cursor:pointer;opacity:0;transform:scale(.4) rotate(0deg);transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.34,1.56,.64,1)}
+.trail-tile.in{opacity:1}
+.trail-tile img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
+.trail-tile.out{opacity:0;transform:scale(.85) rotate(var(--rot,0deg)) !important;transition:opacity .9s ease}
+.trail-cursor{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:2px solid var(--gold-lt);background:rgba(201,168,76,.18);pointer-events:none;z-index:900;transform:translate(-50%,-50%);display:none;align-items:center;justify-content:center;color:var(--gold-lt);font-size:.9rem;transition:opacity .2s}
+@media(max-width:640px){.trail-tile{width:100px}.trail-stage{min-height:52vh}}
 
 .photo-grid{columns:4 240px;column-gap:1rem}
 .photo-card{break-inside:avoid;margin-bottom:1rem;border-radius:var(--r-md);overflow:hidden;position:relative;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .25s,box-shadow .25s}
@@ -128,9 +159,22 @@ header.scrolled nav ul a:hover,header.scrolled nav ul a.active{color:var(--red);
 .pc-caption{color:#fff;font-family:var(--f-label);font-size:.72rem;font-weight:600;letter-spacing:.03em}
 
 .gallery-loading{text-align:center;color:var(--on-cream-muted);font-family:var(--f-serif);font-style:italic;padding:2rem}
+.hidden{display:none !important}
+
+/* ── 2025 EVENT VIDEO HIGHLIGHTS (inside archive modal) ── */
+.archive-videos{max-width:1000px;margin:0 auto 3rem;padding-top:2.5rem;border-top:1px solid var(--bdr-red)}
+.archive-videos h3{font-family:var(--f-display);font-size:1.7rem;color:var(--red-dark);text-align:center;margin-bottom:.4rem;letter-spacing:.01em}
+.archive-videos p.av-sub{text-align:center;font-family:var(--f-serif);font-style:italic;color:var(--on-cream-mid);font-size:.88rem;margin-bottom:1.6rem}
+.av-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.av-card{position:relative;border-radius:var(--r-md);overflow:hidden;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.12);transition:transform .22s}
+.av-card:hover{transform:translateY(-3px)}
+.av-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.av-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25)}
+.av-play::after{content:'▶';width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--red-dark);display:flex;align-items:center;justify-content:center;font-size:1.2rem;padding-left:4px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.av-dur{position:absolute;bottom:.5rem;right:.5rem;background:rgba(0,0,0,.7);color:#fff;font-family:var(--f-label);font-size:.68rem;font-weight:700;padding:.2rem .5rem;border-radius:4px}
 
 /* ── LIGHTBOX ── */
-.lightbox{position:fixed;inset:0;background:rgba(10,0,0,.93);z-index:900;display:none;align-items:center;justify-content:center;padding:2rem;cursor:zoom-out}
+.lightbox{position:fixed;inset:0;background:rgba(10,0,0,.93);z-index:1000;display:none;align-items:center;justify-content:center;padding:2rem;cursor:zoom-out}
 .lightbox.open{display:flex}
 .lightbox img{max-width:min(90vw,900px);max-height:82vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .lightbox-cap{position:absolute;bottom:2rem;left:0;right:0;text-align:center;color:rgba(255,255,255,.7);font-family:var(--f-label);font-size:.8rem;letter-spacing:.04em}
@@ -168,7 +212,9 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <li><a href="artists.html">Artists</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="photos.html" class="active">Photos</a></li>
+      <li><a href="magazine.html">Magazine</a></li>
       <li><a href="philanthropy.html">Philanthropy</a></li>
+      <li><a href="members.html">Members</a></li>
       <li><a href="sponsorship.html">Sponsor</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -183,15 +229,19 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
 
 <!-- HERO -->
 <div class="photo-hero" id="photoHero">
-  <div class="photo-hero-in">
+  <div class="hero-textbar">
     <div class="ph-badge rv">📸 Community Archive</div>
-    <h1 class="rv d1">Moments That<br>Made Us</h1>
+    <h1 class="rv d1">Moments That Made Us</h1>
     <div class="ph-divider rv d1"></div>
-    <p class="sub rv d2">Eleven years of worship, dance, dhaak, and family — captured by the very community that builds UTSOV every single year. Browse the memories, then follow along as we build 2026.</p>
+    <p class="sub rv d2">Fifteen years of worship, dance, dhaak, and family — captured by the very community that builds UTSOV every single year.</p>
     <div class="ph-ctas rv d3">
       <a href="#journey" class="btn btn-outline-w">See the 2026 Journey</a>
       <a href="#years" class="btn btn-red">Browse Previous Years</a>
     </div>
+  </div>
+  <canvas class="trail-canvas" id="heroTrail"></canvas>
+  <div class="ring-stage" id="ringStage">
+    <div class="photo-ring" id="photoRing"></div>
   </div>
 </div>
 
@@ -204,83 +254,60 @@ footer{background:var(--red-dark);border-top:3px solid var(--gold)}
       <p class="s-sub">Every great celebration starts long before the lights go up. Here's what Team UTSOV has been building behind the scenes for this year's Durga Puja.</p>
     </div>
 
-    <div class="journey-timeline">
-      <div class="tl-item rv">
-        <div class="tl-dot done">✓</div>
-        <div class="tl-card">
-          <div class="tl-title">Venue Secured</div>
-          <div class="tl-desc">Jo Ann Magistro Performing Arts Center, East Brunswick — booked and confirmed for both days.</div>
-        </div>
-      </div>
-      <div class="tl-item rv d1">
-        <div class="tl-dot done">✓</div>
-        <div class="tl-card">
-          <div class="tl-title">Teams Assembled</div>
-          <div class="tl-desc">Dozens of volunteers across food, logistics, marketing, and event-day operations — the people who make it all run.</div>
-        </div>
-      </div>
-      <div class="tl-item rv d2">
-        <div class="tl-dot done">✓</div>
-        <div class="tl-card">
-          <div class="tl-title">Artists Confirmed</div>
-          <div class="tl-desc">Iman Chakraborty & Band, Sourendro–Soumyojit, and a full lineup of cultural performances locked in.</div>
-        </div>
-      </div>
-      <div class="tl-item rv d3">
-        <div class="tl-dot done">✓</div>
-        <div class="tl-card">
-          <div class="tl-title">Registration Opened</div>
-          <div class="tl-desc">Passes, the Children's Art Competition, and sponsorship packages are all live and filling up.</div>
-        </div>
-      </div>
-      <div class="tl-item rv">
-        <div class="tl-dot">●</div>
-        <div class="tl-card">
-          <div class="tl-title">Final Prep &amp; Rehearsals</div>
-          <div class="tl-desc">In progress now — decorations, sound checks, and last-minute logistics as we count down to event day.</div>
-        </div>
-      </div>
+    <div class="journey-media rv">
+      <div class="jm-grid" id="journeyGrid"></div>
     </div>
 
-    <div class="journey-cta rv">
-      <h3>Got Photos From Setup or Prep?</h3>
-      <p>If you've snapped anything from rehearsals, planning meetings, or behind-the-scenes work — share it in the Utsov community WhatsApp group and we'll feature it right here.</p>
-      <a href="contact.html" class="btn btn-red">Get in Touch</a>
-    </div>
+    <p class="journey-share-line rv">📷 Got more from setup or rehearsals? Share it in the Utsov WhatsApp group and we'll add it here — <a href="contact.html">get in touch</a>.</p>
 
-    <!-- DESTINATION (locked until event) -->
-    <div class="destination-card rv">
-      <div class="dc-in">
-        <span class="dc-lock">🔒</span>
-        <div class="dc-title">The Destination</div>
-        <div class="dc-sub">Event-day photos unlock here starting October 17, 2026</div>
-        <div class="dc-countdown" id="countdown">
-          <div class="dc-unit"><div class="dc-num" id="cdDays">–</div><div class="dc-label">Days</div></div>
-          <div class="dc-unit"><div class="dc-num" id="cdHours">–</div><div class="dc-label">Hours</div></div>
-          <div class="dc-unit"><div class="dc-num" id="cdMins">–</div><div class="dc-label">Minutes</div></div>
-        </div>
-        <a href="events.html" class="btn btn-outline-w" style="margin-top:.5rem">See the Full Schedule</a>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- PREVIOUS YEARS -->
-<section class="section-ivory" id="years">
-  <div class="s-in">
-    <div class="s-head rv">
-      <span class="s-label">✦ The Archive</span>
-      <h2 class="s-title">Through the Years</h2>
-      <p class="s-sub">From our very first celebrations to last year's festivities — a community archive spanning 2014 through 2025. Click any photo to see it full-size.</p>
-    </div>
-
-    <div class="year-tabs rv" id="yearTabs"></div>
-    <div class="photo-grid" id="photoGrid"></div>
-    <div class="gallery-loading" id="galleryLoading">Loading memories…</div>
+<!-- PREVIOUS YEARS: ambient wallpaper backdrop -->
+<section class="wallpaper-section" id="years">
+  <div class="wallpaper-rows" id="wallpaperRows"></div>
+  <div class="wallpaper-overlay"></div>
+  <div class="wallpaper-content rv">
+    <span class="s-label">✦ The Archive</span>
+    <h2 class="wp-title">15 Years of Memories</h2>
+    <p class="wp-sub">From our very first celebrations in 2014 to last year's festivities — a community archive built one photo at a time.</p>
+    <button class="btn btn-red" id="exploreArchiveBtn">Explore the Full Archive</button>
   </div>
 </section>
 
 </main>
+
+<!-- ARCHIVE EXPLORER MODAL -->
+<div class="archive-modal" id="archiveModal">
+  <div class="archive-modal-in">
+    <button class="archive-modal-close" id="archiveModalClose" aria-label="Close">✕</button>
+    <div class="s-head">
+      <span class="s-label">✦ The Archive</span>
+      <h2 class="s-title">Through the Years</h2>
+      <p class="s-sub">Click any photo to see it full-size.</p>
+    </div>
+    <div class="year-tabs" id="yearTabs"></div>
+
+    <div class="view-toggle">
+      <button class="vt-btn active" id="toggleTrailBtn">✨ Trail Mode</button>
+      <button class="vt-btn" id="toggleGridBtn">⊞ Grid Mode</button>
+    </div>
+
+    <div class="trail-stage" id="trailStage">
+      <div class="trail-hint" id="trailHint">Move your mouse here to reveal memories ✨</div>
+    </div>
+    <div class="trail-cursor" id="trailCursor">+</div>
+
+    <div class="photo-grid hidden" id="photoGrid"></div>
+    <div class="gallery-loading" id="galleryLoading">Loading memories…</div>
+
+    <div class="archive-videos">
+      <h3>2025 Event Highlights</h3>
+      <p class="av-sub">Highlight clips from last year's celebration — click to watch.</p>
+      <div class="av-grid" id="archiveVideoGrid"></div>
+    </div>
+  </div>
+</div>
 
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
@@ -329,51 +356,222 @@ const obs = new IntersectionObserver(entries => {
 }, {threshold:.08, rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-// ── HERO CROSSFADE SLIDESHOW ──
+// ── HERO: 3D orbiting photo ring, built from the real manifest ──
 (function(){
-  const years = ['2014','2015','2017','2018','2019','2021','2025'];
-  const heroEl = document.getElementById('photoHero');
-  const slides = years.map(y => {
-    const d = document.createElement('div');
-    d.className = 'ph-slide';
-    d.style.backgroundImage = `url(images/photos-gallery/previous-years/${y}/${y}-001.jpg)`;
-    heroEl.insertBefore(d, heroEl.firstChild);
-    return d;
-  });
-  let idx = 0;
-  slides[0].classList.add('active');
-  setInterval(() => {
-    slides[idx].classList.remove('active');
-    idx = (idx + 1) % slides.length;
-    slides[idx].classList.add('active');
-  }, 4500);
+  const ring = document.getElementById('photoRing');
+  const stage = document.getElementById('ringStage');
+  if (!ring) return;
+
+  fetch('images/photos-gallery/manifest.json')
+    .then(r => r.json())
+    .then(data => {
+      const byYear = {};
+      data.forEach(item => { (byYear[item.year] = byYear[item.year] || []).push(item); });
+      const years = Object.keys(byYear).sort();
+      // one representative photo per year, oldest -> newest around the ring
+      const picks = years.map(y => {
+        const list = byYear[y];
+        return list[Math.floor(list.length / 3)] || list[0];
+      });
+      const N = picks.length;
+      const radius = Math.round(75 / Math.tan(Math.PI / N));
+      picks.forEach((item, i) => {
+        const tile = document.createElement('div');
+        tile.className = 'ring-tile';
+        const angle = (360 / N) * i;
+        tile.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+        tile.innerHTML = `<img src="${item.thumb || item.file}" alt="UTSOV ${item.year}" loading="lazy"><span class="ring-year-tag">${item.year}</span>`;
+        tile.addEventListener('click', () => {
+          const img = document.getElementById('lightboxImg');
+          const v = document.getElementById('lightboxVideo');
+          if (v) { v.pause(); v.style.display = 'none'; }
+          img.style.display = '';
+          img.src = item.file;
+          img.alt = 'UTSOV ' + item.year;
+          document.getElementById('lightboxCap').textContent = 'UTSOV ' + item.year;
+          document.getElementById('lightbox').classList.add('open');
+        });
+        ring.appendChild(tile);
+      });
+    })
+    .catch(() => {});
+
+  // pause the orbit while a visitor is looking at it
+  stage.addEventListener('mouseenter', () => ring.classList.add('paused'));
+  stage.addEventListener('mouseleave', () => ring.classList.remove('paused'));
 })();
 
-// ── COUNTDOWN TO EVENT ──
+// ── HERO: rainbow mouse trail, confined to the hero section ──
 (function(){
-  const eventDate = new Date('2026-10-17T09:00:00-04:00');
-  function tick() {
-    const diff = eventDate - new Date();
-    if (diff <= 0) {
-      document.getElementById('cdDays').textContent = '0';
-      document.getElementById('cdHours').textContent = '0';
-      document.getElementById('cdMins').textContent = '0';
-      return;
+  const heroEl = document.getElementById('photoHero');
+  const canvas = document.getElementById('heroTrail');
+  if (!heroEl || !canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize(){ canvas.width = heroEl.offsetWidth; canvas.height = heroEl.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let points = [];
+  let hue = 0;
+  function addPoint(clientX, clientY){
+    const r = heroEl.getBoundingClientRect();
+    points.push({ x: clientX - r.left, y: clientY - r.top, t: performance.now(), hue });
+    hue = (hue + 7) % 360;
+  }
+  heroEl.addEventListener('mousemove', e => addPoint(e.clientX, e.clientY));
+  heroEl.addEventListener('touchmove', e => { if (e.touches[0]) addPoint(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+  const LIFETIME = 650;
+  function tick(){
+    const now = performance.now();
+    points = points.filter(p => now - p.t < LIFETIME);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineCap = 'round';
+    for (let i = 1; i < points.length; i++) {
+      const a = points[i - 1], b = points[i];
+      if (b.t - a.t > 120) continue; // gap = cursor re-entered, don't connect across it
+      const age = (now - b.t) / LIFETIME;
+      ctx.strokeStyle = `hsla(${b.hue},100%,62%,${(1 - age) * 0.85})`;
+      ctx.lineWidth = 7 * (1 - age) + 1.5;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
     }
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    document.getElementById('cdDays').textContent = days;
-    document.getElementById('cdHours').textContent = hours;
-    document.getElementById('cdMins').textContent = mins;
+    requestAnimationFrame(tick);
   }
   tick();
-  setInterval(tick, 30000);
+})();
+
+// ── Shared video lightbox opener (used by both the Journey grid and the
+// 2025 Event Highlights strip inside the archive modal) ──
+function openVideoLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  img.style.display = 'none';
+  let v = document.getElementById('lightboxVideo');
+  if (!v) {
+    v = document.createElement('video');
+    v.id = 'lightboxVideo';
+    v.controls = true;
+    v.playsInline = true;
+    v.style.maxWidth = 'min(90vw,900px)';
+    v.style.maxHeight = '82vh';
+    v.style.borderRadius = '10px';
+    v.style.boxShadow = '0 20px 60px rgba(0,0,0,.6)';
+    img.insertAdjacentElement('afterend', v);
+  }
+  v.style.display = 'block';
+  v.src = src;
+  v.play().catch(() => {});
+  document.getElementById('lightboxCap').textContent = caption || 'UTSOV 2026 — behind the scenes';
+  lb.classList.add('open');
+}
+
+// ── JOURNEY MEDIA: 2026 behind-the-scenes photos + videos, interleaved by date.
+// Videos autoplay muted as they scroll into view (no click needed) — click still
+// opens the lightbox for full-size viewing with sound. ──
+(function(){
+  const VIDEO_CLIPS = [
+    { clip: 'clip-01', date: 'Sep 13' }, { clip: 'clip-02', date: 'Sep 19' },
+    { clip: 'clip-03', date: 'Sep 19' }, { clip: 'clip-04', date: 'Sep 19' },
+    { clip: 'clip-05', date: 'Oct 3' },  { clip: 'clip-06', date: 'Oct 3' },
+    { clip: 'clip-07', date: 'Oct 3' },  { clip: 'clip-08', date: 'Oct 4' },
+    { clip: 'clip-09', date: 'Oct 6' },  { clip: 'clip-10', date: 'Oct 10' },
+    { clip: 'clip-11', date: 'Oct 10' }, { clip: 'clip-12', date: 'Oct 10' },
+    { clip: 'clip-13', date: 'Oct 10' }, { clip: 'clip-14', date: 'Oct 11' },
+    { clip: 'clip-15', date: 'Oct 11' },
+  ];
+  const DATE_ORDER = ['Sep 13','Sep 19','Sep 20','Oct 3','Oct 4','Oct 6','Oct 10','Oct 11','Oct 12'];
+
+  const grid = document.getElementById('journeyGrid');
+  if (!grid) return;
+
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) v.play().catch(() => {});
+      else v.pause();
+    });
+  }, { threshold: 0.5 });
+
+  function addVideoTile(v) {
+    const card = document.createElement('div');
+    card.className = 'jm-card';
+    const video = document.createElement('video');
+    video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none';
+    video.poster = `images/photos-gallery/journey-2026/video-posters/${v.clip}.jpg?v=2`;
+    video.src = `videos/journey-2026/${v.clip}.mp4?v=2`;
+    card.appendChild(video);
+    const dateTag = document.createElement('div');
+    dateTag.className = 'jm-date';
+    dateTag.textContent = v.date + ' 🎬';
+    card.appendChild(dateTag);
+    card.addEventListener('click', () => openVideoLightbox(video.src));
+    grid.appendChild(card);
+    videoObserver.observe(video);
+  }
+
+  function addPhotoTile(p, alt) {
+    const card = document.createElement('div');
+    card.className = 'jm-card';
+    card.innerHTML =
+      `<img src="${p.file}" alt="${alt || ('UTSOV 2026 behind the scenes — ' + p.date)}" loading="lazy">` +
+      (p.date ? `<div class="jm-date">${p.date}</div>` : '');
+    card.addEventListener('click', () => openImageLightboxStandalone(p.file, alt || ''));
+    grid.appendChild(card);
+  }
+
+  function openImageLightboxStandalone(src, cap) {
+    const v = document.getElementById('lightboxVideo');
+    if (v) { v.pause(); v.style.display = 'none'; }
+    const img = document.getElementById('lightboxImg');
+    img.style.display = '';
+    img.src = src;
+    img.alt = cap;
+    document.getElementById('lightboxCap').textContent = cap;
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  // Kick off with the real 2026 flyer + sponsor images as the lead tiles
+  addPhotoTile({ file: 'images/photos-gallery/journey-2026/artists-lineup.jpg', date: '' }, 'UTSOV 2026 artist lineup — Iman Chakraborty, Sourendro & Soumyojit');
+  addPhotoTile({ file: 'images/photos-gallery/journey-2026/sponsor-pc-chandra.jpg', date: '' }, 'P.C. Chandra Jewellers — UTSOV 2026 Star Sponsor');
+
+  fetch('images/photos-gallery/journey-2026/team-manifest.json')
+    .then(r => r.json())
+    .then(photos => {
+      // interleave photos and videos by date so the grid reads chronologically,
+      // not "all photos then all videos"
+      DATE_ORDER.forEach(d => {
+        photos.filter(p => p.date === d).forEach(p => addPhotoTile(p));
+        VIDEO_CLIPS.filter(v => v.date === d).forEach(addVideoTile);
+      });
+    })
+    .catch(() => { VIDEO_CLIPS.forEach(addVideoTile); });
+
+  // subtle 3D tilt-on-hover for a "fresh way to view photos" feel
+  grid.addEventListener('pointermove', (e) => {
+    const card = e.target.closest('.jm-card');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-4px)`;
+  });
+  grid.addEventListener('pointerleave', (e) => {
+    const card = e.target.closest && e.target.closest('.jm-card');
+    if (card) card.style.transform = '';
+  }, true);
+  grid.addEventListener('pointerout', (e) => {
+    const card = e.target.closest('.jm-card');
+    if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+  });
 })();
 
 // ── GALLERY: fetch manifest, render year tabs + grid, lightbox ──
 (function(){
-  const YEAR_ORDER = ['2025','2021','2019','2018','2017','2015','2014'];
+  const YEAR_ORDER = ['2025','2024','2023','2022','2021','2019','2018','2017','2016','2015','2014','2013','2012'];
   const grid = document.getElementById('photoGrid');
   const tabsEl = document.getElementById('yearTabs');
   const loadingEl = document.getElementById('galleryLoading');
@@ -407,10 +605,97 @@ document.querySelectorAll('.rv').forEach(el => obs.observe(el));
       card.addEventListener('click', () => openLightbox(i));
       grid.appendChild(card);
     });
+    resetTrail();
   }
+
+  // ── Trail-mode reveal gallery: move the mouse over the dark stage and photos
+  // from the selected year appear along the cursor's path, like a scattered
+  // photo trail — click any appeared photo to open it in the full lightbox. ──
+  const trailStage  = document.getElementById('trailStage');
+  const trailHint   = document.getElementById('trailHint');
+  const trailCursor = document.getElementById('trailCursor');
+  let trailMode = true;
+  let trailIndex = 0;
+  let lastSpawn = { x: -999, y: -999, t: 0 };
+
+  function resetTrail() {
+    trailStage.querySelectorAll('.trail-tile').forEach(t => t.remove());
+    trailIndex = 0;
+    lastSpawn = { x: -999, y: -999, t: 0 };
+    trailHint.classList.remove('hidden');
+    trailHint.textContent = 'Move your mouse here to reveal ' + currentYear + ' memories ✨';
+  }
+
+  function spawnTrailTile(x, y) {
+    if (!currentList.length) return;
+    const myIndex = trailIndex % currentList.length;
+    const item = currentList[myIndex];
+    trailIndex++;
+    trailHint.classList.add('hidden');
+
+    const tile = document.createElement('div');
+    tile.className = 'trail-tile';
+    const rot = (Math.random() * 24 - 12).toFixed(1);
+    tile.style.setProperty('--rot', rot + 'deg');
+    tile.style.left = x + 'px';
+    tile.style.top = y + 'px';
+    tile.style.transform = `translate(-50%,-50%) scale(.4) rotate(${rot}deg)`;
+    tile.innerHTML = `<img src="${item.thumb || item.file}" alt="UTSOV ${item.year}" loading="lazy">`;
+    tile.addEventListener('click', () => openLightbox(myIndex));
+    trailStage.appendChild(tile);
+
+    requestAnimationFrame(() => {
+      tile.classList.add('in');
+      tile.style.transform = `translate(-50%,-50%) scale(1) rotate(${rot}deg)`;
+    });
+
+    setTimeout(() => {
+      tile.classList.add('out');
+      setTimeout(() => tile.remove(), 950);
+    }, 2600);
+  }
+
+  function handleTrailMove(clientX, clientY) {
+    if (!trailMode) return;
+    const r = trailStage.getBoundingClientRect();
+    const x = clientX - r.left, y = clientY - r.top;
+    trailCursor.style.left = clientX + 'px';
+    trailCursor.style.top = clientY + 'px';
+    const dist = Math.hypot(x - lastSpawn.x, y - lastSpawn.y);
+    const now = performance.now();
+    if (dist > 70 && now - lastSpawn.t > 90) {
+      spawnTrailTile(x, y);
+      lastSpawn = { x, y, t: now };
+    }
+  }
+
+  trailStage.addEventListener('mousemove', e => handleTrailMove(e.clientX, e.clientY));
+  trailStage.addEventListener('mouseenter', () => { trailCursor.style.display = 'flex'; });
+  trailStage.addEventListener('mouseleave', () => { trailCursor.style.display = 'none'; });
+  trailStage.addEventListener('touchmove', e => {
+    if (e.touches[0]) handleTrailMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
+  document.getElementById('toggleTrailBtn').addEventListener('click', () => {
+    trailMode = true;
+    document.getElementById('toggleTrailBtn').classList.add('active');
+    document.getElementById('toggleGridBtn').classList.remove('active');
+    trailStage.classList.remove('hidden');
+    grid.classList.add('hidden');
+  });
+  document.getElementById('toggleGridBtn').addEventListener('click', () => {
+    trailMode = false;
+    document.getElementById('toggleGridBtn').classList.add('active');
+    document.getElementById('toggleTrailBtn').classList.remove('active');
+    trailStage.classList.add('hidden');
+    grid.classList.remove('hidden');
+  });
 
   function openLightbox(i) {
     currentIndex = i;
+    const v = document.getElementById('lightboxVideo');
+    if (v) { v.pause(); v.style.display = 'none'; }
+    document.getElementById('lightboxImg').style.display = '';
     showLightboxImage();
     document.getElementById('lightbox').classList.add('open');
   }
@@ -420,7 +705,12 @@ document.querySelectorAll('.rv').forEach(el => obs.observe(el));
     document.getElementById('lightboxImg').alt = 'UTSOV Durga Puja ' + item.year;
     document.getElementById('lightboxCap').textContent = (item.caption ? item.caption + ' — ' : '') + 'UTSOV ' + item.year;
   }
-  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    const v = document.getElementById('lightboxVideo');
+    if (v) { v.pause(); v.src = ''; v.style.display = 'none'; }
+    document.getElementById('lightboxImg').style.display = '';
+  }
   function navLightbox(delta) {
     currentIndex = (currentIndex + delta + currentList.length) % currentList.length;
     showLightboxImage();
@@ -437,17 +727,96 @@ document.querySelectorAll('.rv').forEach(el => obs.observe(el));
     if (e.key === 'ArrowRight') navLightbox(1);
   });
 
-  fetch('images/photos-gallery/manifest.json')
-    .then(r => r.json())
-    .then(data => {
-      manifest = data;
-      loadingEl.style.display = 'none';
-      renderTabs();
-      renderGrid();
-    })
-    .catch(() => {
-      loadingEl.textContent = 'Could not load the photo archive right now — please refresh the page.';
+  // ── swipe left/right to move through photos (touch devices) ──
+  (function(){
+    const lb = document.getElementById('lightbox');
+    let touchStartX = null;
+    lb.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40 && currentList.length > 1) {
+        navLightbox(dx < 0 ? 1 : -1);
+      }
+      touchStartX = null;
+    }, { passive: true });
+  })();
+
+  function buildWallpaper(data) {
+    const rowsEl = document.getElementById('wallpaperRows');
+    if (!rowsEl) return;
+    const shuffled = data.slice().sort(() => Math.random() - 0.5);
+    const ROWS = 5;
+    const perRow = Math.max(8, Math.ceil(shuffled.length / ROWS));
+    for (let r = 0; r < ROWS; r++) {
+      const chunk = shuffled.slice(r * perRow, (r + 1) * perRow);
+      if (chunk.length === 0) continue;
+      const row = document.createElement('div');
+      row.className = 'wp-row ' + (r % 2 === 0 ? 'dir-left' : 'dir-right');
+      row.style.setProperty('--wp-dur', (55 + r * 11) + 's');
+      const doubled = chunk.concat(chunk); // seamless loop
+      doubled.forEach(item => {
+        const img = document.createElement('img');
+        img.src = item.thumb || item.file;
+        img.alt = '';
+        img.loading = 'lazy';
+        row.appendChild(img);
+      });
+      rowsEl.appendChild(row);
+    }
+  }
+
+  function loadManifest(retry) {
+    fetch('images/photos-gallery/manifest.json' + (retry ? '?r=' + Date.now() : ''))
+      .then(r => { if (!r.ok) throw new Error('bad status'); return r.json(); })
+      .then(data => {
+        manifest = data;
+        loadingEl.style.display = 'none';
+        renderTabs();
+        renderGrid();
+        buildWallpaper(data);
+      })
+      .catch(() => {
+        if (!retry) { loadManifest(true); return; }
+        loadingEl.textContent = 'Could not load the photo archive right now — please refresh the page.';
+      });
+  }
+  loadManifest(false);
+
+  // ── 2025 Event Highlights video strip ──
+  const ARCHIVE_CLIPS = [
+    { clip: 'clip-2025-01', label: '1:15' },
+    { clip: 'clip-2025-02', label: '1:20' },
+    { clip: 'clip-2025-03', label: '1:20' },
+    { clip: 'clip-2025-04', label: '1:20' },
+  ];
+  const avGrid = document.getElementById('archiveVideoGrid');
+  if (avGrid) {
+    ARCHIVE_CLIPS.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'av-card';
+      card.innerHTML =
+        `<img src="images/photos-gallery/archive-2025-posters/${c.clip}.jpg" alt="UTSOV 2025 event highlight" loading="lazy">` +
+        `<div class="av-play"></div>` +
+        `<div class="av-dur">${c.label}</div>`;
+      card.addEventListener('click', () => openVideoLightbox(`videos/archive-2025/${c.clip}.mp4`, 'UTSOV 2025 — Event Highlight'));
+      avGrid.appendChild(card);
     });
+  }
+
+  // ── Archive explorer modal ──
+  const modal = document.getElementById('archiveModal');
+  document.getElementById('exploreArchiveBtn').addEventListener('click', () => {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('archiveModalClose').addEventListener('click', () => {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  });
 })();
 </script>
 </body>

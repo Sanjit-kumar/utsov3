@@ -26,7 +26,10 @@ $row = $sel->fetch(PDO::FETCH_ASSOC);
 
 if (!$row) { echo "id={$id}: Row not found\n"; exit; }
 
-$orderId = $row['paypal_order_id'] ?: $row['payment_reference'];
+// For manual entries (Zelle/Sulekha/donor) there's no paypal_order_id, and payment_reference
+// is an internal admin note (can contain $ amounts, long free text) -- never show that to the
+// customer as their "Order ID". Use a clean synthetic reference instead in that case.
+$orderId = $row['paypal_order_id'] ?: ('UTSOV-' . str_pad($id, 5, '0', STR_PAD_LEFT));
 $qty   = (int)$row['qty'];
 $total = number_format((float)$row['total_amount'], 2);
 $name  = $row['name'];
@@ -42,10 +45,12 @@ $foodArr = array_map(function($f) use ($foodMap) {
     return isset($foodMap[$f]) ? $foodMap[$f] : 'Non-Vegetarian';
 }, $foodArr);
 $vegCount = count(array_filter($foodArr, function($f){ return $f === 'Vegetarian'; }));
-$nonVegCount = count($foodArr) - $vegCount;
+$noDinnerCount = count(array_filter($foodArr, function($f){ return $f === 'No Dinner'; }));
+$nonVegCount = count($foodArr) - $vegCount - $noDinnerCount;
 $foodSummaryParts = [];
 if ($nonVegCount > 0) $foodSummaryParts[] = "{$nonVegCount} Non-Veg";
 if ($vegCount > 0) $foodSummaryParts[] = "{$vegCount} Veg";
+if ($noDinnerCount > 0) $foodSummaryParts[] = "{$noDinnerCount} No Dinner (Concert Only)";
 $foodDisp = $foodSummaryParts ? implode(', ', $foodSummaryParts) : 'Non-Vegetarian';
 
 $adultsDisp = isset($row['adults'])   ? (int)$row['adults']   : $qty;
@@ -71,35 +76,38 @@ $tRows = array(
 if (!empty($row['is_student'])) {
     $tRows[] = array('Pass Type', 'Student in group (bring student ID)', false, false, false);
 }
-$tRows[] = array('Total Paid', "\${$total}", true, true,  false);
 $tRows[] = array('Order ID',   $orderId,     false, false, true);
 
 $imgUrl = buildEmailImage(
     'BOOKING CONFIRMED', false,
     "You're going to UTSOV 2026!",
-    array("Dear {$name},", "Your payment of \${$total} has been received.", "Your {$qty} {$passWord} are confirmed!"),
+    array("Dear {$name},", "Your payment has been received.", "Your {$qty} {$passWord} are confirmed!"),
     'BOOKING DETAILS',
     $tRows,
     array('Full schedule & venue details coming closer to', 'October 17-18, New Jersey. See you there!'),
-    $orderId
+    // A dedicated cache-busting key for the image filename, separate from $orderId (which stays
+    // unchanged for display) -- without this, a resend reusing the same order/reference text
+    // produces the exact same image URL, and email clients like Gmail will show their cached
+    // copy from an earlier send instead of fetching the regenerated one (seen firsthand: a
+    // corrected meal-preference fix didn't show up in the resent email because of this).
+    $orderId . '_resend' . time()
 );
 
 if ($imgUrl) {
     $buyerBody = "<html><body style='margin:0;padding:20px 0;background-color:#0d0000;text-align:center;font-family:Arial,sans-serif;'>"
       . "<img src='{$imgUrl}' width='600' alt='UTSOV 2026 Booking Confirmed' style='display:block;margin:0 auto;max-width:100%;border:0;'>"
       . "<p style='color:#888;font-size:11px;margin:8px auto 0;max-width:600px;'>"
-      . "Booking confirmed for {$safeName} | \${$total} | Order: {$safeOrder}"
+      . "Booking confirmed for {$safeName} | Order: {$safeOrder}"
       . "</p></body></html>";
 } else {
     $buyerBody = "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto'>"
       . "<h2 style='color:#8B1A1A'>You're going to UTSOV 2026!</h2>"
-      . "<p>Hi {$safeName},</p><p>Your payment of <b>\${$total}</b> has been received.</p>"
+      . "<p>Hi {$safeName},</p><p>Your payment has been received.</p>"
       . "<table style='border-collapse:collapse;font-size:14px'>"
       . "<tr><td style='padding:4px 16px 4px 0'><b>Passes:</b></td><td>UTSOV 2026 x {$qty} {$passWord}</td></tr>"
       . "<tr><td style='padding:4px 16px 4px 0'><b>Days:</b></td><td>{$daysDisp}</td></tr>"
       . "<tr><td style='padding:4px 16px 4px 0'><b>Adults:</b></td><td>{$guestLine}</td></tr>"
       . "<tr><td style='padding:4px 16px 4px 0'><b>Meal:</b></td><td>{$foodDisp}</td></tr>"
-      . "<tr><td style='padding:4px 16px 4px 0'><b>Total:</b></td><td>\${$total}</td></tr>"
       . "<tr><td style='padding:4px 16px 4px 0'><b>Order ID:</b></td><td>{$safeOrder}</td></tr>"
       . "</table>"
       . "<p style='color:#8B1A1A'>-- The UTSOV Team</p></body></html>";
@@ -111,7 +119,7 @@ $ok = mail($email, $buyerSubject, $buyerBody, $mailHeaders);
 $smsOk = null;
 if (!empty($row['sms_updates'])) {
     $smsDaysPlain = html_entity_decode($daysDisp, ENT_QUOTES, 'UTF-8');
-    $smsBody = "UTSOV 2026: Your {$qty} {$passWord} confirmed! {$smsDaysPlain}. Total \${$total}. Order {$orderId}. Reply STOP to opt out.";
+    $smsBody = "UTSOV 2026: Your {$qty} {$passWord} confirmed! {$smsDaysPlain}. Order {$orderId}. Reply STOP to opt out.";
     $smsOk = sendTwilioSMS($row['phone'], $smsBody);
 }
 

@@ -6,6 +6,7 @@ session_start();
 
 $REG_DB = dirname(__FILE__) . '/api/db/registration.db';
 $CAP_DB = dirname(__FILE__) . '/api/db/capture.db';
+$MEM_DB = dirname(__FILE__) . '/api/db/members.db';
 
 // Twilio reporting helpers (Balance/Usage/Messages API wrappers) - best-effort, never
 // fatal if the files are missing or Twilio config isn't set up.
@@ -68,6 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     header('Location: admin.php#tables-blk'); exit;
 }
 
+// ─── Delete Member (superadmin only) ──────────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_member'
+    && adm_logged_in() && adm_is_super()) {
+    $memId = isset($_POST['mem_id']) ? (int)$_POST['mem_id'] : 0;
+    if ($memId > 0) {
+        try {
+            $db = new PDO("sqlite:".$GLOBALS['MEM_DB']);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db->prepare('DELETE FROM tb_members WHERE id = ?')->execute(array($memId));
+        } catch(\Exception $e) {}
+    }
+    header('Location: admin.php?tab=members#tables-blk'); exit;
+}
+
 // ─── Mark Registration Paid (any logged-in admin) ──────────────────────────────
 // For rows that never went through PayPal capture (e.g. Zelle/Venmo receipt uploads,
 // which land as status='pending_review') - lets an admin confirm the manual review is
@@ -88,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // ─── CSV Export ───────────────────────────────────────────────────────────────
 if (isset($_GET['export']) && adm_logged_in()) {
-    $allowed = array('registrations','donations','contacts','volunteers');
+    $allowed = array('registrations','donations','contacts','volunteers','members');
     $target  = in_array($_GET['export'], $allowed) ? $_GET['export'] : '';
     // Only registrations/donations have a status column - contacts/volunteers silently ignore
     // a status filter rather than erroring, since there's nothing meaningful to filter by there.
@@ -102,7 +117,9 @@ if (isset($_GET['export']) && adm_logged_in()) {
         $out = fopen('php://output', 'w');
         fwrite($out, "\xEF\xBB\xBF");
         try {
-            $db  = $target==='registrations' ? new PDO("sqlite:".$GLOBALS['REG_DB']) : new PDO("sqlite:".$GLOBALS['CAP_DB']);
+            if ($target==='registrations') { $db = new PDO("sqlite:".$GLOBALS['REG_DB']); }
+            elseif ($target==='members')   { $db = new PDO("sqlite:".$GLOBALS['MEM_DB']); }
+            else                            { $db = new PDO("sqlite:".$GLOBALS['CAP_DB']); }
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $tbl = $target==='registrations' ? 'tb_registrations' : 'tb_'.$target;
             if ($statusFilter !== null) {
@@ -226,7 +243,7 @@ function paymentMethodBadge($r){
 }
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
-$regs=$dons=$conts=$vols=array();
+$regs=$dons=$conts=$vols=$members=array();
 $totRev=$totDon=$paidRegs=$paidDons=0;
 $totPasses=$totAdults=$totKids6to12=$totKidsUnder6=$studentCount=$memberWanted=0;
 $regsByYear=$donsByYear=$contsByYear=$volsByYear=array();
@@ -259,6 +276,11 @@ if ($auth) {
         try { $dons  = $cdb->query("SELECT id,date,updated_date,name,email,amount,status,paypal_order_id,paypal_capture_id,ipaddress FROM tb_donations ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
         try { $conts = $cdb->query("SELECT id,date,name,email,phone,topic,message,ipaddress FROM tb_contacts ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
         try { $vols  = $cdb->query("SELECT id,date,name,email,phone,city,state,zip,address1,address2,message,memberrequest,ipaddress FROM tb_volunteers ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC); } catch(\Exception $e){}
+    } catch(\Exception $e){}
+    try {
+        $mdb = new PDO("sqlite:".$MEM_DB);
+        $mdb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $members = $mdb->query("SELECT id,created_at,first_name,last_name,email,phone,member_since,remarks,source FROM tb_members ORDER BY first_name COLLATE NOCASE ASC, last_name COLLATE NOCASE ASC")->fetchAll(PDO::FETCH_ASSOC);
     } catch(\Exception $e){}
 
     // ─── Twilio SMS reporting (all logged-in admins) ───────────────────────────────
@@ -563,6 +585,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
   <div class="hdr-r">
     <span class="hdr-ts"><?php echo esc($curUser['name']); ?> &bull; <?php echo $curUser['role']==='superadmin'?'Super Admin':'Admin'; ?></span>
     <span class="hdr-ts"><?php echo date('D, M j Y \a\t g:ia T'); ?></span>
+    <a class="btn-lo" href="membership.php">Membership Data</a>
     <a class="btn-lo" href="admin.php?logout=1" onclick="return confirm('Sign out?')">Sign Out</a>
   </div>
 </header>
@@ -813,6 +836,7 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
     <button class="tb"    id="tab-dons"  onclick="tab('dons',this)">Donations (<?php echo count($dons); ?>)</button>
     <button class="tb"    id="tab-conts" onclick="tab('conts',this)">Contacts (<?php echo count($conts); ?>)</button>
     <button class="tb"    id="tab-vols"  onclick="tab('vols',this)">Volunteers (<?php echo count($vols); ?>)</button>
+    <button class="tb"    id="tab-members" onclick="tab('members',this)">Members (<?php echo count($members); ?>)</button>
     <?php if (adm_is_super()): ?>
     <button class="tb"    id="tab-admins" onclick="tab('admins',this)">Manage Admins</button>
     <?php endif; ?>
@@ -951,6 +975,41 @@ td.nw{white-space:nowrap}td.msg{white-space:normal;max-width:300px;color:var(--m
         <td class="msg"><?php echo esc($v['message']); ?></td>
         <td class="nw"><?php echo !empty($v['memberrequest'])?'<span class="yes">✓ Yes</span>':'No'; ?></td>
         <td class="mono"><?php echo esc($v['ipaddress']); ?></td>
+      </tr>
+      <?php endforeach; endif; ?>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- MEMBERS -->
+  <div class="tp" id="tp-members">
+    <div class="tt">
+      <div class="ttl"><span class="tt-title">UTSOV Members</span><span class="tt-cnt"><?php echo count($members); ?> members on file</span></div>
+      <div class="tt-r"><input class="srch" type="text" placeholder="&#128269; Search..." oninput="filt('tr-members',this.value)"><a class="csv-btn" href="admin.php?export=members">&#11015; CSV</a></div>
+    </div>
+    <div class="tw"><table id="tr-members">
+      <thead><tr><th onclick="srt('tr-members',0)">#</th><th onclick="srt('tr-members',1)">First Name</th><th onclick="srt('tr-members',2)">Last Name</th><th onclick="srt('tr-members',3)">Email</th><th onclick="srt('tr-members',4)">Phone</th><th onclick="srt('tr-members',5)">Member Since</th><th onclick="srt('tr-members',6)">Remarks</th><th onclick="srt('tr-members',7)">Source</th><?php if (adm_is_super()): ?><th></th><?php endif; ?></tr></thead>
+      <tbody>
+      <?php if (!$members): ?><tr class="empty"><td colspan="<?php echo adm_is_super()?9:8; ?>">No members on file yet.</td></tr>
+      <?php else: foreach ($members as $m): ?>
+      <tr>
+        <td class="nw"><?php echo esc($m['id']); ?></td>
+        <td><?php echo esc($m['first_name']); ?></td>
+        <td><?php echo esc($m['last_name']); ?></td>
+        <td><?php echo esc($m['email']); ?></td>
+        <td class="nw"><?php echo esc($m['phone']); ?></td>
+        <td class="nw"><?php echo esc($m['member_since']); ?></td>
+        <td><?php echo esc($m['remarks']); ?></td>
+        <td class="mono"><?php echo esc($m['source']); ?></td>
+        <?php if (adm_is_super()): ?>
+        <td class="nw">
+          <form method="post" style="display:inline" onsubmit="return confirm('Delete member #<?php echo esc($m['id']); ?> (<?php echo esc($m['first_name'].' '.$m['last_name']); ?>)? This cannot be undone.');">
+            <input type="hidden" name="action" value="delete_member">
+            <input type="hidden" name="mem_id" value="<?php echo esc($m['id']); ?>">
+            <button type="submit" class="del-btn" title="Delete member">&#128465;</button>
+          </form>
+        </td>
+        <?php endif; ?>
       </tr>
       <?php endforeach; endif; ?>
       </tbody>

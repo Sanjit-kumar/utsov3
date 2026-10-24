@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>UTSOV 2026 — Payment</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red-dark:#6B0E0E;--red:#9E2424;--cream:#FFFDF8;--green:#1F8A3B;--green-bg:#E7F6EC;--line:#eadbd0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:#1A0000;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.2rem}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:2rem 1.6rem;max-width:420px;width:100%;box-shadow:0 8px 28px rgba(107,14,14,.1);text-align:center}
+.logo{font-weight:800;font-size:1.3rem;color:var(--red-dark);letter-spacing:.04em;margin-bottom:.3rem}
+.desc{font-size:.95rem;color:#555;margin-bottom:1rem;line-height:1.5}
+.amount{font-size:2.1rem;font-weight:800;color:var(--red-dark);margin-bottom:1.4rem}
+#paypal-button-container{max-width:320px;margin:0 auto}
+.state-msg{font-size:.95rem;color:#777;padding:1.5rem 0}
+.success-box{display:none;padding:1rem 0}
+.success-box.show{display:block}
+.success-icon{font-size:3rem;margin-bottom:.6rem}
+.success-title{font-weight:800;font-size:1.3rem;color:var(--green);margin-bottom:.4rem}
+.success-sub{font-size:.9rem;color:#777}
+.error-box{display:none;background:#FDECEC;border:1.5px solid #E89;color:#8B1A1A;border-radius:10px;padding:.8rem 1rem;font-size:.88rem;margin-top:1rem;text-align:left}
+.error-box.show{display:block}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">UTSOV 2026</div>
+  <div id="loadingState" class="state-msg">Loading payment details…</div>
+
+  <div id="payState" style="display:none">
+    <div class="desc" id="payDesc"></div>
+    <div class="amount">$<span id="payAmount">0.00</span></div>
+    <div id="paypal-button-container"></div>
+    <div class="error-box" id="errorBox"></div>
+  </div>
+
+  <div class="success-box" id="successBox">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Payment Complete</div>
+    <div class="success-sub">Thank you! You can close this page now.</div>
+  </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=ATr7beRI3jcLJ5xGhjqYnlkkl2QqUBCf1gLTbuYzVAEzPC6Wac3AM2rSARo3Z97xMfzlfKKz9yoZd5j1&currency=USD"></script>
+<script>
+function apiCall(action, extra) {
+  var body = Object.assign({ action: action }, extra || {});
+  return fetch('api/gate-pay.php', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+  }).then(function(r) { return r.json(); }).catch(function() {
+    return { err: 'Network error — check connection and try again.' };
+  });
+}
+
+function showError(msg) {
+  var el = document.getElementById('errorBox');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+var params = new URLSearchParams(window.location.search);
+var token = params.get('t') || '';
+
+if (!token) {
+  document.getElementById('loadingState').textContent = 'Missing payment link. Please ask the front desk for a new one.';
+} else {
+  apiCall('resolve', { token: token }).then(function(d) {
+    document.getElementById('loadingState').style.display = 'none';
+    if (d.err) {
+      document.getElementById('payState').style.display = 'block';
+      showError(d.err);
+      return;
+    }
+    document.getElementById('payDesc').textContent = d.description;
+    document.getElementById('payAmount').textContent = d.amount.toFixed(2);
+    document.getElementById('payState').style.display = 'block';
+
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+      createOrder: function() {
+        showError(''); document.getElementById('errorBox').classList.remove('show');
+        return apiCall('createOrder', { token: token }).then(function(r) {
+          if (r.err) { showError(r.err); return Promise.reject(new Error(r.err)); }
+          return r.paypalOrderId;
+        });
+      },
+      onApprove: function(data) {
+        return apiCall('captureOrder', { token: token, paypalOrderId: data.orderID }).then(function(r) {
+          if (r.err) { showError(r.err); return; }
+          document.getElementById('payState').style.display = 'none';
+          document.getElementById('successBox').classList.add('show');
+        });
+      },
+      onCancel: function() {
+        showError('Payment was cancelled. You can try again.');
+      },
+      onError: function(err) {
+        showError('A payment error occurred. Please try again or ask the front desk for help.');
+        console.error(err);
+      }
+    }).render('#paypal-button-container');
+  });
+}
+</script>
+</body>
+</html>

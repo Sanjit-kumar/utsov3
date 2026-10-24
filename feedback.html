@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Feedback — UTSOV Durga Puja 2026</title>
+<meta name="description" content="Tell us about your UTSOV Durga Puja 2026 experience — your feedback helps us make next year even better.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0A0809">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,500;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#F2B705;--coral:#E8532E;--cream:#F4EEE3;--ink:#0A0809;
+  --line:rgba(244,238,227,.14);--line-soft:rgba(244,238,227,.08);
+  --f-serif:'Fraunces',serif;--f-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-serif);color:var(--cream);overflow-x:hidden;min-height:100vh;background:var(--ink);cursor:default}
+a{color:inherit}
+
+/* ── Grain texture overlay ── */
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── Cursor glow ── */
+.glow{position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(242,183,5,.1) 0%,transparent 70%);
+  transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+@media(max-width:860px){.glow{display:none}}
+
+/* ── Top bar (editorial nav, like a studio portfolio) ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(10,8,9,.72);backdrop-filter:blur(10px)}
+.brand{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.brand .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block}
+.brand-logo{height:28px;width:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.brand-label{opacity:.8}
+.meta-right{display:flex;align-items:center;gap:1.6rem;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,238,227,.5)}
+.meta-right .loc{color:rgba(244,238,227,.5)}
+.step-count{color:var(--cream);font-variant-numeric:tabular-nums}
+
+/* top progress hairline */
+.progress-line{position:fixed;top:0;left:0;height:2px;background:var(--gold);z-index:60;width:0%;transition:width .5s cubic-bezier(.16,1,.3,1);box-shadow:0 0 12px rgba(242,183,5,.6)}
+
+.stage{min-height:100vh;display:flex;align-items:center;padding:7rem 1.6rem 4rem}
+.card{position:relative;width:100%;max-width:720px;margin:0 auto;min-height:380px;display:flex;flex-direction:column}
+
+.step{display:none;flex-direction:column;animation:stepIn .6s cubic-bezier(.16,1,.3,1)}
+.step.active{display:flex}
+@keyframes stepIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;color:var(--gold);margin-bottom:1.3rem}
+.eyebrow::before{content:'( ';color:rgba(242,183,5,.5)}
+.eyebrow::after{content:' )';color:rgba(242,183,5,.5)}
+.q-title{font-family:var(--f-serif);font-weight:600;font-size:clamp(1.9rem,5vw,3rem);line-height:1.12;color:var(--cream);margin-bottom:.7rem;letter-spacing:-.01em}
+.q-title em{font-style:italic;font-weight:500;color:var(--gold)}
+.q-sub{font-family:var(--f-mono);font-size:.78rem;line-height:1.7;color:rgba(244,238,227,.55);margin-bottom:2.2rem;max-width:48ch}
+
+/* Intro */
+.intro-mark{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;color:rgba(244,238,227,.4);margin-bottom:1.6rem;text-transform:uppercase}
+
+/* Buttons — editorial bordered, invert on hover; one strong gold CTA */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;font-family:var(--f-mono);font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .25s cubic-bezier(.16,1,.3,1);cursor:pointer;white-space:nowrap;padding:1rem 1.8rem;border-radius:2px;align-self:flex-start}
+.btn-primary{background:var(--gold);color:var(--ink);border:1px solid var(--gold)}
+.btn-primary:hover{background:transparent;color:var(--gold);transform:translateY(-2px)}
+.btn-primary:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--cream)}
+.btn-row{display:flex;gap:1rem;margin-top:1rem;align-items:center}
+.skip-link{font-family:var(--f-mono);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,238,227,.45);text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:none}
+
+/* Emoji mood picker — bordered tiles, editorial */
+.emoji-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.emoji-col{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.emoji-opt{width:72px;height:72px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.9rem;cursor:pointer;transition:all .25s;background:rgba(244,238,227,.02)}
+.emoji-opt:hover{border-color:rgba(244,238,227,.4);transform:translateY(-3px)}
+.emoji-opt.sel{border-color:var(--gold);background:rgba(242,183,5,.08);box-shadow:0 0 0 1px var(--gold) inset}
+.emoji-label{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:rgba(244,238,227,.4);text-align:center}
+
+/* Star aspects */
+.aspect-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line-soft)}
+.aspect-row:first-child{border-top:1px solid var(--line-soft)}
+.aspect-name{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.03em;color:var(--cream)}
+.stars{display:flex;gap:.3rem}
+.star{font-size:1.3rem;cursor:pointer;color:rgba(244,238,227,.2);transition:all .15s}
+.star.on{color:var(--gold)}
+.star:hover{transform:scale(1.2)}
+
+/* Text areas */
+textarea{width:100%;min-height:120px;padding:1rem 0;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--cream);font-family:var(--f-serif);font-size:1.1rem;font-style:italic;resize:vertical}
+textarea::placeholder{color:rgba(244,238,227,.3);font-style:italic}
+textarea:focus{outline:none;border-color:var(--gold)}
+input[type="text"],input[type="email"]{width:100%;padding:.9rem 0;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--cream);font-family:var(--f-mono);font-size:.9rem;margin-bottom:1.2rem}
+input[type="text"]::placeholder,input[type="email"]::placeholder{color:rgba(244,238,227,.3)}
+input[type="text"]:focus,input[type="email"]:focus{outline:none;border-color:var(--gold)}
+
+/* Choice rows — full width bordered, invert on select */
+.choice-col{display:flex;flex-direction:column}
+.choice-opt{display:flex;align-items:center;justify-content:space-between;text-align:left;padding:1.2rem .2rem;background:transparent;border:none;border-bottom:1px solid var(--line-soft);color:var(--cream);font-family:var(--f-serif);font-size:1.15rem;cursor:pointer;transition:all .2s}
+.choice-col .choice-opt:first-child{border-top:1px solid var(--line-soft)}
+.choice-opt::after{content:'→';font-family:var(--f-mono);opacity:0;transition:all .2s;color:var(--gold)}
+.choice-opt:hover{padding-left:.8rem;color:var(--gold)}
+.choice-opt:hover::after{opacity:1}
+.choice-opt.sel{color:var(--gold);padding-left:.8rem}
+.choice-opt.sel::after{content:'✓';opacity:1}
+
+/* Review CTA step */
+.review-card{border:1px solid var(--line);padding:2.2rem;text-align:center}
+.review-card .stars-big{font-family:var(--f-mono);font-size:1.6rem;color:var(--gold);margin-bottom:1.2rem;letter-spacing:.3em}
+
+/* Thank you */
+.thanks-wrap{text-align:left}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:5}
+
+/* Bottom hairline rule under each question, like the reference's underlined nav */
+.rule{height:1px;background:var(--line);width:100%;margin:2rem 0 0}
+
+@media(max-width:640px){
+  .emoji-opt{width:54px;height:54px;font-size:1.4rem}
+  .meta-right{display:none}
+  .q-title{font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="glow" id="glow"></div>
+<div class="progress-line" id="progressBar"></div>
+<canvas id="confetti"></canvas>
+
+<div class="topbar">
+  <a href="index.html" class="brand">
+    <img src="images/logo_utsov.png" alt="UTSOV" class="brand-logo" onerror="this.outerHTML='<span class=&quot;dot&quot;></span>UTSOV'">
+    <span class="brand-label">— Feedback</span>
+  </a>
+  <div class="meta-right">
+    <span id="liveDate"></span>
+    <span class="loc">East Brunswick, NJ</span>
+    <span class="step-count" id="stepCount"></span>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="card" id="card">
+
+    <!-- INTRO -->
+    <div class="step active" data-step="intro">
+      <div class="intro-mark">Durga Puja 2026 — Oct 17 &amp; 18</div>
+      <div class="q-title">Tell us about <em>your</em> Puja experience.</div>
+      <div class="q-sub">Six quick questions, under a minute — and it genuinely shapes what we do differently next year.</div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goTo(1)">Begin →</button>
+      </div>
+    </div>
+
+    <!-- 1: Overall mood -->
+    <div class="step" data-step="overall">
+      <div class="eyebrow">Question 01 — 06</div>
+      <div class="q-title">Overall, how was your <em>experience</em>?</div>
+      <div class="q-sub">Pick whichever face matches your Puja this year.</div>
+      <div class="emoji-row" id="emojiRow"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="overallNext" onclick="nextFrom('overall')" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- 2: Aspects -->
+    <div class="step" data-step="aspects">
+      <div class="eyebrow">Question 02 — 06</div>
+      <div class="q-title">Rate a few <em>specific</em> things</div>
+      <div class="q-sub">Tap the stars for each.</div>
+      <div id="aspectsList"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nextFrom('aspects')">Next →</button>
+      </div>
+    </div>
+
+    <!-- 3: Loved most -->
+    <div class="step" data-step="loved">
+      <div class="eyebrow">Question 03 — 06</div>
+      <div class="q-title">What did you <em>love</em> most this year?</div>
+      <div class="q-sub">Food, performances, the puja itself, the people — anything.</div>
+      <textarea id="lovedInput" placeholder="the dinner, the concert, how organized check-in was..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nextFrom('loved')">Next →</button>
+        <button class="skip-link" onclick="nextFrom('loved')">Skip</button>
+      </div>
+    </div>
+
+    <!-- 4: Improve -->
+    <div class="step" data-step="improve">
+      <div class="eyebrow">Question 04 — 06</div>
+      <div class="q-title">Anything we could <em>improve</em>?</div>
+      <div class="q-sub">Be honest — this is exactly what helps us plan better next year.</div>
+      <textarea id="improveInput" placeholder="longer dinner lines, more seating, earlier start time..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nextFrom('improve')">Next →</button>
+        <button class="skip-link" onclick="nextFrom('improve')">Skip</button>
+      </div>
+    </div>
+
+    <!-- 5: Recommend -->
+    <div class="step" data-step="recommend">
+      <div class="eyebrow">Question 05 — 06</div>
+      <div class="q-title">Would you recommend UTSOV to <em>friends &amp; family</em>?</div>
+      <div class="choice-col" id="recommendChoices"></div>
+    </div>
+
+    <!-- 6: Google review CTA (conditional) -->
+    <div class="step" data-step="reviewcta">
+      <div class="eyebrow">One last thing</div>
+      <div class="q-title">So glad you <em>loved</em> it.</div>
+      <div class="q-sub">Would you mind sharing a quick public review? It genuinely helps other families find us next year.</div>
+      <div class="review-card">
+        <div class="stars-big">★★★★★</div>
+        <a class="btn btn-primary" id="googleReviewBtn" href="#" target="_blank" rel="noopener" style="margin:0 auto">Leave a Google Review</a>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="nextFrom('reviewcta')">Continue →</button>
+      </div>
+    </div>
+
+    <!-- 7: Optional contact -->
+    <div class="step" data-step="contact">
+      <div class="eyebrow">Question 06 — 06</div>
+      <div class="q-title">Want us to <em>follow up</em> with you?</div>
+      <div class="q-sub">Totally optional — leave blank to stay anonymous.</div>
+      <input type="text" id="contactName" placeholder="Your name (optional)">
+      <input type="email" id="contactEmail" placeholder="Email (optional)">
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
+      </div>
+    </div>
+
+    <!-- THANK YOU -->
+    <div class="step" data-step="thanks">
+      <div class="thanks-wrap">
+        <div class="intro-mark">Response recorded</div>
+        <div class="q-title">Thank <em>you</em>.</div>
+        <div class="q-sub">Your feedback means a lot to us — see you next Durga Puja.</div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="index.html">Back to UTSOV Home</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Configurable: Google review link. Leave blank to skip the review-CTA step entirely. ──
+var GOOGLE_REVIEW_URL = '';
+
+var FLOW = ['intro','overall','aspects','loved','improve','recommend','reviewcta','contact','thanks'];
+var QUESTION_STEPS = ['overall','aspects','loved','improve','recommend','contact']; // for progress bar / count
+var current = 'intro';
+var answers = { overall:0, food:0, cultural:0, organization:0, venue:0, loved:'', improve:'', recommend:'', name:'', email:'' };
+
+var EMOJIS = [
+  {v:1, e:'😞', label:'Not great'},
+  {v:2, e:'🙁', label:'Okay'},
+  {v:3, e:'😐', label:'Fine'},
+  {v:4, e:'🙂', label:'Good'},
+  {v:5, e:'🤩', label:'Loved it'}
+];
+var ASPECTS = [
+  {key:'food', label:'Food & Dinner'},
+  {key:'cultural', label:'Cultural Program & Artists'},
+  {key:'organization', label:'Organization & Check-in'},
+  {key:'venue', label:'Venue & Decor'}
+];
+var RECOMMEND_OPTS = ['Yes, definitely', 'Maybe', 'Not really'];
+
+// ── Build emoji row ──
+(function(){
+  var row = document.getElementById('emojiRow');
+  EMOJIS.forEach(function(opt){
+    var col = document.createElement('div');
+    col.className = 'emoji-col';
+    var btn = document.createElement('div');
+    btn.className = 'emoji-opt';
+    btn.textContent = opt.e;
+    btn.addEventListener('click', function(){
+      answers.overall = opt.v;
+      document.querySelectorAll('.emoji-opt').forEach(function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      document.getElementById('overallNext').disabled = false;
+      saveDraft();
+    });
+    col.appendChild(btn);
+    var lbl = document.createElement('div');
+    lbl.className = 'emoji-label';
+    lbl.textContent = opt.label;
+    col.appendChild(lbl);
+    row.appendChild(col);
+  });
+})();
+
+// ── Build aspect star rows ──
+(function(){
+  var list = document.getElementById('aspectsList');
+  ASPECTS.forEach(function(asp){
+    var row = document.createElement('div');
+    row.className = 'aspect-row';
+    var name = document.createElement('div');
+    name.className = 'aspect-name';
+    name.textContent = asp.label;
+    row.appendChild(name);
+    var stars = document.createElement('div');
+    stars.className = 'stars';
+    for (var i = 1; i <= 5; i++) {
+      (function(i){
+        var s = document.createElement('span');
+        s.className = 'star';
+        s.textContent = '★';
+        s.dataset.val = i;
+        s.addEventListener('click', function(){
+          answers[asp.key] = i;
+          var starsInRow = stars.querySelectorAll('.star');
+          starsInRow.forEach(function(st){ st.classList.toggle('on', parseInt(st.dataset.val, 10) <= i); });
+          saveDraft();
+        });
+        stars.appendChild(s);
+      })(i);
+    }
+    row.appendChild(stars);
+    list.appendChild(row);
+  });
+})();
+
+// ── Build recommend choices ──
+(function(){
+  var wrap = document.getElementById('recommendChoices');
+  RECOMMEND_OPTS.forEach(function(opt){
+    var btn = document.createElement('div');
+    btn.className = 'choice-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', function(){
+      answers.recommend = opt;
+      document.querySelectorAll('.choice-opt').forEach(function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      saveDraft();
+      setTimeout(function(){ nextFrom('recommend'); }, 260);
+    });
+    wrap.appendChild(btn);
+  });
+})();
+
+// ── Navigation ──
+function stepEl(name){ return document.querySelector('.step[data-step="' + name + '"]'); }
+
+function goTo(indexOrName){
+  var name = typeof indexOrName === 'number' ? FLOW[indexOrName] : indexOrName;
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  stepEl(name).classList.add('active');
+  current = name;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextFrom(name){
+  var idx = FLOW.indexOf(name);
+  var nextIdx = idx + 1;
+  var nextName = FLOW[nextIdx];
+  // Sync text inputs
+  if (name === 'loved') answers.loved = document.getElementById('lovedInput').value;
+  if (name === 'improve') answers.improve = document.getElementById('improveInput').value;
+  // Skip the review-CTA step unless configured AND the guest loved it
+  if (nextName === 'reviewcta' && (!GOOGLE_REVIEW_URL || answers.overall < 4 || answers.recommend !== 'Yes, definitely')) {
+    nextIdx++;
+    nextName = FLOW[nextIdx];
+  }
+  saveDraft();
+  goTo(nextName);
+}
+
+function updateProgress(){
+  var qIdx = QUESTION_STEPS.indexOf(current);
+  var bar = document.getElementById('progressBar');
+  var count = document.getElementById('stepCount');
+  if (qIdx === -1) { bar.style.width = (current === 'thanks' ? '100' : '0') + '%'; count.textContent = ''; return; }
+  var pct = ((qIdx) / QUESTION_STEPS.length) * 100;
+  bar.style.width = pct + '%';
+  count.textContent = String(qIdx + 1).padStart(2, '0') + ' / ' + String(QUESTION_STEPS.length).padStart(2, '0');
+}
+
+// ── Draft autosave ──
+var DRAFT_KEY = 'utsov_feedback_draft_2026';
+function saveDraft(){
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ answers: answers, step: current })); } catch(e){}
+}
+function loadDraft(){
+  try {
+    var raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return;
+    var saved = JSON.parse(raw);
+    if (saved && saved.answers) {
+      Object.assign(answers, saved.answers);
+      if (answers.overall) {
+        var btn = document.querySelectorAll('.emoji-opt')[answers.overall - 1];
+        if (btn) { btn.classList.add('sel'); document.getElementById('overallNext').disabled = false; }
+      }
+      ASPECTS.forEach(function(asp){
+        if (answers[asp.key]) {
+          var row = Array.prototype.find.call(document.querySelectorAll('.aspect-row'), function(r){
+            return r.querySelector('.aspect-name').textContent === asp.label;
+          });
+          if (row) row.querySelectorAll('.star').forEach(function(st){ st.classList.toggle('on', parseInt(st.dataset.val, 10) <= answers[asp.key]); });
+        }
+      });
+      if (answers.loved) document.getElementById('lovedInput').value = answers.loved;
+      if (answers.improve) document.getElementById('improveInput').value = answers.improve;
+    }
+  } catch(e){}
+}
+loadDraft();
+
+// ── Submit ──
+function submitFeedback(){
+  answers.name = document.getElementById('contactName').value.trim();
+  answers.email = document.getElementById('contactEmail').value.trim();
+  var btn = document.querySelector('.step[data-step="contact"] .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  fetch('api/feedback.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'add', answers: answers })
+  }).then(function(r){ return r.json(); }).then(function(){
+    try { localStorage.removeItem(DRAFT_KEY); } catch(e){}
+    goTo('thanks');
+    launchConfetti();
+  }).catch(function(){
+    try { localStorage.removeItem(DRAFT_KEY); } catch(e){}
+    goTo('thanks');
+    launchConfetti();
+  });
+}
+
+// ── Set up Google review link if configured ──
+if (GOOGLE_REVIEW_URL) {
+  document.getElementById('googleReviewBtn').href = GOOGLE_REVIEW_URL;
+}
+
+// ── Live date, studio-clock style ──
+(function(){
+  var el = document.getElementById('liveDate');
+  var d = new Date();
+  var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  el.textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+})();
+
+// ── Cursor glow follower ──
+(function(){
+  var glow = document.getElementById('glow');
+  if (window.matchMedia('(pointer: coarse)').matches) return; // skip on touch devices
+  window.addEventListener('mousemove', function(e){
+    glow.style.opacity = '1';
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+  window.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
+})();
+
+// ── Tiny confetti burst, no library — restrained palette to match the editorial look ──
+function launchConfetti(){
+  var canvas = document.getElementById('confetti');
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var colors = ['#F2B705', '#E8532E', '#F4EEE3'];
+  var pieces = [];
+  for (var i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * canvas.height * 0.5,
+      w: 5 + Math.random() * 5,
+      h: 7 + Math.random() * 9,
+      color: colors[i % colors.length],
+      rot: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 10,
+      vy: 2 + Math.random() * 3,
+      vx: (Math.random() - 0.5) * 2
+    });
+  }
+  var frames = 0;
+  function tick(){
+    frames++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(function(p){
+      p.x += p.vx; p.y += p.vy; p.rot += p.vRot;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if (frames < 200) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  tick();
+}
+window.addEventListener('resize', function(){
+  var c = document.getElementById('confetti');
+  c.width = window.innerWidth; c.height = window.innerHeight;
+});
+
+updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Expenses — UTSOV 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#8B1A1A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red-dark:#6B0E0E;--red:#8B1A1A;--gold:#C9A84C;--gold-lt:#E8C97A;--teal:#1FA8A0;--green:#2E7D32;
+  --cream:#FFFDF8;--ink:#2A1000;--ink-soft:#6B5A4A;--border:#E8D9C0;
+  --f-display:'Bebas Neue',sans-serif;--f-label:'Josefin Sans',sans-serif;
+}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-label)}
+a{color:inherit}
+
+header{background:linear-gradient(135deg,var(--red-dark),var(--red));padding:1.5rem 1.5rem 2.2rem;text-align:center}
+header h1{font-family:var(--f-display);color:#fff;font-size:clamp(1.7rem,5vw,2.3rem);letter-spacing:.02em}
+header p{color:rgba(255,255,255,.82);font-size:.88rem;margin-top:.4rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+.wrap{max-width:960px;margin:-1.2rem auto 3rem;padding:0 1.25rem}
+
+.tabs{display:flex;gap:.5rem;background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:.4rem;box-shadow:0 10px 32px rgba(107,14,14,.1);margin-bottom:1.3rem}
+.tab-btn{flex:1;border:none;background:transparent;padding:.75rem .6rem;border-radius:11px;font-family:var(--f-display);font-weight:400;font-size:1rem;letter-spacing:.03em;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+.tab-btn.active{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;box-shadow:0 6px 16px rgba(139,26,26,.3)}
+.tab-btn:not(.active):hover{background:#FFF4E0}
+.view{display:none}
+.view.active{display:block}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:1.6rem 1.5rem;box-shadow:0 10px 32px rgba(107,14,14,.1);margin-bottom:1.2rem}
+
+label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.35rem}
+input[type="text"],input[type="number"],input[type="date"],select{width:100%;padding:.7rem .85rem;border:1.5px solid var(--border);border-radius:10px;font-size:.92rem;font-family:var(--f-label);background:#FFFBF4}
+input[type="file"]{width:100%;padding:.55rem .6rem;border:1.5px solid var(--border);border-radius:10px;font-size:.8rem;font-family:var(--f-label);background:#FFFBF4}
+input:focus,select:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.field{margin-bottom:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.exp-row{border:1.5px dashed var(--border);border-radius:14px;padding:1.1rem 1rem 1rem;margin-bottom:1rem;position:relative;background:#FFFCF6}
+.exp-row .exp-num{position:absolute;top:-10px;left:14px;background:var(--gold);color:#fff;font-family:var(--f-display);font-size:.85rem;padding:.1rem .6rem;border-radius:999px}
+.remove-row{position:absolute;top:.6rem;right:.6rem;background:none;border:none;color:var(--ink-soft);font-size:1rem;cursor:pointer;width:28px;height:28px;border-radius:50%;line-height:1}
+.remove-row:hover{background:#FDEDED;color:var(--red)}
+
+.add-row-btn{width:100%;padding:.8rem;border:1.5px dashed var(--gold);background:#FFF9EC;color:var(--red-dark);font-family:var(--f-label);font-weight:700;font-size:.85rem;border-radius:12px;cursor:pointer;transition:background .2s}
+.add-row-btn:hover{background:#FDF0D4}
+
+.submit-btn{width:100%;padding:1rem;border:none;border-radius:12px;background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;font-family:var(--f-display);font-size:1.15rem;letter-spacing:.03em;cursor:pointer;transition:transform .2s;box-shadow:0 8px 20px rgba(139,26,26,.3);margin-top:.3rem}
+.submit-btn:hover{transform:translateY(-2px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.running-total{text-align:center;font-family:var(--f-display);font-size:1.3rem;color:var(--red-dark);margin-bottom:1rem}
+.running-total span{color:var(--green)}
+
+.note{font-size:.78rem;color:var(--ink-soft);line-height:1.6;margin-top:.3rem}
+.error-msg{color:var(--red);font-size:.82rem;font-weight:600;margin-top:.5rem;display:none}
+
+.success-wrap{display:none;text-align:center;padding:2.5rem 1.5rem}
+.success-wrap.show{display:block}
+.success-wrap .emoji{font-size:3rem;margin-bottom:1rem}
+.success-wrap h2{font-family:var(--f-display);color:var(--red-dark);font-size:1.8rem;margin-bottom:.6rem}
+.success-wrap p{color:var(--ink-soft);margin-bottom:1.4rem}
+.again-btn{padding:.75rem 1.6rem;border-radius:999px;border:1.5px solid var(--red);background:#fff;color:var(--red);font-family:var(--f-label);font-weight:700;cursor:pointer}
+
+/* ── Duplicate-expense warning popup ── */
+.dup-overlay{display:none;position:fixed;inset:0;background:rgba(42,16,0,.55);z-index:999;align-items:center;justify-content:center;padding:1.2rem}
+.dup-overlay.show{display:flex}
+.dup-modal{background:#fff;border-radius:18px;max-width:460px;width:100%;padding:1.8rem 1.6rem;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:center}
+.dup-icon{font-size:2.4rem;margin-bottom:.5rem}
+.dup-modal h3{font-family:var(--f-display);color:var(--red-dark);font-size:1.4rem;margin-bottom:.8rem;letter-spacing:.02em}
+.dup-match{background:#FFF7E8;border:1.5px solid var(--gold-lt);border-radius:12px;padding:.8rem .9rem;margin-bottom:.6rem;text-align:left;font-size:.85rem;line-height:1.6}
+.dup-match b{color:var(--red-dark)}
+.dup-actions{display:flex;gap:.7rem;margin-top:.6rem}
+.dup-actions button{flex:1;padding:.75rem .6rem;border-radius:10px;font-family:var(--f-label);font-weight:700;font-size:.85rem;cursor:pointer;border:1.5px solid var(--border)}
+.dup-cancel-btn{background:#fff;color:var(--ink)}
+.dup-cancel-btn:hover{background:#FFF4E0}
+.dup-force-btn{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border-color:transparent}
+.dup-force-btn:hover{opacity:.9}
+
+/* ── Dashboard ── */
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.3rem}
+.sum-tile{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1rem .8rem;text-align:center;box-shadow:0 6px 18px rgba(107,14,14,.07)}
+.sum-tile b{display:block;font-family:var(--f-display);font-size:1.5rem;color:var(--red-dark)}
+.sum-tile.green b{color:var(--green)}
+.sum-tile.gold b{color:#B8860B}
+.sum-tile span{display:block;font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-top:.15rem}
+@media(max-width:680px){.summary-bar{grid-template-columns:repeat(2,1fr)}}
+
+.search-box{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:.8rem 1rem;margin-bottom:1.2rem;box-shadow:0 6px 18px rgba(107,14,14,.06)}
+.search-box input{border:none;background:transparent;padding:.3rem}
+.search-box input:focus{outline:none}
+
+.team-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;margin-bottom:1rem;overflow:hidden;box-shadow:0 8px 24px rgba(107,14,14,.08)}
+.team-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;background:linear-gradient(135deg,#FFF4E0,#FFFBF4);cursor:pointer}
+.team-head:hover{background:#FFF0D4}
+.team-name{font-family:var(--f-display);font-size:1.25rem;color:var(--red-dark);letter-spacing:.02em}
+.team-meta{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.team-pill{font-size:.72rem;font-weight:700;padding:.3rem .7rem;border-radius:999px;background:#fff;border:1.5px solid var(--border);color:var(--ink-soft)}
+.team-pill.spent{color:var(--red-dark);border-color:rgba(139,26,26,.3)}
+.team-pill.owed{color:#B8860B;border-color:rgba(184,134,11,.3)}
+.team-caret{font-size:1rem;color:var(--ink-soft);transition:transform .2s}
+.team-card.open .team-caret{transform:rotate(90deg)}
+.team-body{display:none;padding:0 1.2rem 1.2rem}
+.team-card.open .team-body{display:block}
+
+.owed-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 1.1rem}
+.owed-chip{font-size:.74rem;font-weight:700;padding:.4rem .8rem;border-radius:999px;background:#FFF4E0;color:var(--red-dark);border:1.5px solid rgba(201,168,76,.4)}
+
+.exp-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.exp-table th{text-align:left;padding:.5rem .6rem;color:var(--ink-soft);font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+.exp-table td{padding:.6rem;border-bottom:1px solid var(--border);vertical-align:top}
+.exp-table tr:last-child td{border-bottom:none}
+.exp-table tr.reimbursed td{opacity:.5}
+.exp-table tr.reimbursed .purpose-text{text-decoration:line-through}
+.amt{font-weight:700;white-space:nowrap}
+.receipt-badge{font-size:.64rem;padding:.15rem .5rem;border-radius:999px;font-weight:700;display:inline-block}
+.receipt-badge.yes{background:#E6F4EA;color:var(--green)}
+.receipt-badge.no{background:#FDECEC;color:var(--red)}
+.receipt-badge.other{background:#FFF4E0;color:#B8860B}
+a.receipt-badge{text-decoration:none;cursor:pointer;border:1.5px solid currentColor}
+a.receipt-badge:hover{filter:brightness(.95)}
+.reimburse-toggle{display:flex;align-items:center;gap:.4rem;cursor:pointer;white-space:nowrap}
+.reimburse-toggle input{width:16px;height:16px;accent-color:var(--green);cursor:pointer}
+.del-btn{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:.9rem;padding:.2rem .4rem}
+.del-btn:hover{color:var(--red)}
+.empty-state{text-align:center;color:var(--ink-soft);padding:2.5rem 0;font-style:italic}
+.loading-state{text-align:center;color:var(--ink-soft);padding:2.5rem 0}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Team Expenses &amp; Reimbursements</h1>
+  <p>Log out-of-pocket expenses for your team, and track who still needs to be reimbursed — across every UTSOV team, in one place.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="submit" onclick="selectTab('submit')">➕ Submit Expense</button>
+    <button class="tab-btn" data-tab="dashboard" onclick="selectTab('dashboard')">📊 All Expenses</button>
+  </div>
+
+  <!-- SUBMIT TAB -->
+  <div class="view active" id="view-submit">
+    <form id="expenseForm">
+      <div class="card">
+        <div class="grid2">
+          <div class="field">
+            <label for="submittedBy">Your Name</label>
+            <input type="text" id="submittedBy" required placeholder="e.g. Pratik Datta">
+          </div>
+          <div class="field">
+            <label for="teamName">Team</label>
+            <select id="teamName" required>
+              <option value="">Select a team…</option>
+              <option>Artist Management</option>
+              <option>Food Team</option>
+              <option>Decoration &amp; Mandap</option>
+              <option>Cultural Program</option>
+              <option>Registration / Check-in</option>
+              <option>Sound &amp; AV</option>
+              <option>Pujo Team</option>
+              <option>Logistics</option>
+              <option>Sponsorship</option>
+              <option>Marketing</option>
+              <option>Admin</option>
+              <option>Transportation</option>
+              <option>Facility</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="expenseRows"></div>
+
+      <button type="button" class="add-row-btn" id="addRowBtn">+ Add Another Expense</button>
+
+      <div class="running-total">Batch Total: <span id="runningTotal">$0.00</span></div>
+
+      <div class="card">
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Expenses</button>
+        <div class="error-msg" id="errorMsg"></div>
+        <p class="note">Every expense logged here is tracked for reimbursement — mark it as paid back once settled from the "All Expenses" tab.</p>
+      </div>
+    </form>
+
+    <div class="success-wrap" id="successWrap">
+      <div class="emoji">💰</div>
+      <h2>Logged!</h2>
+      <p id="successDetail">Your expenses have been recorded.</p>
+      <button class="again-btn" id="submitAnotherBtn">Submit More Expenses</button>
+    </div>
+  </div>
+
+  <div class="dup-overlay" id="dupOverlay">
+    <div class="dup-modal">
+      <div class="dup-icon">⚠️</div>
+      <h3>Possible Duplicate</h3>
+      <div id="dupList"></div>
+      <p class="note" style="margin:.4rem 0 1rem">This looks like it may already be submitted — same receipt or same date/amount/purpose/payer as an existing entry.</p>
+      <div class="dup-actions">
+        <button type="button" class="dup-cancel-btn" id="dupCancelBtn">Cancel, Let Me Check</button>
+        <button type="button" class="dup-force-btn" id="dupForceBtn">Submit Anyway</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD TAB -->
+  <div class="view" id="view-dashboard">
+    <div class="summary-bar">
+      <div class="sum-tile"><b id="sumSpent">$0</b><span>Total Spent</span></div>
+      <div class="sum-tile green"><b id="sumReimbursed">$0</b><span>Reimbursed</span></div>
+      <div class="sum-tile gold"><b id="sumOutstanding">$0</b><span>Outstanding</span></div>
+      <div class="sum-tile"><b id="sumCount">0</b><span>Expenses Logged</span></div>
+    </div>
+    <div class="search-box">
+      <input type="text" id="dashSearch" placeholder="🔍 Search by team, person, or purpose…" autocomplete="off">
+    </div>
+    <div id="teamsContainer"></div>
+    <p class="empty-state" id="dashEmpty" hidden>No matching expenses.</p>
+    <p class="loading-state" id="dashLoading">Loading expenses…</p>
+  </div>
+
+</div>
+
+<script>
+var rowCount = 0;
+
+function addExpenseRow() {
+  rowCount++;
+  var container = document.getElementById('expenseRows');
+  var row = document.createElement('div');
+  row.className = 'exp-row';
+  row.dataset.rowId = rowCount;
+  var today = new Date().toISOString().slice(0, 10);
+  row.innerHTML =
+    '<span class="exp-num">#' + rowCount + '</span>' +
+    (rowCount > 1 ? '<button type="button" class="remove-row" aria-label="Remove">&times;</button>' : '') +
+    '<div class="grid3">' +
+      '<div class="field"><label>Date</label><input type="date" class="exp-date" value="' + today + '" required></div>' +
+      '<div class="field"><label>For / Beneficiary</label><input type="text" class="exp-beneficiary" placeholder="e.g. Iman &amp; Guest"></div>' +
+      '<div class="field"><label>Heads / Qty</label><input type="text" class="exp-heads" placeholder="e.g. 8"></div>' +
+    '</div>' +
+    '<div class="field"><label>Purpose</label><input type="text" class="exp-purpose" required placeholder="e.g. Lunch (Mamoun\'s Falafel)"></div>' +
+    '<div class="grid3">' +
+      '<div class="field"><label>Amount ($)</label><input type="number" class="exp-amount" step="0.01" min="0" required placeholder="0.00"></div>' +
+      '<div class="field"><label>Paid By</label><input type="text" class="exp-paidby" required placeholder="Who fronted the cash?"></div>' +
+      '<div class="field"><label>Receipt?</label><select class="exp-receipt"><option value="yes">Yes</option><option value="email_screenshot">Email / Screenshot</option><option value="no">No</option></select></div>' +
+    '</div>' +
+    '<div class="grid3">' +
+      '<div class="field"><label>Payment Method</label><select class="exp-paymethod"><option value="Personal CC">Personal CC</option><option value="UTSOV Debit Card">UTSOV Debit Card</option><option value="UTSOV Check">UTSOV Check</option></select></div>' +
+      '<div class="field"><label>Note (optional)</label><input type="text" class="exp-note" placeholder="anything else worth noting"></div>' +
+      '<div class="field" style="margin-bottom:0"><label>Attach Receipt (optional)</label><input type="file" class="exp-receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf"></div>' +
+    '</div>';
+  container.appendChild(row);
+  var removeBtn = row.querySelector('.remove-row');
+  if (removeBtn) removeBtn.addEventListener('click', function() { row.remove(); updateRunningTotal(); });
+  row.querySelector('.exp-amount').addEventListener('input', updateRunningTotal);
+  // default Paid By to the submitter's name for convenience
+  var subBy = document.getElementById('submittedBy').value.trim();
+  if (subBy) row.querySelector('.exp-paidby').value = subBy;
+}
+
+function updateRunningTotal() {
+  var rows = document.querySelectorAll('.exp-row');
+  var total = 0;
+  rows.forEach(function(row) {
+    var v = parseFloat(row.querySelector('.exp-amount').value);
+    if (!isNaN(v)) total += v;
+  });
+  document.getElementById('runningTotal').textContent = '$' + total.toFixed(2);
+}
+
+document.getElementById('addRowBtn').addEventListener('click', addExpenseRow);
+addExpenseRow();
+
+document.getElementById('expenseForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var errorEl = document.getElementById('errorMsg');
+  errorEl.style.display = 'none';
+
+  var submittedBy = document.getElementById('submittedBy').value.trim();
+  var team = document.getElementById('teamName').value;
+
+  var rows = document.querySelectorAll('.exp-row');
+  var itemsRaw = [];
+  rows.forEach(function(row) {
+    var date = row.querySelector('.exp-date').value;
+    var beneficiary = row.querySelector('.exp-beneficiary').value.trim();
+    var purpose = row.querySelector('.exp-purpose').value.trim();
+    var heads = row.querySelector('.exp-heads').value.trim();
+    var amount = parseFloat(row.querySelector('.exp-amount').value);
+    var paidBy = row.querySelector('.exp-paidby').value.trim();
+    var receipt = row.querySelector('.exp-receipt').value;
+    var paymentMethod = row.querySelector('.exp-paymethod').value;
+    var note = row.querySelector('.exp-note').value.trim();
+    var fileInput = row.querySelector('.exp-receipt-file');
+    var file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+    if (purpose || !isNaN(amount)) {
+      itemsRaw.push({ date: date, beneficiary: beneficiary, purpose: purpose, heads: heads, amount: isNaN(amount) ? 0 : amount, paidBy: paidBy, receipt: receipt, paymentMethod: paymentMethod, note: note, file: file });
+    }
+  });
+
+  if (!submittedBy || !team) {
+    errorEl.textContent = 'Please enter your name and select a team.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (itemsRaw.length === 0) {
+    errorEl.textContent = 'Please add at least one expense.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  var incomplete = itemsRaw.some(function(it) { return !it.purpose || !it.paidBy || it.amount <= 0; });
+  if (incomplete) {
+    errorEl.textContent = 'Each expense needs a purpose, amount, and who paid.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Uploading receipts…';
+
+  function uploadFile(file) {
+    var fd = new FormData();
+    fd.append('action', 'uploadReceipt');
+    fd.append('receipt', file);
+    return fetch('api/team-expenses.php', { method: 'POST', body: fd })
+      .then(function(r) { return r.json(); })
+      .then(function(resp) { return (resp && resp.ok) ? { path: resp.path, hash: resp.hash || '' } : { path: '', hash: '' }; })
+      .catch(function() { return { path: '', hash: '' }; });
+  }
+
+  function submitExpenses(items, force) {
+    btn.textContent = 'Submitting…';
+    var payload = { action: 'add', submittedBy: submittedBy, team: team, items: items };
+    if (force) payload.force = true;
+    fetch('api/team-expenses.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data && data.duplicate) {
+        showDuplicatePopup(data.matches, items);
+        return;
+      }
+      if (!data || data.ok !== true) throw new Error('bad response');
+      var total = items.reduce(function(s, it) { return s + it.amount; }, 0);
+      document.getElementById('successDetail').textContent =
+        items.length + ' expense' + (items.length > 1 ? 's' : '') + ' ($' + total.toFixed(2) + ') logged for ' + team + '.';
+      document.getElementById('expenseForm').style.display = 'none';
+      document.getElementById('successWrap').classList.add('show');
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Submit Expenses';
+      errorEl.textContent = 'Something went wrong — please try again.';
+      errorEl.style.display = 'block';
+    });
+  }
+
+  function showDuplicatePopup(matches, items) {
+    var listEl = document.getElementById('dupList');
+    listEl.innerHTML = (matches || []).map(function(m) {
+      var ex = m.existing;
+      return '<div class="dup-match">' +
+        '<b>' + escapeHtml(ex.purpose) + '</b> — $' + ex.amount.toFixed(2) + '<br>' +
+        'Paid by ' + escapeHtml(ex.paid_by) + ' on ' + escapeHtml(ex.expense_date) + '<br>' +
+        'Team: ' + escapeHtml(ex.team) + ' &middot; Submitted by ' + escapeHtml(ex.submitted_by) +
+        '</div>';
+    }).join('');
+    document.getElementById('dupOverlay').classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Submit Expenses';
+
+    var forceBtn = document.getElementById('dupForceBtn');
+    var cancelBtn = document.getElementById('dupCancelBtn');
+    function cleanup() {
+      document.getElementById('dupOverlay').classList.remove('show');
+      forceBtn.removeEventListener('click', onForce);
+      cancelBtn.removeEventListener('click', onCancel);
+    }
+    function onForce() {
+      cleanup();
+      btn.disabled = true;
+      submitExpenses(items, true);
+    }
+    function onCancel() { cleanup(); }
+    forceBtn.addEventListener('click', onForce);
+    cancelBtn.addEventListener('click', onCancel);
+  }
+
+  Promise.all(itemsRaw.map(function(it) {
+    return it.file ? uploadFile(it.file) : Promise.resolve({ path: '', hash: '' });
+  })).then(function(results) {
+    var items = itemsRaw.map(function(it, i) {
+      return { date: it.date, beneficiary: it.beneficiary, purpose: it.purpose, heads: it.heads, amount: it.amount, paidBy: it.paidBy, receipt: it.receipt, receiptFile: results[i].path, receiptHash: results[i].hash, paymentMethod: it.paymentMethod, note: it.note };
+    });
+    submitExpenses(items, false);
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Submit Expenses';
+    errorEl.textContent = 'Something went wrong — please try again.';
+    errorEl.style.display = 'block';
+  });
+});
+
+document.getElementById('submitAnotherBtn').addEventListener('click', function() {
+  document.getElementById('expenseForm').reset();
+  document.getElementById('expenseRows').innerHTML = '';
+  rowCount = 0;
+  addExpenseRow();
+  updateRunningTotal();
+  document.getElementById('expenseForm').style.display = '';
+  document.getElementById('successWrap').classList.remove('show');
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = false;
+  btn.textContent = 'Submit Expenses';
+});
+
+// ── Tabs ──
+function selectTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === tab); });
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.getElementById('view-' + tab).classList.add('active');
+  if (tab === 'dashboard' && !dashboardLoaded) loadDashboard();
+}
+
+// ── Dashboard ──
+var EXPENSES = [];
+var dashboardLoaded = false;
+
+function money(n) { return '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function escapeHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function loadDashboard() {
+  dashboardLoaded = true;
+  fetch('api/team-expenses.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'list' })
+  }).then(function(r) { return r.json(); }).then(function(resp) {
+    document.getElementById('dashLoading').hidden = true;
+    if (!resp || !resp.ok) return;
+    EXPENSES = resp.rows;
+    renderDashboard();
+  }).catch(function() {
+    document.getElementById('dashLoading').textContent = 'Could not load expenses — please refresh.';
+  });
+}
+
+function renderDashboard() {
+  var q = document.getElementById('dashSearch').value.trim().toLowerCase();
+
+  var totalSpent = 0, totalReimbursed = 0;
+  EXPENSES.forEach(function(e) {
+    totalSpent += parseFloat(e.amount) || 0;
+    if (parseInt(e.reimbursed, 10) === 1) totalReimbursed += parseFloat(e.amount) || 0;
+  });
+  document.getElementById('sumSpent').textContent = money(totalSpent);
+  document.getElementById('sumReimbursed').textContent = money(totalReimbursed);
+  document.getElementById('sumOutstanding').textContent = money(totalSpent - totalReimbursed);
+  document.getElementById('sumCount').textContent = EXPENSES.length;
+
+  var filtered = EXPENSES.filter(function(e) {
+    if (!q) return true;
+    var blob = ((e.team || '') + ' ' + (e.paid_by || '') + ' ' + (e.purpose || '') + ' ' + (e.beneficiary || '') + ' ' + (e.payment_method || '')).toLowerCase();
+    return blob.indexOf(q) !== -1;
+  });
+
+  document.getElementById('dashEmpty').hidden = filtered.length > 0;
+
+  var byTeam = {};
+  filtered.forEach(function(e) {
+    var t = e.team || 'Unassigned';
+    (byTeam[t] = byTeam[t] || []).push(e);
+  });
+
+  var teamNames = Object.keys(byTeam).sort(function(a, b) { return a.localeCompare(b); });
+  var container = document.getElementById('teamsContainer');
+  var openTeams = Array.prototype.map.call(container.querySelectorAll('.team-card.open'), function(c) { return c.dataset.team; });
+  container.innerHTML = '';
+
+  teamNames.forEach(function(team) {
+    var items = byTeam[team];
+    var teamSpent = 0, teamOutstanding = 0;
+    var owedByPerson = {};
+    items.forEach(function(e) {
+      var amt = parseFloat(e.amount) || 0;
+      teamSpent += amt;
+      var isReimbursed = parseInt(e.reimbursed, 10) === 1;
+      if (!isReimbursed) {
+        teamOutstanding += amt;
+        var payer = e.paid_by || 'Unknown';
+        owedByPerson[payer] = (owedByPerson[payer] || 0) + amt;
+      }
+    });
+
+    var card = document.createElement('div');
+    card.className = 'team-card' + (openTeams.indexOf(team) !== -1 ? ' open' : '');
+    card.dataset.team = team;
+
+    var owedChips = Object.keys(owedByPerson).sort(function(a,b){ return owedByPerson[b]-owedByPerson[a]; }).map(function(person) {
+      return '<span class="owed-chip">' + escapeHtml(person) + ': ' + money(owedByPerson[person]) + '</span>';
+    }).join('');
+
+    var rowsHtml = items.map(function(e) {
+      var isR = parseInt(e.reimbursed, 10) === 1;
+      var receiptClass = e.receipt === 'yes' ? 'yes' : (e.receipt === 'no' ? 'no' : 'other');
+      var receiptLabel = e.receipt === 'yes' ? 'Yes' : (e.receipt === 'no' ? 'No' : 'Email/SS');
+      return '<tr class="' + (isR ? 'reimbursed' : '') + '" data-id="' + e.id + '">' +
+        '<td>' + escapeHtml(e.expense_date || '') + '</td>' +
+        '<td>' + escapeHtml(e.beneficiary || '') + '</td>' +
+        '<td class="purpose-text">' + escapeHtml(e.purpose || '') + (e.heads ? ' <span style="color:var(--ink-soft)">(' + escapeHtml(e.heads) + ')</span>' : '') + '</td>' +
+        '<td class="amt">' + money(parseFloat(e.amount) || 0) + '</td>' +
+        '<td>' + escapeHtml(e.paid_by || '') + '</td>' +
+        '<td>' + escapeHtml(e.payment_method || '') + '</td>' +
+        '<td>' + (e.receipt_file
+            ? '<a class="receipt-badge ' + receiptClass + '" href="api/' + escapeHtml(e.receipt_file) + '" target="_blank" rel="noopener" title="View submitted receipt">📎 ' + receiptLabel + '</a>'
+            : '<span class="receipt-badge ' + receiptClass + '">' + receiptLabel + '</span>') + '</td>' +
+        '<td><label class="reimburse-toggle"><input type="checkbox" class="reimburse-cb" ' + (isR ? 'checked' : '') + '> ' + (isR ? 'Paid' : 'Mark Paid') + '</label></td>' +
+        '<td><button class="del-btn" aria-label="Delete">🗑</button></td>' +
+      '</tr>';
+    }).join('');
+
+    card.innerHTML =
+      '<div class="team-head">' +
+        '<span class="team-name">' + escapeHtml(team) + '</span>' +
+        '<div class="team-meta">' +
+          '<span class="team-pill spent">Spent ' + money(teamSpent) + '</span>' +
+          '<span class="team-pill owed">Owed ' + money(teamOutstanding) + '</span>' +
+          '<span class="team-caret">▶</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="team-body">' +
+        (owedChips ? '<div class="owed-row">' + owedChips + '</div>' : '<p class="note" style="margin:.9rem 0">All expenses in this team are reimbursed. 🎉</p>') +
+        '<div style="overflow-x:auto"><table class="exp-table">' +
+          '<thead><tr><th>Date</th><th>For</th><th>Purpose</th><th>Amount</th><th>Paid By</th><th>Payment</th><th>Receipt</th><th>Status</th><th></th></tr></thead>' +
+          '<tbody>' + rowsHtml + '</tbody>' +
+        '</table></div>' +
+      '</div>';
+
+    card.querySelector('.team-head').addEventListener('click', function() { card.classList.toggle('open'); });
+
+    card.querySelectorAll('.reimburse-cb').forEach(function(cb) {
+      cb.addEventListener('click', function(e) { e.stopPropagation(); });
+      cb.addEventListener('change', function() {
+        var tr = cb.closest('tr');
+        var id = tr.dataset.id;
+        var checked = cb.checked;
+        fetch('api/team-expenses.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'setReimbursed', id: id, reimbursed: checked })
+        }).then(function() {
+          var row = EXPENSES.find(function(x) { return String(x.id) === String(id); });
+          if (row) row.reimbursed = checked ? 1 : 0;
+          renderDashboard();
+        });
+      });
+    });
+
+    card.querySelectorAll('.del-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var tr = btn.closest('tr');
+        var id = tr.dataset.id;
+        if (!confirm('Delete this expense entry? This cannot be undone.')) return;
+        fetch('api/team-expenses.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete', id: id })
+        }).then(function() {
+          EXPENSES = EXPENSES.filter(function(x) { return String(x.id) !== String(id); });
+          renderDashboard();
+        });
+      });
+    });
+
+    container.appendChild(card);
+  });
+}
+
+document.getElementById('dashSearch').addEventListener('input', renderDashboard);
+</script>
+</body>
+</html>

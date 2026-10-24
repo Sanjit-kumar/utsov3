@@ -24,7 +24,10 @@ $row = $sel->fetch(PDO::FETCH_ASSOC);
 
 if (!$row) { echo "id={$id}: Row not found\n"; exit; }
 
-$orderId = $row['paypal_order_id'] ?: $row['payment_reference'];
+// For manual entries (Zelle/Sulekha/donor) there's no paypal_order_id, and payment_reference
+// is an internal admin note (can contain $ amounts, long free text) -- never show that to the
+// customer as their "Order ID". Use a clean synthetic reference instead in that case.
+$orderId = $row['paypal_order_id'] ?: ('UTSOV-' . str_pad($id, 5, '0', STR_PAD_LEFT));
 $qty     = (int)$row['qty'];
 $total   = number_format((float)$row['total_amount'], 2);
 $name    = $row['name'];
@@ -40,10 +43,12 @@ $foodArr = array_map(function($f) use ($foodMap) {
     return isset($foodMap[$f]) ? $foodMap[$f] : 'Non-Vegetarian';
 }, $foodArr);
 $vegCount = count(array_filter($foodArr, function($f){ return $f === 'Vegetarian'; }));
-$nonVegCount = count($foodArr) - $vegCount;
+$noDinnerCount = count(array_filter($foodArr, function($f){ return $f === 'No Dinner'; }));
+$nonVegCount = count($foodArr) - $vegCount - $noDinnerCount;
 $foodSummaryParts = [];
 if ($nonVegCount > 0) $foodSummaryParts[] = "{$nonVegCount} Non-Veg";
 if ($vegCount > 0) $foodSummaryParts[] = "{$vegCount} Veg";
+if ($noDinnerCount > 0) $foodSummaryParts[] = "{$noDinnerCount} No Dinner (Concert Only)";
 $foodDisp = $foodSummaryParts ? implode(', ', $foodSummaryParts) : 'Non-Vegetarian';
 
 $adultsDisp = isset($row['adults'])   ? (int)$row['adults']   : $qty;
@@ -73,7 +78,6 @@ $body = "<html><body style='font-family:Arial,sans-serif;color:#333;max-width:60
   . "<tr><td style='padding:6px 16px 6px 0;border-bottom:1px solid #eee'><b>Days:</b></td><td style='padding:6px 0;border-bottom:1px solid #eee'>{$daysDisp}</td></tr>"
   . "<tr><td style='padding:6px 16px 6px 0;border-bottom:1px solid #eee'><b>Attendees:</b></td><td style='padding:6px 0;border-bottom:1px solid #eee'>{$guestLine}" . ($attendeeDisp ? " ({$attendeeDisp})" : "") . "</td></tr>"
   . "<tr><td style='padding:6px 16px 6px 0;border-bottom:1px solid #eee'><b>Meal Preference:</b></td><td style='padding:6px 0;border-bottom:1px solid #eee'>{$foodDisp}</td></tr>"
-  . "<tr><td style='padding:6px 16px 6px 0;border-bottom:1px solid #eee'><b>Total Paid:</b></td><td style='padding:6px 0;border-bottom:1px solid #eee'>\${$total}</td></tr>"
   . "<tr><td style='padding:6px 16px 6px 0'><b>Order ID:</b></td><td style='padding:6px 0'>{$safeOrder}</td></tr>"
   . "</table>"
   . "<p>Please keep this email as your ticket confirmation - no further action is needed. If you have any questions, just reply to this email or reach us at utsov@utsov.org.</p>"
@@ -86,7 +90,7 @@ $ok = mail($email, $subject, $body, $mailHeaders);
 $smsOk = null;
 if (!empty($row['sms_updates'])) {
     $smsDaysPlain = html_entity_decode($daysDisp, ENT_QUOTES, 'UTF-8');
-    $smsBody = "UTSOV 2026: Sorry for the delay! Your {$qty} {$passWord} confirmed. {$smsDaysPlain}. Total \${$total}. Order {$orderId}. Reply STOP to opt out.";
+    $smsBody = "UTSOV 2026: Sorry for the delay! Your {$qty} {$passWord} confirmed. {$smsDaysPlain}. Order {$orderId}. Reply STOP to opt out.";
     $smsOk = sendTwilioSMS($row['phone'], $smsBody);
 }
 
